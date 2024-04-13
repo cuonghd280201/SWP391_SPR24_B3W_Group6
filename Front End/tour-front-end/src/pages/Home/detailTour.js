@@ -1,6 +1,9 @@
 import React from "react";
 import '../Home/Timeline.css'
 
+import '../Home/detailTour.css'
+
+
 
 
 
@@ -18,33 +21,53 @@ const DetailTour = () => {
                     </div>
                 </div>
             </div>
-            <section class="ftco-section">
-                <div class="container">
-                    <div className="row d-flex">
-                        <div className="col-md-8 ftco-animate">
-                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-                            <div className="row justify-content mb-5 pb-3">
-                                <div className="col-md-7 heading-section text-center ftco-animate">
-                                    <h4 className="mb-1">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc - Hà Nam - Hà Nội</h4>
+            <div className="flight-hotel-detail detail tour-detail  ">
+                <div className="entry-head">
+                    <section className="section-01-title section-01"><div className="container-xl">
+                        <div className="row">
+                            <div className="col-md-6 col-12 left">
+                                <div className="warp-mark">
+                                    <i className="fal fa-ticket" />
+                                    <label>NNSGN322-045-010524VN-D</label>
+                                </div>
+                                <h1 className="title">Siêu Sale 🔥 Trung Quốc: Thượng Hải - Hàng Châu - Vô Tích - Tô Châu - Bắc Kinh - Chinh phục Vạn Lý Trường Thành | Lễ 30/4 - Giá đã giảm 2.000.000vnđ/ khách</h1>
+                                <div className="short-rating">
+                                    <div className="s-rate">
+                                        <span>9</span>
+                                        <div className="s-comment">Tuyệt vời<p>1 quan tâm</p>
+                                        </div>
+                                    </div>
+                                    <div className="s-wishlist">
+                                        <i className="fas fa-heart" />
+                                        <label> 126</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-2 ftco-animate">
-                            <div className="two">
-                                <span className="price per-price">7.450.000 đ<small>/tour</small></span>
-                            </div>
-                        </div>
-                        <div className="col-md-2 ftco-animate">
-                            <div className="form-group">
-                                <input type="submit" defaultValue="Search" className="btn btn-primary py-3 px-5" />
+                            <div className="col-md-6 col-12 right">
+                                <div className="group-price">
+                                    <div className="or-price">
+                                        <p>Giá<span className="tour-item__price--old__number"> 27.990.000&nbsp;₫</span>
+                                            <i> /khách</i>
+                                        </p>
+                                    </div>
+                                    <div className="sale-price">
+                                        <span className="sale">GIẢM 7%</span><p>
+                                            <span className="price">25.990.000&nbsp;₫</span>/ khách</p>
+                                    </div>
+                                </div>
+                                <div className="group-add-cart"><a title="Đặt ngay" href="#" className="add-to-cart">
+                                    <i className="fal fa-shopping-cart">
+                                    </i>Đặt ngay</a><a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
                             </div>
                         </div>
                     </div>
+                    </section>
+
                 </div>
 
-            </section>
-            <section className="ftco-about d-md-flex">
+            </div>
 
+            <section className="ftco-about d-md-flex">
                 <div className="one-half img" style={{ backgroundImage: 'url(images/about.jpg)' }} />
                 <div className="one-half ftco-animate">
                     <div className="row">
@@ -66,129 +89,75 @@ const DetailTour = () => {
                     </div>
                 </div>
             </section>
-            <section className="ftco-section services-section bg-light">
+
+            <div className="flight-hotel-detail detail tour-detail  ">
+                <div className="entry-head">
+            <div className="overview active"><section className="section-03 mb-5">
                 <div className="container">
-                    <div className="row d-flex">
-                        <div className="col-md-4 d-flex align-self-stretch ftco-animate">
-                            <div className="one-half ftco-animate">
-                                <div className="heading-section ftco-animate ">
-                                    <h2 className="mb-4">Lịch trình</h2>
-                                </div>
-                                <div>
-                                    <p>Khởi hành 13/03/2024 - Giờ đi: 18:04</p>
-                                    <p>Tập trung 16:04 ngày 13/04/2024</p>
-                                    <p>Thời gian 5 ngày</p>
-                                    <p>Nơi khởi hành TP. Hồ Chí Minh</p>
-                                    <p>Số chỗ còn nhận 4</p>
-                                    <div className="col-md-2 ftco-animate">
-                                        <div className="form-group">
-                                            <input
-                                                type="submit"
-                                                value="Tìm Ngày Khác"
-                                                className="btn btn-outline-primary py-3 px-5"
-                                                style={{ backgroundColor: 'transparent', border: '1px solid #007bff', color: '#007bff' }}
-                                            />
-                                        </div>
+                    <div className="row">
+                        <div className="col-md-5 col-12 left">
+                            <div className="box-order">
+                                <div className="time"><p>Khởi hành <b> 01/05/2024 - Giờ đi: 07:05</b>
+                                </p><p>Tập trung <b>04:05 ngày 01/05/2024</b>
+                                    </p><p>Thời gian <b>7 ngày</b>
+                                    </p><p>Nơi khởi hành <b>TP. Hồ Chí Minh</b>
+                                    </p><p>Số chỗ còn nhận <b>9</b></p></div>
+                                <div className="calendar">
+                                    <div className="calendar-box">
+                                        <i className="icon icon--calendar" />
+                                        <label><a href="#"> Ngày khác</a></label>
                                     </div>
-
                                 </div>
+
                             </div>
-
                         </div>
-                        <div className="col-md d-flex align-self-stretch ftco-animate">
-                            <div className="row d-flex">
-                                <div className="col-md d-flex align-self-stretch ftco-animate">
-
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-yatch" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Thời gian</h3>
-                                                <p>5 ngày 4 đêm</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-around" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Phương tiện di chuyển</h3>
-                                                <p>Máy bay, Xe du lịch</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Điểm tham quan</h3>
-                                                <p>Bangkok, Pattaya, Thai Lan, Bảo tàng Lighting Art, Khao Che Chan, Wat Benchamabophit, Safari World</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Ẩm thực
-                                                </h3>
-                                                <p>Buffet sáng, Theo thực đơn, Đặc sản địa phương</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div className="col-md-7 col-12 right">
+                            <div className="group-services">
+                                <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
+                                    <label>Thời gian</label><p>7 ngày 6 đêm</p>
                                 </div>
-                                <div className="col-md d-flex align-self-stretch ftco-animate">
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Ẩm thực
-                                                </h3>
-                                                <p>Buffet sáng, Theo thực đơn, Đặc sản địa phương</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Ẩm thực
-                                                </h3>
-                                                <p>Buffet sáng, Theo thực đơn, Đặc sản địa phương</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Ẩm thực
-                                                </h3>
-                                                <p>Buffet sáng, Theo thực đơn, Đặc sản địa phương</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 d-flex align-self-stretch ftco-animate">
-                                        <div className="media block-6 services d-block">
-                                            <div className="icon"><span className="flaticon-compass" /></div>
-                                            <div className="media-body">
-                                                <h3 className="heading mb-3">Ẩm thực
-                                                </h3>
-                                                <p>Buffet sáng, Theo thực đơn, Đặc sản địa phương</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className="item">
+                                    <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
+                                    <label>Phương tiện di chuyển</label>
+                                    <p>Máy bay, Xe du lịch</p>
+                                </div>
+                                <div className="item">
+                                    <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
+                                    <label>Điểm tham quan</label><p>Thượng Hải, Hàng Châu, Vô Tích, Tô Châu, Bắc Kinh, Trung Quốc</p>
+                                </div>
+                                <div className="item">
+                                    <img src="/images/icons/utility/am thuc.png" className="icon-img" />
+                                    <label>Ẩm thực</label><p>Buffet sáng</p>
+                                </div>
+                                <div className="item">
+                                    <img src="/images/icons/utility/khach san.png" className="icon-img" />
+                                    <label>Khách sạn</label>
+                                    <p>Khách sạn 4 sao</p></div>
+
+                                <div className="item">
+                                    <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
+                                    <label>Thời gian lý tưởng</label><p>Quanh năm</p>
+                                </div><div className="item">
+                                    <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
+                                    <label>Đối tượng thích hợp</label>
+                                    <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
+                                </div>
+                                <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
+                                    <label>Ưu đãi</label>
+                                    <p>Ưu đãi trực tiếp vào giá tour</p>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </section>
+            </div>
+            </div>
+            </div>
+
             <section className="section-07-map mb-5">
                 <div className="row">
-                    <div className="col-md-5 d-none d-md-block col-12 left">
+                    <div className="col-md-5">
                         <div class="container">
                             <main class="row">
                                 <section class="col">
@@ -216,7 +185,7 @@ const DetailTour = () => {
                             </main>
                         </div>
                     </div>
-                    <div className="col-md-6 d-none d-md-block col-12 left">
+                    <div className="col-md-6">
                         <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                             <div className="excerpt"><span className="line" /><div>
@@ -275,73 +244,73 @@ const DetailTour = () => {
                                     <strong>Nghỉ đêm tại Bangkok.</strong><br />
                                     &nbsp;</div>
                             </div></div></div>
-                            </div>
-                            </div>
-                            </section>
+                    </div>
+                </div>
+            </section>
 
 
             <section className="section-08 mb-5">
                 <div className="container">
-                <div className="row">
-                    <div className="col-md-6 col-12 left">
-                        <h2 className="mb-4">Chi tiết tour</h2>
-                        <div className="tour"><div className="detail-tour">
-                            <h3 className="tt">Thông tin chuyến bay</h3>
-                            <div className="detail-tour-inner">
-                                <div className="date"><span>Ngày đi - </span><b>16/04/2024</b></div>
-                                <div className="time"><h4>11:35</h4><span>Bay thẳng</span><h4>13:10</h4></div>
-                                <div className="from d-flex justify-content-between align-items-center col-12">
-                                    <span className="col-md-4 small text-center">TP. HỒ CHÍ MINH</span>
-                                    <div className="row col-md-4"><img src="https://media.travel.com.vn/ImageAirlines/logo_VietNamAir.jpg" className="flight-logo" alt="prop" /></div>
-                                    <span className="col-md-4 small text-center">SÂN BAY QUỐC TẾ SUVARNABHUMI, BANGKOK, THÁI LAN</span></div>
-                                <div className="from d-flex justify-content-between align-items-center col-12"><div className="col-md-4 small text-center">SGN</div>
-                                    <div className="row col-md-4" /><div className="col-md-4 small text-center">BKK</div></div><div className="p-line">
-                                    <span><img src="/images/icons/go.png" alt="prop" /></span>
-                                    <span><img src="/images/icons/airport.png" alt="prop" /></span>
-                                    <span><img src="/images/icons/to.png" alt="prop" /></span></div>
-                                <div className="cb">Ký hiệu chuyến bay<p> VN605</p></div></div>
-                            <div className="detail-tour-inner comeback ">
-                                <div className="date"><span>Ngày về - </span><b>20/04/2024</b></div>
-                                <div className="time"><h4>14:25</h4><span>Bay thẳng</span><h4>16:10</h4></div>
-                                <div className="from d-flex justify-content-between align-items-center col-12">
-                                    <span className="col-md-4 small text-center">SÂN BAY QUỐC TẾ SUVARNABHUMI, BANGKOK, THÁI LAN</span>
-                                    <div className="row col-md-4"><img src="https://media.travel.com.vn/ImageAirlines/logo_VietNamAir.jpg" className="flight-logo" alt="prop" /></div>
-                                    <span className="col-md-4 small text-center">TP. HỒ CHÍ MINH</span></div>
-                                <div className="from d-flex justify-content-between align-items-center col-12">
-                                    <div className="col-md-4 small text-center">BKK</div><div className="row col-md-4" />
-                                    <div className="col-md-4 small text-center">SGN</div></div><div className="p-line">
-                                    <span><img src="/images/icons/go.png" alt="prop" /></span><span><img src="/images/icons/airport.png" alt="prop" /></span>
-                                    <span><img src="/images/icons/to.png" alt="prop" /></span></div><div className="cb">Ký hiệu chuyến bay<p> VN604</p></div></div></div>
-                            <div className="more-info more-info-1 mt-5"><h3 className="tt">Thông tin tập trung</h3>
-                                <div className="block"><span>Ngày giờ tập trung</span>
-                                    <div className="info">08:35<p>16/04/2024</p>
+                    <div className="row">
+                        {/* <div className="col-md-6 col-12 left">
+                            <h2 className="mb-4">Chi tiết tour</h2>
+                            <div className="tour"><div className="detail-tour">
+                                <h3 className="tt">Thông tin chuyến bay</h3>
+                                <div className="detail-tour-inner">
+                                    <div className="date"><span>Ngày đi - </span><b>16/04/2024</b></div>
+                                    <div className="time"><h4>11:35</h4><span>Bay thẳng</span><h4>13:10</h4></div>
+                                    <div className="from d-flex justify-content-between align-items-center col-12">
+                                        <span className="col-md-4 small text-center">TP. HỒ CHÍ MINH</span>
+                                        <div className="row col-md-4"><img src="https://media.travel.com.vn/ImageAirlines/logo_VietNamAir.jpg" className="flight-logo" alt="prop" /></div>
+                                        <span className="col-md-4 small text-center">SÂN BAY QUỐC TẾ SUVARNABHUMI, BANGKOK, THÁI LAN</span></div>
+                                    <div className="from d-flex justify-content-between align-items-center col-12"><div className="col-md-4 small text-center">SGN</div>
+                                        <div className="row col-md-4" /><div className="col-md-4 small text-center">BKK</div></div><div className="p-line">
+                                        <span><img src="/images/icons/go.png" alt="prop" /></span>
+                                        <span><img src="/images/icons/airport.png" alt="prop" /></span>
+                                        <span><img src="/images/icons/to.png" alt="prop" /></span></div>
+                                    <div className="cb">Ký hiệu chuyến bay<p> VN605</p></div></div>
+                                <div className="detail-tour-inner comeback ">
+                                    <div className="date"><span>Ngày về - </span><b>20/04/2024</b></div>
+                                    <div className="time"><h4>14:25</h4><span>Bay thẳng</span><h4>16:10</h4></div>
+                                    <div className="from d-flex justify-content-between align-items-center col-12">
+                                        <span className="col-md-4 small text-center">SÂN BAY QUỐC TẾ SUVARNABHUMI, BANGKOK, THÁI LAN</span>
+                                        <div className="row col-md-4"><img src="https://media.travel.com.vn/ImageAirlines/logo_VietNamAir.jpg" className="flight-logo" alt="prop" /></div>
+                                        <span className="col-md-4 small text-center">TP. HỒ CHÍ MINH</span></div>
+                                    <div className="from d-flex justify-content-between align-items-center col-12">
+                                        <div className="col-md-4 small text-center">BKK</div><div className="row col-md-4" />
+                                        <div className="col-md-4 small text-center">SGN</div></div><div className="p-line">
+                                        <span><img src="/images/icons/go.png" alt="prop" /></span><span><img src="/images/icons/airport.png" alt="prop" /></span>
+                                        <span><img src="/images/icons/to.png" alt="prop" /></span></div><div className="cb">Ký hiệu chuyến bay<p> VN604</p></div></div></div>
+                                <div className="more-info more-info-1 mt-5"><h3 className="tt">Thông tin tập trung</h3>
+                                    <div className="block"><span>Ngày giờ tập trung</span>
+                                        <div className="info">08:35<p>16/04/2024</p>
+                                        </div>
+                                    </div>
+                                    <div className="block"><span>Nơi tập trung</span>
+                                        <div className="info">Sân bay</div>
                                     </div>
                                 </div>
-                                <div className="block"><span>Nơi tập trung</span>
-                                    <div className="info">Sân bay</div>
+                            </div>
+                        </div> */}
+                        <div className="col-md-6 col-12 right">
+                            <h2>Giá tour &amp; phụ thu phòng đơn</h2>
+                            <div className="table-price"><table>
+                                <tbody>
+                                    <tr><th className="l1">Loại khách</th><th className="l2">Giá tour</th><th className="l3">Land tour</th></tr><tr><td>Người lớn (Từ 12 tuổi trở lên)</td><td className="t-price">8.490.000&nbsp;₫</td><td className="l-price">5.990.000&nbsp;₫</td></tr><tr><td>Trẻ em (Từ 2 tuổi đến dưới 12 tuổi)</td><td className="t-price">7.492.500&nbsp;₫</td><td className="l-price">4.493.000&nbsp;₫</td></tr><tr><td>Em bé (Dưới 2 tuổi)</td><td className="t-price">2.997.000&nbsp;₫</td><td className="l-price">1.797.000&nbsp;₫</td></tr><tr className="total"><td>Phụ thu phòng đơn</td><td className="t-price">3.500.000&nbsp;₫</td><td className="l-price">3.500.000&nbsp;₫</td></tr>
+                                </tbody></table></div>
+                            {/* <h2 className="tt mt-3">Thông tin hướng dẫn viên</h2>
+                            <div className="table-price"><div className="more-info more-info-2">
+                                <div className="block"><span>HDV dẫn đoàn</span><div className="info">
+                                    <h3>TRẦN DŨNG CẢM</h3><p>190 Pasteur, Phường Võ Thị Sáu, Quận 3, TP.HCM, Viet Nam</p>
+                                </div>
+                                </div>
+                                <div className="block"><span>HDV tiễn</span><div>Đang cập nhật</div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-12 right">
-                        <h2>Giá tour &amp; phụ thu phòng đơn</h2>
-                        <div className="table-price"><table>
-                            <tbody>
-                                <tr><th className="l1">Loại khách</th><th className="l2">Giá tour</th><th className="l3">Land tour</th></tr><tr><td>Người lớn (Từ 12 tuổi trở lên)</td><td className="t-price">8.490.000&nbsp;₫</td><td className="l-price">5.990.000&nbsp;₫</td></tr><tr><td>Trẻ em (Từ 2 tuổi đến dưới 12 tuổi)</td><td className="t-price">7.492.500&nbsp;₫</td><td className="l-price">4.493.000&nbsp;₫</td></tr><tr><td>Em bé (Dưới 2 tuổi)</td><td className="t-price">2.997.000&nbsp;₫</td><td className="l-price">1.797.000&nbsp;₫</td></tr><tr className="total"><td>Phụ thu phòng đơn</td><td className="t-price">3.500.000&nbsp;₫</td><td className="l-price">3.500.000&nbsp;₫</td></tr>
-                            </tbody></table></div>
-                        <h2 className="tt mt-3">Thông tin hướng dẫn viên</h2>
-                        <div className="table-price"><div className="more-info more-info-2">
-                            <div className="block"><span>HDV dẫn đoàn</span><div className="info">
-                                <h3>TRẦN DŨNG CẢM</h3><p>190 Pasteur, Phường Võ Thị Sáu, Quận 3, TP.HCM, Viet Nam</p>
-                            </div>
-                            </div>
-                            <div className="block"><span>HDV tiễn</span><div>Đang cập nhật</div>
-                            </div>
-                        </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-            </div>
             </section>
         </div>
     );

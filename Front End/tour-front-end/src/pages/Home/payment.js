@@ -16,7 +16,7 @@ const InfomationTour = () => {
             </div>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-8 col-12 left"><h2>Thanh toán</h2><div className="payments-warp"><h3>Các hình thức thanh toán</h3>
+                    <div className="col-md-8"><h2>Thanh toán</h2><div className="payments-warp"><h3>Các hình thức thanh toán</h3>
                         <div className="container">
                             <div className="title">
                                 <h4>Select a <span style={{ color: '#6064b6' }}>Payment</span> method</h4>
@@ -134,7 +134,7 @@ const InfomationTour = () => {
 
                         </div>
                     </div>
-                    <div className="col-md-4 col-12 right">
+                    <div className="col-md-4">
                         
                         <div className="group-checkout">
                             <h3>Tóm tắt chuyến đi</h3>

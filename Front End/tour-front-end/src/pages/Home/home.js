@@ -198,9 +198,10 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
+                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">New Orleans, LA</a></h3>
+                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
                                                     <p className="rate">
                                                         <i className="icon-star" />
                                                         <i className="icon-star" />
@@ -211,13 +212,17 @@ const Home = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">$40<br /><small>/night</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h4>Mã Tour</h4>
+                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+
+                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
+                                            <h4>Giá : 7.490.000</h4>
                                             <hr />
                                             <p className="bottom-area d-flex">
-                                                <span><i className="icon-map-o" /> Miami, Fl</span>
+                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                 <span className="ml-auto"><a href="#">Book Now</a></span>
                                             </p>
                                         </div>
@@ -231,9 +236,10 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
+                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">New Orleans, LA</a></h3>
+                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
                                                     <p className="rate">
                                                         <i className="icon-star" />
                                                         <i className="icon-star" />
@@ -244,13 +250,17 @@ const Home = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">$40<br /><small>/night</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h4>Mã Tour</h4>
+                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+
+                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
+                                            <h4>Giá : 7.490.000</h4>
                                             <hr />
                                             <p className="bottom-area d-flex">
-                                                <span><i className="icon-map-o" /> Miami, Fl</span>
+                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                 <span className="ml-auto"><a href="#">Book Now</a></span>
                                             </p>
                                         </div>
@@ -264,9 +274,10 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
+                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">New Orleans, LA</a></h3>
+                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
                                                     <p className="rate">
                                                         <i className="icon-star" />
                                                         <i className="icon-star" />
@@ -277,13 +288,17 @@ const Home = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">$40<br /><small>/night</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h4>Mã Tour</h4>
+                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+
+                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
+                                            <h4>Giá : 7.490.000</h4>
                                             <hr />
                                             <p className="bottom-area d-flex">
-                                                <span><i className="icon-map-o" /> Miami, Fl</span>
+                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                 <span className="ml-auto"><a href="#">Book Now</a></span>
                                             </p>
                                         </div>
@@ -297,9 +312,10 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
+                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">New Orleans, LA</a></h3>
+                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
                                                     <p className="rate">
                                                         <i className="icon-star" />
                                                         <i className="icon-star" />
@@ -310,13 +326,17 @@ const Home = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">$40<br /><small>/night</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h4>Mã Tour</h4>
+                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+
+                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
+                                            <h4>Giá : 7.490.000</h4>
                                             <hr />
                                             <p className="bottom-area d-flex">
-                                                <span><i className="icon-map-o" /> Miami, Fl</span>
+                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                 <span className="ml-auto"><a href="#">Book Now</a></span>
                                             </p>
                                         </div>
@@ -330,9 +350,10 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
+                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">New Orleans, LA</a></h3>
+                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
                                                     <p className="rate">
                                                         <i className="icon-star" />
                                                         <i className="icon-star" />
@@ -343,13 +364,17 @@ const Home = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">$40<br /><small>/night</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <p>Far far away, behind the word mountains, far from the countries</p>
+                                            <h4>Mã Tour</h4>
+                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+
+                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
+                                            <h4>Giá : 7.490.000</h4>
                                             <hr />
                                             <p className="bottom-area d-flex">
-                                                <span><i className="icon-map-o" /> Miami, Fl</span>
+                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                 <span className="ml-auto"><a href="#">Book Now</a></span>
                                             </p>
                                         </div>
