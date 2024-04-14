@@ -1,30 +1,89 @@
 import React from "react";
 
-import '../Home/payment.css'
-
-
-
 const InfomationTour = () => {
     return (
-        <div>
-            <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
-                <div className="overlay" />
+        <>
+            <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
-                    <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-                        <div className="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
-                            <h1 className="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Discover <br />A new Place</h1>
-                            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great places to stay, eat, shop, or visit from local experts</p>
+                    <div className="row justify-content-center">
+                        <div className="col-md-10">
+                            {/* <div className="row">
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={100000}>0</strong>
+                                            <span>Happy Customers</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={40000}>0</strong>
+                                            <span>Destination Places</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={87000}>0</strong>
+                                            <span>Hotels</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={56400}>0</strong>
+                                            <span>Restaurant</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             <section className="checkout-main order-tour animate__fadeIn animate__animated">
                 <div className="container">
                     <div className="row">
-
-                    <div className="col-12 top"><div className="product"><div className="product-image"><div className="image"><img src="https://media.travel.com.vn/Tour/tfd__230519050441_982453.jpg" className="img-fluid" alt="image" /></div></div><div className="product-content"><div className="s-rate"><span>9</span><div className="s-comment"><h4>Tuyệt vời</h4><span>1 quan tâm</span></div></div><div className="ticket-no-wrap d-md-none"><div className="ticket-no"><i className="icon icon--ticket" />NNSGN322-045-010524VN-D</div></div><p className="title" id="title">Siêu Sale 🔥 Trung Quốc: Thượng Hải - Hàng Châu - Vô Tích - Tô Châu - Bắc Kinh - Chinh phục Vạn Lý Trường Thành | Lễ 30/4 - Giá đã giảm 2.000.000vnđ/ khách </p><div className="entry"><div className="entry-inner"><span>Mã Tour <b>NNSGN322-045-010524VN-D </b></span><span>Khởi hành<b>01/05/2024</b></span><span>Thời gian <b>7 ngày</b></span><span>Nơi khởi hành <b>TP. Hồ Chí Minh</b></span><span>Số chỗ còn nhận <b>9</b></span><span>Dịch vụ tùy chọn <b>Bay Vietnam Airlines  - Khách sạn 4 sao </b></span></div></div></div><div className="entry-mb d-md-none"><div className="entry-inner"><span>Khởi hành <b>01/05/2024TP. Hồ Chí Minh</b></span><span>Số chỗ còn nhận <b>9</b></span><span>Số ngày <b>7 ngày</b></span></div></div></div></div>
-
-                        <div className="col-md-8 col-12 left">
+                        <div className="col-12 top">
+                            <div className="product">
+                                <div className="product-image">
+                                    <div className="image">
+                                        <img src="https://media.travel.com.vn/Tour/tfd__230519050441_982453.jpg" className="img-fluid" alt="image" />
+                                    </div>
+                                </div>
+                                <div className="product-content">
+                                    <div className="s-rate"><span>9</span>
+                                        <div className="s-comment">
+                                            <h4>Tuyệt vời</h4>
+                                            <span>1 quan tâm</span>
+                                        </div>
+                                    </div>
+                                    <div className="ticket-no-wrap d-md-none">
+                                        <div className="ticket-no"><i className="icon icon--ticket" />NNSGN322-045-010524VN-D</div>
+                                    </div>
+                                    <p className="title" id="title">Siêu Sale 🔥 Trung Quốc: Thượng Hải - Hàng Châu - Vô Tích - Tô Châu - Bắc Kinh - Chinh phục Vạn Lý Trường Thành | Lễ 30/4 - Giá đã giảm 2.000.000vnđ/ khách </p>
+                                    <div className="entry"><div className="entry-inner">
+                                        <span>Mã Tour <b>NNSGN322-045-010524VN-D </b>
+                                        </span>
+                                        <span>Khởi hành<b>01/05/2024</b>
+                                        </span><span>Thời gian <b>7 ngày</b></span>
+                                        <span>Nơi khởi hành <b>TP. Hồ Chí Minh</b></span><span>Số chỗ còn nhận <b>9</b></span><span>Dịch vụ tùy chọn <b>Bay Vietnam Airlines  - Khách sạn 4 sao </b></span></div>
+                                    </div>
+                                </div>
+                                <div className="entry-mb d-md-none">
+                                    <div className="entry-inner">
+                                        <span>Khởi hành <b>01/05/2024TP. Hồ Chí Minh</b></span>
+                                        <span>Số chỗ còn nhận <b>9</b></span>
+                                        <span>Số ngày <b>7 ngày</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-8">
                             <h2 className="d-none d-lg-block">Tổng quan về chuyến đi</h2>
                             <div className="customer-notice">
                                 <div className="customer-notice-left">
@@ -122,7 +181,7 @@ const InfomationTour = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-4 col-12 right">
+                        <div className="col-md-4">
                             <div className="group-checkout">
                                 <h3>Tóm tắt chuyến đi</h3>
                                 <span>Dịch vụ tùy chọn <b>Bay Vietnam Airlines, khách sạn 4 sao</b>
@@ -195,7 +254,7 @@ const InfomationTour = () => {
                     </div>
                 </div>
             </section>
-        </div>
+        </>
     );
 }
 export default InfomationTour;

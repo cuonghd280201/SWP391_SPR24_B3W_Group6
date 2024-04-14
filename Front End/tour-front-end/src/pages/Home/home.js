@@ -46,7 +46,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="container">
+            {/* <div className="container">
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={1}
@@ -68,7 +68,74 @@ const Home = () => {
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>
+            </div> */}
+
+            <section className="ftco-section justify-content-end ftco-search">
+                <div className="container-wrap ml-auto">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="nav nav-pills justify-content-center text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            </div>
+                        </div>
+                        <div className="col-md-24">
+                            <div className="tab-content p-4 px-5" id="v-pills-tabContent">
+                                <div className="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                                    <form action="#" className="search-destination">
+                                        <div className="row">
+                                           
+                                            
+                                            <div className="col-md align-items-end">
+                                                <div className="form-group">
+                                                    <label htmlFor="#">Điểm đi</label>
+                                                    <div className="form-field">
+                                                        <div className="icon"><span className="icon-map-marker" /></div>
+                                                        <input type="text" className="form-control checkin_date" placeholder="Check In" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md align-items-end">
+                                                <div className="form-group">
+                                                    <label htmlFor="#">Điểm đến</label>
+                                                    <div className="form-field">
+                                                        <div className="icon"><span className="icon-map-marker" /></div>
+                                                        <input type="text" className="form-control checkout_date" placeholder="From" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md align-items-end">
+                                                <div className="form-group">
+                                                    <label htmlFor="#">Ngày đi</label>
+                                                    <div className="form-field">
+                                                        <div className="select-wrap">
+                                                            <div className="icon"><span className="ion-ios-arrow-down" /></div>
+                                                            <select name id className="form-control">
+                                                                <option value>1</option>
+                                                                <option value>2</option>
+                                                                <option value>3</option>
+                                                                <option value>4</option>
+                                                                <option value>5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md align-self-end">
+                                                <div className="form-group">
+                                                    <div className="form-field">
+                                                        <input type="submit" defaultValue="Search" className="form-control btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section className="ftco-section">
                 <div className="container-fluid">
                     <div className="row">
@@ -400,7 +467,7 @@ const Home = () => {
                     </div>
                 </div>
             </section> {/* .section */}
-        
+
 
             <section className="ftco-section">
                 <div className="container">

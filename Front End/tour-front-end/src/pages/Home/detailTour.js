@@ -1,26 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import '../Home/Timeline.css'
 
 import '../Home/detailTour.css'
+
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 
 
 
 const DetailTour = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
     return (
         <div>
-            <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
-                <div className="overlay" />
+
+            <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
-                    <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
-                        <div className="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
-                            <h1 className="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Discover <br />A new Place</h1>
-                            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great places to stay, eat, shop, or visit from local experts</p>
+                    <div className="row justify-content-center">
+                        <div className="col-md-10">
+                            {/* <div className="row">
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={100000}>0</strong>
+                                            <span>Happy Customers</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={40000}>0</strong>
+                                            <span>Destination Places</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={87000}>0</strong>
+                                            <span>Hotels</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={56400}>0</strong>
+                                            <span>Restaurant</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
                     <section className="section-01-title section-01"><div className="container-xl">
@@ -55,10 +93,42 @@ const DetailTour = () => {
                                             <span className="price">25.990.000&nbsp;₫</span>/ khách</p>
                                     </div>
                                 </div>
-                                <div className="group-add-cart"><a title="Đặt ngay" href="#" className="add-to-cart">
-                                    <i className="fal fa-shopping-cart">
-                                    </i>Đặt ngay</a><a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
+                                <div className="group-add-cart">
+                                    <a href="#" title="Đặt ngay" className="add-to-cart" onClick={toggle}>
+                                        <i className="fal fa-shopping-cart"></i> Đặt ngay
+                                    </a>
+                                    <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
                             </div>
+                            <Modal isOpen={isOpen} toggle={toggle} centered>
+                                <ModalHeader toggle={toggle}>Nhập thông tin</ModalHeader>
+                                <ModalBody>
+                                    <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
+                                        <div className="title-section mb-3 title-hotel-flight-infor">Số lượng hành khách</div>
+                                        <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
+
+                                            <div className="row">
+                                                <div className="col-lg-3 col-12">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Người lớn (trên 12 tuổi) <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập số lượng" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-3 col-12">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Trẻ em (dưới 12 tuổi) <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập số lượng" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="secondary" onClick={toggle}>Gửi</Button>
+                                    <Button color="secondary" onClick={toggle}>Đóng</Button>
+                                </ModalFooter>
+                            </Modal>
                         </div>
                     </div>
                     </section>
@@ -92,67 +162,67 @@ const DetailTour = () => {
 
             <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
-            <div className="overview active"><section className="section-03 mb-5">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-5 col-12 left">
-                            <div className="box-order">
-                                <div className="time"><p>Khởi hành <b> 01/05/2024 - Giờ đi: 07:05</b>
-                                </p><p>Tập trung <b>04:05 ngày 01/05/2024</b>
-                                    </p><p>Thời gian <b>7 ngày</b>
-                                    </p><p>Nơi khởi hành <b>TP. Hồ Chí Minh</b>
-                                    </p><p>Số chỗ còn nhận <b>9</b></p></div>
-                                <div className="calendar">
-                                    <div className="calendar-box">
-                                        <i className="icon icon--calendar" />
-                                        <label><a href="#"> Ngày khác</a></label>
+                    <div className="overview active"><section className="section-03 mb-5">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-5 col-12 left">
+                                    <div className="box-order">
+                                        <div className="time"><p>Khởi hành <b> 01/05/2024 - Giờ đi: 07:05</b>
+                                        </p><p>Tập trung <b>04:05 ngày 01/05/2024</b>
+                                            </p><p>Thời gian <b>7 ngày</b>
+                                            </p><p>Nơi khởi hành <b>TP. Hồ Chí Minh</b>
+                                            </p><p>Số chỗ còn nhận <b>9</b></p></div>
+                                        <div className="calendar">
+                                            <div className="calendar-box">
+                                                <i className="icon icon--calendar" />
+                                                <label><a href="#"> Ngày khác</a></label>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
+                                <div className="col-md-7 col-12 right">
+                                    <div className="group-services">
+                                        <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
+                                            <label>Thời gian</label><p>7 ngày 6 đêm</p>
+                                        </div>
+                                        <div className="item">
+                                            <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
+                                            <label>Phương tiện di chuyển</label>
+                                            <p>Máy bay, Xe du lịch</p>
+                                        </div>
+                                        <div className="item">
+                                            <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
+                                            <label>Điểm tham quan</label><p>Thượng Hải, Hàng Châu, Vô Tích, Tô Châu, Bắc Kinh, Trung Quốc</p>
+                                        </div>
+                                        <div className="item">
+                                            <img src="/images/icons/utility/am thuc.png" className="icon-img" />
+                                            <label>Ẩm thực</label><p>Buffet sáng</p>
+                                        </div>
+                                        <div className="item">
+                                            <img src="/images/icons/utility/khach san.png" className="icon-img" />
+                                            <label>Khách sạn</label>
+                                            <p>Khách sạn 4 sao</p></div>
 
+                                        <div className="item">
+                                            <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
+                                            <label>Thời gian lý tưởng</label><p>Quanh năm</p>
+                                        </div><div className="item">
+                                            <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
+                                            <label>Đối tượng thích hợp</label>
+                                            <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
+                                        </div>
+                                        <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
+                                            <label>Ưu đãi</label>
+                                            <p>Ưu đãi trực tiếp vào giá tour</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-md-7 col-12 right">
-                            <div className="group-services">
-                                <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
-                                    <label>Thời gian</label><p>7 ngày 6 đêm</p>
-                                </div>
-                                <div className="item">
-                                    <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
-                                    <label>Phương tiện di chuyển</label>
-                                    <p>Máy bay, Xe du lịch</p>
-                                </div>
-                                <div className="item">
-                                    <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
-                                    <label>Điểm tham quan</label><p>Thượng Hải, Hàng Châu, Vô Tích, Tô Châu, Bắc Kinh, Trung Quốc</p>
-                                </div>
-                                <div className="item">
-                                    <img src="/images/icons/utility/am thuc.png" className="icon-img" />
-                                    <label>Ẩm thực</label><p>Buffet sáng</p>
-                                </div>
-                                <div className="item">
-                                    <img src="/images/icons/utility/khach san.png" className="icon-img" />
-                                    <label>Khách sạn</label>
-                                    <p>Khách sạn 4 sao</p></div>
-
-                                <div className="item">
-                                    <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
-                                    <label>Thời gian lý tưởng</label><p>Quanh năm</p>
-                                </div><div className="item">
-                                    <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
-                                    <label>Đối tượng thích hợp</label>
-                                    <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
-                                </div>
-                                <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
-                                    <label>Ưu đãi</label>
-                                    <p>Ưu đãi trực tiếp vào giá tour</p>
-                                </div>
-                            </div>
-                        </div>
+                    </section>
                     </div>
                 </div>
-            </section>
-            </div>
-            </div>
             </div>
 
             <section className="section-07-map mb-5">
