@@ -11,68 +11,60 @@ import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from "react-icons
 
 
 
-SwiperCore.use([Navigation]);
-
-const TourSlide = ({ backgroundImage }) => {
-    return (
-        <div className="hero-wrap js-fullheight" style={{ backgroundImage: `url(${backgroundImage})`, height: '100vh' }}>
-            <div className="overlay" />
-            <div className="container">
-                <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                    <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                        <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
-                        <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Tours</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const Home = () => {
+const FindTour = () => {
 
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
 
     return (
         <>
-            <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
-                <div className="overlay" />
+
+            <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
-                    <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                        <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                            <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
-                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Tours</h1>
+                    <div className="row justify-content-center">
+                        <div className="col-md-10">
+                            {/* <div className="row">
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={100000}>0</strong>
+                                            <span>Happy Customers</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={40000}>0</strong>
+                                            <span>Destination Places</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={87000}>0</strong>
+                                            <span>Hotels</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                                    <div className="block-18 text-center">
+                                        <div className="text">
+                                            <strong className="number" data-number={56400}>0</strong>
+                                            <span>Restaurant</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container">
-                <Swiper
-                    spaceBetween={50}
-                    slidesPerView={1}
-                    navigation={{
-                        prevEl: ".button-prev-slide",
-                        nextEl: ".button-next-slide",
-                    }}
-                    style={{ height: '100vh' }}
-                >
-                    {tourImages.map((image, index) => (
-                        <SwiperSlide key={index} style={{ position: 'relative' }}>
-                            <TourSlide backgroundImage={image} />
-                            <div className="swiper-button-prev button-prev-slide" style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)', backgroundColor: 'black', padding: '10px' }}>
-                                <HiOutlineArrowNarrowLeft style={{ color: 'white' }} />
-                            </div>
-                            <div className="swiper-button-next button-next-slide" style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)', backgroundColor: 'black', padding: '10px' }}>
-                                <HiOutlineArrowNarrowRight style={{ color: 'white' }} />
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
+            </section>
+
             <section className="ftco-section">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-3 sidebar order-md-last ftco-animate">
+                        <div className="col-lg-3 sidebar  ftco-animate">
                             <div className="sidebar-wrap ftco-animate">
                                 <h3 className="heading mb-4">Find City</h3>
                                 <form action="#">
@@ -152,6 +144,7 @@ const Home = () => {
                         </div>{/* END*/}
                         <div className="col-lg-9">
                             <div className="row">
+                                <h1 class="py-4 h2 fw-bold heading text-center">Du lịch khởi hành từ TP. HỒ CHÍ MINH</h1>
                                 <div className="col-sm col-md-6 col-lg-4 ftco-animate">
                                     <div className="destination">
                                         <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-1.jpg)' }}>
@@ -198,7 +191,7 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
+                                            <p>14/04/2024 - 5N4Đ - Giờ đi: 09:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
                                                     <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
@@ -236,7 +229,7 @@ const Home = () => {
                                             </div>
                                         </a>
                                         <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
+                                            <p>18/04/2024 - 5N4Đ - Giờ đi: 12:50</p>
                                             <div className="d-flex">
                                                 <div className="one">
                                                     <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
@@ -400,187 +393,6 @@ const Home = () => {
                     </div>
                 </div>
             </section> {/* .section */}
-        
-
-            <section className="ftco-section">
-                <div className="container">
-                    <div className="row justify-content-center mb-5 pb-3">
-                        <div className="col-md-7 heading-section text-center ftco-animate">
-                            <h2 className="mb-4"><strong>Popular</strong> Hotels</h2>
-                        </div>
-                    </div>
-                </div>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-sm col-md-6 col-lg ftco-animate">
-                            <div className="destination">
-                                <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-1.jpg)' }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                        <span className="icon-link" />
-                                    </div>
-                                </a>
-                                <div className="text p-3">
-                                    <div className="d-flex">
-                                        <div className="one">
-                                            <h3><a href="#">New Orleans, Hotel</a></h3>
-                                            <p className="rate">
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star-o" />
-                                                <span>8 Rating</span>
-                                            </p>
-                                        </div>
-                                        <div className="two">
-                                            <span className="price per-price">$40<br /><small>/night</small></span>
-                                        </div>
-                                    </div>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                    <hr />
-                                    <p className="bottom-area d-flex">
-                                        <span><i className="icon-map-o" /> Miami, Fl</span>
-                                        <span className="ml-auto"><a href="#">Book Now</a></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm col-md-6 col-lg ftco-animate">
-                            <div className="destination d-md-flex flex-column-reverse">
-                                <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-2.jpg)' }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                        <span className="icon-link" />
-                                    </div>
-                                </a>
-                                <div className="text p-3">
-                                    <div className="d-flex">
-                                        <div className="one">
-                                            <h3><a href="#">New Orleans, Hotel</a></h3>
-                                            <p className="rate">
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star-o" />
-                                                <span>8 Rating</span>
-                                            </p>
-                                        </div>
-                                        <div className="two">
-                                            <span className="price per-price">$40<br /><small>/night</small></span>
-                                        </div>
-                                    </div>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                    <hr />
-                                    <p className="bottom-area d-flex">
-                                        <span><i className="icon-map-o" /> Miami, Fl</span>
-                                        <span className="ml-auto"><a href="#">Book Now</a></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm col-md-6 col-lg ftco-animate">
-                            <div className="destination">
-                                <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-3.jpg)' }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                        <span className="icon-link" />
-                                    </div>
-                                </a>
-                                <div className="text p-3">
-                                    <div className="d-flex">
-                                        <div className="one">
-                                            <h3><a href="#">New Orleans, Hotel</a></h3>
-                                            <p className="rate">
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star-o" />
-                                                <span>8 Rating</span>
-                                            </p>
-                                        </div>
-                                        <div className="two">
-                                            <span className="price per-price">$40<br /><small>/night</small></span>
-                                        </div>
-                                    </div>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                    <hr />
-                                    <p className="bottom-area d-flex">
-                                        <span><i className="icon-map-o" /> Miami, Fl</span>
-                                        <span className="ml-auto"><a href="#">Book Now</a></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm col-md-6 col-lg ftco-animate">
-                            <div className="destination d-md-flex flex-column-reverse">
-                                <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-4.jpg)' }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                        <span className="icon-link" />
-                                    </div>
-                                </a>
-                                <div className="text p-3">
-                                    <div className="d-flex">
-                                        <div className="one">
-                                            <h3><a href="#">New Orleans, Hotel</a></h3>
-                                            <p className="rate">
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star-o" />
-                                                <span>8 Rating</span>
-                                            </p>
-                                        </div>
-                                        <div className="two">
-                                            <span className="price per-price">$40<br /><small>/night</small></span>
-                                        </div>
-                                    </div>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                    <hr />
-                                    <p className="bottom-area d-flex">
-                                        <span><i className="icon-map-o" /> Miami, Fl</span>
-                                        <span className="ml-auto"><a href="#">Book Now</a></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-sm col-md-6 col-lg ftco-animate">
-                            <div className="destination">
-                                <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-5.jpg)' }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                        <span className="icon-link" />
-                                    </div>
-                                </a>
-                                <div className="text p-3">
-                                    <div className="d-flex">
-                                        <div className="one">
-                                            <h3><a href="#">New Orleans, Hotel</a></h3>
-                                            <p className="rate">
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star" />
-                                                <i className="icon-star-o" />
-                                                <span>8 Rating</span>
-                                            </p>
-                                        </div>
-                                        <div className="two">
-                                            <span className="price per-price">$40<br /><small>/night</small></span>
-                                        </div>
-                                    </div>
-                                    <p>Far far away, behind the word mountains, far from the countries</p>
-                                    <hr />
-                                    <p className="bottom-area d-flex">
-                                        <span><i className="icon-map-o" /> Miami, Fl</span>
-                                        <span className="ml-auto"><a href="#">Book Now</a></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <section className="ftco-section-parallax">
                 <div className="parallax-img d-flex align-items-center">
                     <div className="container">
@@ -603,10 +415,8 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
-
         </>
     );
 };
 
-export default Home;
+export default FindTour;
