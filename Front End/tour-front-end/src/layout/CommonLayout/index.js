@@ -2,7 +2,7 @@
 import React, { Suspense, useState, useEffect } from "react";
 //Importing Section
 // const TopBar = import("../CommonLayout/TopBar");
-import NavBar from "../CommonLayout/Navbar";
+import CustomNavbar from "./CustomNavbar";
 import Footer from "../CommonLayout/Footer";
 
 const Layout = (props) => {
@@ -12,7 +12,7 @@ const Layout = (props) => {
     <React.Fragment>
       <Suspense>
         <div>
-          <NavBar />
+          <CustomNavbar />
           <div className="main-content">
             <div className="page-content">{props.children}</div>
             <Footer />

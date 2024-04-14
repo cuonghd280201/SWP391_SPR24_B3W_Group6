@@ -157,7 +157,7 @@ label {
 }
 
 .flight-hotel-detail .section-01-title .left .title {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 26px;
     font-weight: 700;
     line-height: 30px;
@@ -166,7 +166,7 @@ label {
 }
 
 .tour-detail .section-01 .left .title {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 26px;
     font-weight: 700;
     line-height: 30px;
@@ -174,7 +174,7 @@ label {
     max-width: 100%;
 }
 .flight-hotel-detail .section-01 .left .title {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 26px;
     font-weight: 700;
     line-height: 32px;
@@ -237,7 +237,7 @@ h1 {
     border-bottom-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     display: flex;
     font-size: 25px;
     font-weight: 700;
@@ -285,18 +285,18 @@ h1 {
 }
 
 .flight-hotel-detail .section-01-title .left .short-rating .s-rate .s-comment p {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     margin: 0;
 }
 
 .tour-detail .section-01 .left .short-rating .s-rate .s-comment p {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     margin: 0;
 }
 .flight-hotel-detail .section-01 .left .short-rating .s-rate .s-comment p {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     margin: 0;
 }
@@ -396,18 +396,18 @@ p {
 }
 
 .flight-hotel-detail .section-01-title .right .group-price .or-price {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     line-height: 16px;
 }
 
 .tour-detail .section-01 .right .group-price .or-price {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     line-height: 16px;
 }
 .flight-hotel-detail .section-01 .right .group-price .or-price {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     font-size: 13px;
     line-height: 16px;
 }
@@ -470,7 +470,7 @@ p {
 
 .tour-detail .section-01 .right .group-price .sale-price .sale {
     align-items: center;
-    background: #e01600;
+    background: rgb(253, 196, 50);
     border-radius: 2px;
     color: #fff;
     display: flex;
@@ -486,7 +486,7 @@ p {
 
 .flight-hotel-detail .section-01 .right .group-price .sale-price .sale {
     align-items: center;
-    background: #e01600;
+    background: rgb(253, 196, 50);
     border-radius: 2px;
     color: #fff;
     display: flex;
@@ -514,7 +514,7 @@ p {
 }
 
 .flight-hotel-detail .section-01-title .right .group-price .sale-price .price {
-    color: #e01600;
+    color: rgb(253, 196, 50);
     font-size: 22px;
     font-weight: 700;
     line-height: 28px;
@@ -522,14 +522,14 @@ p {
 }
 
 .tour-detail .section-01 .right .group-price .sale-price .price {
-    color: #e01600;
+    color: rgb(253, 196, 50);
     font-size: 22px;
     font-weight: 700;
     line-height: 28px;
     margin: 0;
 }
 .flight-hotel-detail .section-01 .right .group-price .sale-price .price {
-    color: #e01600;
+    color: rgb(253, 196, 50);
     font-size: 22px;
     font-weight: 700;
     line-height: 28px;
@@ -555,7 +555,7 @@ p {
 
 .flight-hotel-detail .section-01-title .right .group-add-cart .add-to-cart {
     align-items: center;
-    background: linear-gradient(64.4deg, #e01600 21.33%, #fe2214 67.61%);
+    background: linear-gradient(64.4deg, rgb(253, 196, 50) 21.33%, rgb(253, 196, 50) 67.61%);
     border-radius: 5px;
     color: #fff;
     display: flex;
@@ -568,7 +568,7 @@ p {
 
 .tour-detail .section-01 .right .group-add-cart .add-to-cart {
     align-items: center;
-    background: linear-gradient(64.4deg, #e01600 21.33%, #fe2214 67.61%);
+    background: linear-gradient(64.4deg, rgb(253, 196, 50) 21.33%, rgb(253, 196, 50) 67.61%);
     border-radius: 5px;
     color: #fff;
     display: flex;
@@ -580,7 +580,7 @@ p {
 }
 .flight-hotel-detail .section-01 .right .group-add-cart .add-to-cart {
     align-items: center;
-    background: linear-gradient(64.4deg, #e01600 21.33%, #fe2214 67.61%);
+    background: linear-gradient(64.4deg, rgb(253, 196, 50) 21.33%, rgb(253, 196, 50) 67.61%);
     border-radius: 5px;
     color: #fff;
     display: flex;
@@ -598,15 +598,13 @@ p {
     text-decoration: none;
 }
 a {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     text-decoration: none;
 }
 a {
-    text-decoration: underline;
 }
 a {
     color: #0d6efd;
-    text-decoration: underline;
 }
 a {
     background-color: transparent;
@@ -624,7 +622,6 @@ user agent stylesheet
 a:-webkit-any-link {
     color: -webkit-link;
     cursor: pointer;
-    text-decoration: underline;
 }
 .tour-detail .section-01 .right .group-add-cart .add-to-cart i {
     margin-right: 7px;
@@ -651,9 +648,9 @@ a:-webkit-any-link {
 
 .flight-hotel-detail .section-01-title .right .group-add-cart .add-to-group {
     align-items: center;
-    border: 1px solid #2d4271;
+    border: 1px solid rgb(33, 37, 41);
     border-radius: 5px;
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     display: flex;
     height: 50px;
     justify-content: center;
@@ -661,9 +658,9 @@ a:-webkit-any-link {
 }
 .tour-detail .section-01 .right .group-add-cart .add-to-group {
     align-items: center;
-    border: 1px solid #2d4271;
+    border: 1px solid rgb(33, 37, 41);
     border-radius: 5px;
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     display: flex;
     height: 50px;
     justify-content: center;
@@ -673,15 +670,13 @@ a:-webkit-any-link {
     text-decoration: none;
 }
 a {
-    color: #2d4271;
+    color: rgb(33, 37, 41);
     text-decoration: none;
 }
 a {
-    text-decoration: underline;
 }
 a {
     color: #0d6efd;
-    text-decoration: underline;
 }
 a {
     background-color: transparent;
@@ -699,7 +694,6 @@ user agent stylesheet
 a:-webkit-any-link {
     color: -webkit-link;
     cursor: pointer;
-    text-decoration: underline;
 }
 
 *, :after, :before {
@@ -1997,13 +1991,13 @@ table {
 }
 
 .tour-detail .section-08 .right .table-price tr .t-price {
-    color: #e01600;
+    color: rgb(253, 196, 50);
 }
 .tour-detail .section-08 .right .table-price tr td, .tour-detail .section-08 .right .table-price tr th {
     padding: 10px 0;
 }
 .section-08 .right .table-price tr .t-price {
-    color: #e01600;
+    color: rgb(253, 196, 50);
 }
 .section-08 .right .table-price tr td {
     padding: 10px 0;

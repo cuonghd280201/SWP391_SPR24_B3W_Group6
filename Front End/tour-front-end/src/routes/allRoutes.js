@@ -8,6 +8,8 @@ import InfomationTour from "../pages/Home/infomationTour";
 import Payment from "../pages/Home/payment";
 import HomeSlider from "../pages/HomeSlider/homeSlider";
 import FindTour from "../pages/Home/findTour";
+import ProfileInfo from "../pages/Profile/profile";
+import OrderHistory from "../pages/Profile/orderHistory";
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -20,10 +22,8 @@ const userRoutes = [
   { path: "/payment", component: <Payment/>},
   { path: "/homeSlider", component: <HomeSlider/>},
   { path: "/findTour", component: <FindTour/>},
-
-
-
-
+  { path: "/profileInfo", component: <ProfileInfo/>},
+  { path: "/orderHistory", component: <OrderHistory/>},
 
   { path: "/infomationTour", component: <InfomationTour/>}
 

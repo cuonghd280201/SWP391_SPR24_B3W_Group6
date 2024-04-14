@@ -12,7 +12,7 @@ const InfomationTour = () => {
                 </div>
             </section>
             <section className="checkout-main">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8"><h2>Thanh toán</h2><div className="payments-warp"><h3>Các hình thức thanh toán</h3>
                             <div className="container">
