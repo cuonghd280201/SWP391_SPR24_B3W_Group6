@@ -46,7 +46,7 @@ const InfomationTour = () => {
                 </div>
             </section>
             <section className="checkout-main order-tour animate__fadeIn animate__animated">
-                <div className="container">
+            <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 top">
                             <div className="product">

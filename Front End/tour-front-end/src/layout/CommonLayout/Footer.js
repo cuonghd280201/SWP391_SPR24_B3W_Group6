@@ -1,14 +1,12 @@
-import React from "react";
+import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
-import withRouter from "../../components/withRouter";
-
-
-const Footer = (props) => {
+const Footer = () => {
     return (
         <footer className="ftco-footer ftco-bg-dark ftco-section">
-            <div className="container">
-                <div className="row mb-5">
-                    <div className="col-md">
+            <Container>
+                <Row className="mb-5">
+                    <Col md>
                         <div className="ftco-footer-widget mb-4">
                             <h2 className="ftco-heading-2">Adventure</h2>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
@@ -18,8 +16,8 @@ const Footer = (props) => {
                                 <li className="ftco-animate"><a href="#"><span className="icon-instagram" /></a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div className="col-md">
+                    </Col>
+                    <Col md>
                         <div className="ftco-footer-widget mb-4 ml-md-4">
                             <h2 className="ftco-heading-2">Information</h2>
                             <ul className="list-unstyled">
@@ -32,8 +30,8 @@ const Footer = (props) => {
                                 <li><a href="#" className="py-2 d-block">Refund policy</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div className="col-md">
+                    </Col>
+                    <Col md>
                         <div className="ftco-footer-widget mb-4">
                             <h2 className="ftco-heading-2">Experience</h2>
                             <ul className="list-unstyled">
@@ -45,8 +43,8 @@ const Footer = (props) => {
                                 <li><a href="#" className="py-2 d-block">Party</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div className="col-md">
+                    </Col>
+                    <Col md>
                         <div className="ftco-footer-widget mb-4">
                             <h2 className="ftco-heading-2">Have a Questions?</h2>
                             <div className="block-23 mb-3">
@@ -57,18 +55,18 @@ const Footer = (props) => {
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12 text-center">
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={{ size: 12, offset: 0 }} className="text-center">
                         <p>{/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                             Copyright © All rights reserved | This template is made with <i className="icon-heart" aria-hidden="true" /> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                             {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}</p>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </footer>
     );
 };
-export default withRouter(Footer);
 
+export default Footer;

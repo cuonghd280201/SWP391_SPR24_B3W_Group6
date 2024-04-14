@@ -1,33 +1,12 @@
 import React from "react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 
 // Import Swiper styles
-import 'swiper/css';
-import { StaticImage } from 'gatsby-plugin-image';
-import SwiperCore from 'swiper';
-import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from "react-icons/hi";
 
 
 
-SwiperCore.use([Navigation]);
 
-const TourSlide = ({ backgroundImage }) => {
-    return (
-        <div className="hero-wrap js-fullheight" style={{ backgroundImage: `url(${backgroundImage})`, height: '100vh' }}>
-            <div className="overlay" />
-            <div className="container">
-                <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                    <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                        <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
-                        <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Tours</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
+
 
 const Home = () => {
 
@@ -40,37 +19,15 @@ const Home = () => {
                 <div className="container">
                     <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
                         <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                            <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
-                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Tours</h1>
+                            <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Trang Chủ</a></span> <span>Chuyến Đi</span></p>
+                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Chuyến Đi</h1>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <div className="container">
-                <Swiper
-                    spaceBetween={50}
-                    slidesPerView={1}
-                    navigation={{
-                        prevEl: ".button-prev-slide",
-                        nextEl: ".button-next-slide",
-                    }}
-                    style={{ height: '100vh' }}
-                >
-                    {tourImages.map((image, index) => (
-                        <SwiperSlide key={index} style={{ position: 'relative' }}>
-                            <TourSlide backgroundImage={image} />
-                            <div className="swiper-button-prev button-prev-slide" style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)', backgroundColor: 'black', padding: '10px' }}>
-                                <HiOutlineArrowNarrowLeft style={{ color: 'white' }} />
-                            </div>
-                            <div className="swiper-button-next button-next-slide" style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)', backgroundColor: 'black', padding: '10px' }}>
-                                <HiOutlineArrowNarrowRight style={{ color: 'white' }} />
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div> */}
+           
 
-            <section className="ftco-section justify-content-end ftco-search">
+        <section className="ftco-section justify-content-end ftco-search">
                 <div className="container-wrap ml-auto">
                     <div className="row">
                         <div className="col-md-4">
