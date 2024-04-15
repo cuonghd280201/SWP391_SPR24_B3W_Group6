@@ -77,8 +77,8 @@ const SiderBarWebStaff = ({ choose }) => {
       label: "List Book Tour",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
-      className: "listAccountManager",
-      link: "/listAccountManager",
+      className: "listTourBook",
+      link: "/listTourBook",
     },
     {
       label: "Report Refund",

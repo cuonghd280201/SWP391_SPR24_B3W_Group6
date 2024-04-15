@@ -14,6 +14,7 @@ import Dashboard from "../pages/Admin/dashboard";
 import ListTourStaff from "../pages/Staff/ListTourStaff";
 import ListAccountCustomer from "../pages/Admin/listAccountCustomer";
 import CreateTourStaff from "../pages/Staff/CreateTourStaff";
+import ListTourBook from "../pages/Staff/ListTourBook"
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -38,6 +39,8 @@ const authRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
   { path: "/listTourStaff", component: <ListTourStaff /> },
   { path: "/createToutStaff", component: <CreateTourStaff /> },
+  { path: "/listTourBook", component: <ListTourBook /> },
+
   { path: "/listAccountCustomer", component: <ListAccountCustomer /> },
 
 
