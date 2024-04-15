@@ -1,5 +1,8 @@
 import React from "react";
 
+import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button } from 'reactstrap';
+
+
 
 // Import Swiper styles
 
@@ -25,9 +28,9 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-           
 
-        <section className="ftco-section justify-content-end ftco-search">
+
+            <section className="ftco-section justify-content-end ftco-search">
                 <div className="container-wrap ml-auto">
                     <div className="row">
                         <div className="col-md-4">
@@ -37,56 +40,43 @@ const Home = () => {
                         <div className="col-md-24">
                             <div className="tab-content p-4 px-5" id="v-pills-tabContent">
                                 <div className="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                                    <form action="#" className="search-destination">
-                                        <div className="row">
-                                           
-                                            
-                                            <div className="col-md align-items-end">
-                                                <div className="form-group">
-                                                    <label htmlFor="#">Điểm đi</label>
-                                                    <div className="form-field">
-                                                        <div className="icon"><span className="icon-map-marker" /></div>
-                                                        <input type="text" className="form-control checkin_date" placeholder="Check In" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md align-items-end">
-                                                <div className="form-group">
-                                                    <label htmlFor="#">Điểm đến</label>
-                                                    <div className="form-field">
-                                                        <div className="icon"><span className="icon-map-marker" /></div>
-                                                        <input type="text" className="form-control checkout_date" placeholder="From" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md align-items-end">
-                                                <div className="form-group">
-                                                    <label htmlFor="#">Ngày đi</label>
-                                                    <div className="form-field">
-                                                        <div className="select-wrap">
-                                                            <div className="icon"><span className="ion-ios-arrow-down" /></div>
-                                                            <select name id className="form-control">
-                                                                <option value>1</option>
-                                                                <option value>2</option>
-                                                                <option value>3</option>
-                                                                <option value>4</option>
-                                                                <option value>5</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md align-self-end">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <input type="submit" defaultValue="Search" className="form-control btn btn-primary" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <Row>
+                                        <Col>
+                                            <TabContent activeTab="v-pills-1">
+                                                <TabPane tabId="v-pills-1">
+                                                    <form className="search-destination">
+                                                        <Row>
+                                                            <Col md={3}>
+                                                                <div className="form-group">
+                                                                    <label>Điểm đi</label>
+                                                                    <Input type="text" placeholder="Check In" />
+                                                                </div>
+                                                            </Col>
+                                                            <Col md={3}>
+                                                                <div className="form-group">
+                                                                    <label>Điểm đến</label>
+                                                                    <Input type="text" placeholder="From" />
+                                                                </div>
+                                                            </Col>
+                                                            <Col md={3}>
+                                                                <div className="form-group">
+                                                                    <label>Ngày đi</label>
+                                                                    <Input type="date" />
+                                                                </div>
+                                                            </Col>
+
+                                                            <Col md={2}>
+                                                                <div className="form-group">
+                                                                    <Button color="primary">Tìm Kiếm</Button>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                    </form>
+                                                </TabPane>
+                                            </TabContent>
+                                        </Col>
+                                    </Row>
                                 </div>
-                               
                             </div>
                         </div>
                     </div>
@@ -138,41 +128,7 @@ const Home = () => {
                                     </div>
                                 </form>
                             </div>
-                            <div className="sidebar-wrap ftco-animate">
-                                <h3 className="heading mb-4">Star Rating</h3>
-                                <form method="post" className="star-rating">
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">
-                                            <p className="rate"><span><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /></span></p>
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">
-                                            <p className="rate"><span><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /><i className="icon-star-o" /></span></p>
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">
-                                            <p className="rate"><span><i className="icon-star" /><i className="icon-star" /><i className="icon-star" /><i className="icon-star-o" /><i className="icon-star-o" /></span></p>
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">
-                                            <p className="rate"><span><i className="icon-star" /><i className="icon-star" /><i className="icon-star-o" /><i className="icon-star-o" /><i className="icon-star-o" /></span></p>
-                                        </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">
-                                            <p className="rate"><span><i className="icon-star" /><i className="icon-star-o" /><i className="icon-star-o" /><i className="icon-star-o" /><i className="icon-star-o" /></span></p>
-                                        </label>
-                                    </div>
-                                </form>
-                            </div>
+                           
                         </div>{/* END*/}
                         <div className="col-lg-9">
                             <div className="row">
