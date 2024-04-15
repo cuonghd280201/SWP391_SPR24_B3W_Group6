@@ -10,6 +10,9 @@ import HomeSlider from "../pages/HomeSlider/homeSlider";
 import FindTour from "../pages/Home/findTour";
 import ProfileInfo from "../pages/Profile/profile";
 import OrderHistory from "../pages/Profile/orderHistory";
+import Dashboard from "../pages/Admin/dashboard";
+import ListTourStaff from "../pages/Staff/ListTourStaff";
+import ListAccountCustomer from "../pages/Admin/listAccountCustomer";
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -24,12 +27,18 @@ const userRoutes = [
   { path: "/findTour", component: <FindTour/>},
   { path: "/profileInfo", component: <ProfileInfo/>},
   { path: "/orderHistory", component: <OrderHistory/>},
-
   { path: "/infomationTour", component: <InfomationTour/>}
 
 ];
 
 const authRoutes = [
+
+  { path: "/dashboard", component: <Dashboard /> },
+  { path: "/listTourStaff", component: <ListTourStaff /> },
+  { path: "/listAccountCustomer", component: <ListAccountCustomer /> },
+
+
+
 
 
 
