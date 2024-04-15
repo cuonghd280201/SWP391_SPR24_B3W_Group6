@@ -56,8 +56,8 @@ const SiderBarWebStaff = ({ choose }) => {
       label: "List Tour",
       key: "menu-key/1",
       icon: <HomeOutlined />,
-      className: "dashboard",
-      link: "/dashboard",
+      className: "listTourStaff",
+      link: "/listTourStaff",
     },
 
     // {

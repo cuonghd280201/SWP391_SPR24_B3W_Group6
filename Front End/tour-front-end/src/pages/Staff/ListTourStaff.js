@@ -33,7 +33,15 @@ const ListTourStaff = () => {
                                 <div className="page-header">
                                     <h2 className="pageheader-title">Dashboard </h2>
                                 </div>
+                                <div className="destination">
+                                    <div className="text p-2">
+                                        <p className="bottom-area d-flex">
+                                            <span className="ml-auto"><a href="/createToutStaff">Tạo Chuyến Đi</a></span>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         <div className="ecommerce-widget">
                             <div className="row row-with-margin">
