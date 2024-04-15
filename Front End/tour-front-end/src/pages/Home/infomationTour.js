@@ -1,8 +1,11 @@
 import React from "react";
+import CustomNavbar from "../../layout/CommonLayout/CustomNavbar";
 
 const InfomationTour = () => {
     return (
         <>
+                <CustomNavbar />
+
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row justify-content-center">
