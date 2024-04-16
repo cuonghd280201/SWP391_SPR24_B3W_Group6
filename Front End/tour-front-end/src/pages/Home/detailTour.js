@@ -4,6 +4,7 @@ import '../Home/Timeline.css'
 import '../Home/detailTour.css'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 
 
@@ -110,7 +111,9 @@ const DetailTour = () => {
                                             </div>
                                         </section>                                </ModalBody>
                                     <ModalFooter>
-                                        <Button color="secondary" onClick={toggle}>Gửi</Button>
+                                        <Link to="/infomationTour">
+                                            <Button color="secondary" onClick={toggle}>Gửi</Button>
+                                        </Link>
                                         <Button color="secondary" onClick={toggle}>Đóng</Button>
                                     </ModalFooter>
                                 </Modal>
@@ -159,7 +162,7 @@ const DetailTour = () => {
                                             <div className="calendar">
                                                 <div className="calendar-box">
                                                     <i className="icon icon--calendar" />
-                                                    <label><a href="#"> Ngày khác</a></label>
+                                                    <label><a href="/findTour"> Ngày khác</a></label>
                                                 </div>
                                             </div>
 

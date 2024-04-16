@@ -6,9 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
-    const { googleSignIn, user } = UserAuth();
+const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
-
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -17,8 +16,8 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (user != null) { // Check if user is logged in
-      navigate('/home'); // Redirect to '/home' if logged in
+    if (user != null) { 
+      navigate('/login'); 
     }
   }, [user]); 
     return (

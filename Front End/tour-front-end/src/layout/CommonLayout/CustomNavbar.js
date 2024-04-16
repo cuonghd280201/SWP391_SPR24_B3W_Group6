@@ -3,6 +3,14 @@ import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Co
 import withRouter from '../../components/withRouter';
 import { UserAuth } from "../../utils/AuthContext";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faClock,
+    faPenToSquare,
+    faTrashCan,
+    faPlusSquare,
+  } from "@fortawesome/free-regular-svg-icons";
+
 const CustomNavbar = (props) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -42,6 +50,7 @@ const CustomNavbar = (props) => {
                             <NavItem>
                                 {user?.displayName ? (
                                     <div>
+                                                       <FontAwesomeIcon size="2xl" icon={faPlusSquare} />
                                         <p>Welcome, {user?.displayName}</p>
                                         <button onClick={handleSignOut}>Đăng Xuất</button>
                                     </div>
