@@ -25,7 +25,6 @@ const userRoutes = [
   { path: "/detailTour", component: <DetailTour/>},
   { path: "/login", component: <Login/>},
   { path: "/payment", component: <Payment/>},
-  { path: "/homeSlider", component: <HomeSlider/>},
   { path: "/findTour", component: <FindTour/>},
   { path: "/profileInfo", component: <ProfileInfo/>},
   { path: "/orderHistory", component: <OrderHistory/>},
@@ -41,6 +40,7 @@ const authRoutes = [
   { path: "/createToutStaff", component: <CreateTourStaff /> },
   { path: "/listTourBook", component: <ListTourBook /> },
   { path: "/listAccountCustomer", component: <ListAccountCustomer /> },
+  { path: "/homeSlider", component: <HomeSlider/>},
 
 
 ];
