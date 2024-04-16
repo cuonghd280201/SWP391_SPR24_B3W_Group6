@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/auth": "^1.7.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -16,6 +17,7 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "bootstrap-datepicker": "^1.10.0",
+    "firebase": "^10.11.0",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
     "gatsby-source-filesystem": "^5.13.1",
