@@ -40,7 +40,6 @@ const authRoutes = [
   { path: "/listTourStaff", component: <ListTourStaff /> },
   { path: "/createToutStaff", component: <CreateTourStaff /> },
   { path: "/listTourBook", component: <ListTourBook /> },
-
   { path: "/listAccountCustomer", component: <ListAccountCustomer /> },
 
 
