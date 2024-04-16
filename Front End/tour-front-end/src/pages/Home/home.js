@@ -3,7 +3,6 @@ import React from "react";
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button } from 'reactstrap';
 
 
-
 // Import Swiper styles
 
 
@@ -12,6 +11,8 @@ import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input,
 
 
 const Home = () => {
+
+   
 
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
 
