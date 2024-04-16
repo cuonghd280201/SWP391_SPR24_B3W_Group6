@@ -8,11 +8,15 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import tourbooking.utils.DateTimeUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -40,4 +44,9 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<User> userSet;
+
+    public List<SimpleGrantedAuthority> getAuthor() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.name));
+    }
+
 }
