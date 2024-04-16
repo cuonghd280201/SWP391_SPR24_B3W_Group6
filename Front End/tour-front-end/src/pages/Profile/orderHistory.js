@@ -120,12 +120,20 @@ const OrderHistory = () => {
                                                                     <p className="card-text">
                                                                         <small className="text-muted">1 người, 0 đêm</small>
                                                                     </p>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </Col>
                                                         <Col md={4} xs={5} className="text-end">
                                                             <h6 className="text-primary mb-2">Quá Hạn thanh toán</h6>
                                                             <h5 className="text-primary fw-bold">₫</h5>
+                                                            <div className="destination">
+                                                                        <div className="text p-2">
+                                                                            <p className="bottom-area d-flex">
+                                                                                <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                         </Col>
                                                     </Row>
                                                 </CardBody>
@@ -172,6 +180,13 @@ const OrderHistory = () => {
                                                         <Col md={4} xs={5} className="text-end">
                                                             <h6 className="text-primary mb-2">Chờ thanh toán</h6>
                                                             <h5 className="text-primary fw-bold">₫</h5>
+                                                            <div className="destination">
+                                                                        <div className="text p-2">
+                                                                            <p className="bottom-area d-flex">
+                                                                                <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                         </Col>
                                                     </Row>
                                                 </CardBody>

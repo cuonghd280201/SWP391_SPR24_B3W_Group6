@@ -10,16 +10,16 @@ const Layout = (props) => {
 
   return (
     <React.Fragment>
-      <Suspense>
-        <div>
-          <CustomNavbar />
-          <div className="main-content">
-            <div className="page-content">{props.children}</div>
-            <Footer />
-          </div>
+    <Suspense>
+      <div>
+        <CustomNavbar />
+        <div className="main-content">
+          <div className="page-content">{props.children}</div>
+          <Footer />
         </div>
-      </Suspense>
-    </React.Fragment>
+      </div>
+    </Suspense>
+  </React.Fragment>
   );
 };
 

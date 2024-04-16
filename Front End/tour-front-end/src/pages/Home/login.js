@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { UserAuth } from "../../utils/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Login = () => {
+
+    const { googleSignIn, user } = UserAuth();
+  const navigate = useNavigate();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (user != null) { // Check if user is logged in
+      navigate('/home'); // Redirect to '/home' if logged in
+    }
+  }, [user]); 
     return (
         <div>
             <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
@@ -27,7 +45,7 @@ const Login = () => {
                                 <i className="fa fa-facebook-official" />
                                 Facebook
                             </a>
-                            <a href="#" className="btn-google m-b-20">
+                            <a href="#" className="btn-google m-b-20" onClick={handleGoogleSignIn}>
                                 <img src="images/icons/icon-google.png" alt="GOOGLE" />
                                 Google
                             </a>
