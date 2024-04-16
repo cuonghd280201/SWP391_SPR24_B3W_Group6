@@ -10,8 +10,6 @@ const CustomNavbar = (props) => {
     };
 
     return (
-        <React.Fragment >
-
         <Navbar className="navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar" expand="lg">
             <Container>
                 <NavbarBrand href="/">DU LỊCH</NavbarBrand>
@@ -34,8 +32,6 @@ const CustomNavbar = (props) => {
                 </Collapse>
             </Container>
         </Navbar>
-        </React.Fragment>
-
     );
 };
 

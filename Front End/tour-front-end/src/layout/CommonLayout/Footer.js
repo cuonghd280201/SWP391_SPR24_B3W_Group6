@@ -3,8 +3,6 @@ import { Container, Row, Col } from 'reactstrap';
 
 const Footer = () => {
     return (
-        <React.Fragment >
-
         <footer className="ftco-footer ftco-bg-dark ftco-section">
             <Container>
                 <Row className="mb-5">
@@ -68,8 +66,6 @@ const Footer = () => {
                 </Row>
             </Container>
         </footer>
-            </React.Fragment>
-
     );
 };
 
