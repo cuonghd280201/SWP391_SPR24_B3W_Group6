@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
             //lưu user đăng nhập từ google vào database
             User user = new User();
             user.setEmail(userRecord.getEmail());
+            user.setName(userRecord.getDisplayName());
             user.setImage(userRecord.getPhotoUrl());
             user.setFireBaseUid(uid);
             user.setRole(roleRepository.findByName("USER"));
@@ -55,13 +56,13 @@ public class UserServiceImpl implements UserService {
             String authorityValue = authority.getAuthority();
 
             if (authorityValue.startsWith("ROLE_")) {
-                role = authorityValue;
-            } else {
-                authorityValues.add(authorityValue);
-            }
+                role = authorityValue;}
+//            } else {
+//                authorityValues.add(authorityValue);
+//            }
         }
 
-        claims.put("authority", authorityValues);
+        //claims.put("authority", authorityValues);
 
         if (role != null) {
             claims.put("role", role);

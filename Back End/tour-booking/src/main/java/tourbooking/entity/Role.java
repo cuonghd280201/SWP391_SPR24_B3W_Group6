@@ -12,10 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import tourbooking.utils.DateTimeUtils;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -46,7 +43,8 @@ public class Role {
     private Set<User> userSet;
 
     public List<SimpleGrantedAuthority> getAuthor() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.name));
+        List<SimpleGrantedAuthority> author = new ArrayList<>();
+        author.add(new SimpleGrantedAuthority("ROLE_" + this.name));
+        return author;
     }
-
 }

@@ -7,7 +7,7 @@ spring:
   datasource:
       url: jdbc:mysql://localhost:3308/tour_booking
       username: root
-      password: Quocbao1401@
+      password: 1234
   driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3308}/book_swap
 #    username: ${MYSQL_USERNAME:root}
