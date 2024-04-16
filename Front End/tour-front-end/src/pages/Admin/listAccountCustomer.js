@@ -62,9 +62,14 @@ const ListAccountCustomer = () => {
                 style={{
                   padding: "5px 0px 0px 0px",
                   margin: "0px 0px 0px 20px",
-                  color: "black",
-                  fontSize: "20px",
-                  fontWeight: "bold"
+                  color: "#4a4a4a", 
+                  fontSize: "24px", 
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif", 
+                  textTransform: "uppercase", 
+                  letterSpacing: "1px", 
+                  borderBottom: "4px solid #6546D2", 
+                  display: "inline-block", 
                 }}
               >
                 MANAGE CUSTOMER

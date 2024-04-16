@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Layout,Table,Space,Input,Switch} from "antd";
-
+import { Layout, Table, Space, Input, Switch } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
@@ -28,8 +27,8 @@ const ListAccountStaff = () => {
         phoneNumber: `12345678${i}`,
         dateOfBirth: `200${i}-01-01`,
         roleString: `Role ${i + 1}`,
-        statusString: i % 2 === 0 ? 'Active' : 'Inactive',
-        userId: i + 1
+        statusString: i % 2 === 0 ? "Active" : "Inactive",
+        userId: i + 1,
       });
     }
     return dummyData;
@@ -62,9 +61,14 @@ const ListAccountStaff = () => {
                 style={{
                   padding: "5px 0px 0px 0px",
                   margin: "0px 0px 0px 20px",
-                  color: "black",
-                  fontSize: "20px",
-                  fontWeight: "bold"
+                  color: "#4a4a4a", 
+                  fontSize: "24px", 
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif", 
+                  textTransform: "uppercase", 
+                  letterSpacing: "1px", 
+                  borderBottom: "4px solid #6546D2", 
+                  display: "inline-block", 
                 }}
               >
                 MANAGE STAFF
@@ -106,7 +110,6 @@ const ListAccountStaff = () => {
                       index % 2 === 0 ? "even-row" : "odd-row"
                     }
                   >
-              
                     <Column
                       title="FirstName"
                       dataIndex="firstName"
@@ -148,8 +151,8 @@ const ListAccountStaff = () => {
                             text === "Active"
                               ? "badge text-bg-success"
                               : text === "OnTasking"
-                                ? "badge bg-warning text-light"
-                                : "badge text-bg-danger"
+                              ? "badge bg-warning text-light"
+                              : "badge text-bg-danger"
                           }
                         >
                           {text}
@@ -161,17 +164,30 @@ const ListAccountStaff = () => {
                       key="action"
                       render={(_, record) => (
                         <Space size="middle">
-                      
                           <Switch
-                            checked={record.statusString === 'Active' && (switchStatusMap[record.userId] || true)}
+                            checked={
+                              record.statusString === "Active" &&
+                              (switchStatusMap[record.userId] || true)
+                            }
                             onChange={(checked, event) => {
                               event.stopPropagation();
 
-                              setSwitchStatusMap((prevMap) => ({ ...prevMap, [record.userId]: checked }));
+                              setSwitchStatusMap((prevMap) => ({
+                                ...prevMap,
+                                [record.userId]: checked,
+                              }));
                             }}
-
                             size="small" // Set size to "small" for iOS-like appearance
-                            style={{ backgroundColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6', borderColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6' }}
+                            style={{
+                              backgroundColor:
+                                record.statusString === "Active"
+                                  ? "#4CD964"
+                                  : "#D1D1D6",
+                              borderColor:
+                                record.statusString === "Active"
+                                  ? "#4CD964"
+                                  : "#D1D1D6",
+                            }}
                           />
                         </Space>
                       )}
@@ -181,10 +197,6 @@ const ListAccountStaff = () => {
               </div>
             </Content>
           </div>
-
-        
-          
-        
         </Layout>
       </Layout>
     </React.Fragment>
