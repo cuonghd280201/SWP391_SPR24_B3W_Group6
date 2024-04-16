@@ -1,64 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Layout,
-  Button,
-  Table,
-  Divider,
-  Tag,
-  Space,
-  Avatar,
-  Badge,
-  Input,
-  Breadcrumb,
-  Modal,
-  Cascader,
-  Checkbox,
-  DatePicker,
-  Form,
-  InputNumber,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  TreeSelect,
-  Upload,
-  Col,
-  Row,
-  message,
-  notification,
-  Menu,
-} from "antd";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  PieChartOutlined,
-  DesktopOutlined,
-  UserOutlined,
-  TeamOutlined,
-  FileOutlined,
-  LeftOutlined,
-  RightOutlined,
-  HomeOutlined,
-  SnippetsOutlined,
-  SolutionOutlined,
-  CodeOutlined,
-  EditOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import { FaSpider, FaUserAltSlash } from "react-icons/fa";
-import {
-  faClock,
-  faPenToSquare,
-  faTrashCan,
-  faPlusSquare,
-} from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import { toast } from 'react-toastify';
+import {Layout,Table,Space,Input,Switch} from "antd";
+
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
@@ -73,56 +15,30 @@ const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
 
 const ListAccountCustomer = () => {
-  //--------------------------------------------------------------------------------------------------------
-
-  const [visibleModal1, setVisibleModal1] = useState(false);
-  const [visibleModal2, setVisibleModal2] = useState(false);
-  const [visibleModal3, setVisibleModal3] = useState(false);
-  const [visibleModal4, setVisibleModal4] = useState(false);
-
-  const showModal1 = () => {
-    setVisibleModal1(true);
+  // Dummy data generation
+  const generateDummyData = () => {
+    const dummyData = [];
+    for (let i = 0; i < 10; i++) {
+      dummyData.push({
+        key: i,
+        firstName: `User ${i + 1}`,
+        lastName: `LastName ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        password: `password${i + 1}`,
+        phoneNumber: `12345678${i}`,
+        dateOfBirth: `200${i}-01-01`,
+        roleString: `Role ${i + 1}`,
+        statusString: i % 2 === 0 ? 'Active' : 'Inactive',
+        userId: i + 1
+      });
+    }
+    return dummyData;
   };
 
-  const [userIdAccountManage, setManagerIdAccount] = useState(null);
+  // Dummy data
+  const dummyData = generateDummyData();
 
-  const showModal2 = (userId) => {
-    setManagerIdAccount(userId);
-    setVisibleModal2(true);
-  };
-
-  const closedModal2 = () => {
-    setVisibleModal2(false);
-  };
-  const showModal3 = () => {
-    setVisibleModal3(true);
-  };
-  const showModal4 = () => {
-    setVisibleModal4(true);
-  };
-  const handleOk = () => {
-    setVisibleModal1(false);
-    setVisibleModal2(false);
-    setVisibleModal3(false);
-    setVisibleModal4(false);
-  };
-
-  const handleCancel = () => {
-    setVisibleModal1(false);
-    setVisibleModal2(false);
-    setVisibleModal3(false);
-    setVisibleModal4(false);
-  };
-
- 
-
-  //----------------------------------------------------------------
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
+  // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
 
   return (
@@ -154,12 +70,6 @@ const ListAccountCustomer = () => {
                 MANAGE CUSTOMER
               </h1>
 
-              <a
-                className="me-1 d-flex flex-column align-items-end"
-                onClick={showModal1}
-              >
-                <FontAwesomeIcon size="2xl" icon={faPlusSquare} />
-              </a>
               <div
                 style={{
                   padding: 25,
@@ -169,7 +79,7 @@ const ListAccountCustomer = () => {
                 <div style={{ height: "600px", overflow: "auto" }}>
                   <Table
                     className="custom-table"
-                    dataSource={""}
+                    dataSource={dummyData}
                     pagination={page}
                     size="middle"
                     components={{
@@ -196,21 +106,7 @@ const ListAccountCustomer = () => {
                       index % 2 === 0 ? "even-row" : "odd-row"
                     }
                   >
-                    {/* <Column
-                      title="Image"
-                      dataIndex="userImage"
-                      key="userImage"
-                      render={(text, record) => (
-                        <img
-                          src={record.userImage}
-                          style={{
-                            width: "50px",
-                            height: "50px",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      )}
-                    /> */}
+              
                     <Column
                       title="FirstName"
                       dataIndex="firstName"
@@ -265,12 +161,7 @@ const ListAccountCustomer = () => {
                       key="action"
                       render={(_, record) => (
                         <Space size="middle">
-                          
-                            <FontAwesomeIcon
-                              style={{ color: "#6d73f6" }}
-                              size="xl"
-                              icon={faPenToSquare}
-                            />
+                      
                           <Switch
                             checked={record.statusString === 'Active' && (switchStatusMap[record.userId] || true)}
                             onChange={(checked, event) => {
