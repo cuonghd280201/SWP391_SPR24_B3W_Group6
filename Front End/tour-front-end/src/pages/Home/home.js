@@ -571,7 +571,7 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <h4>Mã Chuyến Đi</h4>
-                                    <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
+                                    <span><i className="icon-map-o"/> NDSGN1371-002-130424VU-H</span>
 
                                     <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
                                     <h4>Giá : 7.490.000</h4>

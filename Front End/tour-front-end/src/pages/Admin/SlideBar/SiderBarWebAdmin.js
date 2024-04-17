@@ -53,7 +53,7 @@ const SiderBarWebAdmin = ({ choose }) => {
 
   const items = [
     {
-      label: "Dashboard",
+      label: "Thống Kê",
       key: "menu-key/1",
       icon: <HomeOutlined />,
       className: "dashboard",
@@ -74,21 +74,21 @@ const SiderBarWebAdmin = ({ choose }) => {
     // },
 
     {
-      label: "Staff",
+      label: "Quản Lý Nhân Viên",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
       className: "listAccountManager",
       link: "/listAccountManager",
     },
     {
-      label: "Customer",
+      label: "Quản Lý Khách Hàng",
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
       className: "listAccountStaff",
       link: "/listAccountStaff", // Add the link property
     },
      {
-       label: "Refund",
+       label: "Quản Lý Hoàn Tiền",
        key: "menu-key/4",
        icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
        className: "listAccountHR",

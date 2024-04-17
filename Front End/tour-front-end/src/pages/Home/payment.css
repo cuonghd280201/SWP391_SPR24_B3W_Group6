@@ -1132,7 +1132,7 @@ h4 {
 .checkout-main.order-tour .top .product .product-content .s-rate .s-comment span {
     align-items: center;
     border-right: 1px solid #7d8fab;
-    color: #000;
+    color: #000; 
     display: flex;
     font-size: 13px;
     font-weight: 400;

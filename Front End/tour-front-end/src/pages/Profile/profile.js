@@ -56,7 +56,7 @@ const ProfileInfo = () => {
                                         </div>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="d-inline-flex align-items-center rounded" href="/profile/orders">
+                                        <NavLink className="d-inline-flex align-items-center rounded" href="/orderHistory">
                                             <h6 className="fw-bold">Đơn đặt chỗ</h6>
                                         </NavLink>
                                     </NavItem>
