@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+
+
+
+import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const InfomationTour = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [adultCount, setAdultCount] = useState(0);
+    const [childCount, setChildCount] = useState(0);
+    const [adultNames, setAdultNames] = useState([]);
+    const [childNames, setChildNames] = useState([]);
+
+    const toggle = () => setIsOpen(!isOpen);
+
+    const handleSendForm = () => {
+        const formData = {
+            adultCount: adultCount,
+            childCount: childCount,
+            adultNames: adultNames,
+            childNames: childNames
+        };
+        console.log(formData); // Just for testing, you can send this data to your server or handle it as needed
+    };
+
+    // const location = useLocation();
+    // const { adultCount = 0, childCount = 0 } = location.state || {};
+
     return (
         <>
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
@@ -48,7 +75,7 @@ const InfomationTour = () => {
                 </div>
             </section>
             <section className="checkout-main order-tour animate__fadeIn animate__animated">
-            <div className="container-fluid">
+                <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 top">
                             <div className="product">
@@ -87,7 +114,7 @@ const InfomationTour = () => {
                         </div>
                         <div className="col-md-8">
                             <h2 className="d-none d-lg-block">Tổng quan về chuyến đi</h2>
-                            <div className="customer-notice">
+                            {/* <div className="customer-notice">
                                 <div className="customer-notice-left">
                                     . Người lớn sinh trước ngày<b className="mx-1">18/04/2012</b><br />
                                     . Trẻ em sinh từ<b className="mx-1">19/04/2012</b>đến<b className="mx-1">18/04/2022</b>
@@ -95,8 +122,8 @@ const InfomationTour = () => {
                                 <div className="customer-notice-right">
                                     . Em bé sinh từ<b className="mx-1">19/04/2022</b>đến<b className="mx-1">20/04/2024</b>
                                 </div>
-                            </div>
-                            <div className="mb-4">
+                            </div> */}
+                            {/* <div className="mb-4">
                                 <div className="form-check checkbox-input-search d-inline-flex align-items-center">
                                     <input className="form-check-input me-3" type="radio" name="input-list-customer" defaultValue="yes" defaultChecked />
                                     <label className="form-check-label mt-1 small">Nhập danh sách khách hàng</label>
@@ -107,74 +134,229 @@ const InfomationTour = () => {
                                         <label className="form-check-label mt-1 small">Tôi cần được nhân viên tư vấn Vietravel trợ giúp nhập thông tin đăng ký dịch vụ</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
-                                <div className="title-section mb-3 title-hotel-flight-infor">Thông tin hành khách</div>
-                                <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
-                                    <div className="title-persona">
-                                        <img src="/images/icons/persons/adult.svg" />Người lớn
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-lg-3 col-12">
-                                            <div className="form-group">
-                                                <label className="pb-1 font-700">Họ và tên <span className="text-danger">*</span></label>
-                                                <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
-                                                <div className="errorform error-notes">Vui lòng nhập thông tin</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-2 col-12">
-                                            <div className="form-group select-custom-icon">
-                                                <label className="pb-1 white-space-nowrap">Giới tính <span className="text-danger">*</span></label>
-                                                <select className="form-control title title-gender hotel-flight-input" name="gender">
-                                                    <option value={1}>Nam</option>
-                                                    <option value={0}>Nữ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-5 col-12">
-                                            <div className="row">
-                                                <div className="col-sm-4 col-4 mt-sm-0 mt-4">
-                                                    <div className="form-group select-custom-icon">
-                                                        <label className="pb-1 white-space-nowrap font-700">Ngày sinh <span className="text-danger">*</span></label>
-                                                        <select className="form-control birth-date hotel-flight-input" name="dayOfMonth">
-                                                            <option value={-1}>Ngày</option>
-                                                            {/* Options for days */}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-4 col-4 mt-sm-0 mt-4">
-                                                    <div className="form-group select-custom-icon">
-                                                        <label className="pb-1">&nbsp;</label>
-                                                        <select className="form-control birth-month hotel-flight-input" name="monthOfYear">
-                                                            <option value={-1}>Tháng</option>
-                                                            {/* Options for months */}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-4 col-4 mt-sm-0 mt-4">
-                                                    <div className="form-group select-custom-icon">
-                                                        <label className="pb-1">&nbsp;</label>
-                                                        <select className="form-control birth-year birth-year-adult hotel-flight-input" name="yearOfYear">
-                                                            <option value={-1}>Năm</option>
-                                                            {/* Options for years */}
-                                                        </select>
-                                                    </div>
+
+                                <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
+                                    <div className="title-section mb-3 title-hotel-flight-infor">Số lượng hành khách</div>
+                                    <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
+                                        <div className="row">
+                                            <div className="col-lg-3 col-12">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Người lớn (trên 12 tuổi) <span className="text-danger">*</span></label>
+                                                    <input
+                                                        type="number"
+                                                        className="form-control fullName hotel-flight-input"
+                                                        placeholder="Nhập số lượng"
+                                                        value={adultCount === 0 ? '' : adultCount}
+                                                        onChange={(e) => {
+                                                            const value = parseInt(e.target.value);
+                                                            if (!isNaN(value) && value >= 0) {
+                                                                setAdultCount(value);
+                                                            } else {
+                                                                // Handle invalid input
+                                                                setAdultCount(0); // Or any other appropriate action
+                                                            }
+                                                        }}
+                                                    />
+
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
                                                 </div>
                                             </div>
-                                            <div className="errorform error-notes">Vui lòng nhập thông tin</div>
-                                        </div>
-                                        <div className="col-sm-2 col-2 mt-sm-0 mt-4">
-                                            <div className="form-group select-custom-icon">
-                                                <label className="pb-1">Phòng đơn</label>
-                                                <div className="form-check form-switch">
-                                                    <input className="form-check-input" type="checkbox" name="isRoomSurcharge" />
-                                                    <label className="form-check-label">3.500.000 ₫</label>
+                                            <div className="col-lg-3 col-12">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Trẻ em (dưới 12 tuổi) <span className="text-danger">*</span></label>
+
+                                                    <input
+                                                        type="number"
+                                                        className="form-control fullName hotel-flight-input"
+                                                        placeholder="Nhập số lượng"
+                                                        value={childCount === 0 ? '' : childCount}
+                                                        onChange={(e) => {
+                                                            const value = parseInt(e.target.value);
+                                                            if (!isNaN(value) && value >= 0) {
+                                                                setChildCount(value);
+                                                            } else {
+                                                                // Handle invalid input
+                                                                setChildCount(0); // Or any other appropriate action
+                                                            }
+                                                        }}
+                                                    />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </section>
                             </section>
+                            <div className="scrollable-section">
+
+                                <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
+                                    <div className="title-section mb-3 title-hotel-flight-infor">Thông tin hành khách</div>
+                                    {[...Array(parseInt(adultCount))].map((_, index) => (
+
+                                        <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={index}>
+                                            <div className="title-persona">
+                                                <img src="/images/icons/persons/adult.svg" />Người lớn
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Họ và tên <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-2">
+                                                    <div className="form-group select-custom-icon">
+                                                        <label className="pb-1 white-space-nowrap">Giới tính <span className="text-danger">*</span></label>
+                                                        <select className="form-control title title-gender hotel-flight-input" name="gender">
+                                                            <option value={1}>Nam</option>
+                                                            <option value={0}>Nữ</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">CMND/CCCD <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
+                                                        <Input type="date" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {[...Array(parseInt(childCount))].map((_, index) => (
+
+                                        <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={index}>
+                                            <div className="title-persona">
+                                                <img src="/images/icons/persons/child.svg" />Trẻ em
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Họ và tên <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-2">
+                                                    <div className="form-group select-custom-icon">
+                                                        <label className="pb-1 white-space-nowrap">Giới tính <span className="text-danger">*</span></label>
+                                                        <select className="form-control title title-gender hotel-flight-input" name="gender">
+                                                            <option value={1}>Nam</option>
+                                                            <option value={0}>Nữ</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                {/* <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">CMND/CCCD <span className="text-danger">*</span></label>
+                                                        <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div> */}
+                                                <div className="col-lg-3">
+                                                    <div className="form-group">
+                                                        <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
+                                                        <Input type="date" />
+                                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    {/* <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
+                                        <div className="title-persona">
+                                            <img src="/images/icons/persons/adult.svg" />Người lớn
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Họ và tên <span className="text-danger">*</span></label>
+                                                    <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <div className="form-group select-custom-icon">
+                                                    <label className="pb-1 white-space-nowrap">Giới tính <span className="text-danger">*</span></label>
+                                                    <select className="form-control title title-gender hotel-flight-input" name="gender">
+                                                        <option value={1}>Nam</option>
+                                                        <option value={0}>Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">CMND/CCCD <span className="text-danger">*</span></label>
+                                                    <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
+                                                    <Input type="date" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
+                                        <div className="title-persona">
+                                            <img src="/images/icons/persons/adult.svg" />Người lớn
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Họ và tên <span className="text-danger">*</span></label>
+                                                    <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-2">
+                                                <div className="form-group select-custom-icon">
+                                                    <label className="pb-1 white-space-nowrap">Giới tính <span className="text-danger">*</span></label>
+                                                    <select className="form-control title title-gender hotel-flight-input" name="gender">
+                                                        <option value={1}>Nam</option>
+                                                        <option value={0}>Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">CMND/CCCD <span className="text-danger">*</span></label>
+                                                    <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập họ tên" name="fullName" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-3">
+                                                <div className="form-group">
+                                                    <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
+                                                    <Input type="date" />
+                                                    <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> */}
+
+
+
+
+                                </section>
+                            </div>
                             <div className="customer-save">
                                 <h3>Quý khách có ghi chú lưu ý gì, hãy nói với chúng tôi !</h3>
                                 <div className="customer-save-inner">
@@ -229,29 +411,21 @@ const InfomationTour = () => {
                                                 <td>Người nhở</td>
                                                 <td className="t-price text-right">1 x 5.990.000&nbsp;₫</td>
                                             </tr>
-                                            <tr className="cuppon promotion-broder">
-                                                <td colSpan={2}>
-                                                    <div className="row">
-                                                        <div className="col-4">Mã giảm giá</div>
-                                                        <div className="col-8 p-0"><div className="row">
-                                                            <div className="col-7 p-0">
-                                                                <input className="form-control mr-2 w-10" placeholder="Thêm mã" required type="text" data-gtm-form-interact-field-id={0} defaultValue /></div>
-                                                            <div className="col-5">
-                                                                <input type="button" className="btn btn-success" id="btnDiscountCode" defaultValue="Áp dụng" />
-                                                            </div>
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
                                             <tr className="total">
                                                 <td>Tổng tiền </td>
                                                 <td className="t-price text-right">9.990.000&nbsp;₫</td>
                                             </tr>
+                                            <tr className="cuppon promotion-broder">
+                                                <tr className="total">
+                                                    <td>Tiền Đặt Cọc (50%) </td>
+                                                    <td className="t-price text-right">5.990.000&nbsp;₫</td>
+                                                </tr>
+                                            </tr>
+
                                         </tbody></table>
-                                        <Link to="/payment">
+                                    <Link to="/payment">
                                         <button className="btn btn-primary btn-order">Đặt ngay</button>
-                                        </Link>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

@@ -80,7 +80,7 @@ const DetailTour = () => {
                                         </div>
                                     </div>
                                     <div className="group-add-cart">
-                                        <a href="#" title="Đặt ngay" className="add-to-cart" onClick={toggle}>
+                                        <a href="/infomationTour" title="Đặt ngay" className="add-to-cart">
                                             <i className="fal fa-shopping-cart"></i> Đặt ngay
                                         </a>
                                         <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>

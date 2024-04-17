@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+.scrollable-section {
+    max-height: 400px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+}
 *, :after, :before {
     box-sizing: border-box;
 }
