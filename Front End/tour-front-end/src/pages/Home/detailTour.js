@@ -13,22 +13,6 @@ import { Link } from 'react-router-dom';
 const DetailTour = () => {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [adultCount, setAdultCount] = useState(0); // Mặc định là 0
-    const [childCount, setChildCount] = useState(0); // Mặc định là 0
-
-    const handleAdultCountChange = (e) => {
-        const count = parseInt(e.target.value);
-        if (!isNaN(count) && count >= 0) {
-            setAdultCount(count);
-        }
-    };
-
-    const handleChildCountChange = (e) => {
-        const count = parseInt(e.target.value);
-        if (!isNaN(count) && count >= 0) {
-            setChildCount(count);
-        }
-    };
 
     const toggle = () => setIsOpen(!isOpen);
     return (
@@ -96,56 +80,43 @@ const DetailTour = () => {
                                         </div>
                                     </div>
                                     <div className="group-add-cart">
-                                        <a href="#" title="Đặt ngay" className="add-to-cart" onClick={toggle}>
+                                        <a href="/infomationTour" title="Đặt ngay" className="add-to-cart">
                                             <i className="fal fa-shopping-cart"></i> Đặt ngay
                                         </a>
                                         <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
                                 </div>
-
                                 <Modal isOpen={isOpen} toggle={toggle} centered>
-                <ModalHeader toggle={toggle}>Nhập thông tin</ModalHeader>
-                <ModalBody>
-                    <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
-                        <div className="title-section mb-3 title-hotel-flight-infor">Số lượng hành khách</div>
-                        <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
-                            <div className="row">
-                                <div className="col-lg-3 col-12">
-                                    <div className="form-group">
-                                        <label className="pb-1 font-700">Người lớn (trên 12 tuổi) <span className="text-danger">*</span></label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control fullName hotel-flight-input" 
-                                            placeholder="Nhập số lượng" 
-                                            value={adultCount} 
-                                            onChange={handleAdultCountChange} 
-                                        />
-                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-12">
-                                    <div className="form-group">
-                                        <label className="pb-1 font-700">Trẻ em (dưới 12 tuổi) <span className="text-danger">*</span></label>
-                                        <input 
-                                            type="number" 
-                                            className="form-control fullName hotel-flight-input" 
-                                            placeholder="Nhập số lượng" 
-                                            value={childCount} 
-                                            onChange={handleChildCountChange} 
-                                        />
-                                        <div className="errorform error-notes">Vui lòng nhập thông tin</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </ModalBody>
-                <ModalFooter>
-                    <Link to="/infomationTour">
-                        <Button color="secondary" onClick={toggle}>Gửi</Button>
-                    </Link>
-                    <Button color="secondary" onClick={toggle}>Đóng</Button>
-                </ModalFooter>
-            </Modal>
+                                    <ModalHeader toggle={toggle}>Nhập thông tin</ModalHeader>
+                                    <ModalBody>
+                                        <section className="wrap-info-customer-number-person-details mt-4 wrapper-new-input">
+                                            <div className="title-section mb-3 title-hotel-flight-infor">Số lượng hành khách</div>
+                                            <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3">
+
+                                                <div className="row">
+                                                    <div className="col-lg-3 col-12">
+                                                        <div className="form-group">
+                                                            <label className="pb-1 font-700">Người lớn (trên 12 tuổi) <span className="text-danger">*</span></label>
+                                                            <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập số lượng" name="fullName" />
+                                                            <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3 col-12">
+                                                        <div className="form-group">
+                                                            <label className="pb-1 font-700">Trẻ em (dưới 12 tuổi) <span className="text-danger">*</span></label>
+                                                            <input type="text" className="form-control fullName hotel-flight-input" placeholder="Nhập số lượng" name="fullName" />
+                                                            <div className="errorform error-notes">Vui lòng nhập thông tin</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>                                </ModalBody>
+                                    <ModalFooter>
+                                        <Link to="/infomationTour">
+                                            <Button color="secondary" onClick={toggle}>Gửi</Button>
+                                        </Link>
+                                        <Button color="secondary" onClick={toggle}>Đóng</Button>
+                                    </ModalFooter>
+                                </Modal>
                             </div>
                         </div>
                     </section>
