@@ -25,14 +25,11 @@ public class TourDetailServiceImpl implements TourDetailService {
     private final ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<BaseResponseDTO> createTourDetail(Principal principal, TourDetailCreateForm tourDetailCreateForm) {
-        User user = userRepository.findByFireBaseUid(principal.getName())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
-
+    public TourDetail createTourDetail(User user , TourDetailCreateForm tourDetailCreateForm) {
         TourDetail tourDetail = modelMapper.map(tourDetailCreateForm, TourDetail.class);
         tourDetail.setCreateBy(user.getName());
-        tourDetailRepository.save(tourDetail);
+//        tourDetailRepository.save(tourDetail);
 
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Create Successfully"));
+        return tourDetail;
     }
 }

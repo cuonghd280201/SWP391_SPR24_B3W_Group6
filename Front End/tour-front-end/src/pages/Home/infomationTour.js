@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from 'react-router-dom';
+
 const InfomationTour = () => {
     return (
         <>
@@ -247,7 +249,9 @@ const InfomationTour = () => {
                                                 <td className="t-price text-right">9.990.000&nbsp;₫</td>
                                             </tr>
                                         </tbody></table>
-                                    <button className="btn btn-primary btn-order">Đặt ngay</button>
+                                        <Link to="/payment">
+                                        <button className="btn btn-primary btn-order">Đặt ngay</button>
+                                        </Link>
                                 </div>
                             </div>
                         </div>

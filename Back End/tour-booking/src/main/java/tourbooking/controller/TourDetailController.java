@@ -22,6 +22,7 @@ public class TourDetailController {
 
     @PostMapping("/create")
     public ResponseEntity<BaseResponseDTO> createTourDetail(Principal principal, @RequestBody TourDetailCreateForm tourDetailCreateForm) {
-        return tourDetailService.createTourDetail(principal, tourDetailCreateForm);
+//        return tourDetailService.createTourDetail(principal, tourDetailCreateForm);
+        return null;
     }
 }
