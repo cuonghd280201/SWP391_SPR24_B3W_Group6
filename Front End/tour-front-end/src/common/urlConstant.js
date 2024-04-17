@@ -7,7 +7,8 @@ export default {
         },
         tour: {
             getAllTour: "/Tour"
-        }
+        },
+        
     }
 
 }
