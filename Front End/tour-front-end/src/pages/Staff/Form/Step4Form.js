@@ -11,7 +11,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 const { Content } = Layout;
 
-const Step2Form = () => {
+const Step4Form = () => {
   return (
       <Layout>
         <div
@@ -35,31 +35,27 @@ const Step2Form = () => {
                       name="contact-form"
                       id="contact-form3"
                     > 
-                      <h4 class="text-dark mb-3">Tạo thời gian cho chuyến đi </h4>
+                      <h4 class="text-dark mb-3">Tạo lịch chuyến đi </h4>
+                     
                     
+
+                     
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                           <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian xuất phát</label>
+                            <label class="text-muted">
+                              Số lượng ngày
+                            </label>
                             <input
-                              id="duration"
-                              type="date"
+                              type="number"
                               class="form-control resume"
-                              placeholder=""
+                              placeholder="1"
+                              min="1"
+                              max="10"
                             ></input>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian kết thúc</label>
-                            <input
-                              id="duration"
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                            ></input>
-                          </div>
-                        </div>
+
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
                             <label class="text-muted">Mô tả</label>
@@ -87,4 +83,4 @@ const Step2Form = () => {
   );
 };
 
-export default Step2Form;
+export default Step4Form;

@@ -11,7 +11,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 const { Content } = Layout;
 
-const Step2Form = () => {
+const Step3Form = () => {
   return (
       <Layout>
         <div
@@ -35,34 +35,65 @@ const Step2Form = () => {
                       name="contact-form"
                       id="contact-form3"
                     > 
-                      <h4 class="text-dark mb-3">Tạo thời gian cho chuyến đi </h4>
-                    
+                      <h4 class="text-dark mb-3">Tạo chi tiết chuyến đi </h4>
+                     
+
                       <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian xuất phát</label>
-                            <input
-                              id="duration"
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian kết thúc</label>
-                            <input
-                              id="duration"
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                            ></input>
-                          </div>
-                        </div>
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
-                            <label class="text-muted">Mô tả</label>
+                          <label class="text-muted">Đồ ăn</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Khách sạn</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Địa điểm</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Thời gian</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Phương tiện</label>
                             <input
                               id="job-title"
                               type="text"
@@ -87,4 +118,4 @@ const Step2Form = () => {
   );
 };
 
-export default Step2Form;
+export default Step3Form;

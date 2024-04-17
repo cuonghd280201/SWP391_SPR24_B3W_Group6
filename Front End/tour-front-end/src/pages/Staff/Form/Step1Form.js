@@ -58,7 +58,8 @@ const Step1Form = () => {
                               id="number-dev"
                               type="number"
                               class="form-control resume"
-                              placeholder="0"
+                              placeholder="2"
+                              min={2}
                             ></input>
                           </div>
                         </div>
@@ -79,29 +80,7 @@ const Step1Form = () => {
                           </div>
                         </div>
 
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian đi</label>
-                            <input
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                              readOnly
-                              value=""
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted"></label>
-                            <input
-                              id="duration"
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                            ></input>
-                          </div>
-                        </div>
+                        
                       </div>
                       <div class="row">
                         <div class="col-md-6">
@@ -119,7 +98,7 @@ const Step1Form = () => {
                         </div>
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
-                            <label class="text-muted">Khác</label>
+                            <label class="text-muted">Nơi kết thúc</label>
                             <input
                               id="job-title"
                               type="text"
@@ -132,9 +111,9 @@ const Step1Form = () => {
                         </div>
                       </div>
                       <div class="row">
-                        <div class="mb-3">
+                      <div class="col-md-6">
                           <label for="imageUpload" class="form-label">
-                            Add an image:
+                            Chọn ảnh chính:
                           </label>
 
                           <input
@@ -142,6 +121,20 @@ const Step1Form = () => {
                             class="form-control"
                             id="imageUpload"
                             name="imageUpload"
+                            
+                          />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="imageUpload" class="form-label">
+                            Chọn ảnh phụ:
+                          </label>
+
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="imageUpload"
+                            name="imageUpload"
+                            multiple
                           />
                         </div>
                         <div class="col-md-24">
