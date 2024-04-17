@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import "../Admin/dashboard.css";
 import {
   
   Layout,
@@ -9,18 +8,12 @@ import {
 
 import { Editor } from "@tinymce/tinymce-react";
 
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
-import Footer from "../../layout/CommonLayout/Footer";
-import { ProgressB } from "./ProgressB";
+
 const { Content } = Layout;
 
-const CreateTourStaff = () => {
+const Step2Form = () => {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
       <Layout>
-        <NavBarWebStaff></NavBarWebStaff>
         <div
           style={{
             padding: "30px",
@@ -41,9 +34,41 @@ const CreateTourStaff = () => {
                       action="php/contact.php"
                       name="contact-form"
                       id="contact-form3"
-                    > <ProgressB/>
+                    > 
+                      <h4 class="text-dark mb-3">Tạo lịch chuyến đi </h4>
+                     
                     
-                
+
+                     
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Số lượng ngày</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              placeholder="Title..."
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Khác</label>
+                            <input
+                              id="job-title"
+                              type="text"
+                              class="form-control resume"
+                              placeholder="Title..."
+                              maxlength="100"
+                              required
+                            ></input>
+                          </div>
+                        </div>
+                      </div>
+                    
 {/* 
                       <center>
                         <button
@@ -67,8 +92,7 @@ const CreateTourStaff = () => {
           </Content>
         </div>
       </Layout>
-    </Layout>
   );
 };
 
-export default CreateTourStaff;
+export default Step2Form;
