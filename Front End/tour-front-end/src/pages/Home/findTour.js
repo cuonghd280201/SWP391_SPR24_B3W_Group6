@@ -65,7 +65,7 @@ const FindTour = () => {
                     <div className="row">
                         <div className="col-lg-3 sidebar  ftco-animate">
                             <div className="sidebar-wrap ftco-animate">
-                                <h3 className="heading mb-4">Find City</h3>
+                                <h3 className="heading mb-4">Địa Điểm Đi</h3>
                                 <form action="#">
                                     <div className="fields">
                                         <div className="form-group">
@@ -75,7 +75,7 @@ const FindTour = () => {
                                             <div className="select-wrap one-third">
                                                 <div className="icon"><span className="ion-ios-arrow-down" /></div>
                                                 <select name id className="form-control" placeholder="Keyword search">
-                                                    <option value>Select Location</option>
+                                                    <option value>Tìm Chuyến Đi</option>
                                                     <option value>San Francisco USA</option>
                                                     <option value>Berlin Germany</option>
                                                     <option value>Lodon United Kingdom</option>
@@ -84,10 +84,10 @@ const FindTour = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" id="checkin_date" className="form-control checkin_date" placeholder="Date from" />
+                                            <input type="text" id="checkin_date" className="form-control checkin_date" placeholder="Ngày Đi" />
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" id="checkout_date" className="form-control checkout_date" placeholder="Date to" />
+                                            <input type="text" id="checkout_date" className="form-control checkout_date" placeholder="Ngày Về" />
                                         </div>
                                         <div className="form-group">
                                             <div className="range-slider">
@@ -169,7 +169,7 @@ const FindTour = () => {
                                                     <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -177,7 +177,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>
@@ -204,10 +204,10 @@ const FindTour = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -215,7 +215,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ const FindTour = () => {
                                                     <span className="price per-price">7.450.000<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -253,7 +253,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>
@@ -280,10 +280,10 @@ const FindTour = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -291,7 +291,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>
@@ -318,10 +318,10 @@ const FindTour = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -329,7 +329,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>
@@ -356,10 +356,10 @@ const FindTour = () => {
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
+                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Tour</h4>
+                                            <h4>Mã chuyến đi</h4>
                                             <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                             <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
@@ -367,7 +367,7 @@ const FindTour = () => {
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Book Now</a></span>
+                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                             </p>
                                         </div>
                                     </div>

@@ -32,11 +32,19 @@ const ListTourBook = () => {
                         <div className="row">
                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div className="page-header">
-                                    <h2 className="pageheader-title">Dashboard </h2>
+                                    <h2 className="pageheader-title">Danh Sách Chuyển Đi Đã Đặt</h2>
                                 </div>
-
+                                <div className="form-search mb-4">
+                                    <Row className="align-items-center">
+                                        <Col md="8">
+                                            <Input type="text" placeholder="Tìm kiếm theo tên chuyến đi/ mã chuyến đi hoặc giá" aria-label="default input example" />
+                                        </Col>  
+                                        <Col md="4">
+                                            <Button color="btn-primary">Tìm kiếm</Button>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </div>
-
                         </div>
                         <div className="ecommerce-widget">
                             <div className="row row-with-margin">
@@ -53,7 +61,7 @@ const ListTourBook = () => {
                                                                     <div className="d-flex d-lg-block justify-content-between">
                                                                         <div>
                                                                             <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                                Booking ngày 01/12/2022
+                                                                                Đặt ngày 01/12/2022
 
                                                                             </Button>
                                                                             <div className="s-rate">
@@ -63,8 +71,8 @@ const ListTourBook = () => {
                                                                                 </span>
                                                                             </div>
                                                                             <p className="mb-0">
-                                                                                <span className="text-muted">Số booking: 210607080237</span><br />
-                                                                                <span className="text-muted">Tour code: NDSGN1371-002-130424VU-H </span>
+                                                                                <span className="text-muted">Số Chuyến Đi: 210607080237</span><br />
+                                                                                <span className="text-muted">Mã Chuyến Đi: NDSGN1371-002-130424VU-H </span>
                                                                             </p>
                                                                             <p className="card-text">
                                                                                 <small className="text-muted">1 người</small>
@@ -110,7 +118,7 @@ const ListTourBook = () => {
                                                                     <div className="d-flex d-lg-block justify-content-between">
                                                                         <div>
                                                                             <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                                Booking ngày 01/12/2022
+                                                                                Đặt ngày 01/12/2022
 
                                                                             </Button>
                                                                             <div className="s-rate">
@@ -120,8 +128,8 @@ const ListTourBook = () => {
                                                                                 </span>
                                                                             </div>
                                                                             <p className="mb-0">
-                                                                                <span className="text-muted">Số booking:  210607080237</span><br />
-                                                                                <span className="text-muted">Tour code:  NDSGN1371-002-130424VU-H </span>
+                                                                                <span className="text-muted">Số Chuyến Đi:  210607080237</span><br />
+                                                                                <span className="text-muted">Mã Chuyến Đi:  NDSGN1371-002-130424VU-H </span>
                                                                             </p>
                                                                             <p className="card-text">
                                                                                 <small className="text-muted">1 người, 0 đêm</small>
@@ -165,7 +173,7 @@ const ListTourBook = () => {
                                                                     <div className="d-flex d-lg-block justify-content-between">
                                                                         <div>
                                                                             <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                                Booking ngày 01/12/2022
+                                                                                Đặt ngày 01/12/2022
 
                                                                             </Button>
                                                                             <div className="s-rate">
@@ -175,8 +183,8 @@ const ListTourBook = () => {
                                                                                 </span>
                                                                             </div>
                                                                             <p className="mb-0">
-                                                                                <span className="text-muted">Số booking: 210607080237</span><br />
-                                                                                <span className="text-muted">Tour code: NDSGN1371-002-130424VU-H </span>
+                                                                                <span className="text-muted">Số Chuyến Đi: 210607080237</span><br />
+                                                                                <span className="text-muted">Mã Chuyến Đi: NDSGN1371-002-130424VU-H </span>
                                                                             </p>
                                                                             <p className="card-text">
                                                                                 <small className="text-muted">1 người, 0 đêm</small>

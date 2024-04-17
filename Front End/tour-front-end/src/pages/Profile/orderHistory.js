@@ -95,7 +95,7 @@ const OrderHistory = () => {
                                                 <CardHeader id="headingOne">
                                                     <Row className="align-items-center">
                                                         <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Booking ngày 01/12/2022
+                                                            Đặt ngày 01/12/2022
                                                             <div className="status">
                                                                 <span className="badge badge-warning">Quá Hạn Thanh Toán</span>
                                                             </div>
@@ -114,7 +114,7 @@ const OrderHistory = () => {
                                                                         </span>
                                                                     </div>
                                                                     <p className="mb-0">
-                                                                        <span className="text-muted">Số booking: 210607080237</span><br />
+                                                                        <span className="text-muted">Số đặt lịch: 210607080237</span><br />
                                                                         <span className="text-muted">Tour code: 233434134MDFadf </span>
                                                                     </p>
                                                                     <p className="card-text">
@@ -149,7 +149,7 @@ const OrderHistory = () => {
                                                 <CardHeader id="headingOne">
                                                     <Row className="align-items-center">
                                                         <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Booking ngày 01/12/2024
+                                                            Đặt ngày 01/12/2024
                                                             <div className="status">
                                                                 <span className="badge badge-warning">Chưa Thanh Toán</span>
                                                             </div>
@@ -168,7 +168,7 @@ const OrderHistory = () => {
                                                                         </span>
                                                                     </div>
                                                                     <p className="mb-0">
-                                                                        <span className="text-muted">Số booking: 210607080237</span><br />
+                                                                        <span className="text-muted">Số đặt lịch: 210607080237</span><br />
                                                                         <span className="text-muted">Tour code: 233434134MDFadf </span>
                                                                     </p>
                                                                     <p className="card-text">
