@@ -8,3 +8,10 @@ Values (unhex(replace('62c91bb6-c041-489e-b447-f7765906aeea','-','')), 'USER');
 
 Insert into `tour_booking`.`role` (`id`, `name`)
 Values (unhex(replace('5d0f48de-fbe5-492c-8dff-4b29ec30b21c','-','')), 'STAFF');
+
+## City
+INSERT INTO `tour_booking`.`city` (`id`, `name`)
+VALUES (UNHEX(REPLACE('d7fa6636-ed35-457c-856d-9394ae26bf99', '-', '')),'TP Hồ Chí Minh');
+
+INSERT INTO `tour_booking`.`city` (`id`, `name`)
+value(UNHEX(REPLACE('9bce4a5c-c2a2-4bd3-b464-3caf5ee4f4ff', '-', '')),'Hà Nội');
