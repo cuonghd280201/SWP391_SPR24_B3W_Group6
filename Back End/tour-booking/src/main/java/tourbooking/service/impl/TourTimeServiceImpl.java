@@ -2,7 +2,11 @@ package tourbooking.service.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import tourbooking.common.TimeStatus;
 import tourbooking.dto.BaseResponseDTO;
+import tourbooking.dto.TourScheduleCreateForm;
+import tourbooking.dto.TourTimeCreateForm;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Tour.TourTime;
 import tourbooking.entity.Tour.TourVisitor;
@@ -12,9 +16,8 @@ import tourbooking.repository.TourVisitorRepository;
 import tourbooking.service.TourTimeService;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
-import java.util.List;
-
+import java.util.*;
+@Service
 public class TourTimeServiceImpl implements TourTimeService {
 
     private final TourTimeRepository tourTimeRepository;
@@ -25,6 +28,24 @@ public class TourTimeServiceImpl implements TourTimeService {
         this.tourTimeRepository = tourTimeRepository;
         this.tourVisitorRepository = tourVisitorRepository;
         this.orderRepository = orderRepository;
+    }
+
+    @Override
+    public Set<TourTime> createTime(Set<TourTimeCreateForm> listTourTime) {
+        Set<TourTime> tourTimeList = new HashSet<>();
+
+        for(TourTimeCreateForm tourTimeCreateForm: listTourTime) {
+            TourTime tourTime = new TourTime();
+            tourTime.setStartDate(tourTimeCreateForm.getStartDate());
+            tourTime.setEndDate(tourTimeCreateForm.getEndDate());
+            tourTime.setStartTime(tourTimeCreateForm.getStartTime());
+            tourTime.setSlotNumber(tourTimeCreateForm.getSlotNumber());
+            tourTime.setTimeStatus(TimeStatus.ACTIVE);
+            tourTimeList.add(tourTime);
+            tourTimeRepository.save(tourTime);
+        }
+
+        return tourTimeList;
     }
 
     @Override

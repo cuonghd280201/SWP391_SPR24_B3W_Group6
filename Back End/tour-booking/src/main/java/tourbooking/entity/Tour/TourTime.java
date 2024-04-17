@@ -40,9 +40,7 @@ public class TourTime {
     @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
     private LocalDate endDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.TIME_FORMAT)
-    @DateTimeFormat(pattern = DateTimeUtils.TIME_FORMAT)
-    private LocalTime startTime;
+    private String startTime;
 
     private Integer slotNumber;
 

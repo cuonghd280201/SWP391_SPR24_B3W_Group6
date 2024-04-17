@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourCreateForm;
 import tourbooking.dto.TourDetailCreateForm;
+import tourbooking.dto.TourTimeCreateForm;
 import tourbooking.entity.Tour.Tour;
 
 import java.security.Principal;
@@ -16,4 +17,6 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> listTour();
     ResponseEntity<BaseResponseDTO> searchTour(String title);
     ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id);
+
+    ResponseEntity<BaseResponseDTO> createTime(TourTimeCreateForm tourTimeCreateForm);
 }

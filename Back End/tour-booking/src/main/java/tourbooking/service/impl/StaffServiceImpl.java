@@ -7,18 +7,19 @@ import org.springframework.stereotype.Service;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourCreateForm;
 import tourbooking.dto.TourDetailCreateForm;
+import tourbooking.dto.TourTimeCreateForm;
 import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourDetail;
+import tourbooking.entity.Tour.TourTime;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
-import tourbooking.repository.CityRepository;
-import tourbooking.repository.TourRepository;
-import tourbooking.repository.UserRepository;
+import tourbooking.repository.*;
 import tourbooking.service.StaffService;
 import tourbooking.service.TourDetailService;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -26,8 +27,10 @@ import java.util.UUID;
 public class StaffServiceImpl implements StaffService {
 
     private final TourRepository tourRepository;
+    private final TourTimeRepository tourTimeRepository;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
+    private final TourTimeServiceImpl tourTimeService;
     private final TourDetailServiceImpl tourDetailService;
 
     @Override
@@ -39,6 +42,7 @@ public class StaffServiceImpl implements StaffService {
 
         TourDetail tourDetail = tourDetailService.createTourDetail(user, tourCreateForm.getTourDetailCreateForm());
 
+        Set<TourTime> tourTimeSet = tourTimeService.createTime(tourCreateForm.getTourTimeCreateFormSet());
         Tour tour = new Tour();
         tour.setTitle(tourCreateForm.getTitle());
         tour.setStarLocation(tourCreateForm.getStarLocation());
@@ -50,8 +54,12 @@ public class StaffServiceImpl implements StaffService {
                 .orElseThrow(() -> new ResourceNotFoundException("City not found!")));
         tour.setCreateBy(user.getName());
         tour.setTourDetail(tourDetail);
-
+        tour.setTourTimeSet(tourTimeSet);
         tourRepository.save(tour);
+        for(TourTime tourTime: tourTimeSet) {
+            tourTime.setTour(tour);
+            tourTimeRepository.save(tourTime);
+        }
 
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Create Successfully"));
     }
@@ -78,6 +86,14 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> createTime(TourTimeCreateForm tourTimeCreateForm) {
+
+
+
         return null;
     }
 }
