@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {React, useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,25 +6,9 @@ import {
   faAngleRight,
   faUserTie,
   faIdCardClip,
-  faChalkboardUser,
   faBuildingUser,
-  faUserGear,
-  faSignal,
-  faCodeMerge
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  PieChartOutlined,
-  DesktopOutlined,
-  UserOutlined,
-  TeamOutlined,
-  FileOutlined,
-  HomeOutlined,
-  SnippetsOutlined,
-  SolutionOutlined,
-  CodeOutlined,
-  AuditOutlined,
-  BankOutlined,
-} from "@ant-design/icons";
+import {HomeOutlined,} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -53,75 +37,35 @@ const SiderBarWebAdmin = ({ choose }) => {
 
   const items = [
     {
-      label: "Dashboard",
+      label: "Thống Kê",
       key: "menu-key/1",
       icon: <HomeOutlined />,
       className: "dashboard",
       link: "/dashboard",
     },
 
-    // {
-    //   label: "User",
-    //   key: "menu-key/sub-menu-key",
-    //   icon: <UserOutlined />,
-    //   children: [
-    //     { label: "Manager", key: "menu-key/sub-menu-key/3" },
-    //     { label: "Staff", key: "menu-key/sub-menu-key/4" },
-    //     { label: "Human Resource", key: "menu-key/sub-menu-key/5" },
-    //     { label: "Developer", key: "menu-key/sub-menu-key/6" },
-    //   ],
-    //   className: "option-2",
-    // },
-
     {
-      label: "Staff",
+      label: "Quản Lý Nhân Viên",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
       className: "listAccountManager",
-      link: "/listAccountManager",
+      link: "/listAccountStaff",
     },
     {
-      label: "Customer",
+      label: "Quản Lý Khách Hàng",
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
       className: "listAccountStaff",
-      link: "/listAccountStaff", // Add the link property
+      link: "/listAccountCustomer", // Add the link property
     },
      {
-       label: "Refund",
+       label: "Quản Lý Hoàn Tiền",
        key: "menu-key/4",
        icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
        className: "listAccountHR",
-       link: "/listAccountHR", // Add the link property
+       link: "/listAccountStaff", // Add the link property
      },
-    // {
-    //   label: "Developer",
-    //   key: "menu-key/5",
-    //   icon: <FontAwesomeIcon icon={faChalkboardUser} size="xl" />,
-    //   className: "listAccountDeveloper",
-    //   link: "/listAccountDeveloper", // Add the link property
-    // },
-    // {
-    //   label: "Manage Skill",
-    //   key: "menu-key/6",
-    //   icon: <FontAwesomeIcon icon={faUserGear} size="xl" />,
-    //   className: "manageSKill",
-    //   link: "/manageSkill", // Add the link property
-    // },
-    // {
-    //   label: "Manage Level",
-    //   key: "menu-key/7",
-    //   icon: <FontAwesomeIcon icon={faSignal} size="xl" />,
-    //   className: "manageLevel",
-    //   link: "/manageLevel", // Add the link property
-    // },
-    // {
-    //   label: "Manage Type",
-    //   key: "menu-key/8",
-    //   icon: <FontAwesomeIcon icon={faCodeMerge} size="xl" />,
-    //   className: "manageType",
-    //   link: "/manageType", // Add the link property
-    // },
+   
   ];
 
   const navigate = useNavigate();
@@ -155,11 +99,13 @@ const SiderBarWebAdmin = ({ choose }) => {
               borderRadius: "10px",
             }}
           >
-            <FontAwesomeIcon
+             <FontAwesomeIcon
               icon={faAngleLeft}
               size="xl"
               color="#6546D2"
               onClick={toggleSidebar}
+              style={{ cursor: 'pointer'
+            }}
             />
           </div>
         ) : (
@@ -180,6 +126,7 @@ const SiderBarWebAdmin = ({ choose }) => {
               size="xl"
               color="#6546D2"
               onClick={toggleSidebar}
+              style={{ cursor: 'pointer'}}
             />
           </div>
         )}
@@ -187,38 +134,13 @@ const SiderBarWebAdmin = ({ choose }) => {
       <Menu
         className="mt-4"
         style={{ border: "0px" }}
-        //"menu-key/10"
         defaultSelectedKeys={[choose]}
         selectedKeys={selectedKeys}
         mode="inline"
         onClick={handleMenuClick}
       >
         {items.map((item) => (
-          //   item.children ? (
-          //     <Menu.SubMenu
-          //       key={item.key}
-          //       icon={item.icon}
-          //       title={item.label}
-          //       onClick={() => handleSubMenuClick(item)}
-          //     >
-          //       {item.children.map((child) => (
-          //         <Menu.Item key={child.key}>
-          //           {child.label === "Manager" && (
-          //             <Link to="/listAccountManager">{child.label}</Link>
-          //           )}
-          //           {child.label === "Staff" && (
-          //             <Link to="/listAccountStaff">{child.label}</Link>
-          //           )}
-          //           {child.label === "Human Resource" && (
-          //             <Link to="/listAccountHR">{child.label}</Link>
-          //           )}
-          //           {child.label === "Developer" && (
-          //             <Link to="/listAccountDeveloper">{child.label}</Link>
-          //           )}
-          //         </Menu.Item>
-          //       ))}
-          //     </Menu.SubMenu>
-          //   ) :
+         
           <Menu.Item key={item.key} icon={item.icon}>
             <Link to={item.link}>{item.label}</Link>
           </Menu.Item>

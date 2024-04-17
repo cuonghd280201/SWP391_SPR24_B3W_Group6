@@ -112,7 +112,7 @@ const NavBarWebAdmin = () => {
                                                 to={"/profileadmin"}
                                                 className="dropdown-item px-0 p-0"
                                             >
-                                                <div className="dropdown-item">Profile</div>
+                                                <div className="dropdown-item">Thông Tin Cá Nhân</div>
                                             </Link>
                                         </div>
                                     </DropdownItem>
@@ -120,7 +120,7 @@ const NavBarWebAdmin = () => {
                                     <DropdownItem style={{ padding: "0px" }}>
                                         <div>
                                             <Link to="#" className="dropdown-item">
-                                                Change Password
+                                                Đổi Mật Khẩu
                                             </Link>
                                         </div>
                                     </DropdownItem>
@@ -128,7 +128,7 @@ const NavBarWebAdmin = () => {
                                     <DropdownItem style={{ padding: "0px" }}>
                                         <div>
                                             <Link to="/signout" className="dropdown-item">
-                                                Logout
+                                                Đăng Xuất
                                             </Link>
                                         </div>
                                     </DropdownItem>
