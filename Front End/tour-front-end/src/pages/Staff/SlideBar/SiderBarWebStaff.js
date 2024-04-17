@@ -53,7 +53,7 @@ const SiderBarWebStaff = ({ choose }) => {
 
   const items = [
     {
-      label: "List Tour",
+      label: "Danh Sách Chuyến Đi",
       key: "menu-key/1",
       icon: <HomeOutlined />,
       className: "listTourStaff",
@@ -74,21 +74,21 @@ const SiderBarWebStaff = ({ choose }) => {
     // },
 
     {
-      label: "List Book Tour",
+      label: "Danh Sách Đặt Chuyến Đi",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
       className: "listTourBook",
       link: "/listTourBook",
     },
     {
-      label: "Report Refund",
+      label: "Báo Cáo Hoàn Tiền",
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
       className: "listAccountStaff",
       link: "/listAccountStaff", // Add the link property
     },
      {
-       label: "List Tour Cancel",
+       label: "Chuyến Đi Bị Hủy",
        key: "menu-key/4",
        icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
        className: "listAccountHR",

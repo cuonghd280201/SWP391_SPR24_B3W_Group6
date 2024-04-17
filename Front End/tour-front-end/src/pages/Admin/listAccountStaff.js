@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Layout,Table,Space,Input,Switch} from "antd";
-
+import { Layout, Table, Space, Input, Switch } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
@@ -14,22 +13,22 @@ const { Column, ColumnGroup } = Table;
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
 
-const ListAccountCustomer = () => {
+const ListAccountStaff = () => {
   // Dummy data generation
   const generateDummyData = () => {
     const dummyData = [];
     for (let i = 0; i < 10; i++) {
       dummyData.push({
         key: i,
-        firstName: `User ${i + 1}`,
+        firstName: `Staff ${i + 1}`,
         lastName: `LastName ${i + 1}`,
-        email: `user${i + 1}@example.com`,
+        email: `staff${i + 1}@example.com`,
         password: `password${i + 1}`,
         phoneNumber: `12345678${i}`,
         dateOfBirth: `200${i}-01-01`,
         roleString: `Role ${i + 1}`,
-        statusString: i % 2 === 0 ? 'Active' : 'Inactive',
-        userId: i + 1
+        statusString: i % 2 === 0 ? "Active" : "Inactive",
+        userId: i + 1,
       });
     }
     return dummyData;
@@ -72,7 +71,7 @@ const ListAccountCustomer = () => {
                   display: "inline-block", 
                 }}
               >
-                MANAGE CUSTOMER
+                MANAGE STAFF
               </h1>
 
               <div
@@ -111,7 +110,6 @@ const ListAccountCustomer = () => {
                       index % 2 === 0 ? "even-row" : "odd-row"
                     }
                   >
-              
                     <Column
                       title="FirstName"
                       dataIndex="firstName"
@@ -153,8 +151,8 @@ const ListAccountCustomer = () => {
                             text === "Active"
                               ? "badge text-bg-success"
                               : text === "OnTasking"
-                                ? "badge bg-warning text-light"
-                                : "badge text-bg-danger"
+                              ? "badge bg-warning text-light"
+                              : "badge text-bg-danger"
                           }
                         >
                           {text}
@@ -166,17 +164,30 @@ const ListAccountCustomer = () => {
                       key="action"
                       render={(_, record) => (
                         <Space size="middle">
-                      
                           <Switch
-                            checked={record.statusString === 'Active' && (switchStatusMap[record.userId] || true)}
+                            checked={
+                              record.statusString === "Active" &&
+                              (switchStatusMap[record.userId] || true)
+                            }
                             onChange={(checked, event) => {
                               event.stopPropagation();
 
-                              setSwitchStatusMap((prevMap) => ({ ...prevMap, [record.userId]: checked }));
+                              setSwitchStatusMap((prevMap) => ({
+                                ...prevMap,
+                                [record.userId]: checked,
+                              }));
                             }}
-
                             size="small" // Set size to "small" for iOS-like appearance
-                            style={{ backgroundColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6', borderColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6' }}
+                            style={{
+                              backgroundColor:
+                                record.statusString === "Active"
+                                  ? "#4CD964"
+                                  : "#D1D1D6",
+                              borderColor:
+                                record.statusString === "Active"
+                                  ? "#4CD964"
+                                  : "#D1D1D6",
+                            }}
                           />
                         </Space>
                       )}
@@ -186,14 +197,10 @@ const ListAccountCustomer = () => {
               </div>
             </Content>
           </div>
-
-        
-          
-        
         </Layout>
       </Layout>
     </React.Fragment>
   );
 };
 
-export default ListAccountCustomer;
+export default ListAccountStaff;

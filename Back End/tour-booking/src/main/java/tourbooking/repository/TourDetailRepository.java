@@ -5,6 +5,5 @@ import tourbooking.entity.Tour.TourDetail;
 
 import java.util.UUID;
 
-
 public interface TourDetailRepository extends JpaRepository<TourDetail, UUID> {
 }

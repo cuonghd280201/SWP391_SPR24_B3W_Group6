@@ -14,10 +14,10 @@ const InfomationTour = () => {
             <section className="checkout-main">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8"><h2>Thanh toán</h2><div className="payments-warp"><h3>Các hình thức thanh toán</h3>
+                        <div className="col-md-8"><h2>Thanh toán</h2><div className="payments-warp">
                             <div className="container">
                                 <div className="title">
-                                    <h4>Select a <span style={{ color: '#6064b6' }}>Payment</span> method</h4>
+                                    <h4>Chọn hình thức <span style={{ color: '#6064b6' }}>Thanh Toán</span> cho chuyến đi</h4>
                                 </div>
                                 <form action="#">
                                     <input type="radio" name="payment" id="visa" />
