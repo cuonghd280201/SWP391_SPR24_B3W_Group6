@@ -178,13 +178,15 @@ const InfomationTour = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className="detail">
-                                                <td>Người lớn</td>
-                                                <td className="t-price text-right">1 x 9.990.000&nbsp;₫</td>
-                                            </tr>
-                                            <tr className="total">
+                                        <tr className="total">
                                                 <td>Tổng tiền </td>
                                                 <td className="t-price text-right">9.990.000&nbsp;₫</td>
+                                            </tr>
+                                            <tr className="cuppon promotion-broder">
+                                            <tr className="total">
+                                                <td>Tiền Đặt Cọc (50%) </td>
+                                                <td className="t-price text-right">5.990.000&nbsp;₫</td>
+                                            </tr>
                                             </tr>
                                         </tbody>
                                     </table>
