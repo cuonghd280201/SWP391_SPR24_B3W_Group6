@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface TourRepository extends JpaRepository<Tour, UUID> {
     Page<Tour> findAll(Pageable pageable);
 
-    @Query("SELECT DISTINCT t FROM tour t " +
+    @Query("SELECT DISTINCT t FROM Tour t " +
             "JOIN t.tourDetail td " +
             "WHERE t.title like %:keyWord% or " +
             "t.endLocation like %:keyWord% or " +
@@ -19,6 +19,6 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
             "td.vehicle like %:keyWord% or " +
             "td.location like %:keyWord% or " +
             "td.food like %:keyWord% or " +
-            "td.hotel like %:keyWord%   ")
+            "td.hotel like %:keyWord%")
     Page<Tour> searchByKeyWord(String keyWord, Pageable pageable);
 }
