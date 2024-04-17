@@ -73,7 +73,7 @@ const ListTourStaff = () => {
                                                         <div className="col-4">
                                                             <p className="text-right" style={{ fontSize: 18, color: '#ff5722', marginBottom: 5 }}>7.450.000<small>/Chuyến Đi</small></p>
                                                             <p className="bottom-area d-flex">
-                                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
+                                                                <span className="ml-auto"><a href="/home">Xem chi tiết</a></span>
                                                             </p>
                                                         </div>
                                                     </div>

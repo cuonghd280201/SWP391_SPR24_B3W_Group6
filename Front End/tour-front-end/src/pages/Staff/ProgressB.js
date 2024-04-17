@@ -3,12 +3,14 @@ import StepProgressBar from "react-step-progress";
 import "react-step-progress/dist/index.css";
 import Step1Form from "./Form/Step1Form";
 import Step2Form from "./Form/Step2Form";
+import Step3Form from "./Form/Step3Form";
+import Step4Form from "./Form/Step4Form";
 
 export const ProgressB = () => {
   const step1Content = <Step1Form/>;
   const step2Content = <Step2Form/>;
-  const step3Content = <h1>Step 3 Content</h1>;
-  const step4Content = <h1>Step 4 Content</h1>;
+  const step3Content = <Step4Form/>;
+  const step4Content = <Step3Form/>;
   
 
   function onFormSubmit() {
