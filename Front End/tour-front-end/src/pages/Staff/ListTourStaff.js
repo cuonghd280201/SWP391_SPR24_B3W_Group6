@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 import '../Admin/dashboard.css'
-import { Table, Space, Modal, Button, Form, message, Input, Select, Layout, Badge, Switch, Breadcrumb } from 'antd';
+import {Button, Input, Layout,} from 'antd';
 import { Row, Col} from 'reactstrap';
 
 
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
-import Footer from "../../layout/CommonLayout/Footer";
 const { Content } = Layout;
 
 
@@ -73,7 +72,7 @@ const ListTourStaff = () => {
                                                         <div className="col-4">
                                                             <p className="text-right" style={{ fontSize: 18, color: '#ff5722', marginBottom: 5 }}>7.450.000<small>/Chuyến Đi</small></p>
                                                             <p className="bottom-area d-flex">
-                                                                <span className="ml-auto"><a href="/home">Xem chi tiết</a></span>
+                                                                <span className="ml-auto"><a href="/listTourStaffDetail">Xem chi tiết</a></span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -94,14 +93,14 @@ const ListTourStaff = () => {
                                                             <img src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg" className="img-fluid rounded" alt="Tour Image" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
                                                         </div>
                                                         <div className="col-4">
-                                                            <h4 style={{ fontSize: 16, marginTop: 10 }}>Mã Chuyến Đi: <span style={{ color: '#666' }}>NDSGN1371-002-130424VU-H</span></h4>
+                                                            <h4 style={{ fontSize: 16, marginTop: 10 }}>Mã Chuyến Đi: <span style={{ color: '#666' }}>Hi hello im good</span></h4>
                                                             <p style={{ fontSize: 14, marginBottom: 5 }}>13/04/2024</p>
                                                             <p className="text-primary" style={{ fontSize: 14, marginBottom: 5 }}>Giờ đi: 18:50</p>
                                                         </div>
                                                         <div className="col-4">
                                                             <p className="text-right" style={{ fontSize: 18, color: '#ff5722', marginBottom: 5 }}>7.450.000<small>/Chuyến Đi</small></p>
                                                             <p className="bottom-area d-flex">
-                                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
+                                                                <span className="ml-auto"><a href="/listTourStaffDetail">Xem chi tiết</a></span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -121,14 +120,14 @@ const ListTourStaff = () => {
                                                             <img src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg" className="img-fluid rounded" alt="Tour Image" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
                                                         </div>
                                                         <div className="col-4">
-                                                            <h4 style={{ fontSize: 16, marginTop: 10 }}>Mã Chuyến Đi: <span style={{ color: '#666' }}>NDSGN1371-002-130424VU-H</span></h4>
+                                                            <h4 style={{ fontSize: 16, marginTop: 10 }}>Mã Chuyến Đi: <span style={{ color: '#666' }}>QQQKKKLLLL</span></h4>
                                                             <p style={{ fontSize: 14, marginBottom: 5 }}>13/04/2024</p>
                                                             <p className="text-primary" style={{ fontSize: 14, marginBottom: 5 }}>Giờ đi: 18:50</p>
                                                         </div>
                                                         <div className="col-4">
                                                             <p className="text-right" style={{ fontSize: 18, color: '#ff5722', marginBottom: 5 }}>7.450.000<small>/Chuyến Đi</small></p>
                                                             <p className="bottom-area d-flex">
-                                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
+                                                                <span className="ml-auto"><a href="/listTourStaffDetail">Xem chi tiết</a></span>
                                                             </p>
                                                         </div>
                                                     </div>
