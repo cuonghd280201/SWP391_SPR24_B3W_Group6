@@ -1,0 +1,10 @@
+use tour_booking;
+## Role
+Insert into `tour_booking`.`role` (`id`, `name`)
+Values (unhex(replace('550e8400-e29b-41d4-a716-446655440000','-','')), 'ADMIN');
+
+Insert into `tour_booking`.`role` (`id`, `name`)
+Values (unhex(replace('62c91bb6-c041-489e-b447-f7765906aeea','-','')), 'USER');
+
+Insert into `tour_booking`.`role` (`id`, `name`)
+Values (unhex(replace('5d0f48de-fbe5-492c-8dff-4b29ec30b21c','-','')), 'STAFF');

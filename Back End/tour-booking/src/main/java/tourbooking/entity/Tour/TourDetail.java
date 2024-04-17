@@ -33,5 +33,7 @@ public class TourDetail {
 
     private String hotel;
 
+    private String createBy;
+
     private boolean deleted = Boolean.FALSE;
 }

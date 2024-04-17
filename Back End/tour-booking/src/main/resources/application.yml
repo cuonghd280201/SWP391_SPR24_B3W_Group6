@@ -13,12 +13,12 @@ spring:
 #    username: ${MYSQL_USERNAME:root}
 #    password: ${MYSQL_PASSWORD:1234}
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#  security:
-#    oauth2:
-#      resource-server:
-#        jwt:
-#          jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com
-#          issuer-uri: https://securetoken.google.com/bookswapplatform
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken%40system.gserviceaccount.com
+          issuer-uri: https://securetoken.google.com/tour-booking-firebase
 #  mvc:
 #    view:
 #      prefix: forward:/nonexistent
