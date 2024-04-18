@@ -2,18 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import "../Admin/dashboard.css";
 import {
-  Table,
-  Space,
-  Modal,
-  Button,
-  Form,
-  message,
-  Input,
-  Select,
+  
   Layout,
-  Badge,
-  Switch,
-  Breadcrumb,
+  
 } from "antd";
 
 import { Editor } from "@tinymce/tinymce-react";
@@ -21,6 +12,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
 import Footer from "../../layout/CommonLayout/Footer";
+import { ProgressB } from "./ProgressB";
 const { Content } = Layout;
 
 const CreateTourStaff = () => {
@@ -49,129 +41,10 @@ const CreateTourStaff = () => {
                       action="php/contact.php"
                       name="contact-form"
                       id="contact-form3"
-                    >
-                      <h4 class="text-dark mb-3">Tạo chuyến đi </h4>
-                      <div class="row">
-                        <div class="col-md-9">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Tên chuyến đi</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              placeholder="Tên..."
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Số lượng người đi</label>
-                            <input
-                              id="number-dev"
-                              type="number"
-                              class="form-control resume"
-                              placeholder="0"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">
-                              Giá chuyến đi (VND)
-                            </label>
-                            <input
-                              id="budget"
-                              type="number"
-                              class="form-control resume"
-                              placeholder="3000000 VND"
-                            ></input>
-                          </div>
-                        </div>
-
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian đi</label>
-                            <input
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                              readOnly
-                              value=""
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted"></label>
-                            <input
-                              id="duration"
-                              type="date"
-                              class="form-control resume"
-                              placeholder=""
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Nơi khởi hành</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              placeholder="Title..."
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Khác</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              placeholder="Title..."
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="mb-3">
-                          <label for="imageUpload" class="form-label">
-                            Add an image:
-                          </label>
-
-                          <input
-                            type="file"
-                            class="form-control"
-                            id="imageUpload"
-                            name="imageUpload"
-                          />
-                        </div>
-                        <div class="col-md-24">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">
-                              Hiring request description
-                            </label>
-                            <Editor
-                              class="fix-height"
-                              id="description"
-                              apiKey="axy85kauuja11vgbfrm96qlmduhgfg6egrjpbjil00dfqpwf"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
+                    > <ProgressB/>
+                    
+                
+{/* 
                       <center>
                         <button
                           type="button"
@@ -183,7 +56,9 @@ const CreateTourStaff = () => {
                         <button type="button" className="btn btn-danger">
                           Cancel
                         </button>
-                      </center>
+                      </center> */}
+
+                      
                     </form>
                   </div>
                 </div>
