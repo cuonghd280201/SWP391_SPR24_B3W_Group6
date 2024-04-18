@@ -9,6 +9,7 @@ export default {
             getAllTour: "/tour/all",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+            getTourDetailByID: "/staff/tourTime/get/${tourId}"
         },     
     }
 }
