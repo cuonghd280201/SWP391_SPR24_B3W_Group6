@@ -1,4 +1,4 @@
-const SERVICE_URL = "https://wehireapi.azurewebsites.net/api";
+const SERVICE_URL = "http://26.84.100.30:9000/tour-booking/api/v1";
 
 export default {
     base: SERVICE_URL,
@@ -6,9 +6,9 @@ export default {
         auth: {         
         },
         tour: {
-            getAllTour: "/Tour"
-        },
-        
+            getAllTour: "/tour/all",
+            paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
+            sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+        },     
     }
-
 }
