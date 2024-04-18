@@ -11,20 +11,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class TourDetailDTO {
+public class TourImageDTO {
     private UUID id;
 
-    private String time;
-
-    private String vehicle;
-
-    private String location;
-
-    private String food;
-
-    private String hotel;
-
-    private String createBy;
-
-    private boolean deleted;
+    private String image;
 }

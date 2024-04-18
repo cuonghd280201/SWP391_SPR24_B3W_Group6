@@ -1,16 +1,13 @@
 package tourbooking.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import tourbooking.dto.BaseResponseDTO;
-import tourbooking.dto.TourCreateForm;
-import tourbooking.dto.TourDetailCreateForm;
-import tourbooking.dto.TourTimeCreateForm;
-import tourbooking.entity.Tour.Tour;
-import tourbooking.entity.Tour.TourDetail;
-import tourbooking.entity.Tour.TourTime;
+import tourbooking.common.TourStatus;
+import tourbooking.dto.*;
+import tourbooking.entity.Tour.*;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
@@ -19,6 +16,7 @@ import tourbooking.service.TourDetailService;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,12 +24,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StaffServiceImpl implements StaffService {
 
+    private final ModelMapper modelMapper;
     private final TourRepository tourRepository;
     private final TourTimeRepository tourTimeRepository;
+    private final TourScheduleRepository tourScheduleRepository;
+    private final TourImagesRepository tourImagesRepository;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
     private final TourTimeServiceImpl tourTimeService;
     private final TourDetailServiceImpl tourDetailService;
+    private final TourScheduleServiceImpl tourScheduleService;
+    private final TourImageServiceImpl tourImageService;
 
     @Override
     public ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm) {
@@ -43,6 +46,9 @@ public class StaffServiceImpl implements StaffService {
         TourDetail tourDetail = tourDetailService.createTourDetail(user, tourCreateForm.getTourDetailCreateForm());
 
         Set<TourTime> tourTimeSet = tourTimeService.createTime(tourCreateForm.getTourTimeCreateFormSet());
+        Set<TourSchedule> tourScheduleSet = tourScheduleService.createTourSchedule(tourCreateForm.getListTourSchedule());
+        Set<TourImages> tourImagesSet = tourImageService.createImage(tourCreateForm.getTourImageCreateForms());
+
         Tour tour = new Tour();
         tour.setTitle(tourCreateForm.getTitle());
         tour.setStarLocation(tourCreateForm.getStarLocation());
@@ -52,13 +58,26 @@ public class StaffServiceImpl implements StaffService {
         tour.setCoverImage(tourCreateForm.getCoverImage());
         tour.setCity(cityRepository.findByName(tourCreateForm.getCity())
                 .orElseThrow(() -> new ResourceNotFoundException("City not found!")));
+        tour.setTourStatus(TourStatus.ACTIVE);
         tour.setCreateBy(user.getName());
         tour.setTourDetail(tourDetail);
         tour.setTourTimeSet(tourTimeSet);
+        tour.setTourSchedules(tourScheduleSet);
+        tour.setTourImagesSet(tourImagesSet);
         tourRepository.save(tour);
         for(TourTime tourTime: tourTimeSet) {
             tourTime.setTour(tour);
             tourTimeRepository.save(tourTime);
+        }
+
+        for(TourSchedule tourSchedule : tourScheduleSet){
+            tourSchedule.setTour(tour);
+            tourScheduleRepository.save(tourSchedule);
+        }
+
+        for(TourImages tourImages : tourImagesSet){
+            tourImages.setTour(tour);
+            tourImagesRepository.save(tourImages);
         }
 
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Create Successfully"));
@@ -70,8 +89,11 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public ResponseEntity<BaseResponseDTO> viewTourDetails(UUID id) {
-        return null;
+    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(UUID tourId) {
+
+        Tour tour = tourRepository.findById(tourId).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+        TourInfoDTO tourInfoDTO = convertToTourInfoDTO(tour);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.FOUND, "Get Tour Detail Successfully!", tourInfoDTO));
     }
 
     @Override
@@ -95,5 +117,48 @@ public class StaffServiceImpl implements StaffService {
 
 
         return null;
+    }
+
+    public TourInfoDTO convertToTourInfoDTO(Tour tour){
+        TourInfoDTO tourInfoDTO = modelMapper.map(tour, TourInfoDTO.class);
+        if(tour.getTourSchedules() == null){
+            tourInfoDTO.setTourSchedules(null);
+        }
+        if(tour.getTourTimeSet() == null){
+            tourInfoDTO.setTourTimeSet(null);
+        }
+        if(tour.getTourImagesSet() == null){
+            tourInfoDTO.setTourImagesSet(null);
+        }
+        if(tour.getTourDetail() == null){
+            tourInfoDTO.setTourDetail(null);
+        }
+
+        TourDetailDTO tourDetailDTO = modelMapper.map(tour.getTourDetail(), TourDetailDTO.class);
+
+        Set<TourImageDTO> tourImageDTOSet = new HashSet<>();
+        for(TourImages tourImages : tour.getTourImagesSet()){
+            TourImageDTO tourImageDTO = modelMapper.map(tourImages, TourImageDTO.class);
+            tourImageDTOSet.add(tourImageDTO);
+        }
+
+        Set<TourScheduleDTO> tourScheduleDTOSet = new HashSet<>();
+        for(TourSchedule tourSchedule : tour.getTourSchedules()){
+            TourScheduleDTO tourScheduleDTO = modelMapper.map(tourSchedule, TourScheduleDTO.class);
+            tourScheduleDTOSet.add(tourScheduleDTO);
+        }
+
+        Set<TourTimeDTO> tourTimeDTOSet = new HashSet<>();
+        for(TourTime tourTime : tour.getTourTimeSet()){
+            TourTimeDTO tourTimeDTO = modelMapper.map(tourTime, TourTimeDTO.class);
+            tourTimeDTOSet.add(tourTimeDTO);
+        }
+
+        tourInfoDTO.setTourDetail(tourDetailDTO);
+        tourInfoDTO.setTourImagesSet(tourImageDTOSet);
+        tourInfoDTO.setTourSchedules(tourScheduleDTOSet);
+        tourInfoDTO.setTourTimeSet(tourTimeDTOSet);
+
+        return tourInfoDTO;
     }
 }

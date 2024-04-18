@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import tourbooking.entity.Tour.Tour;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface TourRepository extends JpaRepository<Tour, UUID> {
+
+
     Page<Tour> findAll(Pageable pageable);
 
     @Query("SELECT DISTINCT t FROM Tour t " +

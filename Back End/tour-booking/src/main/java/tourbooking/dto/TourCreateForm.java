@@ -35,7 +35,9 @@ public class TourCreateForm {
 
     private TourDetailCreateForm tourDetailCreateForm;
 
-    private List<TourScheduleCreateForm> listTourSchedule;
+    private Set<TourScheduleCreateForm> listTourSchedule;
 
     private Set<TourTimeCreateForm> tourTimeCreateFormSet;
+
+    private Set<TourImageCreateForm> tourImageCreateForms;
 }

@@ -4,7 +4,8 @@ import tourbooking.dto.TourScheduleCreateForm;
 import tourbooking.entity.Tour.TourSchedule;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TourScheduleService {
-    TourSchedule createTourSchedule(List<TourScheduleCreateForm> listTourScheduleCreateForm);
+    Set<TourSchedule> createTourSchedule(Set<TourScheduleCreateForm> listTourScheduleCreateForm);
 }

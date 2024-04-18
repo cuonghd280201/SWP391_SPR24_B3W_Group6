@@ -7,10 +7,7 @@ import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.repository.TourScheduleRepository;
 import tourbooking.service.TourScheduleService;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +16,18 @@ public class TourScheduleServiceImpl implements TourScheduleService {
     private final TourScheduleRepository tourScheduleRepository;
 
     @Override
-    public TourSchedule createTourSchedule(List<TourScheduleCreateForm> listTourScheduleCreateForm) {
+    public Set<TourSchedule> createTourSchedule(Set<TourScheduleCreateForm> listTourScheduleCreateForm) {
 
-//        List<TourSchedule> listTourSchedule = new List<TourSchedule>();
-//        for(TourScheduleCreateForm dto : listTourScheduleCreateForm){
-//            TourSchedule newSchedule = new TourSchedule();
-//            newSchedule.setDay(dto.getDay());
-//            newSchedule.setDescription(dto.getDescription());
-//            listTourSchedule.add(newSchedule);
-//        }
+        Set<TourSchedule> listTourSchedule = new HashSet<>();
+        for(TourScheduleCreateForm dto : listTourScheduleCreateForm){
+            TourSchedule newSchedule = new TourSchedule();
+            newSchedule.setDay(dto.getDay());
+            newSchedule.setDescription(dto.getDescription());
+            listTourSchedule.add(newSchedule);
+            tourScheduleRepository.save(newSchedule);
+        }
 
 
-        return null;
+        return listTourSchedule;
     }
 }
