@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button } from 'reactstrap';
 import tourServices from "../../services/tour.services";
+import { Link } from "react-router-dom";
 
 
 // Import Swiper styles
@@ -187,13 +188,20 @@ const Home = () => {
                         <div className="col-lg-9">
                             <div className="row">
                                 {tours.map(tour => (
-                                    <div className="col-sm col-md-6 col-lg-4 ftco-animate">
+                                    <div key={tour.id} className="col-sm col-md-6 col-lg-4 ftco-animate">
                                         <div className="destination">
-                                            <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
-                                                <div className="icon d-flex justify-content-center align-items-center">
-                                                    <span className="icon-link" />
-                                                </div>
-                                            </a>
+                                            <Link
+                                                to="/detailTour"
+                                                className="text-dark"
+                                                state={{ tourId: tour.id }} // Pass tourId as state data
+                                            >
+                                                <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                                    <div className="icon d-flex justify-content-center align-items-center">
+                                                        <span className="icon-link" />
+                                                    </div>
+                                                </a>
+                                            </Link>
+
                                             <div className="text p-3">
                                                 <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
                                                 <div className="d-flex">
