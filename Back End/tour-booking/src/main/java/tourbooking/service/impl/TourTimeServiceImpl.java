@@ -7,9 +7,11 @@ import tourbooking.common.TimeStatus;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourScheduleCreateForm;
 import tourbooking.dto.TourTimeCreateForm;
+import tourbooking.dto.TourTimeDTO;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Tour.TourTime;
 import tourbooking.entity.Tour.TourVisitor;
+import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.OrderRepository;
 import tourbooking.repository.TourTimeRepository;
 import tourbooking.repository.TourVisitorRepository;
@@ -40,12 +42,32 @@ public class TourTimeServiceImpl implements TourTimeService {
             tourTime.setEndDate(tourTimeCreateForm.getEndDate());
             tourTime.setStartTime(tourTimeCreateForm.getStartTime());
             tourTime.setSlotNumber(tourTimeCreateForm.getSlotNumber());
+            tourTime.setSlotNumberActual(0);
             tourTime.setTimeStatus(TimeStatus.ACTIVE);
             tourTimeList.add(tourTime);
             tourTimeRepository.save(tourTime);
         }
 
         return tourTimeList;
+    }
+
+    @Override
+    public void updateTime(TourTimeDTO tourTimeDTO, TourTime tourTime) {
+            tourTime.setStartDate(tourTimeDTO.getStartDate());
+            tourTime.setEndDate(tourTimeDTO.getEndDate());
+            tourTime.setStartTime(tourTime.getStartTime());
+            tourTime.setSlotNumber(tourTimeDTO.getSlotNumber());
+            tourTime.setSlotNumberActual(tourTimeDTO.getSlotNumberActual());
+            tourTime.setCreateDate(tourTimeDTO.getCreateDate());
+            tourTime.setTimeStatus(tourTimeDTO.getTimeStatus());
+            tourTime.setDeleted(tourTimeDTO.isDeleted());
+            tourTimeRepository.save(tourTime);
+    }
+
+    @Override
+    public TourTime findById(UUID id) {
+        return tourTimeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Time not found!"));
     }
 
     @Override
