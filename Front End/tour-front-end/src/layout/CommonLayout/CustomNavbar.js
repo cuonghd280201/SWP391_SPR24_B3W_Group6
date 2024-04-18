@@ -12,7 +12,9 @@ import {
     Col,
     Row,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from '@firebase/auth';
+import { auth } from '../../utils/firebase';
 
 
 
@@ -48,13 +50,27 @@ const CustomNavbar = (props) => {
     };
 
 
-    const { user, logOut } = UserAuth();
+    // const { user, logOut } = UserAuth();
 
-    const handleSignOut = async () => {
-        try {
-            await logOut()
-        } catch (error) {
-            console.log(error)
+    // const handleSignOut = async () => {
+    //     try {
+    //         await logOut()
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try{
+            await signOut(auth);
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate("/login")
+        }catch(error){
+            console.error(error);
         }
     }
 
@@ -92,7 +108,7 @@ const CustomNavbar = (props) => {
                                             >
                                                 <div>
                                                     <img
-                                                        src={imgUser}
+                                                        src={user.photoURL}
                                                         className="ms-1 px-0"
                                                         style={{
                                                             borderRadius: "7px",
@@ -102,7 +118,7 @@ const CustomNavbar = (props) => {
                                                     />
                                                 </div>
                                                 <div className="me-1 d-flex flex-column align-items-center">
-                                                    <p>Welcome, {user?.displayName}</p>
+                                                <p>Welcome, {user && user.email}</p>
                                                     {/* <span>{roleString}</span> */}
                                                 </div>
                                             </DropdownToggle>
@@ -133,7 +149,7 @@ const CustomNavbar = (props) => {
 
                                                 <DropdownItem style={{ padding: "0px" }}>
                                                     <div>
-                                                        <Link  className="dropdown-item" onClick={handleSignOut}>
+                                                        <Link  className="dropdown-item" onClick={handleLogout}>
                                                             Đăng Xuất
                                                         </Link>
 
