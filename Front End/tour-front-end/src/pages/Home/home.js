@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button } from 'reactstrap';
+import tourServices from "../../services/tour.services";
 
 
 // Import Swiper styles
@@ -11,8 +12,36 @@ import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input,
 
 
 const Home = () => {
+    const [tours, setTours] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
 
+    useEffect(() => {
+        fetchTourData();
+    }, []);
+
+    const fetchTourData = async (currentPage = 0, pageSize = 6, sortBy = 'title', sortOrder = 'desc') => {
+        try {
+            const response = await tourServices.getAllTourAndPaging(currentPage, pageSize, sortBy, sortOrder);
+            console.log("Response:", response); // Log the response object
+
+            setTours(response.data.data);
+            setLoading(false);
+
+        } catch (error) {
+            console.error("Error fetching tours:", error);
+            setError(error);
+            setLoading(false);        }
+    };
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
 
@@ -131,38 +160,42 @@ const Home = () => {
                             </div>
 
                         </div>{/* END*/}
+
+                        {/* <div key={tour.id} className="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div className="destination">
+                            <a href={`/detailTour/${tour.id}`} className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                <div className="icon d-flex justify-content-center align-items-center">
+                                    <span className="icon-link" />
+                                </div>
+                            </a> */}
                         <div className="col-lg-9">
                             <div className="row">
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
+                            {tours.map(tour => (
+                                <div  className="col-sm col-md-6 col-lg-4 ftco-animate">
                                     <div className="destination">
-                                        <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-1.jpg)' }}>
+                                        <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})`}}>
                                             <div className="icon d-flex justify-content-center align-items-center">
                                                 <span className="icon-link" />
                                             </div>
                                         </a>
                                         <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
+                                        <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
                                             <div className="d-flex">
                                                 <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
+                                                <h4><a href="#">{tour.title}</a></h4>
                                                     <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
+                                                     
                                                     </p>
                                                 </div>
                                                 <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
+                                                <span className="price per-price">{tour.price}<br /><small>/tour</small></span>
                                                 </div>
                                             </div>
-                                            <h4>Mã Chuyến Đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
+                                            <h3>Mã Chuyến Đi</h3>
+                                            <span><i className="icon-map-o" /> {tour.id}</span>
+                                            <p>Nơi Khởi Hành:  {tour.starLocation}</p>
+                                            <p>Nơi Kết Thúc:  {tour.endLocation}</p>
+                                            <h3>Giá : {tour.price}</h3>
                                             <hr />
                                             <p className="bottom-area d-flex">
                                                 <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
@@ -171,6 +204,8 @@ const Home = () => {
                                         </div>
                                     </div>
                                 </div>
+                                                ))}
+{/* 
                                 <div className="col-sm col-md-6 col-lg-4 ftco-animate">
                                     <div className="destination">
                                         <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-2.jpg)' }}>
@@ -360,7 +395,7 @@ const Home = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="row mt-5">
                                 <div className="col text-center">

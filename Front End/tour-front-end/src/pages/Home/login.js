@@ -2,13 +2,29 @@ import React, { useEffect } from 'react';
 import { UserAuth } from "../../utils/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { signInWithPopup } from '@firebase/auth';
+import { auth, googleAuthProvider } from '../../utils/firebase';
 
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const handleSignWithGoogle = async () => {
+        try{
+            const result  = await signInWithPopup(auth,googleAuthProvider);
+            console.log(result);  
+            localStorage.setItem('token', result.user.accessToken);
+            localStorage.setItem('user', JSON.stringify(result.user));
+            navigate("/");  
+        }catch(error){
+            console.error(error);
+        }
+
+    }
 
 const { googleSignIn, user } = UserAuth();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -45,7 +61,7 @@ const { googleSignIn, user } = UserAuth();
                                 <i className="fa fa-facebook-official" />
                                 Facebook
                             </a>
-                            <a href="#" className="btn-google m-b-20" onClick={handleGoogleSignIn}>
+                            <a href="#" className="btn-google m-b-20" onClick={handleSignWithGoogle}>
                                 <img src="images/icons/icon-google.png" alt="GOOGLE" />
                                 Google
                             </a>
