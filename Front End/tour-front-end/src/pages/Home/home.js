@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button } from 'reactstrap';
 import tourServices from "../../services/tour.services";
@@ -16,15 +16,20 @@ const Home = () => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
+    const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+    const [totalPages, setTotalPages] = useState(1); // Add state for total pages
+
 
 
     useEffect(() => {
         fetchTourData();
-    }, []);
+    }, [currentPage, pageSize]);
 
-    const fetchTourData = async (currentPage = 0, pageSize = 6, sortBy = 'title', sortOrder = 'desc') => {
+
+    const fetchTourData = async (sortBy = 'title', sortOrder = 'desc') => {
         try {
-            const response = await tourServices.getAllTourAndPaging(currentPage, pageSize, sortBy, sortOrder);
+            const response = await tourServices.getAllTourAndPaging(currentPage - 1, pageSize, sortBy, sortOrder);
             console.log("Response:", response); // Log the response object
 
             setTours(response.data.data);
@@ -33,7 +38,18 @@ const Home = () => {
         } catch (error) {
             console.error("Error fetching tours:", error);
             setError(error);
-            setLoading(false);        }
+            setLoading(false);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNext = () => {
+        setCurrentPage(currentPage + 1);
     };
     if (loading) {
         return <div>Loading...</div>;
@@ -170,42 +186,42 @@ const Home = () => {
                             </a> */}
                         <div className="col-lg-9">
                             <div className="row">
-                            {tours.map(tour => (
-                                <div  className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})`}}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                        <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                <h4><a href="#">{tour.title}</a></h4>
-                                                    <p className="rate">
-                                                     
-                                                    </p>
+                                {tours.map(tour => (
+                                    <div className="col-sm col-md-6 col-lg-4 ftco-animate">
+                                        <div className="destination">
+                                            <a href="/detailTour" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                                <div className="icon d-flex justify-content-center align-items-center">
+                                                    <span className="icon-link" />
                                                 </div>
-                                                <div className="two">
-                                                <span className="price per-price">{tour.price}<br /><small>/tour</small></span>
+                                            </a>
+                                            <div className="text p-3">
+                                                <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
+                                                <div className="d-flex">
+                                                    <div className="one">
+                                                        <h4><a href="#">{tour.title}</a></h4>
+                                                        <p className="rate">
+
+                                                        </p>
+                                                    </div>
+                                                    <div className="two">
+                                                        <span className="price per-price">{tour.price}<br /><small>/tour</small></span>
+                                                    </div>
                                                 </div>
+                                                <h3>Mã Chuyến Đi</h3>
+                                                <span><i className="icon-map-o" /> {tour.id}</span>
+                                                <p>Nơi Khởi Hành:  {tour.starLocation}</p>
+                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>
+                                                <h3>Giá : {tour.price}</h3>
+                                                <hr />
+                                                <p className="bottom-area d-flex">
+                                                    <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
+                                                    <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
+                                                </p>
                                             </div>
-                                            <h3>Mã Chuyến Đi</h3>
-                                            <span><i className="icon-map-o" /> {tour.id}</span>
-                                            <p>Nơi Khởi Hành:  {tour.starLocation}</p>
-                                            <p>Nơi Kết Thúc:  {tour.endLocation}</p>
-                                            <h3>Giá : {tour.price}</h3>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                                                ))}
-{/* 
+                                ))}
+                                {/* 
                                 <div className="col-sm col-md-6 col-lg-4 ftco-animate">
                                     <div className="destination">
                                         <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-2.jpg)' }}>
@@ -401,13 +417,13 @@ const Home = () => {
                                 <div className="col text-center">
                                     <div className="block-27">
                                         <ul>
-                                            <li><a href="#">&lt;</a></li>
-                                            <li className="active"><span>1</span></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">&gt;</a></li>
+                                            <li><a href="#" onClick={handlePrevious}>&lt;</a></li>
+                                            {Array.from({ length: totalPages }, (_, index) => (
+                                                <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
+                                                    <a href="#" onClick={() => setCurrentPage(index + 1)}>{index + 1}</a>
+                                                </li>
+                                            ))}
+                                            <li><a href="#" onClick={handleNext}>&gt;</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -606,7 +622,7 @@ const Home = () => {
                                         </div>
                                     </div>
                                     <h4>Mã Chuyến Đi</h4>
-                                    <span><i className="icon-map-o"/> NDSGN1371-002-130424VU-H</span>
+                                    <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
 
                                     <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
                                     <h4>Giá : 7.490.000</h4>
