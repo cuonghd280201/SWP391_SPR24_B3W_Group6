@@ -13,8 +13,10 @@ import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
 import tourbooking.service.StaffService;
 import tourbooking.service.TourDetailService;
+import tourbooking.utils.DateTimeUtils;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,8 +40,6 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm) {
-
-
         User user = userRepository.findByFireBaseUid(principal.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
 
@@ -84,6 +84,51 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public ResponseEntity<BaseResponseDTO> addMoreTime(TourTimeAddMoreForm tourTimeAddMoreForm) {
+        Tour tour = tourRepository.findById(tourTimeAddMoreForm.getId()).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+
+        Set<TourTime> tourTimeSet = tourTimeService.createTime(tourTimeAddMoreForm.getTourTimeCreateFormSet());
+        tour.setTourTimeSet(tourTimeSet);
+        for(TourTime tourTime : tourTimeSet){
+            tourTime.setTour(tour);
+            tourTimeRepository.save(tourTime);
+        }
+
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Add More Time Successfully"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> updateTime(TourTimeDTO tourTimeDTO) {
+        TourTime tourTime = tourTimeService.findById(tourTimeDTO.getId());
+        int dateCompareResult = DateTimeUtils.actualCompareInfo(LocalDate.now(), tourTime.getEndDate());
+        if(tourTime.getSlotNumberActual() == 0 || dateCompareResult > 0){
+            tourTimeService.updateTime(tourTimeDTO, tourTime);
+        }else {
+            return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED, "This Time has been booked!"));
+        }
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Time Successfully!"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> addMoreImage(TourImageAddMoreForm tourImageAddMoreForm) {
+        Tour tour = tourRepository.findById(tourImageAddMoreForm.getId()).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+
+        Set<TourImages> tourImagesSet = tourImageService.createImage(tourImageAddMoreForm.getTourImageCreateFormSet());
+        tour.setTourImagesSet(tourImagesSet);
+        for(TourImages tourImages : tourImagesSet){
+            tourImages.setTour(tour);
+            tourImagesRepository.save(tourImages);
+        }
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Add More Images Successfully"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> updateImage(TourImageDTO tourImageDTO) {
+        tourImageService.updateImage(tourImageDTO);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Image Successfully!"));
+    }
+
+    @Override
     public ResponseEntity<BaseResponseDTO> updateTour(Principal principal, Tour tour) {
         return null;
     }
@@ -108,14 +153,6 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<BaseResponseDTO> createTime(TourTimeCreateForm tourTimeCreateForm) {
-
-
-
         return null;
     }
 
