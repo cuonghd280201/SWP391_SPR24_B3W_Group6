@@ -82,6 +82,8 @@ const ListTourStaffDetail = () => {
                         <h4 style={{ fontSize: 16, marginTop: 10 }}>
                           Mã Chuyến Đi:{" "}
                           <span style={{ color: "#666" }}>
+
+
                             {tourDetailCustomer?.id}
                           </span>
                         </h4>
@@ -98,6 +100,7 @@ const ListTourStaffDetail = () => {
                           className="text-primary"
                           style={{ fontSize: 14, marginBottom: 5 }}
                         >
+
                           Giờ đi: {tourDetailCustomer?.starLocation}
 
                         </p>
@@ -116,6 +119,7 @@ const ListTourStaffDetail = () => {
                         <div className="row">
                           <div className="col-md-5 left">
                             <div className="box-order">
+
                               <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
                               </p>
                                 {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
@@ -180,6 +184,7 @@ const ListTourStaffDetail = () => {
                     </section>
                   </div>
                 </div>
+
               </div>
               <section className="section-07-map mb-5">
                 <div class="container-fluid">
