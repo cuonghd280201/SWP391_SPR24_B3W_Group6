@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from 'reactstrap';
 
 import "../Admin/dashboard.css";
 import { Layout } from "antd";
 import { Link, useLocation } from 'react-router-dom';
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
+
 import tourServices from "../../services/tour.services";
 const { Content } = Layout;
 
-const ListTourStaffDetail = () => {
+const OrderBookTourDetail = () => {
 
   const { state } = useLocation();
 
@@ -47,10 +47,19 @@ const ListTourStaffDetail = () => {
 
 
   return (
+
+    
     <Layout style={{ minHeight: "100vh" }}>
-      <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
+      <section className="ftco-section ftco-counter img" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col md="10">
+                            {/* Your content here */}
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
       <Layout>
-        <NavBarWebStaff></NavBarWebStaff>
         <div
           style={{
             padding: "30px",
@@ -288,4 +297,4 @@ const ListTourStaffDetail = () => {
   );
 };
 
-export default ListTourStaffDetail;
+export default OrderBookTourDetail;

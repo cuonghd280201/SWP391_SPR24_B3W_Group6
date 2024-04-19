@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Link, useLocation } from 'react-router-dom';
 
 
 // Import Swiper styles
@@ -8,12 +9,34 @@ import 'swiper/css';
 import { StaticImage } from 'gatsby-plugin-image';
 import SwiperCore from 'swiper';
 import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import tourServices from "../../services/tour.services";
 
 
 
 const FindTour = () => {
 
-    const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
+    const { state } = useLocation();
+
+    const [tourDetailCustomer, setTourDetailCustomer] =
+    useState(null);
+    const fetchTourDetailCustomer = async () => {
+        let response;
+        try{
+            response = await tourServices.getDetailTourByCustomer(state?.tourId);
+            console.log("Response:", response); // Log the response object
+            setTourDetailCustomer(response.data.data);
+            
+            return response;
+
+        }catch(error){
+            console.error("Error fetching tour:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchTourDetailCustomer();
+      }, []);
+    
 
     return (
         <>
@@ -156,14 +179,7 @@ const FindTour = () => {
                                             <div className="d-flex">
                                                 <div className="one">
                                                     <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
+                                            
                                                 </div>
                                                 <div className="two">
                                                     <span className="price per-price">7.450.000<br /><small>/tour</small></span>
@@ -182,196 +198,7 @@ const FindTour = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-2.jpg)' }}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                            <p>14/04/2024 - 5N4Đ - Giờ đi: 09:50</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
-                                                </div>
-                                                <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
-                                                </div>
-                                            </div>
-                                            <h4>Mã chuyến đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-3.jpg)' }}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                            <p>18/04/2024 - 5N4Đ - Giờ đi: 12:50</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
-                                                </div>
-                                                <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/tour</small></span>
-                                                </div>
-                                            </div>
-                                            <h4>Mã chuyến đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-4.jpg)' }}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
-                                                </div>
-                                                <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
-                                                </div>
-                                            </div>
-                                            <h4>Mã chuyến đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-5.jpg)' }}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
-                                                </div>
-                                                <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
-                                                </div>
-                                            </div>
-                                            <h4>Mã chuyến đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm col-md-6 col-lg-4 ftco-animate">
-                                    <div className="destination">
-                                        <a href="#" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: 'url(images/hotel-5.jpg)' }}>
-                                            <div className="icon d-flex justify-content-center align-items-center">
-                                                <span className="icon-link" />
-                                            </div>
-                                        </a>
-                                        <div className="text p-3">
-                                            <p>13/04/2024 - 5N4Đ - Giờ đi: 18:50</p>
-                                            <div className="d-flex">
-                                                <div className="one">
-                                                    <h3><a href="#">Hà Nội - Vịnh Hạ Long - KDL Tràng An - Tuyệt Tịnh Cốc - Chùa Tam Chúc</a></h3>
-                                                    <p className="rate">
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star" />
-                                                        <i className="icon-star-o" />
-                                                        <span>8 Rating</span>
-                                                    </p>
-                                                </div>
-                                                <div className="two">
-                                                    <span className="price per-price">7.450.000<br /><small>/chuyến đi</small></span>
-                                                </div>
-                                            </div>
-                                            <h4>Mã chuyến đi</h4>
-                                            <span><i className="icon-map-o" /> NDSGN1371-002-130424VU-H</span>
-
-                                            <p>Nơi Khởi Hành:  TP. Hồ Chí Minh</p>
-                                            <h4>Giá : 7.490.000</h4>
-                                            <hr />
-                                            <p className="bottom-area d-flex">
-                                                <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
-                                                <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div className="row mt-5">
                                 <div className="col text-center">

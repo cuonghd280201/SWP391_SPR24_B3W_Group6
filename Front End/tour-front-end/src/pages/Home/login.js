@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { signInWithPopup } from '@firebase/auth';
 import { auth, googleAuthProvider } from '../../utils/firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -17,6 +19,8 @@ const Login = () => {
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
             navigate("/");  
+            toast.success("Login successfully!")
+
         }catch(error){
             console.error(error);
         }

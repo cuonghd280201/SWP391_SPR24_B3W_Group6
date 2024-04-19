@@ -62,7 +62,6 @@ const ListTourBook = () => {
                                                                         <div>
                                                                             <Button color="link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                                                 Đặt ngày 01/12/2022
-
                                                                             </Button>
                                                                             <div className="s-rate">
                                                                                 <span className="s-comment">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Input, Button, Select } from "antd";
 import { Row, Col } from "reactstrap";
 import {
@@ -6,9 +6,11 @@ import {
   RightOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons"; // Import arrow icons
+import { Link } from "react-router-dom";
 
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
+import tourServices from "../../services/tour.services";
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -84,13 +86,41 @@ const ListTourStaff = () => {
     } else if (value === "date") {
       // Sort data by date
       sortedData.sort((a, b) => new Date(a.date) - new Date(b.date));
-    }else if (value === "date2") {
-        // Sort data by date
-        sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-      }
+    } else if (value === "date2") {
+      // Sort data by date
+      sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
 
     // Update the state with the sorted data
     setDummyData(sortedData);
+  };
+
+  //List Tour Staff
+  const [tours, setTours] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+
+
+  useEffect(() => {
+    fetchTourData();
+  }, [currentPage, pageSize]);
+
+
+  const fetchTourData = async (sortBy = 'title', sortOrder = 'desc') => {
+    try {
+      const response = await tourServices.getAllTourAndPaging(currentPage - 1, pageSize, sortBy, sortOrder);
+      console.log("Response:", response); // Log the response object
+
+      setTours(response.data.data);
+      setLoading(false);
+
+    } catch (error) {
+      console.error("Error fetching tours:", error);
+      setError(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -180,86 +210,90 @@ const ListTourStaff = () => {
                   <div className="card border-5 border-top border-success-subtle">
                     <div className="card-body-dashboard">
                       <div className="destination">
-                        <div className="text p-3">
-                          <div className="row">
-                            {/* Tour details */}
-                            <div className="col-4">
-                              <img
-                                src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg"
-                                className="img-fluid rounded"
-                                alt="Tour Image"
-                                style={{
-                                  width: "100%",
-                                  height: 200,
-                                  objectFit: "cover",
-                                }}
-                              />
-                            </div>
-                            <div className="col-4">
-                              <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                                Mã Chuyến Đi:{" "}
-                                <span style={{ color: "#666" }}>
-                                  {tour.title}
-                                </span>
-                              </h4>
-                              <p style={{ fontSize: 14, marginBottom: 5 }}>
-                                <span style={{ color: "#666" }}>
-                                  {tour.date}
-                                </span>
-                              </p>
-                              <p
-                                className="text-primary"
-                                style={{ fontSize: 14, marginBottom: 5 }}
-                              >
-                                Giờ đi: 18:50
-                              </p>
-                            </div>
-                            <div className="col-4">
-                              <p
-                                className="text-right"
-                                style={{
-                                  fontSize: 18,
-                                  color: "#ff5722",
-                                  marginBottom: 5,
-                                }}
-                              >
-                                {tour.price} VNĐ
-                              </p>
-                              <p className=" d-flex">
-                                <span className="ml-auto">
-                                  <a
-                                    href="/listTourStaffDetail"
-                                    style={{
-                                      fontSize: "15px",
-                                      color: "blueviolet",
-                                      textDecoration: "none",
-                                      padding: "8px 16px",
-                                      border: "1px solid blueviolet",
-                                      borderRadius: "4px",
-                                      transition:
-                                        "background-color 0.3s, color 0.3s",
-                                      display: "flex",
-                                      alignItems: "center",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.target.style.backgroundColor =
-                                        "blueviolet";
-                                      e.target.style.color = "#fff";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.target.style.backgroundColor =
-                                        "transparent";
-                                      e.target.style.color = "blueviolet";
-                                    }}
-                                  >
-                                    Xem chi tiết
+                        {tours.map(tour => (
+                          <div className="text p-3">
+                            <div className="row">
+                              {/* Tour details */}
+                              < div className="col-4" >
+                                <Link
+                                  to="/listTourStaffDetail"
+                                  className="text-dark"
+                                  state={{ tourId: tour.id }} // Pass tourId as state data
+                                >
+                                  <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                    <div className="icon d-flex justify-content-center align-items-center">
+                                      <span className="icon-link" />
+                                    </div>
                                   </a>
-                                </span>
-                              </p>
+                                </Link>
+                              </div>
+                              <div className="col-4">
+                                <h4 style={{ fontSize: 16, marginTop: 10 }}>
+                                  Mã Chuyến Đi:{" "}
+                                  <span style={{ color: "#666" }}>
+                                    {tours.id}
+                                  </span>
+                                </h4>
+                                <p style={{ fontSize: 14, marginBottom: 5 }}>
+                                  <span style={{ color: "#666" }}>
+                                  Tên Chuyến Đi: {tour.title}
+                                  </span>
+                                </p>
+                                <p
+                                  className="text-primary"
+                                  style={{ fontSize: 14, marginBottom: 5 }}
+                                >
+                                  Nơi Khởi Hành: {tour.starLocation}
+                                </p>
+                              </div>
+                              <div className="col-4">
+                                <p
+                                  className="text-right"
+                                  style={{
+                                    fontSize: 18,
+                                    color: "#ff5722",
+                                    marginBottom: 5,
+                                  }}
+                                >
+                                  {tour.price} VNĐ
+                                </p>
+                                <p className=" d-flex">
+                                  <span className="ml-auto">
+                                    <a
+                                      href="/listTourStaffDetail"
+                                      style={{
+                                        fontSize: "15px",
+                                        color: "blueviolet",
+                                        textDecoration: "none",
+                                        padding: "8px 16px",
+                                        border: "1px solid blueviolet",
+                                        borderRadius: "4px",
+                                        transition:
+                                          "background-color 0.3s, color 0.3s",
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.target.style.backgroundColor =
+                                          "blueviolet";
+                                        e.target.style.color = "#fff";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.target.style.backgroundColor =
+                                          "transparent";
+                                        e.target.style.color = "blueviolet";
+                                      }}
+                                    >
+                                      Xem chi tiết
+                                    </a>
+                                  </span>
+                                </p>
+                              </div>
                             </div>
+                            <hr />
                           </div>
-                          <hr />
-                        </div>
+                        ))}
+
                       </div>
                     </div>
                   </div>
@@ -296,8 +330,8 @@ const ListTourStaff = () => {
             </div>
           </Content>
         </div>
-      </Layout>
-    </Layout>
+      </Layout >
+    </Layout >
   );
 };
 

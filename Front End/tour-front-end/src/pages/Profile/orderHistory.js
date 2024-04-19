@@ -120,7 +120,7 @@ const OrderHistory = () => {
                                                                     <p className="card-text">
                                                                         <small className="text-muted">1 người, 0 đêm</small>
                                                                     </p>
-                                                                    
+
                                                                 </div>
                                                             </div>
                                                         </Col>
@@ -128,12 +128,43 @@ const OrderHistory = () => {
                                                             <h6 className="text-primary mb-2">Quá Hạn thanh toán</h6>
                                                             <h5 className="text-primary fw-bold">₫</h5>
                                                             <div className="destination">
-                                                                        <div className="text p-2">
-                                                                            <p className="bottom-area d-flex">
-                                                                                <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
+                                                                <div className="text p-2">
+                                                                    <p className="bottom-area d-flex">
+                                                                        <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
+                                                                    </p>
+                                                                </div>
+                                                                <p className=" d-flex">
+                                                                    <span className="ml-auto">
+                                                                        <a
+                                                                            href="/orderBookTouDetail"
+                                                                            style={{
+                                                                                fontSize: "15px",
+                                                                                color: "blueviolet",
+                                                                                textDecoration: "none",
+                                                                                padding: "8px 16px",
+                                                                                border: "1px solid blueviolet",
+                                                                                borderRadius: "4px",
+                                                                                transition:
+                                                                                    "background-color 0.3s, color 0.3s",
+                                                                                display: "flex",
+                                                                                alignItems: "center",
+                                                                            }}
+                                                                            onMouseEnter={(e) => {
+                                                                                e.target.style.backgroundColor =
+                                                                                    "blueviolet";
+                                                                                e.target.style.color = "#fff";
+                                                                            }}
+                                                                            onMouseLeave={(e) => {
+                                                                                e.target.style.backgroundColor =
+                                                                                    "transparent";
+                                                                                e.target.style.color = "blueviolet";
+                                                                            }}
+                                                                        >
+                                                                            Xem chi tiết
+                                                                        </a>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
                                                         </Col>
                                                     </Row>
                                                 </CardBody>
@@ -181,12 +212,44 @@ const OrderHistory = () => {
                                                             <h6 className="text-primary mb-2">Chờ thanh toán</h6>
                                                             <h5 className="text-primary fw-bold">₫</h5>
                                                             <div className="destination">
-                                                                        <div className="text p-2">
-                                                                            <p className="bottom-area d-flex">
-                                                                                <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
+                                                                <div className="text p-2">
+                                                                    <p className="bottom-area d-flex">
+                                                                        <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
+                                                                    </p>
+                                                                </div>
+
+                                                                <p className=" d-flex">
+                                                                    <span className="ml-auto">
+                                                                        <a
+                                                                            href="/orderBookTouDetail"
+                                                                            style={{
+                                                                                fontSize: "15px",
+                                                                                color: "blueviolet",
+                                                                                textDecoration: "none",
+                                                                                padding: "8px 16px",
+                                                                                border: "1px solid blueviolet",
+                                                                                borderRadius: "4px",
+                                                                                transition:
+                                                                                    "background-color 0.3s, color 0.3s",
+                                                                                display: "flex",
+                                                                                alignItems: "center",
+                                                                            }}
+                                                                            onMouseEnter={(e) => {
+                                                                                e.target.style.backgroundColor =
+                                                                                    "blueviolet";
+                                                                                e.target.style.color = "#fff";
+                                                                            }}
+                                                                            onMouseLeave={(e) => {
+                                                                                e.target.style.backgroundColor =
+                                                                                    "transparent";
+                                                                                e.target.style.color = "blueviolet";
+                                                                            }}
+                                                                        >
+                                                                            Xem chi tiết
+                                                                        </a>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
                                                         </Col>
                                                     </Row>
                                                 </CardBody>
