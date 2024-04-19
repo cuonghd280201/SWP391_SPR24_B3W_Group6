@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.PageableRequest;
 import tourbooking.common.Pagination;
-import tourbooking.dto.BaseResponseDTO;
-import tourbooking.dto.TourDTO;
-import tourbooking.dto.TourFilterRequest;
+import tourbooking.dto.*;
 import tourbooking.entity.Tour.Tour;
+import tourbooking.entity.Tour.TourImages;
+import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.entity.Tour.TourTime;
 import tourbooking.repository.TourRepository;
 import tourbooking.service.TourService;
@@ -21,7 +21,9 @@ import tourbooking.utils.DateTimeUtils;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -118,5 +120,48 @@ public class TourServiceImpl implements TourService {
             return null;
         }
         return modelMapper.map(tour, TourDTO.class);
+    }
+
+    public TourInfoDTO convertToTourInfoDTO(Tour tour){
+        TourInfoDTO tourInfoDTO = modelMapper.map(tour, TourInfoDTO.class);
+        if(tour.getTourSchedules() == null){
+            tourInfoDTO.setTourSchedules(null);
+        }
+        if(tour.getTourTimeSet() == null){
+            tourInfoDTO.setTourTimeSet(null);
+        }
+        if(tour.getTourImagesSet() == null){
+            tourInfoDTO.setTourImagesSet(null);
+        }
+        if(tour.getTourDetail() == null){
+            tourInfoDTO.setTourDetail(null);
+        }
+
+        TourDetailDTO tourDetailDTO = modelMapper.map(tour.getTourDetail(), TourDetailDTO.class);
+
+        Set<TourImageDTO> tourImageDTOSet = new HashSet<>();
+        for(TourImages tourImages : tour.getTourImagesSet()){
+            TourImageDTO tourImageDTO = modelMapper.map(tourImages, TourImageDTO.class);
+            tourImageDTOSet.add(tourImageDTO);
+        }
+
+        Set<TourScheduleDTO> tourScheduleDTOSet = new HashSet<>();
+        for(TourSchedule tourSchedule : tour.getTourSchedules()){
+            TourScheduleDTO tourScheduleDTO = modelMapper.map(tourSchedule, TourScheduleDTO.class);
+            tourScheduleDTOSet.add(tourScheduleDTO);
+        }
+
+        Set<TourTimeDTO> tourTimeDTOSet = new HashSet<>();
+        for(TourTime tourTime : tour.getTourTimeSet()){
+            TourTimeDTO tourTimeDTO = modelMapper.map(tourTime, TourTimeDTO.class);
+            tourTimeDTOSet.add(tourTimeDTO);
+        }
+
+        tourInfoDTO.setTourDetail(tourDetailDTO);
+        tourInfoDTO.setTourImagesSet(tourImageDTOSet);
+        tourInfoDTO.setTourSchedules(tourScheduleDTOSet);
+        tourInfoDTO.setTourTimeSet(tourTimeDTOSet);
+
+        return tourInfoDTO;
     }
 }

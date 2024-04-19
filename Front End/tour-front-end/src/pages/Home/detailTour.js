@@ -1,16 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../Home/Timeline.css'
 
 import '../Home/detailTour.css'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import tourServices from "../../services/tour.services";
 
 
 
 
 
 const DetailTour = () => {
+    const { state } = useLocation();
+
+    const [tourDetailCustomer, setTourDetailCustomer] =
+    useState(null);
+    const fetchTourDetailCustomer = async () => {
+        let response;
+        try{
+            response = await tourServices.getDetailTourByCustomer(state?.tourId);
+            console.log("Response:", response); // Log the response object
+            setTourDetailCustomer(response.data.data);
+            
+            return response;
+
+        }catch(error){
+            console.error("Error fetching tour:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchTourDetailCustomer();
+      }, []);
+    
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -67,20 +90,21 @@ const DetailTour = () => {
                                 <div className="col-md-6 left">
                                     <div className="warp-mark">
                                         <i className="fal fa-ticket" />
-                                        <label>NNSGN322-045-010524VN-D</label>
+                                        <label>{tourDetailCustomer?.id}</label>
                                     </div>
-                                    <h1 className="title">Siêu Sale 🔥 Trung Quốc: Thượng Hải - Hàng Châu - Vô Tích - Tô Châu - Bắc Kinh - Chinh phục Vạn Lý Trường Thành | Lễ 30/4 - Giá đã giảm 2.000.000vnđ/ khách</h1>
+                                    <h1 className="title">🔥 {tourDetailCustomer?.title}</h1>
 
                                 </div>
                                 <div className="col-md-6 right">
                                     <div className="group-price">
                                         <div className="sale-price">
                                             <p>
-                                                <span className="price">25.990.000&nbsp;₫</span>/ khách</p>
+                                                <span className="price">{tourDetailCustomer?.price}&nbsp;₫</span>/ khách
+                                                </p>
                                         </div>
                                     </div>
                                     <div className="group-add-cart">
-                                        <a href="#" title="Đặt ngay" className="add-to-cart" onClick={toggle}>
+                                        <a href="/infomationTour" title="Đặt ngay" className="add-to-cart">
                                             <i className="fal fa-shopping-cart"></i> Đặt ngay
                                         </a>
                                         <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
@@ -127,7 +151,7 @@ const DetailTour = () => {
 
 
             <section className="ftco-about d-md-flex">
-                <div className="one-half img" style={{ backgroundImage: 'url(images/about.jpg)' }} />
+                <div className="one-half img"  style={{ backgroundImage: `url(${tourDetailCustomer?.coverImage})` }} />
                 <div className="one-half ftco-animate">
                     <div className="row">
                         <div className="col-md-4 ftco-animate">
@@ -154,11 +178,14 @@ const DetailTour = () => {
                                 <div className="row">
                                     <div className="col-md-5 left">
                                         <div className="box-order">
-                                            <div className="time"><p>Khởi hành <b> 01/05/2024 - Giờ đi: 07:05</b>
-                                            </p><p>Tập trung <b>04:05 ngày 01/05/2024</b>
-                                                </p><p>Thời gian <b>7 ngày</b>
-                                                </p><p>Nơi khởi hành <b>TP. Hồ Chí Minh</b>
-                                                </p><p>Số chỗ còn nhận <b>9</b></p></div>
+                                            <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
+                                            </p>
+                                            {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
+                                                </p> */}
+                                                <p>Thời gian <b>7 ngày</b>
+                                                </p><p>Nơi khởi hành <b>{tourDetailCustomer?.starLocation}</b>
+                                                </p><p>Nơi kết thúc <b>{tourDetailCustomer?.endLocation}</b>
+                                                </p><p>Số chỗ còn nhận <b>{tourDetailCustomer?.tourTimeSet[0]?.slotNumber}</b></p></div>
                                             <div className="calendar">
                                                 <div className="calendar-box">
                                                     <i className="icon icon--calendar" />
@@ -171,25 +198,30 @@ const DetailTour = () => {
                                     <div className="col-md-7  right">
                                         <div className="group-services">
                                             <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
-                                                <label>Thời gian</label><p>7 ngày 6 đêm</p>
+                                                <label>Thời gian</label>
+                                                <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                                             </div>
                                             <div className="item">
                                                 <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
                                                 <label>Phương tiện di chuyển</label>
-                                                <p>Máy bay, Xe du lịch</p>
+                                                <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
                                             </div>
                                             <div className="item">
                                                 <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
-                                                <label>Điểm tham quan</label><p>Thượng Hải, Hàng Châu, Vô Tích, Tô Châu, Bắc Kinh, Trung Quốc</p>
+                                                <label>Điểm tham quan</label>
+                                                <p>{tourDetailCustomer?.tourDetail.location}</p>
                                             </div>
                                             <div className="item">
                                                 <img src="/images/icons/utility/am thuc.png" className="icon-img" />
-                                                <label>Ẩm thực</label><p>Buffet sáng</p>
+                                                <label>Ẩm thực</label>
+                                                
+                                                <p>{tourDetailCustomer?.tourDetail.food}</p>
                                             </div>
                                             <div className="item">
                                                 <img src="/images/icons/utility/khach san.png" className="icon-img" />
                                                 <label>Khách sạn</label>
-                                                <p>Khách sạn 4 sao</p></div>
+                                                <p>{tourDetailCustomer?.tourDetail.food}</p>
+                                                </div>
 
                                             <div className="item">
                                                 <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />

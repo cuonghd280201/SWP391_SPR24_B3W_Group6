@@ -1,13 +1,11 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { UserAuth } from '../../utils/AuthContext';
-const Protected = ({ children }) => {
-  const { user } = UserAuth();
-  if (!user) {
-    return <Navigate to='/' />;
-  }
+import React from 'react'
 
-  return children;
-};
+import {Outlet, Navigate} from 'react-router-dom';
+const Protected = () => {
+  const token = localStorage.getItem('token');
+  return (
+    token ? <Outlet/> :  <Navigate to="/login"/> 
+  )
+}
 
-export default Protected;
+export default Protected

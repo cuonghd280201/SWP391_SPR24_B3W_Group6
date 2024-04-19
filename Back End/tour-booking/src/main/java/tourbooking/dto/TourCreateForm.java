@@ -10,6 +10,7 @@ import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.entity.Tour.TourTime;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -31,5 +32,12 @@ public class TourCreateForm {
     private String coverImage;
 
     private String city;
+
     private TourDetailCreateForm tourDetailCreateForm;
+
+    private Set<TourScheduleCreateForm> listTourSchedule;
+
+    private Set<TourTimeCreateForm> tourTimeCreateFormSet;
+
+    private Set<TourImageCreateForm> tourImageCreateForms;
 }
