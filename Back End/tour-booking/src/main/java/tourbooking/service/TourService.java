@@ -23,5 +23,6 @@ public interface TourService {
                                                         BigDecimal minPrice,
                                                         BigDecimal maxPrice,
                                                         String startDate);
+    ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(UUID tourId);
 
 }

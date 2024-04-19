@@ -12,6 +12,7 @@ import tourbooking.dto.TourFilterRequest;
 import tourbooking.service.TourService;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/tour")
@@ -52,5 +53,9 @@ public class TourController {
                                                                @RequestParam(required = false )BigDecimal maxPrice,
                                                                @RequestParam(required = false) String startDate) {
         return tourService.searchAndFilterTour(pageNumber, pageSize, sortBy, sortOrder, keyWord, endLocation, minPrice, maxPrice, startDate);
+    }
+    @GetMapping("/get/{tourId}")
+    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(@PathVariable("tourId") UUID tourId){
+        return tourService.viewTourDetailsByTourId(tourId);
     }
 }

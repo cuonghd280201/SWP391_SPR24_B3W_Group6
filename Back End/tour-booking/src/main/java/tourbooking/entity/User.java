@@ -75,8 +75,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<TourVisitor> tourVisitorSet;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Set<TourVisitor> tourVisitorSet;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Orders> ordersSet;

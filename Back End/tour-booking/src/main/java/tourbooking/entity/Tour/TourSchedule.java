@@ -28,7 +28,7 @@ public class TourSchedule {
     private UUID id;
 
     private String day;
-
+    private String title;
     private String description;
 
     @CreatedDate
