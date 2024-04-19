@@ -35,65 +35,30 @@ const Step3Form = () => {
                       name="contact-form"
                       id="contact-form3"
                     > 
-                      <h4 class="text-dark mb-3">Tạo chi tiết chuyến đi </h4>
+                      <h4 class="text-dark mb-3">Tạo lịch chuyến đi </h4>
                      
+                    
 
+                     
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
-                          <label class="text-muted">Đồ ăn</label>
+                            <label class="text-muted">
+                              Số lượng ngày
+                            </label>
                             <input
-                              id="job-title"
-                              type="text"
+                              type="number"
                               class="form-control resume"
-                              maxlength="100"
-                              required
+                              placeholder="1"
+                              min="1"
+                              max="10"
                             ></input>
                           </div>
                         </div>
 
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
-                            <label class="text-muted">Khách sạn</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Địa điểm</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Thời gian</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Phương tiện</label>
+                            <label class="text-muted">Mô tả</label>
                             <input
                               id="job-title"
                               type="text"

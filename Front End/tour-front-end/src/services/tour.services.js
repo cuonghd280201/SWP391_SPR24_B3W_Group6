@@ -15,6 +15,10 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
   return response;
 };
 
+const createTourByStaff = async () => {
+  
+}
+
 export default {
   getAllTourAndPaging,
 }
