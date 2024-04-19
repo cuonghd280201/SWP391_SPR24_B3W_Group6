@@ -1,11 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Nav, NavItem, NavLink, Label, FormGroup, TabPane, Input, Button, Card, CardHeader, CardBody } from 'reactstrap';
 import '../Profile/profile.css';
 import userServices from "../../services/user.services";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { imageDb } from '../../utils/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+
 const ProfileInfo = () => {
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const fileInputRef = useRef(null);
+
+
+    // Xử lý sự kiện khi người dùng chọn một tệp
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+    };
+
+    // Xử lý sự kiện khi người dùng nhấp vào nút tải lên
+    const handleClick = async () => {
+        if (!selectedFile) {
+            console.error('No file selected.');
+            return;
+        }
+
+        // Tạo một tham chiếu cho tệp trong Firebase Storage
+        const fileRef = ref(imageDb, `profile-images/${uuidv4()}`);
+
+        try {
+            // Tải lên tệp lên Firebase Storage
+            const snapshot = await uploadBytes(fileRef, selectedFile);
+            console.log('File uploaded successfully!', snapshot);
+
+            // Lấy URL của tệp vừa tải lên
+            const downloadURL = await getDownloadURL(fileRef);
+            console.log('File download URL:', downloadURL);
+
+            // Cập nhật URL hình ảnh trong trạng thái
+            setUserImage3(downloadURL);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
+    const handleImgClick = () => {
+        // Kích hoạt input file để mở hộp thoại chọn tệp
+        fileInputRef.current.click();
+    };
+
+
+
+
     const [users, setUsers] = useState(); // Initialize users as an object
     const [avatar2, setAvatar2] = useState();
     const [userImage3, setUserImage3] = useState(null);
@@ -58,8 +107,8 @@ const ProfileInfo = () => {
             setGenderState(response.data.data.lastName);
             setPhonenameState(response.data.data.phoneNumber);
 
-            if (response.data.data.userImage) {
-                setUserImage3(response.data.data.userImage);
+            if (response.data.data.image) {
+                setUserImage3(response.data.data.image);
             } else {
                 setUserImage3();
             }
@@ -74,13 +123,13 @@ const ProfileInfo = () => {
         try {
             // Get the date of birth input from the DOM
             const dayOfBirthInput = document.getElementById('dayOfBirthTab2').value;
-    
+
             // Split the date input by hyphen to get date parts
             const dateParts = dayOfBirthInput.split('-');
-    
+
             // Format the date to "yyyy-mm-dd"
             const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-    
+
             // Retrieve form values
             const updatedProfile = {
                 name: document.getElementById('fullNameTab2').value,
@@ -88,7 +137,7 @@ const ProfileInfo = () => {
                 dateOfBirth: formattedDate,
                 gender: document.getElementById('genderTab2').value,
             };
-    
+
             // Call the updateProfile function with the updated profile data
             const response = await userServices.updateProfile(
                 updatedProfile.name,
@@ -96,9 +145,9 @@ const ProfileInfo = () => {
                 updatedProfile.gender,
                 updatedProfile.dateOfBirth
             );
-    
+
             console.log('Response:', response);
-    
+
             // Handle the API response
             if (response.status === 200) {
                 // Success: notify the user and update the application state
@@ -185,16 +234,36 @@ const ProfileInfo = () => {
                                 </div>
                                 <div className="row section-01">
                                     <div className="col-md-12 col-12 setting-wrap">
+                                        <div>
+                                            <input
+                                                type="file"
+                                                onChange={handleFileChange}
+                                                ref={fileInputRef}
+                                                style={{ display: 'none' }} // Ẩn input file
+                                            />
+
+                                            <button onClick={handleClick}>Upload</button>
+
+
+                                            {/* Hiển thị hình ảnh với src lấy từ userImage3 và thêm trình xử lý sự kiện onClick */}
+                                            <img
+                                                src={userImage3}
+                                                className="rounded-circle img-thumbnail profile-img"
+                                                id="profile-img-2"
+                                                alt=""
+                                                onClick={handleImgClick} // Xử lý sự kiện khi người dùng nhấp vào hình ảnh
+                                            />
+                                        </div>
                                         <FormGroup row>
                                             <Label for="fullname" md={3} className="col-form-label">Họ và Tên</Label>
                                             <Col md={9}>
-                                                <Input className="form-control" id="fullNameTab2" name="fullname" placeholder="Nhập họ và tên" type="text"  />
+                                                <Input className="form-control" id="fullNameTab2" name="fullname" placeholder="Nhập họ và tên" type="text" />
                                             </Col>
                                         </FormGroup>
                                         <FormGroup row>
                                             <Label for="fullname" md={3} className="col-form-label">Số Điện Thoại</Label>
                                             <Col md={9}>
-                                                <Input className="form-control" id="phoneNumberTab2" name="phone" placeholder="Nhập số điện thoại" type="text"  />
+                                                <Input className="form-control" id="phoneNumberTab2" name="phone" placeholder="Nhập số điện thoại" type="text" />
                                             </Col>
                                         </FormGroup>
 
