@@ -18,6 +18,7 @@ import ListTourBook from "../pages/Staff/ListTourBook"
 import ListAccountStaff from "../pages/Admin/listAccountStaff";
 import ListTourStaffDetail from "../pages/Staff/ListTourStaffDetail";
 import FileUploadImage from "../pages/Profile/FileUploadImage";
+import ListTourBookDetail from "../pages/Staff/SlideBar/ListTourBookDetail";
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -46,7 +47,8 @@ const authRoutes = [
   { path: "/listAccountCustomer", component: <ListAccountCustomer /> },
   { path: "/listAccountStaff", component: <ListAccountStaff /> },
   { path: "/homeSlider", component: <HomeSlider/>},
-  { path: "/fileImage", component: <FileUploadImage/>}
+  { path: "/fileImage", component: <FileUploadImage/>},
+  { path: "/listTourBookDetail", component: <ListTourBookDetail/>}
 
 
 

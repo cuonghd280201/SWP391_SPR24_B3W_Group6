@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import "../Admin/dashboard.css";
+import "../../Admin/dashboard.css";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
+import NavBarWebStaff from "../Navbar/NavBarWebStaff";
+import SiderBarWebStaff from "../SlideBar/SiderBarWebStaff";
 const { Content } = Layout;
 
-const ListTourStaffDetail = () => {
+const ListTourBookDetail = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
@@ -426,7 +426,7 @@ const ListTourStaffDetail = () => {
                 </div>
               </section>
 
-              <Link to="/listTourStaff" style={{ textDecoration: "none" }}>
+              <Link to="/listTourBook" style={{ textDecoration: "none" }}>
                 <button
                   style={{
                     fontSize: "15px",
@@ -459,4 +459,4 @@ const ListTourStaffDetail = () => {
   );
 };
 
-export default ListTourStaffDetail;
+export default ListTourBookDetail;

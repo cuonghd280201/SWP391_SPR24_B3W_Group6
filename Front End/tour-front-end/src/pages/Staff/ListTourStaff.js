@@ -113,28 +113,13 @@ const ListTourStaff = () => {
                 <div className="page-header">
                   <h2 className="pageheader-title">Danh Sách Chuyến Đi </h2>
                 </div>
-
-                {/* <div className="form-search mb-4">
-                  <Row className="align-items-center">
-                    <Col md="8">
-                      <Input
-                        type="text"
-                        placeholder="Tìm kiếm theo tên chuyến đi/ mã chuyến đi hoặc giá"
-                        aria-label="default input example"
-                      />
-                    </Col>
-                    <Col md="4">
-                      <Button color="btn-primary">Tìm kiếm</Button>
-                    </Col>
-                  </Row>
-                </div> */}
               </div>
             </div>
 
             {/* Filter by price */}
             <div className="d-flex justify-content-between mb-4">
               <Select
-                defaultValue="Sắp xếp theo"
+                defaultValue="Tìm kiếm theo"
                 style={{ width: 250, height: 40 }}
                 onChange={handleSortByPrice}
               >
