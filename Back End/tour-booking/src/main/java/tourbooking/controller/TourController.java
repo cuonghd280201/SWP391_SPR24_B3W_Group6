@@ -11,10 +11,11 @@ import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourFilterRequest;
 import tourbooking.service.TourService;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("api/v1/tour")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_USER')")
 public class TourController {
     private final TourService tourService;
     @GetMapping("/all")
@@ -46,7 +47,10 @@ public class TourController {
                                                                @Parameter(description = "Sort order (EX: asc, desc)")
                                                                    @RequestParam(defaultValue = "desc") String sortOrder,
                                                                @RequestParam(required = false) String keyWord,
-                                                               @RequestBody(required = false) TourFilterRequest tourFilterRequest) {
-        return tourService.searchAndFilterTour(pageNumber, pageSize, sortBy, sortOrder, keyWord, tourFilterRequest);
+                                                               @RequestParam(required = false) String endLocation,
+                                                               @RequestParam(required = false) BigDecimal minPrice,
+                                                               @RequestParam(required = false )BigDecimal maxPrice,
+                                                               @RequestParam(required = false) String startDate) {
+        return tourService.searchAndFilterTour(pageNumber, pageSize, sortBy, sortOrder, keyWord, endLocation, minPrice, maxPrice, startDate);
     }
 }

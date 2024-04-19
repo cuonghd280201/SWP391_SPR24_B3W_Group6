@@ -19,8 +19,6 @@ public class TourFilterRequest {
     private String endLocation;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT)
-    @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
-    private LocalDate startDate;
+    private String startDate;
 
 }
