@@ -27,4 +27,11 @@ public class BaseResponseDTO {
         this.status = status;
         this.message = message;
     }
+
+    public BaseResponseDTO(LocalDateTime timestamp, HttpStatus status, String message, Object data) {
+        this.timestamp = timestamp;
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
 }

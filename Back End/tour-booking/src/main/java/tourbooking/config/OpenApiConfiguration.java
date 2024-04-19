@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = ""
+                        url = "http://26.84.100.30:9000/tour-booking"
                 )
         },
         security = {
