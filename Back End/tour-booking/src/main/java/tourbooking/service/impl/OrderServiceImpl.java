@@ -3,6 +3,7 @@ package tourbooking.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.OrderStatus;
@@ -24,6 +25,7 @@ import tourbooking.service.OrderService;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,11 +85,14 @@ public class OrderServiceImpl implements OrderService {
         //Tạo payment
         if (paid.compareTo(BigDecimal.ZERO) == 0) {
            orders.setAmount(orderPrice);
+            orders.setOrderStatus(OrderStatus.DONE);
         } else {
             orders.setAmount(orderPrice.subtract(paid));
+            orders.setOrderStatus(OrderStatus.NOT_DONE);
         }
+        orders.setPriceAfterPaid(orderPrice.subtract(paid));
         orders.setRefund(BigDecimal.ZERO);
-        orders.setOrderStatus(OrderStatus.NOT_DONE);
-        return null;
+        orderRepository.save(orders);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
     }
 }

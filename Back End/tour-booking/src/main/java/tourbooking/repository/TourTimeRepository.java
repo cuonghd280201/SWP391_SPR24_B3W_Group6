@@ -8,6 +8,6 @@ import tourbooking.entity.Tour.TourTime;
 import java.util.UUID;
 
 public interface TourTimeRepository extends JpaRepository<TourTime, UUID> {
-    @Query("SELECT COUNT(tv) FROM TourVisitor tv WHERE tv.tourTime.uuid = :uuid")
+    @Query("SELECT COUNT(tv) FROM TourVisitor tv WHERE tv.tourTime.id = :uuid")
     Integer countVisitor(@Param("uuid") UUID uuid);
 }
