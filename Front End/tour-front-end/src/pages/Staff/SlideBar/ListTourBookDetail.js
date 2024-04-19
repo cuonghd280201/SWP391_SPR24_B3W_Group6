@@ -18,7 +18,7 @@ const ListTourBookDetail = () => {
             padding: "30px",
             background: "white",
             margin: "30px",
-            borderRadius: "12px",
+            borderRadius: "15px",
             boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
           }}
         >
@@ -425,6 +425,87 @@ const ListTourBookDetail = () => {
                   </div>
                 </div>
               </section>
+              <div class="col-md-6 col-12">
+                <h2
+                  style={{
+                    fontSize: "28px",
+                    color: "#333",
+                    marginBottom: "20px",
+                  }}
+                >
+                  Thông tin khách hàng đã đặt
+                </h2>
+                <div class="table-responsive">
+                  <table
+                    class="table table-striped"
+                    style={{ width: "100%", borderCollapse: "collapse" }}
+                  >
+                    <thead>
+                      <tr
+                        style={{
+                          backgroundColor: "#f8f9fa",
+                          borderBottom: "2px solid #dee2e6",
+                        }}
+                      >
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Tên khách
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Mail
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Số điện thoại
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Chứng minh nhân dân
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: "15px" }}>
+                          Người lớn (Từ 12 tuổi trở lên)
+                        </td>
+                        <td style={{ padding: "15px" }}>8.490.000 ₫</td>
+                        <td style={{ padding: "15px" }}>5.990.000 ₫</td>
+                        <td style={{ padding: "15px" }}></td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "15px" }}>
+                          Trẻ em (Từ 2 tuổi đến dưới 12 tuổi)
+                        </td>
+                        <td style={{ padding: "15px" }}>7.492.500 ₫</td>
+                        <td style={{ padding: "15px" }}>4.493.000 ₫</td>
+                        <td style={{ padding: "15px" }}></td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "15px" }}>Em bé (Dưới 2 tuổi)</td>
+                        <td style={{ padding: "15px" }}>2.997.000 ₫</td>
+                        <td style={{ padding: "15px" }}>1.797.000 ₫</td>
+                        <td style={{ padding: "15px" }}></td>
+                      </tr>
+                      <tr style={{ fontWeight: "bold" }}>
+                        <td style={{ padding: "15px" }}>Phụ thu phòng đơn</td>
+                        <td style={{ padding: "15px" }}>3.500.000 ₫</td>
+                        <td style={{ padding: "15px" }}>3.500.000 ₫</td>
+                        <td style={{ padding: "15px" }}></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
               <Link to="/listTourBook" style={{ textDecoration: "none" }}>
                 <button
