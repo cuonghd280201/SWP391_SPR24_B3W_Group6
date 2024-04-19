@@ -3,6 +3,7 @@ package tourbooking.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,6 +35,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                antMatcher("/api/v1/tour/**"),
                                 antMatcher("/api/v1/guest/**"),
                                 //antMatcher("/api/v1/vn-pay/**"),
                                 antMatcher("/swagger-ui/**"),
@@ -41,8 +43,6 @@ public class SecurityConfiguration {
                                 antMatcher("/v3/api-docs/**"),
                                 antMatcher("/configuration/ui"),
                                 antMatcher("/configuration/security")).permitAll()
-                        //.requestMatchers(mvcMatcherBuilder.pattern("/api/v1/user/**")).hasAnyAuthority("ROLE_USER")
-                        //.requestMatchers(mvcMatcherBuilder.pattern("/api/v1/book/**")).hasAnyAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(accessDeniedHandler))
