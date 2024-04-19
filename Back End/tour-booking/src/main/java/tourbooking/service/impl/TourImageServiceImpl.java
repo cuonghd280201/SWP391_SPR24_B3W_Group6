@@ -3,7 +3,9 @@ package tourbooking.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tourbooking.dto.TourImageCreateForm;
+import tourbooking.dto.TourImageDTO;
 import tourbooking.entity.Tour.TourImages;
+import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.TourImagesRepository;
 import tourbooking.service.TourImageService;
 
@@ -29,5 +31,14 @@ public class TourImageServiceImpl implements TourImageService {
         }
 
         return tourImagesSet;
+    }
+
+    @Override
+    public void updateImage(TourImageDTO tourImageDTO) {
+        TourImages tourImages = tourImagesRepository.findById(tourImageDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Image not found!"));
+
+        tourImages.setImage(tourImageDTO.getImage());
+        tourImagesRepository.save(tourImages);
     }
 }

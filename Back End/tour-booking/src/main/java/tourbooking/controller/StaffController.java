@@ -32,6 +32,16 @@ public class StaffController {
         return staffService.updateTime(tourTimeDTO);
     }
 
+    @PostMapping("/tourImage/addMoreImage")
+    public ResponseEntity<BaseResponseDTO> addMoreImage(@RequestBody TourImageAddMoreForm tourImageAddMoreForm){
+        return staffService.addMoreImage(tourImageAddMoreForm);
+    }
+
+    @PutMapping("/tourImage/updateImage")
+    public ResponseEntity<BaseResponseDTO> updateImage(@RequestBody TourImageDTO tourImageDTO){
+        return staffService.updateImage(tourImageDTO);
+    }
+
     @GetMapping("tourTime/get/{tourId}")
     public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(@PathVariable("tourId") UUID tourId){
         return staffService.viewTourDetailsByTourId(tourId);

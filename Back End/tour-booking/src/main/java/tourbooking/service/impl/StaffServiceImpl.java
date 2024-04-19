@@ -110,6 +110,25 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public ResponseEntity<BaseResponseDTO> addMoreImage(TourImageAddMoreForm tourImageAddMoreForm) {
+        Tour tour = tourRepository.findById(tourImageAddMoreForm.getId()).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+
+        Set<TourImages> tourImagesSet = tourImageService.createImage(tourImageAddMoreForm.getTourImageCreateFormSet());
+        tour.setTourImagesSet(tourImagesSet);
+        for(TourImages tourImages : tourImagesSet){
+            tourImages.setTour(tour);
+            tourImagesRepository.save(tourImages);
+        }
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Add More Images Successfully"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> updateImage(TourImageDTO tourImageDTO) {
+        tourImageService.updateImage(tourImageDTO);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Image Successfully!"));
+    }
+
+    @Override
     public ResponseEntity<BaseResponseDTO> updateTour(Principal principal, Tour tour) {
         return null;
     }
