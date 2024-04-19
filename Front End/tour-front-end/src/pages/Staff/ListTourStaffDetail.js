@@ -33,14 +33,30 @@ const ListTourStaffDetail = () => {
   }, []);
 
   const renderTourSchedules = () => {
+    // Lấy ngày hiện tại
+    const currentDate = new Date().toISOString().split('T')[0];
+    const [isPastSchedule, setIsPastSchedule] = useState(false);
+
+
     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
-      return tourDetailCustomer.tourSchedules.map((schedule, index) => (
-        <div key={schedule.id} className="box">
-          <h4>Ngày {index + 1}</h4>
-          <h3>{schedule.createDate.split(' ')[0]}</h3>
-          <p>{schedule.description}</p>
-        </div>
-      ));
+      return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+        // So sánh ngày lịch trình với ngày hiện tại
+        const scheduleDate = schedule.createDate.split(' ')[0];
+        const isPast = scheduleDate < currentDate;
+
+        // Cập nhật biến trạng thái
+        if (isPast) {
+          setIsPastSchedule(true);
+        }
+
+        return (
+          <div key={schedule.id} className={`box`}>
+            <h4>Ngày {index + 1}</h4>
+            <h3>{scheduleDate}</h3>
+            <p>{schedule.description}</p>
+          </div>
+        );
+      });
     }
     return null;
   };
@@ -186,7 +202,7 @@ const ListTourStaffDetail = () => {
                   <div className="row">
                     <div className="col-md-5">
                       <div class="container-fluid">
-                        <main class="row">
+                        <main className={`row ${isPastSchedule ? 'past-schedule' : ''}`}>
                           <section className="col">
                             <header className="title">
                               <h2>Lịch Trình</h2>
