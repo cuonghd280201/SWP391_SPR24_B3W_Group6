@@ -18,6 +18,7 @@ import ListTourBook from "../pages/Staff/ListTourBook"
 import ListAccountStaff from "../pages/Admin/listAccountStaff";
 import ListTourStaffDetail from "../pages/Staff/ListTourStaffDetail";
 import FileUploadImage from "../pages/Profile/FileUploadImage";
+import OrderBookTourDetail from "../pages/Profile/orderBookTourDetail";
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -31,7 +32,10 @@ const userRoutes = [
   { path: "/findTour", component: <FindTour/>},
   { path: "/profileInfo", component: <ProfileInfo/>},
   { path: "/orderHistory", component: <OrderHistory/>},
-  { path: "/infomationTour", component: <InfomationTour/>}
+  { path: "/infomationTour", component: <InfomationTour/>},
+  { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>}
+
+
 
 
 ];
