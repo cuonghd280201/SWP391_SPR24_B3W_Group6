@@ -35,27 +35,31 @@ const Step4Form = () => {
                       name="contact-form"
                       id="contact-form3"
                     > 
-                      <h4 class="text-dark mb-3">Tạo lịch chuyến đi </h4>
-                     
+                      <h4 class="text-dark mb-3">Tạo thời gian cho chuyến đi </h4>
                     
-
-                     
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group app-label mt-2">
-                            <label class="text-muted">
-                              Số lượng ngày
-                            </label>
+                            <label class="text-muted">Thời gian xuất phát</label>
                             <input
-                              type="number"
+                              id="duration"
+                              type="date"
                               class="form-control resume"
-                              placeholder="1"
-                              min="1"
-                              max="10"
+                              placeholder=""
                             ></input>
                           </div>
                         </div>
-
+                        <div class="col-md-4">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Thời gian kết thúc</label>
+                            <input
+                              id="duration"
+                              type="date"
+                              class="form-control resume"
+                              placeholder=""
+                            ></input>
+                          </div>
+                        </div>
                         <div class="col-md-6">
                           <div class="form-group app-label mt-2">
                             <label class="text-muted">Mô tả</label>
@@ -65,6 +69,19 @@ const Step4Form = () => {
                               class="form-control resume"
                               maxlength="100"
                               required
+                            ></input>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">Số hành khách</label>
+                            <input
+                              id="job-title"
+                              type="number"
+                              class="form-control resume"
+                              maxlength="3"
+                              required
+                              min={2}
                             ></input>
                           </div>
                         </div>

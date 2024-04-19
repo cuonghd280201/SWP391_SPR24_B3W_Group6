@@ -38,7 +38,7 @@ const Step1Form = () => {
                       <h4 class="text-dark mb-3">Tạo chuyến đi </h4>
                      
                       <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-11">
                           <div class="form-group app-label mt-2">
                             <label class="text-muted">Tên chuyến đi</label>
                             <input
@@ -48,18 +48,6 @@ const Step1Form = () => {
                               placeholder="Tên..."
                               maxlength="100"
                               required
-                            ></input>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Số lượng người đi</label>
-                            <input
-                              id="number-dev"
-                              type="number"
-                              class="form-control resume"
-                              placeholder="2"
-                              min={2}
                             ></input>
                           </div>
                         </div>
@@ -77,7 +65,20 @@ const Step1Form = () => {
                               class="form-control resume"
                               placeholder="3000000 VND"
                             ></input>
-                          </div>
+                          </div>  
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group app-label mt-2">
+                            <label class="text-muted">
+                              Thành phố đến
+                            </label>
+                            <input
+                              id="city"
+                              type="text"
+                              class="form-control resume"
+                     
+                            ></input>
+                          </div>  
                         </div>
 
                         
@@ -90,7 +91,7 @@ const Step1Form = () => {
                               id="job-title"
                               type="text"
                               class="form-control resume"
-                              placeholder="Title..."
+                              
                               maxlength="100"
                               required
                             ></input>
@@ -103,7 +104,7 @@ const Step1Form = () => {
                               id="job-title"
                               type="text"
                               class="form-control resume"
-                              placeholder="Title..."
+                            
                               maxlength="100"
                               required
                             ></input>
@@ -113,7 +114,7 @@ const Step1Form = () => {
                       <div class="row">
                       <div class="col-md-6">
                           <label for="imageUpload" class="form-label">
-                            Chọn ảnh chính:
+                            Chọn ảnh:
                           </label>
 
                           <input
@@ -124,23 +125,11 @@ const Step1Form = () => {
                             
                           />
                         </div>
-                        <div class="col-md-6">
-                          <label for="imageUpload" class="form-label">
-                            Chọn ảnh phụ:
-                          </label>
-
-                          <input
-                            type="file"
-                            class="form-control"
-                            id="imageUpload"
-                            name="imageUpload"
-                            multiple
-                          />
-                        </div>
+              
                         <div class="col-md-24">
                           <div class="form-group app-label mt-2">
                             <label class="text-muted">
-                              Hiring request description
+                              Mô tả chuyến đi
                             </label>
                             <Editor
                               class="fix-height"
@@ -150,20 +139,6 @@ const Step1Form = () => {
                           </div>
                         </div>
                       </div>
-{/* 
-                      <center>
-                        <button
-                          type="button"
-                          className="btn btn-success"
-                          style={{ marginRight: "10px" }}
-                        >
-                          Save
-                        </button>
-                        <button type="button" className="btn btn-danger">
-                          Cancel
-                        </button>
-                      </center> */}
-
                       
                     </form>
                   </div>
