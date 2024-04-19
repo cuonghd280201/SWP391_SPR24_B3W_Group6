@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+import java.util.UUID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class TourScheduleCreateForm {
+public class TourImageAddMoreForm {
+    private UUID id;
 
-    private String day;
-    private String title;
-    private String description;
+    private Set<TourImageCreateForm> tourImageCreateFormSet;
 }

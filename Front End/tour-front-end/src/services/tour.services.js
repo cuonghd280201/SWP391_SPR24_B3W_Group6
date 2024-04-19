@@ -15,10 +15,22 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
   return response;
 };
 
-const createTourByStaff = async () => {
-  
-}
+
+
+const getDetailTourByCustomer = async (tourId) => {
+  const serviceUrl =
+    urlConstant.endpoint.tour.getTourDetailByID.replace(
+      "${tourId}",
+      tourId
+    );
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "GET"
+  );
+  return response;
+};
 
 export default {
   getAllTourAndPaging,
+  getDetailTourByCustomer,
 }

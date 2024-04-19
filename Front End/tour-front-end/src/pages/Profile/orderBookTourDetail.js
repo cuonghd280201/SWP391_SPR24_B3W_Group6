@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from 'reactstrap';
 
 import "../Admin/dashboard.css";
 import { Layout } from "antd";
 import { Link, useLocation } from 'react-router-dom';
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
+
 import tourServices from "../../services/tour.services";
 const { Content } = Layout;
 
-const ListTourStaffDetail = () => {
+const OrderBookTourDetail = () => {
 
   const { state } = useLocation();
 
@@ -47,10 +47,19 @@ const ListTourStaffDetail = () => {
 
 
   return (
+
+    
     <Layout style={{ minHeight: "100vh" }}>
-      <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
+      <section className="ftco-section ftco-counter img" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
+                <Container>
+                    <Row className="justify-content-center">
+                        <Col md="10">
+                            {/* Your content here */}
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
       <Layout>
-        <NavBarWebStaff></NavBarWebStaff>
         <div
           style={{
             padding: "30px",
@@ -82,8 +91,6 @@ const ListTourStaffDetail = () => {
                         <h4 style={{ fontSize: 16, marginTop: 10 }}>
                           Mã Chuyến Đi:{" "}
                           <span style={{ color: "#666" }}>
-
-
                             {tourDetailCustomer?.id}
                           </span>
                         </h4>
@@ -100,7 +107,6 @@ const ListTourStaffDetail = () => {
                           className="text-primary"
                           style={{ fontSize: 14, marginBottom: 5 }}
                         >
-
                           Giờ đi: {tourDetailCustomer?.starLocation}
 
                         </p>
@@ -119,7 +125,6 @@ const ListTourStaffDetail = () => {
                         <div className="row">
                           <div className="col-md-5 left">
                             <div className="box-order">
-
                               <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
                               </p>
                                 {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
@@ -184,7 +189,6 @@ const ListTourStaffDetail = () => {
                     </section>
                   </div>
                 </div>
-
               </div>
               <section className="section-07-map mb-5">
                 <div class="container-fluid">
@@ -293,4 +297,4 @@ const ListTourStaffDetail = () => {
   );
 };
 
-export default ListTourStaffDetail;
+export default OrderBookTourDetail;
