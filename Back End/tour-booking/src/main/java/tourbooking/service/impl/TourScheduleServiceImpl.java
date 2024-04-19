@@ -23,6 +23,7 @@ public class TourScheduleServiceImpl implements TourScheduleService {
             TourSchedule newSchedule = new TourSchedule();
             newSchedule.setDay(dto.getDay());
             newSchedule.setDescription(dto.getDescription());
+            newSchedule.setTitle(dto.getTitle());
             listTourSchedule.add(newSchedule);
             tourScheduleRepository.save(newSchedule);
         }

@@ -134,14 +134,6 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(UUID tourId) {
-
-        Tour tour = tourRepository.findById(tourId).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
-        TourInfoDTO tourInfoDTO = convertToTourInfoDTO(tour);
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.FOUND, "Get Tour Detail Successfully!", tourInfoDTO));
-    }
-
-    @Override
     public ResponseEntity<BaseResponseDTO> listTour() {
         return null;
     }

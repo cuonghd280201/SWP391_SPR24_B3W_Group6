@@ -42,8 +42,4 @@ public class StaffController {
         return staffService.updateImage(tourImageDTO);
     }
 
-    @GetMapping("tourTime/get/{tourId}")
-    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(@PathVariable("tourId") UUID tourId){
-        return staffService.viewTourDetailsByTourId(tourId);
-    }
 }

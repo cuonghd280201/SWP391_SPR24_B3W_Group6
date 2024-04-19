@@ -14,6 +14,7 @@ import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourImages;
 import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.entity.Tour.TourTime;
+import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.TourRepository;
 import tourbooking.service.TourService;
 import tourbooking.utils.DateTimeUtils;
@@ -100,20 +101,13 @@ public class TourServiceImpl implements TourService {
         Pagination pagination = new Pagination(tourPage.getNumber(), tourPage.getTotalElements(), tourPage.getTotalPages());
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", pagination, tourDTOS));
     }
+    @Override
+    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(UUID tourId) {
 
-//    private boolean matchesFilter(Tour tour, TourFilterRequest tourFilterRequest) {
-//        BigDecimal tourPrice = tour.getPrice();
-//        return (tourFilterRequest.getEndLocation() == null || tour.getEndLocation().equals(tourFilterRequest.getEndLocation())) &&
-//                (tourFilterRequest.getMinPrice() == null || tourPrice.compareTo(tourFilterRequest.getMinPrice()) >= 0) &&
-//                (tourFilterRequest.getMaxPrice() == null ||tourPrice.compareTo(tourFilterRequest.getMaxPrice()) <= 0) &&
-//                (tour.getTourTimeSet().stream().map(TourTime::getStartDate).anyMatch(startDate -> {
-//                    try {
-//                        return startDate.equals(DateTimeUtils.convertStringToLocalDate(tourFilterRequest.getStartDate()));
-//                    } catch (ParseException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }));
-//    }
+        Tour tour = tourRepository.findById(tourId).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+        TourInfoDTO tourInfoDTO = convertToTourInfoDTO(tour);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.FOUND, "Get Tour Detail Successfully!", tourInfoDTO));
+    }
 
     public TourDTO convertToTourDTO(Tour tour) {
         if (tour == null) {
