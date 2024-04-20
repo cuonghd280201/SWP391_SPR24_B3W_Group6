@@ -35,8 +35,11 @@ const userRoutes = [
   { path: "/profileInfo", component: <ProfileInfo/>},
   { path: "/orderHistory", component: <OrderHistory/>},
   { path: "/infomationTour", component: <InfomationTour/>},
-  { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
-  
+  { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>}
+
+
+
+
 ];
 
 const authRoutes = [
@@ -50,9 +53,9 @@ const authRoutes = [
   { path: "/listAccountStaff", component: <ListAccountStaff /> },
   { path: "/homeSlider", component: <HomeSlider/>},
   { path: "/fileImage", component: <FileUploadImage/>},
+
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
   { path: "/contact", component: <Contact/>}
-
 
 
 ];

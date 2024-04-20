@@ -1,28 +1,37 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faEnvelope,
+  faMapMarkerAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Contact = () => {
   return (
     <div>
-      <div style={{ fontSize: "2em", color: "red", fontWeight: "bold" }}>
-        Liên hệ
-      </div>
-      <div
-        style={{
-          marginTop: "10px",
-          color: "#404040",
-          fontSize: "1.2em",
-          fontWeight: "inherit",
-        }}
-      >
-        Liên hệ với chúng tôi để được xử lý các yêu cầu mà quý khách gặp phải
-        một cách nhanh chóng
+      <div style={{ textAlign: "center" }}>
+        <div style={{ fontSize: "2em", color: "#cc0000", fontWeight: "bold" }}>
+          Liên hệ
+        </div>
+        <div
+          style={{
+            marginTop: "10px",
+            color: "#404040",
+            fontSize: "1.2em",
+            fontWeight: "inherit",
+          }}
+        >
+          Liên hệ với chúng tôi qua số điện thoại hoặc email để được xử lý các
+          yêu cầu mà quý khách gặp phải một cách nhanh chóng
+        </div>
       </div>
 
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "center",
           flexWrap: "wrap",
+          marginTop: "40px",
         }}
       >
         <div
@@ -31,19 +40,74 @@ const Contact = () => {
             marginBottom: "20px",
             padding: "20px",
             border: "1px solid #ccc",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            marginRight: "20px",
           }}
         >
-          <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
+          <h3
+            style={{
+              fontWeight: "bolder",
+              fontSize: "18px",
+              marginBottom: "10px",
+              color: "#5900b3",
+            }}
+          >
+            CHI NHÁNH THỦ ĐỨC
+          </h3>
+          <p style={{ margin: "5px 0" }}>
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              style={{ marginRight: "5px" }}
+            />
+            224 Kha Vạn Cân, Thành phố Thủ Đức
+          </p>
+          <p style={{ margin: "5px 0" }}>
+            <FontAwesomeIcon icon={faPhone} style={{ marginRight: "5px" }} />
+            Tel: (84) 898922059
+          </p>
+          <p style={{ margin: "5px 0" }}>
+            <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: "5px" }} />
+            Email: qklgithub@gmail.com
+          </p>
+        </div>
+        <div
+          style={{
+            width: "30%",
+            marginBottom: "20px",
+            padding: "20px",
+            border: "1px solid #ccc",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            marginRight: "20px",
+          }}
+        >
+          <h3
+            style={{
+              fontWeight: "bolder",
+              fontSize: "18px",
+              marginBottom: "10px",
+              color: "#5900b3",
+            }}
+          >
             TRỤ SỞ CHÍNH
           </h3>
           <p style={{ margin: "5px 0" }}>
-            190 Pasteur, P. Võ Thị Sáu, Q.3, Tp. Hồ Chí Minh, Việt Nam
+            {" "}
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              style={{ marginRight: "5px" }}
+            />
+            273 Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương, Việt Nam
           </p>
-          <p style={{ margin: "5px 0" }}>Tel: (84-28) 38 668 999 (20 lines)</p>
-          <p style={{ margin: "5px 0" }}>Fax: (84-28) 38 29 9142</p>
           <p style={{ margin: "5px 0" }}>
-            Email: info@vietravel.com - info.asia@vietravel.com (English
-            Support)
+            <FontAwesomeIcon icon={faPhone} style={{ marginRight: "5px" }} />
+            Tel: (84) 898922059
+          </p>
+          <p style={{ margin: "5px 0" }}>
+            {" "}
+            <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: "5px" }} />
+            Email: qklgithub@gmail.com
           </p>
         </div>
         <div
@@ -52,35 +116,35 @@ const Contact = () => {
             marginBottom: "20px",
             padding: "20px",
             border: "1px solid #ccc",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
-            PHÒNG ĐĂNG KÝ DU LỊCH CHỢ LỚN
+          <h3
+            style={{
+              fontWeight: "bolder",
+              fontSize: "18px",
+              marginBottom: "10px",
+              color: "#5900b3",
+            }}
+          >
+            CHI NHÁNH BÌNH THẠNH
           </h3>
           <p style={{ margin: "5px 0" }}>
-            86A Châu Văn Liêm, Phường 11, Quận 5, Tp. HCM
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              style={{ marginRight: "5px" }}
+            />
+            264 Ung Văn Khiêm, Quận Bình Thạnh, TP. Hồ Chí Minh, Việt Nam
           </p>
-          <p style={{ margin: "5px 0" }}>Tel: (84-28) 35 358 709</p>
-          <p style={{ margin: "5px 0" }}>Fax:</p>
-          <p style={{ margin: "5px 0" }}>Email: vtv.cholon@vietravel.com</p>
-        </div>
-        <div
-          style={{
-            width: "30%",
-            marginBottom: "20px",
-            padding: "20px",
-            border: "1px solid #ccc",
-          }}
-        >
-          <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
-            PHÒNG ĐĂNG KÝ DU LỊCH QUẬN 11
-          </h3>
           <p style={{ margin: "5px 0" }}>
-            1475 Đường 3/2, Phường 16, Quận 11, Tp. HCM
+            <FontAwesomeIcon icon={faPhone} style={{ marginRight: "5px" }} />
+            Tel: (84) 898922059
           </p>
-          <p style={{ margin: "5px 0" }}>Tel: (84-28) 39 699 439</p>
-          <p style={{ margin: "5px 0" }}>Fax:</p>
-          <p style={{ margin: "5px 0" }}>Email: vtv.caygo@vietravel.com</p>
+          <p style={{ margin: "5px 0" }}>
+            <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: "5px" }} />
+            Email: qklgithub@gmail.com
+          </p>
         </div>
       </div>
     </div>
