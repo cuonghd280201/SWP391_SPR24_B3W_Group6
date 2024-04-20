@@ -47,4 +47,8 @@ public class StaffController {
         return staffService.deleteImage(imageId);
     }
 
+    @GetMapping("/tourTime/getTimeDetail/{timeId}")
+    public ResponseEntity<BaseResponseDTO> viewTimeDetailByTimeId(@PathVariable("timeId") UUID timeId){
+        return staffService.viewTourTimeDetailById(timeId);
+    }
 }
