@@ -42,22 +42,6 @@ const CreateTourStaff = () => {
                       name="contact-form"
                       id="contact-form3"
                     > <ProgressB/>
-                    
-                
-{/* 
-                      <center>
-                        <button
-                          type="button"
-                          className="btn btn-success"
-                          style={{ marginRight: "10px" }}
-                        >
-                          Save
-                        </button>
-                        <button type="button" className="btn btn-danger">
-                          Cancel
-                        </button>
-                      </center> */}
-
                       
                     </form>
                   </div>
