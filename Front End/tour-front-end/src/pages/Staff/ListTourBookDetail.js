@@ -92,7 +92,7 @@ const ListTourBookDetail = () => {
                                 <div className="calendar-box">
                                   <i className="icon icon--calendar" />
                                   <label>
-                                    <a href="/findTour"> Ngày khác</a>
+                                    <a href="/slotTourStaff"> Ngày khác</a>
                                   </label>
                                 </div>
                               </div>
