@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import "../Admin/dashboard.css";
 import {
   
   Layout,
@@ -9,18 +8,12 @@ import {
 
 import { Editor } from "@tinymce/tinymce-react";
 
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
-import Footer from "../../layout/CommonLayout/Footer";
-import { ProgressB } from "./ProgressB";
+
 const { Content } = Layout;
 
-const CreateTourStaff = () => {
+const Step5Form = () => {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
       <Layout>
-        <NavBarWebStaff></NavBarWebStaff>
         <div
           style={{
             padding: "30px",
@@ -41,7 +34,26 @@ const CreateTourStaff = () => {
                       action="php/contact.php"
                       name="contact-form"
                       id="contact-form3"
-                    > <ProgressB/>
+                    > 
+                      <h4 class="text-dark mb-3">Tạo ảnh cho chuyến đi </h4>
+                     
+                     
+                      <div class="row">
+                      <div class="col-md-6">
+                          <label for="imageUpload" class="form-label">
+                            Chọn ảnh:
+                          </label>
+
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="imageUpload"
+                            name="imageUpload"
+                            multiple
+                          />
+                        </div>
+              
+                      </div>
                       
                     </form>
                   </div>
@@ -51,8 +63,7 @@ const CreateTourStaff = () => {
           </Content>
         </div>
       </Layout>
-    </Layout>
   );
 };
 
-export default CreateTourStaff;
+export default Step5Form;

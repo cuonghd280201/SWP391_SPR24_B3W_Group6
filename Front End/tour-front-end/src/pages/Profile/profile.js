@@ -288,7 +288,7 @@ const ProfileInfo = () => {
                                             </Col>
                                         </FormGroup>
 
-                                        <Button className="fw-bold text-underline toggle-edit-form" onClick={handleEdit}  >Chỉnh sửa</Button>
+                                        <Button className="fw-bold text-underline toggle-edit-form" onClick={handleEdit}>Chỉnh sửa</Button>
 
 
                                         {/* More Settings */}

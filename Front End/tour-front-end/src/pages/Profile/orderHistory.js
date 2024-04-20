@@ -1,10 +1,72 @@
-import React from "react";
-import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from 'reactstrap';
-import '../Profile/profile.css';
+import { React, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+  Input,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+} from "reactstrap";
+import "../Profile/profile.css";
 
 const OrderHistory = () => {
-    return (
-        <main role="main">
+  const [dummyData, setDummyData] = useState([
+    {
+      id: 1,
+      status: "",
+      title: "Hello",
+      code: "",
+      desscription: "",
+    },
+    {
+      id: 2,
+      title: "Tour 2",
+      date: "2024-04-18",
+      price: "3.000.000",
+    },
+    {
+      id: 3,
+      title: "Tour 3",
+      date: "2024-04-14",
+      price: "4.000.000",
+    },
+    {
+      id: 4,
+      title: "Tour 4",
+      date: "2024-04-16",
+      price: "3.600.000",
+    },
+    {
+      id: 5,
+      title: "Tour 4",
+      date: "2024-04-11",
+      price: "4.200.000",
+    },
+  ]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+  const totalItems = dummyData.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  // Calculate start and end indexes for the current page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+  // Function to handle page navigation
+  const goToPage = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <main role="main">
             <section className="ftco-section ftco-counter img" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <Container>
                     <Row className="justify-content-center">
