@@ -95,7 +95,7 @@ const FindTour = () => {
                                             <Link
                                                 to="/detailTour"
                                                 className="text-dark"
-                                                state={{ tourId: tour.id }}
+                                                state={{ tourId: tourTime.id }}
                                             >
                                                 <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tourDetailCustomer.coverImage})` }}>
                                                     <div className="icon d-flex justify-content-center align-items-center">
