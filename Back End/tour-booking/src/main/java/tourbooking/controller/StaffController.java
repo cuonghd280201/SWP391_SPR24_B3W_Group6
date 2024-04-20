@@ -42,4 +42,9 @@ public class StaffController {
         return staffService.updateImage(tourImageDTO);
     }
 
+    @DeleteMapping("/tourImage/{imageId}")
+    public ResponseEntity<BaseResponseDTO> deleteImage(@PathVariable("imageId") UUID imageId){
+        return staffService.deleteImage(imageId);
+    }
+
 }

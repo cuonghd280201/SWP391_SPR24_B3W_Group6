@@ -52,8 +52,8 @@ const authRoutes = [
   { path: "/listAccountStaff", component: <ListAccountStaff /> },
   { path: "/homeSlider", component: <HomeSlider/>},
   { path: "/fileImage", component: <FileUploadImage/>},
-  
-  { path: "/listTourBookDetail", component: <ListTourBookDetail/>}
+
+  { path: "/listTourBookDetail", component: <ListTourStaffDetail/>}
 
 
 

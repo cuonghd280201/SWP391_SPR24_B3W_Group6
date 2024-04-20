@@ -129,6 +129,12 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public ResponseEntity<BaseResponseDTO> deleteImage(UUID id) {
+        tourImageService.deleteImage(id);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Delete Image Successfully!"));
+    }
+
+    @Override
     public ResponseEntity<BaseResponseDTO> updateTour(Principal principal, Tour tour) {
         return null;
     }
