@@ -15,7 +15,9 @@ export default {
             getTourDetailByID: "/tour/get/${tourId}"
         }, 
         order: {
-            createOrder: "/order/create",
+            createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
+            getAllTour: "/order/all",
+            getOrderDetailByID: "/order/${orderId}"
         }
         
         

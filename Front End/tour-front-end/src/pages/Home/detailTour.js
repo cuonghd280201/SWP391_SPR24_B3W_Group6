@@ -4,9 +4,8 @@ import '../Home/Timeline.css'
 import '../Home/detailTour.css'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import tourServices from "../../services/tour.services";
-
 
 
 
@@ -33,6 +32,24 @@ const DetailTour = () => {
     useEffect(() => {
         fetchTourDetailCustomer();
       }, []);
+
+
+      const navigate = useNavigate();
+
+      // Function to navigate to /findTour with tourId
+      const navigateToFindTour = () => {
+        if (tourDetailCustomer) {
+            // Navigate to FindTour page
+            navigate('/findTour', { state: { tourId: tourDetailCustomer.id } });
+          }
+    };
+    const navigateInfomationTour = () => {
+        if (tourDetailCustomer){
+            navigate('/infomationTour', { state: {tourId: tourDetailCustomer.id}});
+        }
+    }
+
+
     
 
     const [isOpen, setIsOpen] = useState(false);
@@ -90,7 +107,7 @@ const DetailTour = () => {
                                 <div className="col-md-6 left">
                                     <div className="warp-mark">
                                         <i className="fal fa-ticket" />
-                                        <label>{tourDetailCustomer?.id}</label>
+                                        <label>{tourDetailCustomer?.tourTimeSet[0]?.id}</label>
                                     </div>
                                     <h1 className="title">🔥 {tourDetailCustomer?.title}</h1>
 
@@ -104,7 +121,7 @@ const DetailTour = () => {
                                         </div>
                                     </div>
                                     <div className="group-add-cart">
-                                        <a href="/infomationTour" title="Đặt ngay" className="add-to-cart">
+                                        <a  title="Đặt ngay" className="add-to-cart" onClick={navigateInfomationTour}>
                                             <i className="fal fa-shopping-cart"></i> Đặt ngay
                                         </a>
                                         <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
@@ -189,8 +206,12 @@ const DetailTour = () => {
                                             <div className="calendar">
                                                 <div className="calendar-box">
                                                     <i className="icon icon--calendar" />
-                                                    <label><a href="/findTour"> Ngày khác</a></label>
-                                                </div>
+
+                                                    <label>
+                <a onClick={navigateToFindTour}>
+                    Ngày khác
+                </a>
+            </label>                                                  </div>
                                             </div>
 
                                         </div>
