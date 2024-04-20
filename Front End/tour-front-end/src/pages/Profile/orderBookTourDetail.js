@@ -3,62 +3,49 @@ import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input,
 
 import "../Admin/dashboard.css";
 import { Layout } from "antd";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import tourServices from "../../services/tour.services";
+import orderServices from "../../services/order.services";
 const { Content } = Layout;
 
 const OrderBookTourDetail = () => {
 
   const { state } = useLocation();
 
-  const [tourDetailCustomer, setTourDetailCustomer] =
+  const [orderDetail, setOrderDetail] =
     useState(null);
-  const fetchTourDetailCustomer = async () => {
+  const fetchOrderDetail = async () => {
     let response;
     try {
-      response = await tourServices.getDetailTourByCustomer(state?.tourId);
+      response = await orderServices.getDetailOrder(state?.orderId);
       console.log("Response:", response); // Log the response object
-      setTourDetailCustomer(response.data.data);
+      setOrderDetail(response.data.data);
 
       return response;
 
     } catch (error) {
-      console.error("Error fetching tour:", error);
+      console.error("Error fetching order:", error);
     }
   }
 
   useEffect(() => {
-    fetchTourDetailCustomer();
+    fetchOrderDetail();
   }, []);
-
-  const renderTourSchedules = () => {
-    if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
-      return tourDetailCustomer.tourSchedules.map((schedule, index) => (
-        <div key={schedule.id} className="box">
-          <h4>Ngày {index + 1}</h4>
-          <h3>{schedule.createDate.split(' ')[0]}</h3>
-          <p>{schedule.description}</p>
-        </div>
-      ));
-    }
-    return null;
-  };
 
 
   return (
 
-    
+
     <Layout style={{ minHeight: "100vh" }}>
       <section className="ftco-section ftco-counter img" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
-                <Container>
-                    <Row className="justify-content-center">
-                        <Col md="10">
-                            {/* Your content here */}
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
+        <Container>
+          <Row className="justify-content-center">
+            <Col md="10">
+              {/* Your content here */}
+            </Col>
+          </Row>
+        </Container>
+      </section>
       <Layout>
         <div
           style={{
@@ -91,7 +78,7 @@ const OrderBookTourDetail = () => {
                         <h4 style={{ fontSize: 16, marginTop: 10 }}>
                           Mã Chuyến Đi:{" "}
                           <span style={{ color: "#666" }}>
-                            {tourDetailCustomer?.id}
+
                           </span>
                         </h4>
                         <p
@@ -101,13 +88,13 @@ const OrderBookTourDetail = () => {
                             marginBottom: 5,
                           }}
                         >
-                          {tourDetailCustomer?.price} VNĐ
+                          VNĐ
                         </p>
                         <p
                           className="text-primary"
                           style={{ fontSize: 14, marginBottom: 5 }}
                         >
-                          Giờ đi: {tourDetailCustomer?.starLocation}
+                          Giờ đi:
 
                         </p>
                       </div>
@@ -123,67 +110,29 @@ const OrderBookTourDetail = () => {
                     <section className="section-03 mb-5">
                       <div className="container-fluid">
                         <div className="row">
-                          <div className="col-md-5 left">
+                          <div className="col-md-24 left">
                             <div className="box-order">
-                              <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
+                              <div className="time"><p>Khởi hành <b> </b>
                               </p>
                                 {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
                                                 </p> */}
-                                <p>Thời gian <b>7 ngày</b>
-                                </p><p>Nơi khởi hành <b>{tourDetailCustomer?.starLocation}</b>
-                                </p><p>Nơi kết thúc <b>{tourDetailCustomer?.endLocation}</b>
-                                </p><p>Số chỗ còn nhận <b>{tourDetailCustomer?.tourTimeSet[0]?.slotNumber}</b></p></div>
-                              <div className="calendar">
-                                <div className="calendar-box">
-                                  <i className="icon icon--calendar" />
-                                  <label><a href="/findTour"> Ngày khác</a></label>
-                                </div>
+                                <p>Ngày đi:  <b>{orderDetail?.tourTimeDTO.startDate}</b>
+                                </p>
+                                <p>Ngày về:  <b> {orderDetail?.tourTimeDTO.endDate}</b>
+                                </p><p>Thời gian đi:   <b> {orderDetail?.tourTimeDTO.startTime}</b>
+                                </p><p>Số lượng người đi:   <b> {orderDetail?.tourTimeDTO.slotNumberActual}</b>
+                                  <p>Số lượng chỗ:   <b> {orderDetail?.tourTimeDTO.slotNumber}</b></p>
+                                  <p>Trạng thái chuyến đi:   <b> {orderDetail?.tourTimeDTO.timeStatus}</b></p>
+
+                                </p>
+
+
                               </div>
+                             
 
                             </div>
                           </div>
-                          <div className="col-md-7  right">
-                            <div className="group-services">
-                              <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
-                                <label>Thời gian</label>
-                                <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
-                              </div>
-                              <div className="item">
-                                <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
-                                <label>Phương tiện di chuyển</label>
-                                <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
-                              </div>
-                              <div className="item">
-                                <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
-                                <label>Điểm tham quan</label>
-                                <p>{tourDetailCustomer?.tourDetail.location}</p>
-                              </div>
-                              <div className="item">
-                                <img src="/images/icons/utility/am thuc.png" className="icon-img" />
-                                <label>Ẩm thực</label>
 
-                                <p>{tourDetailCustomer?.tourDetail.food}</p>
-                              </div>
-                              <div className="item">
-                                <img src="/images/icons/utility/khach san.png" className="icon-img" />
-                                <label>Khách sạn</label>
-                                <p>{tourDetailCustomer?.tourDetail.food}</p>
-                              </div>
-
-                              <div className="item">
-                                <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
-                                <label>Thời gian lý tưởng</label><p>Quanh năm</p>
-                              </div><div className="item">
-                                <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
-                                <label>Đối tượng thích hợp</label>
-                                <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
-                              </div>
-                              <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
-                                <label>Ưu đãi</label>
-                                <p>Ưu đãi trực tiếp vào giá tour</p>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </section>
@@ -201,7 +150,7 @@ const OrderBookTourDetail = () => {
                               <h2>Lịch Trình</h2>
                             </header>
                             <div className="contents">
-                              {renderTourSchedules()}
+                              {/* {renderTourSchedules()} */}
                             </div>
                           </section>
                         </main>
@@ -271,6 +220,79 @@ const OrderBookTourDetail = () => {
                 </div>
 
               </section>
+
+              <div class="col-md-6 col-12">
+                <h2
+                  style={{
+                    fontSize: "28px",
+                    color: "#333",
+                    marginBottom: "20px",
+                  }}
+                >
+                  Thông tin khách hàng đã đặt
+                </h2>
+                <div class="table-responsive">
+                  <table
+                    class="table table-striped"
+                    style={{ width: "100%", borderCollapse: "collapse" }}
+                  >
+                    <thead>
+                      <tr
+                        style={{
+                          backgroundColor: "#f8f9fa",
+                          borderBottom: "2px solid #dee2e6",
+                        }}
+                      >
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Tên khách
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Số điện thoại
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          CMND
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Ngày Sinh
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ padding: "15px", color: "#495057" }}
+                        >
+                          Loại Khách
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {orderDetail && orderDetail.tourVisitorDTOList.map((tourVisitor, index) => (
+
+                      <tr>
+                        <td style={{ padding: "15px" }}>
+                          {tourVisitor.name}
+                        </td>
+                        <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                        <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                        <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                        <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+
+                      </tr>
+                    ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <Link to="/listTourStaff" style={{ textDecoration: "none" }}>
                 <button
                   style={{

@@ -95,7 +95,8 @@ const FindTour = () => {
                                             <Link
                                                 to="/detailTour"
                                                 className="text-dark"
-                                                state={{ tourId: tourTime.id }}
+                                                state={{ tourId: tourDetailCustomer.id }}
+
                                             >
                                                 <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tourDetailCustomer.coverImage})` }}>
                                                     <div className="icon d-flex justify-content-center align-items-center">
@@ -118,11 +119,12 @@ const FindTour = () => {
                                                         <span className="price per-price">{tourDetailCustomer.price}<br /><small>/tour</small></span>
                                                     </div>
                                                 </div>
-                                                <h3>Mã Chuyến Đi</h3>
-                                                <span><i className="icon-map-o" /> {tourDetailCustomer.id}</span>
+                                                <span><i className="icon-map-o" />Mã Chuyến Đi: {tourTime.id}</span>
                                                 <p>Nơi Khởi Hành:  {tourDetailCustomer.starLocation}</p>
                                                 <p>Nơi Kết Thúc:  {tourDetailCustomer.endLocation}</p>
                                                 <h3>Giá : {tourDetailCustomer.price}</h3>
+                                                <p>Số chỗ còn nhận <b>{tourTime.slotNumber}</b></p>
+
                                                 <hr />
 
                                                 {/* Hiển thị các thông tin khác về tour */}
