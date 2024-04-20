@@ -1,41 +1,40 @@
 package tourbooking.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-import tourbooking.common.Gender;
+import tourbooking.common.OrderStatus;
 import tourbooking.utils.DateTimeUtils;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class OrderDetailDTO {
     private UUID id;
-    private String name;
-    private String phone;
-    private String email;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT)
-    @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
-    private LocalDate dateOfBirth;
-    private Gender gender;
+    private BigDecimal price;
+    private BigDecimal paid;
+    private BigDecimal priceAfterPaid;
+    private BigDecimal amount;
+    private BigDecimal refund;
+    private OrderStatus orderStatus;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime createDate;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime updateDate;
-    private String image;
-    private String role;
+    private TourTimeDTO tourTimeDTO;
+    private List<TourVisitorDTO> tourVisitorDTOList;
+    private UserDTO userDTO;
 }

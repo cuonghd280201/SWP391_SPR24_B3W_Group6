@@ -6,4 +6,5 @@ import tourbooking.entity.Payment;
 import java.util.UUID;
 
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
+    Payment getPaymentByVnPayCode(String vnPayCode);
 }
