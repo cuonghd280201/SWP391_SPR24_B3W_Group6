@@ -78,7 +78,7 @@ const SiderBarWebStaff = ({ choose }) => {
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
       className: "listTourBook",
-      link: "/listTourStaff",
+      link: "/listTourBook",
     },
     {
       label: "Báo Cáo Hoàn Tiền",
