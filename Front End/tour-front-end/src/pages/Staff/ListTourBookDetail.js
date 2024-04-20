@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-
-import "../../Admin/dashboard.css";
+import "../Admin/dashboard.css";
 import { Layout } from "antd";
 import { Link } from "react-router-dom";
-import NavBarWebStaff from "../Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "../SlideBar/SiderBarWebStaff";
+
+import NavBarWebStaff from "./Navbar/NavBarWebStaff";
+import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
 const { Content } = Layout;
 
 const ListTourBookDetail = () => {
