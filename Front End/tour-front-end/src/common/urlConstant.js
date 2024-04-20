@@ -9,10 +9,12 @@ export default {
 
         },
         tour: {
+            createTour: "/staff/tour/create",
             getAllTour: "/tour/all",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
-            getTourDetailByID: "/tour/get/${tourId}"
+            getTourDetailByID: "/tour/get/${tourId}",
+            getSlotDetailByID: "/staff/tourTime/getTimeDetail/${timeId}"
         }, 
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
