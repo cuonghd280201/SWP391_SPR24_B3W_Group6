@@ -11,6 +11,7 @@ import tourbooking.service.TourImageService;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +41,13 @@ public class TourImageServiceImpl implements TourImageService {
 
         tourImages.setImage(tourImageDTO.getImage());
         tourImagesRepository.save(tourImages);
+    }
+
+    @Override
+    public void deleteImage(UUID id) {
+        TourImages tourImages = tourImagesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Image not found!"));
+
+        tourImagesRepository.deleteById(id);
     }
 }

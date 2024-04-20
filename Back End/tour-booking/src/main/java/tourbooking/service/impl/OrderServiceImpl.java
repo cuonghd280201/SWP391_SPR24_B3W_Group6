@@ -8,8 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.OrderStatus;
 import tourbooking.common.TourVisitorType;
-import tourbooking.dto.BaseResponseDTO;
-import tourbooking.dto.TourVisitorForm;
+import tourbooking.dto.*;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourTime;
@@ -23,13 +22,11 @@ import tourbooking.repository.UserRepository;
 import tourbooking.service.OrderService;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +67,11 @@ public class OrderServiceImpl implements OrderService {
         //Cập nhật số lượng khách thực tế
         tourTime.setTourVisitorSet(tourVisitorSet);
         int slotNumberInTime = tourTimeRepository.countVisitor(tourTimeId);
-        tourTime.setSlotNumberActual(tourTime.getSlotNumber() - slotNumberInTime);
+        //int listVisitCount = tourVisitorFormList.size();
+        //int slotNumberActual = slotNumberInTime + listVisitCount;
+        System.out.println(slotNumberInTime);
+        tourTime.setSlotNumberActual(slotNumberInTime);
+        tourTime.setSlotNumber(tourTime.getSlotNumber() - slotNumberInTime);
         tourTimeRepository.save(tourTime);
         //Tính giá tiền cho trẻ em
         BigDecimal tourPrice = tourTime.getTour().getPrice();
@@ -80,19 +81,61 @@ public class OrderServiceImpl implements OrderService {
         int adultNumber = tourVisitorRepository.countAdultInTourTime(tourTimeId);
         BigDecimal adultPrice = tourPrice.multiply(BigDecimal.valueOf(adultNumber));
         //Tính giá tiền cho order
+        BigDecimal paidPrice;
         BigDecimal orderPrice = babyPrice.add(adultPrice);
         orders.setPrice(orderPrice);
         //Tạo payment
         if (paid.compareTo(BigDecimal.ZERO) == 0) {
-           orders.setAmount(orderPrice);
+            paidPrice = BigDecimal.valueOf(0);
+            orders.setAmount(orderPrice);
             orders.setOrderStatus(OrderStatus.DONE);
         } else {
-            orders.setAmount(orderPrice.subtract(paid));
+            paidPrice = orderPrice.multiply(paid.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
+            orders.setAmount(paidPrice);
             orders.setOrderStatus(OrderStatus.NOT_DONE);
         }
-        orders.setPriceAfterPaid(orderPrice.subtract(paid));
+        orders.setPriceAfterPaid(orderPrice.subtract(paidPrice));
         orders.setRefund(BigDecimal.ZERO);
         orderRepository.save(orders);
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
     }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> getAllOrder(Principal principal) {
+        User user = userRepository.findByFireBaseUid(principal.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        List<Orders> ordersList = orderRepository.findAllByUser(user);
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Orders orders: ordersList
+             ) {
+            OrderDTO orderDTO = modelMapper.map(orders, OrderDTO.class);
+            orderDTOList.add(orderDTO);
+        }
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", orderDTOList));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> getOrderDetailById(UUID uuid) {
+        Orders orders = orderRepository.findById(uuid).orElseThrow(() -> new ResourceNotFoundException("Order not found!"));
+
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", convertToOrderDetailDTO(orders)));
+    }
+
+    public OrderDetailDTO convertToOrderDetailDTO (Orders orders) {
+        if (orders == null) {
+            return null;
+        }
+        OrderDetailDTO orderDetailDTO = modelMapper.map(orders, OrderDetailDTO.class);
+        orderDetailDTO.setTourTimeDTO(modelMapper.map(orders.getTourTime(), TourTimeDTO.class));
+        orderDetailDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
+        List<TourVisitorDTO> tourVisitorDTOList = new ArrayList<>();
+        for (TourVisitor tourVisitor: orders.getTourTime().getTourVisitorSet()
+             ) {
+            TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+            tourVisitorDTOList.add(tourVisitorDTO);
+        }
+        orderDetailDTO.setTourVisitorDTOList(tourVisitorDTOList);
+        return orderDetailDTO;
+    }
+
 }

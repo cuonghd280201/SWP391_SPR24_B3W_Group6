@@ -25,4 +25,12 @@ public class OrderController {
                                                         @RequestBody List<TourVisitorForm> tourVisitorFormList) {
         return orderService.createOrder(principal, tourTimeId, paid, tourVisitorFormList);
     }
+    @GetMapping("/all")
+    public ResponseEntity<BaseResponseDTO> getAllOrderByUser (Principal principal) {
+        return orderService.getAllOrder(principal);
+    }
+    @GetMapping("/{orderId}")
+    public ResponseEntity<BaseResponseDTO> getOrderDetailById (@PathVariable("orderId") UUID uuid) {
+        return orderService.getOrderDetailById(uuid);
+    }
 }
