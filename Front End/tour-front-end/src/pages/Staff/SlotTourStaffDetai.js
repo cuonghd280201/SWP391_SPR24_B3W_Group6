@@ -125,8 +125,8 @@ const SlotTourStaffDetai = () => {
                                   </p><p>Số lượng người đi:   <b> {timeDetail?.tourTimeDTO.slotNumberActual}</b>
                                     <p>Số lượng chỗ:   <b> {timeDetail?.tourTimeDTO.slotNumber}</b></p>
                                     Trạng thái chuyến đi:   <b>  {timeDetail?.tourTimeDTO.timeStatus}</b>
-                                    
-                                    
+
+
                                   </p>
                                 </div>
 
@@ -163,110 +163,109 @@ const SlotTourStaffDetai = () => {
                   </div>
 
                 </section>
-
-                <div className="flight-hotel-detail detail tour-detail  ">
-                  <div className="entry-head">
-                    <div className="overview active">
-                      <section className="section-03 mb-5">
-                        <div className="container-fluid">
-                          <div className="row">
-                            <div className="col-md-24 left">
-                              <div className="box-order">
-                                <h2 className="tt mt-3">Thông tin người đặt</h2>
-                                <div className="table-price"><div className="more-info more-info-2">
-                                  <div className="block">
-                                    <div className="info">
-                                      <h3>Tên Người Đặt: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.name}</h3><p>Địa chỉ e-mail: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.email}</p>
-                                      <span>Số Điện Thoại: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.phone}</span>
+                {timeDetail && timeDetail?.groupVisitorDTOSet?.map((groupVisitorDTOSet, index) => (
+                  <section>
+                    <div className="flight-hotel-detail detail tour-detail  ">
+                      <div className="entry-head">
+                        <div className="overview active">
+                          <section className="section-03 mb-5">
+                            <div className="container-fluid">
+                              <div className="row">
+                                <div className="col-md-24 left">
+                                  <div className="box-order">
+                                    <h2 className="tt mt-3">Thông tin người đặt</h2>
+                                    <div className="table-price"><div className="more-info more-info-2">
+                                      <div className="block">
+                                        <div className="info">
+                                          <h3>Tên Người Đặt: {groupVisitorDTOSet?.userDTO?.name}</h3><p>Địa chỉ e-mail: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.email}</p>
+                                          <span>Số Điện Thoại: {groupVisitorDTOSet?.userDTO?.phone}</span>
+                                        </div>
+                                      </div>
+                                    </div>
                                     </div>
                                   </div>
                                 </div>
+                                <h2
+                                  style={{
+                                    fontSize: "28px",
+                                    color: "#333",
+                                    marginBottom: "20px",
+                                  }}
+                                >
+                                  Thông tin khách hàng tham gia chuyến đi
+                                </h2>
+                                <div class="table-responsive">
+                                  <table
+                                    class="table table-striped"
+                                    style={{ width: "100%", borderCollapse: "collapse" }}
+                                  >
+                                    <thead>
+                                      <tr
+                                        style={{
+                                          backgroundColor: "#f8f9fa",
+                                          borderBottom: "2px solid #dee2e6",
+                                        }}
+                                      >
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Tên khách
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Số điện thoại
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          CMND
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Ngày Sinh
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Loại Khách
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {groupVisitorDTOSet && groupVisitorDTOSet?.tourVisitorDTOSet?.map((tourVisitor, index) => (
+
+                                        <tr>
+                                          <td style={{ padding: "15px" }}>
+                                            {tourVisitor.name}
+                                          </td>
+                                          <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                                          <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                                          <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                                          <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
                                 </div>
+
                               </div>
                             </div>
-
-                          </div>
+                          </section>
                         </div>
-                      </section>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </section>
+                ))}
 
 
-
-
-                <div class="col-md-6 col-12">
-                  <h2
-                    style={{
-                      fontSize: "28px",
-                      color: "#333",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    Thông tin khách hàng tham gia chuyến đi
-                  </h2>
-                  <div class="table-responsive">
-                    <table
-                      class="table table-striped"
-                      style={{ width: "100%", borderCollapse: "collapse" }}
-                    >
-                      <thead>
-                        <tr
-                          style={{
-                            backgroundColor: "#f8f9fa",
-                            borderBottom: "2px solid #dee2e6",
-                          }}
-                        >
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Tên khách
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Số điện thoại
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            CMND
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Ngày Sinh
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Loại Khách
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {timeDetail && timeDetail?.groupVisitorDTOSet?.[0]?.tourVisitorDTOSet?.map((tourVisitor, index) => (
-
-                          <tr>
-                            <td style={{ padding: "15px" }}>
-                              {tourVisitor.name}
-                            </td>
-                            <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
-                            <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
-                            <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
-                            <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
-
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
                 <Link to="/listTourStaff" style={{ textDecoration: "none" }}>
                   <button
                     style={{

@@ -276,7 +276,19 @@ const OrderBookTourDetail = () => {
                       </tr>
                     </thead>
                     <tbody>
-                   
+                    {orderDetail && orderDetail.tourVisitorDTOList.map((tourVisitor, index) => (
+
+                      <tr>
+                        <td style={{ padding: "15px" }}>
+                          {tourVisitor.name}
+                        </td>
+                        <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                        <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                        <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                        <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+
+                      </tr>
+                    ))}
                     </tbody>
                   </table>
                 </div>

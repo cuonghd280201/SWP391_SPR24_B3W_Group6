@@ -163,11 +163,8 @@ const Step4Form = ({ onButtonClick, startTime, endTime, description, slotNumber 
                                         </div>
 
                                     <div className="col-lg-12 mt-2 d-flex justify-content-end gap-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            onClick={handleSubmit}
-                                        >
+                                    <button type="button" className="btn btn-primary" value={formData.someField || ''} onChange={handleChange} onClick={handleSubmit}>
+
                                             Submit
                                         </button>
                                     </div>

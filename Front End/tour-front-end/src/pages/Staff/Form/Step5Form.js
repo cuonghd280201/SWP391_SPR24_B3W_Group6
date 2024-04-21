@@ -4,7 +4,7 @@ import tourServices from "../../../services/tour.services";
 
 const { Content } = Layout;
 
-const Step5Form = ({ combinedData, onTourCreated }) => {
+const Step5Form = ({ formData = {}, onTourCreated }) => {
     const [selectedImages, setSelectedImages] = useState([]);
 
     // Handle image file selection
@@ -13,49 +13,30 @@ const Step5Form = ({ combinedData, onTourCreated }) => {
         setSelectedImages(files);
     };
 
-    // Function to create a tour
-    const createTour = async () => {
-        // Add image data to the combined form data
-        const formData = new FormData();
-        formData.append("title", combinedData.title);
-        formData.append("startLocation", combinedData.startLocation);
-        formData.append("endLocation", combinedData.endLocation);
-        formData.append("description", combinedData.description);
-        formData.append("price", combinedData.price);
-        formData.append("city", combinedData.city);
+    // Function to handle form submission
+    const handleSubmit = async () => {
+        // Create a FormData object and append the data from all previous steps
+        const combinedFormData = new FormData();
 
-        // Add tour details
-        formData.append("time", combinedData.tourDetailCreateForm.time);
-        formData.append("vehicle", combinedData.tourDetailCreateForm.vehicle);
-        formData.append("location", combinedData.tourDetailCreateForm.location);
-        formData.append("food", combinedData.tourDetailCreateForm.food);
-        formData.append("hotel", combinedData.tourDetailCreateForm.hotel);
+        // Add data from the formData prop
+        if (formData) {
+            for (const [key, value] of Object.entries(formData)) {
+                combinedFormData.append(key, value);
+            }
+        }
 
-        // Add tour schedule
-        combinedData.listTourSchedule.forEach((schedule, index) => {
-            formData.append(`listTourSchedule[${index}].day`, schedule.day);
-            formData.append(`listTourSchedule[${index}].title`, schedule.title);
-            formData.append(`listTourSchedule[${index}].description`, schedule.description);
+        // Append selected images to the form data
+        selectedImages.forEach((file, index) => {
+            combinedFormData.append(`image${index}`, file);
         });
 
-        // Add tour times
-        combinedData.tourTimeCreateFormSet.forEach((time, index) => {
-            formData.append(`tourTimeCreateFormSet[${index}].startDate`, time.startDate);
-            formData.append(`tourTimeCreateFormSet[${index}].endDate`, time.endDate);
-            formData.append(`tourTimeCreateFormSet[${index}].startTime`, time.startTime);
-            formData.append(`tourTimeCreateFormSet[${index}].slotNumber`, time.slotNumber);
-        });
-
-        // Add selected images
-        selectedImages.forEach((image, index) => {
-            formData.append(`tourImageCreateForms[${index}].image`, image);
-        });
-
-        // Send the form data to the API endpoint
         try {
-          const response = tourServices.createTour(formData);
+            // Call the API endpoint to create the tour
+            const response = await tourServices.createTour(combinedFormData);
+
+            // Handle successful tour creation
             if (response.ok) {
-                // Notify the parent component or navigate to a different route
+                // Notify parent component that the tour has been created
                 onTourCreated();
             } else {
                 console.error("Failed to create tour:", await response.text());
@@ -66,50 +47,21 @@ const Step5Form = ({ combinedData, onTourCreated }) => {
     };
 
     return (
-        <Layout>
-            <div
-                style={{
-                    padding: "30px",
-                    background: "white",
-                    margin: "30px",
-                    borderRadius: "12px",
-                    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                }}
-            >
-                <Content>
-                    <div className="row justify-content-center">
-                        <div className="col-lg-12">
-                            <div className="rounded shadow bg-white p-4">
-                                <div className="custom-form">
-                                    <h4 className="text-dark mb-3">Tạo ảnh cho chuyến đi</h4>
-
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <label htmlFor="imageUpload" className="form-label">
-                                                Chọn ảnh:
-                                            </label>
-                                            <input
-                                                type="file"
-                                                className="form-control"
-                                                id="imageUpload"
-                                                name="imageUpload"
-                                                multiple
-                                                onChange={handleImageUpload}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="col-lg-12 mt-2 d-flex justify-content-end gap-2">
-                                        <Button type="primary" onClick={createTour}>
-                                            Tạo chuyến đi
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Content>
+        <Layout style={{ padding: "20px" }}>
+            <h4>Step 5: Upload Images</h4>
+            <div className="form-group">
+                <label htmlFor="imageUpload">Choose Images:</label>
+                <input
+                    type="file"
+                    id="imageUpload"
+                    className="form-control"
+                    multiple
+                    onChange={handleImageUpload}
+                />
             </div>
+            <Button  type="primary" onClick={handleSubmit}>
+                Submit Tour
+            </Button>
         </Layout>
     );
 };
