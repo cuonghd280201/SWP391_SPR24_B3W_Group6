@@ -34,7 +34,7 @@ const ListTourStaffDetail = () => {
   const navigateToFindTour = () => {
     if (tourDetailCustomer) {
         // Navigate to FindTour page
-        navigate('/findTour', { state: { tourId: tourDetailCustomer.id } });
+        navigate('/slotTourStaff', { state: { tourId: tourDetailCustomer.id } });
       }
 };
   useEffect(() => {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
+import { Layout, Input, Button, Form, message } from 'antd';
 import { Editor } from "@tinymce/tinymce-react";
+import { imageDb } from '../../../utils/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const { Content } = Layout;
 
@@ -13,7 +15,7 @@ const Step1Form = ({ onButtonClick, title, price, city, startLocation, endLocati
     const [endLocationError, setEndLocationError] = useState(null);
     const [imageError, setImageError] = useState(null);
     const [descriptionError, setDescriptionError] = useState(null);
-    
+
     // Initialize form fields with given props using useEffect
     useEffect(() => {
         if (title) {
@@ -36,6 +38,45 @@ const Step1Form = ({ onButtonClick, title, price, city, startLocation, endLocati
         }
     }, [title, price, city, startLocation, endLocation, description]);
 
+    const handleFileUpload = async (file) => {
+        try {
+            const storageRef = ref(imageDb, `images/${file.name}`);
+            await uploadBytes(storageRef, file);
+            const downloadURL = await getDownloadURL(storageRef);
+            return downloadURL;
+        } catch (error) {
+            return null;
+        }
+    };
+
+    // Function to validate the form and handle form submission
+    const handleSubmit = async (values) => {
+        const { imageFile } = values;
+        const description = values.description;
+
+        // Validate description
+        if (!description) {
+            setDescriptionError('Please provide a description.');
+            return;
+        } else {
+            setDescriptionError(null);
+        }
+
+        // Handle image file upload
+        let downloadURL = null;
+        if (imageFile) {
+            downloadURL = await handleFileUpload(imageFile.file);
+            if (!downloadURL) {
+                return;
+            }
+        }
+
+        // Proceed with form submission using the collected values
+        onButtonClick('step2form', {
+            ...values,
+            image: downloadURL
+        });
+    };
     // Function to validate form fields
     const checkvalidate = () => {
         let isValid = true;
@@ -94,7 +135,7 @@ const Step1Form = ({ onButtonClick, title, price, city, startLocation, endLocati
         //     setImageError(null);
         // }
 
-         const descriptionValue = document.getElementById("description").value;
+        const descriptionValue = document.getElementById("description").value;
         // // if (!descriptionValue) {
         // //     setDescriptionError("Enter description");
         // //     isValid = false;
@@ -245,23 +286,23 @@ const Step1Form = ({ onButtonClick, title, price, city, startLocation, endLocati
                                         {/* Image upload */}
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <label htmlFor="imageUpload" className="form-label">
-                                                    Chọn ảnh:
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    className="form-control"
-                                                    id="imageUpload"
-                                                    name="imageUpload"
-                                                />
-                                                {/* Conditional rendering of image error message */}
-                                                
+                                                <Form.Item
+                                                    name="imageFile"
+                                                    label="Choose Image"
+                                                    valuePropName="fileList"
+                                                    getValueFromEvent={(e) => e?.fileList}
+                                                    rules={[{ required: false, message: 'Please upload an image' }]}
+                                                    extra="Upload a file (image)"
+                                                >
+                                                    <Input type="file" />
+                                                </Form.Item>
+
                                             </div>
                                         </div>
 
                                         {/* Description input */}
                                         <div className="row">
-                                            <div className="col-md-12">
+                                            <div className="col-md-24">
                                                 <div className="form-group app-label mt-2">
                                                     <label className="text-muted">Mô tả chuyến đi</label>
                                                     <Editor
@@ -270,7 +311,7 @@ const Step1Form = ({ onButtonClick, title, price, city, startLocation, endLocati
                                                         apiKey="axy85kauuja11vgbfrm96qlmduhgfg6egrjpbjil00dfqpwf"
                                                     />
                                                     {/* Conditional rendering of description error message */}
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
