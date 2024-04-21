@@ -10,15 +10,13 @@ import tourbooking.common.OrderStatus;
 import tourbooking.common.TourVisitorType;
 import tourbooking.dto.*;
 import tourbooking.entity.Orders;
+import tourbooking.entity.Payment;
 import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourTime;
 import tourbooking.entity.Tour.TourVisitor;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
-import tourbooking.repository.OrderRepository;
-import tourbooking.repository.TourTimeRepository;
-import tourbooking.repository.TourVisitorRepository;
-import tourbooking.repository.UserRepository;
+import tourbooking.repository.*;
 import tourbooking.service.OrderService;
 
 import java.math.BigDecimal;
@@ -35,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final TourTimeRepository tourTimeRepository;
     private final TourVisitorRepository tourVisitorRepository;
+    private final PaymentRepository paymentRepository;
+    private final PaymentServiceImpl paymentService;
     private final ModelMapper modelMapper;
     @Override
     public ResponseEntity<BaseResponseDTO> createOrder(Principal principal, UUID tourTimeId, BigDecimal paid, List<TourVisitorForm> tourVisitorFormList) {
@@ -53,6 +53,12 @@ public class OrderServiceImpl implements OrderService {
         for (TourVisitorForm tourVisitorForm: tourVisitorFormList
              ) {
             TourVisitor tourVisitor = modelMapper.map(tourVisitorForm, TourVisitor.class);
+            if (tourVisitorForm.getPhone() == null) {
+                tourVisitor.setPhone(null);
+            }
+            if (tourVisitorForm.getIdCard() == null) {
+                tourVisitor.setIdCard(null);
+            }
             int age = dateNow.minusYears(tourVisitor.getDateOfBirth().getYear()).minusDays(1).getYear();
             if (age >= 12) {
                 tourVisitor.setTourVisitorType(TourVisitorType.ADULT);
@@ -99,8 +105,14 @@ public class OrderServiceImpl implements OrderService {
         }
         orders.setPriceAfterPaid(orderPrice.subtract(paidPrice));
         orders.setRefund(BigDecimal.ZERO);
+
+        Payment payment = paymentService.createPayment(user,orders,null);
+        Set<Payment> paymentSet = new HashSet<>();
+        paymentSet.add(payment);
+        orders.setPaymentSet(paymentSet);
         orderRepository.save(orders);
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
+        paymentRepository.save(payment);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully", orders.getPaymentSet().stream().map(Payment::getId)));
     }
 
     @Override
@@ -129,8 +141,13 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
         OrderDetailDTO orderDetailDTO = modelMapper.map(orders, OrderDetailDTO.class);
+        //set tour time dto
         orderDetailDTO.setTourTimeDTO(modelMapper.map(orders.getTourTime(), TourTimeDTO.class));
+        //set user dto
         orderDetailDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
+        //set tour schedule
+        orderDetailDTO.setTourScheduleDTO(modelMapper.map(orders.getTourTime().getTour().getTourSchedules(), TourScheduleDTO.class));
+        //set tour visitor
         List<TourVisitorDTO> tourVisitorDTOList = new ArrayList<>();
         for (TourVisitor tourVisitor: orders.getTourTime().getTourVisitorSet()
              ) {
@@ -139,6 +156,15 @@ public class OrderServiceImpl implements OrderService {
             tourVisitorDTOList.add(tourVisitorDTO);
         }
         orderDetailDTO.setTourVisitorDTOList(tourVisitorDTOList);
+        //set payment dto
+        List<PaymentDTO> paymentDTOList = new ArrayList<>();
+        for (Payment payment: orders.getPaymentSet()
+             ) {
+            PaymentDTO paymentDTO = modelMapper.map(payment, PaymentDTO.class);
+            paymentDTOList.add(paymentDTO);
+        }
+        orderDetailDTO.setPaymentDTOList(paymentDTOList);
+
         return orderDetailDTO;
     }
 
