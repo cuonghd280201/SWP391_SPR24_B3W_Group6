@@ -1,183 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
-import { Editor } from "@tinymce/tinymce-react";
+import React from 'react';
+import { Form, Button, Input, Space, DatePicker } from 'antd';
+import moment from 'moment';
 
-const { Content } = Layout;
+const Step4Form = ({ formData, onNext }) => {
+    const [form] = Form.useForm();
 
-const Step4Form = ({ onButtonClick, startTime, endTime, description, slotNumber }) => {
-    // State variables to manage form values
-    const [formData, setFormData] = useState({
-        startTime: startTime || "",
-        endTime: endTime || "",
-        description: description || "",
-        slotNumber: slotNumber || "",
-    });
-
-    // State variable for form errors
-    const [formErrors, setFormErrors] = useState({});
-
-    useEffect(() => {
-        setFormData({
-            startTime: startTime || "",
-            endTime: endTime || "",
-            description: description || "",
-            slotNumber: slotNumber || "",
+    const handleSubmit = (values) => {
+        // Định dạng các giá trị ngày tháng trong values
+        const formattedValues = values.tourTimeCreateFormSet.map((item) => {
+            return {
+                ...item,
+                startDate: item.startDate.format('DD-MM-YYYY'),
+                endDate: item.endDate.format('DD-MM-YYYY'),
+            };
         });
-    }, [startTime, endTime, description, slotNumber]);
 
-    // Handle input changes
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [id]: value,
-        }));
-    };
-
-    // Validate form
-    const validateForm = () => {
-        const errors = {};
-        if (!formData.startTime) {
-            errors.startTime = "Vui lòng chọn thời gian xuất phát.";
-        }
-        if (!formData.endTime) {
-            errors.endTime = "Vui lòng chọn thời gian kết thúc.";
-        }
-        if (!formData.description) {
-            errors.description = "Vui lòng nhập mô tả.";
-        }
-        if (!formData.slotNumber) {
-            errors.slotNumber = "Vui lòng nhập số lượng hành khách.";
-        } else if (formData.slotNumber < 2) {
-            errors.slotNumber = "Số lượng hành khách phải từ 2 trở lên.";
-        }
-
-        setFormErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
-
-    // Handle form submission
-    const handleSubmit = () => {
-        if (validateForm()) {
-            // Call the onSubmit function with the form data
-            onButtonClick("step5form", formData);
-        }
+        // Gọi onNext với giá trị đã định dạng
+        onNext({ tourTimeCreateFormSet: formattedValues });
     };
 
     return (
-        <Layout>
-            <div
-                style={{
-                    padding: "30px",
-                    background: "white",
-                    margin: "30px",
-                    borderRadius: "12px",
-                    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                }}
-            >
-                <Content>
-                    <div className="row justify-content-center">
-                        <div className="col-lg-12">
-                            <div className="rounded shadow bg-white p-4">
-                                <div className="custom-form">
-                                    <h4 className="text-dark mb-3">Tạo thời gian cho chuyến đi</h4>
-
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div className="form-group app-label mt-2">
-                                                <label className="text-muted">Thời gian xuất phát</label>
-                                                <input
-                                                    id="startTime"
-                                                    type="date"
-                                                    className="form-control resume"
-                                                    value={formData.startTime}
-                                                    onChange={handleChange}
-                                                />
-                                                {formErrors.startTime && (
-                                                    <p style={{ color: 'red' }}>{formErrors.startTime}</p>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        <div className="col-md-6">
-                                            <div className="form-group app-label mt-2">
-                                                <label className="text-muted">Thời gian kết thúc</label>
-                                                <input
-                                                    id="endTime"
-                                                    type="date"
-                                                    className="form-control resume"
-                                                    value={formData.endTime}
-                                                    onChange={handleChange}
-                                                />
-                                                {formErrors.endTime && (
-                                                    <p style={{ color: 'red' }}>{formErrors.endTime}</p>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        
-
-                                        <div className="col-md-6">
-                                            <div className="form-group app-label mt-2">
-                                                <label className="text-muted">Số hành khách</label>
-                                                <input
-                                                    id="slotNumber"
-                                                    type="number"
-                                                    className="form-control resume"
-                                                    value={formData.slotNumber}
-                                                    onChange={handleChange}
-                                                    min="2"
-                                                />
-                                                {formErrors.slotNumber && (
-                                                    <p style={{ color: 'red' }}>{formErrors.slotNumber}</p>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        
-                                    </div>
-                                    <div className="col-md-24">
-                                            <div className="form-group app-label mt-2">
-                                                <label className="text-muted">Mô tả</label>
-                                                <Editor
-                                                    id="description"
-                                                    initialValue={formData.description}
-                                                    init={{
-                                                        height: 200,
-                                                        menubar: false,
-                                                        plugins: "link image",
-                                                        toolbar:
-                                                            "undo redo | bold italic | alignleft aligncenter alignright | code",
-                                                    }}
-                                                    onEditorChange={(content) => {
-                                                        setFormData((prevData) => ({
-                                                            ...prevData,
-                                                            description: content,
-                                                        }));
-                                                    }}
-                                                />
-                                                {formErrors.description && (
-                                                    <p style={{ color: 'red' }}>{formErrors.description}</p>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                    <div className="col-lg-12 mt-2 d-flex justify-content-end gap-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            onClick={handleSubmit}
-                                        >
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Content>
-            </div>
-        </Layout>
+        <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
+            <Form.List name="tourTimeCreateFormSet">
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, fieldKey, ...restField }) => (
+                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'startDate']}
+                                    fieldKey={[fieldKey, 'startDate']}
+                                    rules={[{ required: true, message: 'Please enter the start date!' }]}
+                                >
+                                    <DatePicker placeholder="Start Date" format="DD-MM-YYYY" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'endDate']}
+                                    fieldKey={[fieldKey, 'endDate']}
+                                    rules={[{ required: true, message: 'Please enter the end date!' }]}
+                                >
+                                    <DatePicker placeholder="End Date" format="DD-MM-YYYY" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'startTime']}
+                                    fieldKey={[fieldKey, 'startTime']}
+                                    rules={[{ required: true, message: 'Please enter the start time!' }]}
+                                >
+                                    <Input placeholder="Start Time (HH:MM)" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'slotNumber']}
+                                    fieldKey={[fieldKey, 'slotNumber']}
+                                    rules={[{ required: true, message: 'Please enter the slot number!' }]}
+                                >
+                                    <Input placeholder="Slot Number" type="number" />
+                                </Form.Item>
+                                <Button type="link" onClick={() => remove(name)}>Remove</Button>
+                            </Space>
+                        ))}
+                        <Form.Item>
+                            <Button type="dashed" onClick={() => add()} block icon="+">
+                                Add Time
+                            </Button>
+                        </Form.Item>
+                    </>
+                )}
+            </Form.List>
+            <Form.Item>
+                <Button type="primary" htmlType="submit">Next</Button>
+            </Form.Item>
+        </Form>
     );
 };
 
