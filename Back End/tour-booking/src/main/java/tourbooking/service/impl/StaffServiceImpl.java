@@ -143,12 +143,6 @@ public class StaffServiceImpl implements StaffService {
 
          Set<Orders> ordersSet = tourTime.getOrdersSet();
          for(Orders orders : ordersSet){
-//             User user = orders.getUser();
-//             Set<Orders> orderUserSet = user.getOrdersSet();
-//             for(Orders orders1 : orderUserSet){
-//                 Set<TourVisitor> tourVisitorSet = orders1.getTourTime().getTourVisitorSet();
-//             }
-
 
              GroupVisitorDTO groupVisitorDTO = new GroupVisitorDTO();
              groupVisitorDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
@@ -168,6 +162,13 @@ public class StaffServiceImpl implements StaffService {
          TourTimeDetailDTO tourTimeDetailDTO = new TourTimeDetailDTO();
          tourTimeDetailDTO.setTourTimeDTO(modelMapper.map(tourTime, TourTimeDTO.class));
          tourTimeDetailDTO.setTourDTO(modelMapper.map(tourTime.getTour(), TourDTO.class));
+         Set<TourSchedule> tourScheduleSet = tourTime.getTour().getTourSchedules();
+         Set<TourScheduleDTO> tourScheduleDTOSet = new HashSet<>();
+         for(TourSchedule tourSchedule : tourScheduleSet ){
+             TourScheduleDTO tourScheduleDTO = modelMapper.map(tourSchedule, TourScheduleDTO.class);
+             tourScheduleDTOSet.add(tourScheduleDTO);
+         }
+         tourTimeDetailDTO.setTourScheduleDTOSet(tourScheduleDTOSet);
          tourTimeDetailDTO.setGroupVisitorDTOSet(groupVisitorDTOSet);
 
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "View Time Detail Successfully", tourTimeDetailDTO));
