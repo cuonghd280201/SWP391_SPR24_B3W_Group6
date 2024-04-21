@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tourbooking.dto.*;
 import tourbooking.service.StaffService;
+import tourbooking.service.TourVisitorService;
 
 import javax.swing.plaf.PanelUI;
 import java.security.Principal;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class StaffController {
 
     private final StaffService staffService;
+    private final TourVisitorService tourVisitorService;
 
     @PostMapping("/tour/create")
     public ResponseEntity<BaseResponseDTO> createTour (Principal principal, @RequestBody TourCreateForm tourCreateForm){
@@ -50,5 +52,10 @@ public class StaffController {
     @GetMapping("/tourTime/getTimeDetail/{timeId}")
     public ResponseEntity<BaseResponseDTO> viewTimeDetailByTimeId(@PathVariable("timeId") UUID timeId){
         return staffService.viewTourTimeDetailById(timeId);
+    }
+
+    @PutMapping("/tourVisitor/updateTourVisitor")
+    public ResponseEntity<BaseResponseDTO> updateTourVisitor(@RequestBody TourVisitorDTO tourVisitorDTO){
+        return tourVisitorService.updateTourVisitorById(tourVisitorDTO);
     }
 }

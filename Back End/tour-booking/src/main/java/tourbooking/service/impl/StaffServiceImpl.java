@@ -158,7 +158,8 @@ public class StaffServiceImpl implements StaffService {
              Set<TourVisitor> tourVisitorSet = orders.getTourTime().getTourVisitorSet();
              for(TourVisitor tourVisitor : tourVisitorSet){
                  TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
-                 tourVisitorDTOSet.add(tourVisitorDTO);
+                 if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()))
+                    tourVisitorDTOSet.add(tourVisitorDTO);
              }
              groupVisitorDTO.setTourVisitorDTOSet(tourVisitorDTOSet);
              groupVisitorDTOSet.add(groupVisitorDTO);

@@ -36,4 +36,5 @@ public class TourVisitorDTO {
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime updateDate;
     private TourVisitorType tourVisitorType;
+    private UUID userId;
 }
