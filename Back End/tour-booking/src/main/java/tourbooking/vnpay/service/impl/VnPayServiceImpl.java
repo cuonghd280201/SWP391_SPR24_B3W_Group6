@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class VnPayServiceImpl implements VnPayService {
     private final PaymentRepository paymentRepository;
-    private final PaymentService paymentService;
+    //private final PaymentService paymentService;
     @Override
     public String handleVnPayIPN(HttpServletRequest request) {
         try
