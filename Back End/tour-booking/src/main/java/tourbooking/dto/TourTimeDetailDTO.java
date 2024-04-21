@@ -17,6 +17,8 @@ public class TourTimeDetailDTO {
 
     private TourDTO tourDTO;
 
+    private Set<TourScheduleDTO> tourScheduleDTOSet;
+
     private Set<GroupVisitorDTO> groupVisitorDTOSet;
 
 }

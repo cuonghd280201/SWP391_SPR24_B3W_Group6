@@ -67,6 +67,9 @@ public class OrderServiceImpl implements OrderService {
                 tourVisitor.setTourVisitorType(TourVisitorType.BABY);
             }
             tourVisitor.setTourTime(tourTime);
+
+            tourVisitor.setUserId(user.getId());
+
             tourVisitorRepository.save(tourVisitor);
             tourVisitorSet.add(tourVisitor);
         }
@@ -149,6 +152,7 @@ public class OrderServiceImpl implements OrderService {
         for (TourVisitor tourVisitor: orders.getTourTime().getTourVisitorSet()
              ) {
             TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+//            if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()))
             tourVisitorDTOList.add(tourVisitorDTO);
         }
         orderDetailDTO.setTourVisitorDTOList(tourVisitorDTOList);
