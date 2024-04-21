@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button, Input, Space } from 'antd';
 
-const Step5Form = ({ formData, onNext }) => {
+const Step6Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
 
     const handleSubmit = (values) => {
@@ -17,8 +17,8 @@ const Step5Form = ({ formData, onNext }) => {
                             <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                                 <Form.Item
                                     {...restField}
-                                    name={[name, 'image']}
-                                    fieldKey={[fieldKey, 'image']}
+                                    name={[name, 'imageUrl']}
+                                    fieldKey={[fieldKey, 'imageUrl']}
                                     rules={[{ required: true, message: 'Please enter the image URL!' }]}
                                 >
                                     <Input placeholder="Image URL" />
@@ -35,10 +35,10 @@ const Step5Form = ({ formData, onNext }) => {
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType="submit">Next</Button>
+                <Button type="primary" htmlType="submit">Create Tour</Button>
             </Form.Item>
         </Form>
     );
 };
 
-export default Step5Form;
+export default Step6Form;
