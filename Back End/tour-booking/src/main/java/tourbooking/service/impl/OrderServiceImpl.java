@@ -12,6 +12,7 @@ import tourbooking.dto.*;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Payment;
 import tourbooking.entity.Tour.Tour;
+import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.entity.Tour.TourTime;
 import tourbooking.entity.Tour.TourVisitor;
 import tourbooking.entity.User;
@@ -146,7 +147,13 @@ public class OrderServiceImpl implements OrderService {
         //set user dto
         orderDetailDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
         //set tour schedule
-        orderDetailDTO.setTourScheduleDTO(modelMapper.map(orders.getTourTime().getTour().getTourSchedules(), TourScheduleDTO.class));
+        List<TourScheduleDTO> tourScheduleDTOList = new ArrayList<>();
+        for (TourSchedule tourSchedule: orders.getTourTime().getTour().getTourSchedules()
+             ) {
+            TourScheduleDTO tourScheduleDTO = modelMapper.map(tourSchedule, TourScheduleDTO.class);
+            tourScheduleDTOList.add(tourScheduleDTO);
+        }
+        orderDetailDTO.setTourScheduleDTOList(tourScheduleDTOList);
         //set tour visitor
         List<TourVisitorDTO> tourVisitorDTOList = new ArrayList<>();
         for (TourVisitor tourVisitor: orders.getTourTime().getTourVisitorSet()
