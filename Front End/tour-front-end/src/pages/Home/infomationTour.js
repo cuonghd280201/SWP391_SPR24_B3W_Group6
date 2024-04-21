@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import tourServices from "../../services/tour.services";
 import orderServices from "../../services/order.services";
+import paymentServices from "../../services/payment.services";
 
 const InfomationTour = () => {
     // Get Imfomation
@@ -44,49 +45,67 @@ const InfomationTour = () => {
     // Create Order 
 
 
-
     const createOrderTour = async () => {
         try {
             const tourTimeId = tourDetailCustomer?.tourTimeSet[0]?.id;
             const passengers = [];
-    
+
             // Loop through the adult passengers
             for (let i = 0; i < adultCount; i++) {
                 const name = document.getElementById(`adult-name-${i}`).value;
                 const phone = document.getElementById(`adult-phone-${i}`).value;
                 const idCard = document.getElementById(`adult-idCard-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`adult-dateOfBirth-${i}`).value;
-    
+
                 // Convert date format from YYYY-MM-DD to DD-MM-YYYY
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
-    
+
                 // Create an object for each adult passenger
                 passengers.push({ name, phone, idCard, dateOfBirth: formattedDateOfBirth });
             }
-    
+
             // Loop through the child passengers
             for (let i = 0; i < childCount; i++) {
                 const name = document.getElementById(`child-name-${i}`).value;
                 const phone = document.getElementById(`child-phone-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`child-dateOfBirth-${i}`).value;
-    
+
                 // Convert date format from YYYY-MM-DD to DD-MM-YYYY
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
-    
+
                 // Create an object for each child passenger
                 passengers.push({ name, phone, idCard: null, dateOfBirth: formattedDateOfBirth });
             }
-    
+
             // Send the request to create the tour order
             const response = await orderServices.createOrder(tourTimeId, passengers);
-            
+            const responseData = response.data[0];
+            // Lưu trực tiếp giá trị chuỗi vào local storage
+            localStorage.setItem('orderResponse', responseData);
             toast.success("Create Information Visitor Successfully!");
-            navigate("/payment");
+            //  navigate("/payment");
         } catch (error) {
             toast.error("Visitor Failed!");
             console.error("Error creating tour order:", error);
         }
     };
+    // Checkoout chuyen di
+
+    const createCheckout = async () => {
+        try {
+            const orderResponseString = localStorage.getItem('orderResponse');
+            const response = await paymentServices.createCheckout(orderResponseString);
+            toast.success("Payment Successfully");
+        } catch (error) {
+            toast.error("Payment Failed");
+            console.error("Error payment failed:", error);
+        }
+    };
+
+    const handlePaymentClick = async () => {
+        await createCheckout();
+    };
+
 
     const renderAdultFields = () => {
         const fields = [];
@@ -368,36 +387,51 @@ const InfomationTour = () => {
                                                 <th className="l1">
                                                     <i className="fal fa-users me-1" id="AmoutPerson" />Hành khách</th>
                                                 <th className="l2  text-right">
-                                                    <span className="total-booking">9.990.000&nbsp;₫</span>
+                                                    <span className="total-booking">{tourDetailCustomer?.price}&nbsp;₫</span>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr className="detail">
                                                 <td>Người lớn</td>
-                                                <td className="t-price text-right">1 x 9.990.000&nbsp;₫</td>
-                                            </tr>
+                                                <td className="t-price text-right">
+                                                    {adultCount} x {tourDetailCustomer?.price}&nbsp;₫ &nbsp;=&nbsp; {adultCount * tourDetailCustomer?.price}&nbsp;₫
+                                                </td>                                            </tr>
                                             <tr className="detail">
                                                 <td>Người nhở</td>
-                                                <td className="t-price text-right">1 x 5.990.000&nbsp;₫</td>
-                                            </tr>
+                                                <td className="t-price text-right">
+                                                    {childCount} x {tourDetailCustomer?.price}&nbsp;₫ &nbsp;=&nbsp; {childCount * (tourDetailCustomer?.price) / 2}&nbsp;₫
+                                                </td>                                            </tr>
                                             <tr className="total">
                                                 <td>Tổng tiền </td>
-                                                <td className="t-price text-right">9.990.000&nbsp;₫</td>
+                                                <td className="t-price text-right">{(tourDetailCustomer?.price) + (adultCount * tourDetailCustomer?.price) + (childCount * (tourDetailCustomer?.price) / 2)}&nbsp;₫</td>
+
                                             </tr>
+                                            <Link to="/payment">
+                                                <button
+                                                    onClick={handlePaymentClick}
+                                                    className="btn btn-primary btn-order">Thanh Toán</button>
+                                            </Link>
                                             <tr className="cuppon promotion-broder">
                                                 <tr className="total">
                                                     <td>Tiền Đặt Cọc (50%) </td>
-                                                    <td className="t-price text-right">5.990.000&nbsp;₫</td>
+                                                    <td className="t-price text-right">{((tourDetailCustomer?.price) + (adultCount * tourDetailCustomer?.price) + (childCount * (tourDetailCustomer?.price) / 2)) / 2}&nbsp;₫</td>
+
                                                 </tr>
+                                                <Link to="/payment">
+                                                    <button
+                                                        onClick={handlePaymentClick}
+
+                                                        className="btn btn-primary btn-order">Thanh Toán Đặt Cọc</button>
+                                                </Link>
                                             </tr>
 
                                         </tbody></table>
-                                    <Link to="/payment">
+                                    {/* <Link to="/payment">
                                         <button
 
                                             className="btn btn-primary btn-order">Đặt ngay</button>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>

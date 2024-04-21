@@ -20,6 +20,12 @@ export default {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
             getAllTour: "/order/all",
             getOrderDetailByID: "/order/${orderId}"
+        },
+        payment: {
+            checkout: "/payment/check-out?uuid=${uuid}",
+            transaction: "/transaction/all",
+            paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
+            sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
         }
         
         

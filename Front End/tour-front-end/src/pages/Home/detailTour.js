@@ -59,12 +59,7 @@ const DetailTour = () => {
     //Schedule
 
     // Hàm chuyển đổi ngày từ DD-MM-YYYY sang YYYY-MM-DD
-    const convertDateFormat = (dateString) => {
-        const [day, month, year] = dateString.split('-');
-        return `${year}-${month}-${day}`;
-    };
-
-    const currentDate = new Date().toISOString().split('T')[0];
+    
     // const renderTourSchedules = () => {
     //     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
     //         return tourDetailCustomer.tourSchedules.map((schedule, index) => {
@@ -90,6 +85,12 @@ const DetailTour = () => {
     //     return null;
     // };
     // Function to add days to a date and return the date in dd-mm-yyyy format
+    const convertDateFormat = (dateString) => {
+        const [day, month, year] = dateString.split('-');
+        return `${year}-${month}-${day}`;
+    };
+
+    const currentDate = new Date().toISOString().split('T')[0];
     const addDaysToDate = (dateString, days) => {
         const [day, month, year] = dateString.split('-');
         const date = new Date(`${year}-${month}-${day}`);

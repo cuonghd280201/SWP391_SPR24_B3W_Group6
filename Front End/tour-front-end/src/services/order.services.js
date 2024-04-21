@@ -4,7 +4,7 @@ import axiosLocalHost from "../utils/customAxios";
 
 const createOrder = async (tourTimeId, passengers) => {
  
-    const baseUrl = urlConstant.endpoint.order.createOrder.replace("${tourTimeId}", tourTimeId).replace("${paid}", 1);;   
+    const baseUrl = urlConstant.endpoint.order.createOrder.replace("${tourTimeId}", tourTimeId).replace("${paid}", 50);;   
     // const serviceUrl = `${baseUrl}?tourTimeId=${encodeURIComponent(tourTimeId)}&paid=1`;
     try {
         const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", passengers);

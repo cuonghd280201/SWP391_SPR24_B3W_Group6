@@ -1,68 +1,51 @@
-import React, { useState } from "react";
-import { Layout, Button } from "antd";
-import tourServices from "../../../services/tour.services";
+import React from 'react';
+import { Form, Button, Input, Space } from 'antd';
 
-const { Content } = Layout;
+const Step5Form = ({ formData, onNext }) => {
+    const [form] = Form.useForm();
 
-const Step5Form = ({ formData = {}, onTourCreated }) => {
-    const [selectedImages, setSelectedImages] = useState([]);
-
-    // Handle image file selection
-    const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        setSelectedImages(files);
-    };
-
-    // Function to handle form submission
-    const handleSubmit = async () => {
-        // Create a FormData object and append the data from all previous steps
-        const combinedFormData = new FormData();
-
-        // Add data from the formData prop
-        if (formData) {
-            for (const [key, value] of Object.entries(formData)) {
-                combinedFormData.append(key, value);
-            }
-        }
-
-        // Append selected images to the form data
-        selectedImages.forEach((file, index) => {
-            combinedFormData.append(`image${index}`, file);
-        });
-
-        try {
-            // Call the API endpoint to create the tour
-            const response = await tourServices.createTour(combinedFormData);
-
-            // Handle successful tour creation
-            if (response.ok) {
-                // Notify parent component that the tour has been created
-                onTourCreated();
-            } else {
-                console.error("Failed to create tour:", await response.text());
-            }
-        } catch (error) {
-            console.error("Error creating tour:", error);
-        }
+    const handleSubmit = (values) => {
+        onNext(values);
     };
 
     return (
-        <Layout style={{ padding: "20px" }}>
-            <h4>Step 5: Upload Images</h4>
-            <div className="form-group">
-                <label htmlFor="imageUpload">Choose Images:</label>
-                <input
-                    type="file"
-                    id="imageUpload"
-                    className="form-control"
-                    multiple
-                    onChange={handleImageUpload}
-                />
-            </div>
-            <Button  type="primary" onClick={handleSubmit}>
-                Submit Tour
-            </Button>
-        </Layout>
+        <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
+            <Form.List name="tourImageCreateForms">
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, fieldKey, ...restField }) => (
+                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'imageUrl']}
+                                    fieldKey={[fieldKey, 'imageUrl']}
+                                    rules={[{ required: true, message: 'Please enter the image URL!' }]}
+                                >
+                                    <Input placeholder="Image URL" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'description']}
+                                    fieldKey={[fieldKey, 'description']}
+                                    rules={[{ required: true, message: 'Please enter the description!' }]}
+                                >
+                                    <Input placeholder="Description" />
+                                </Form.Item>
+                                <Button type="link" onClick={() => remove(name)}>Remove</Button>
+                            </Space>
+                        ))}
+                        <Form.Item>
+                            <Button type="dashed" onClick={() => add()} block icon="+">
+                                Add Image
+                            </Button>
+                        </Form.Item>
+                    </>
+                )}
+            </Form.List>
+            <Form.Item>
+                <Button type="primary" htmlType="submit">Create Tour</Button>
+            </Form.Item>
+        </Form>
     );
 };
 

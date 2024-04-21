@@ -33,6 +33,38 @@ const OrderBookTourDetail = () => {
   }, []);
 
 
+
+ 
+
+ 
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  // Modified renderTourSchedules function
+  const renderTourSchedules = () => {
+    const scheduleDate = orderDetail?.tourTimeDTO?.startDate;
+    if (orderDetail && orderDetail.tourScheduleDTOList) {
+
+      return orderDetail.tourScheduleDTOList.map((schedule, index) => {
+        const isComing = scheduleDate <= currentDate;
+        return (
+          <div
+            key={schedule.id}
+            className={`box`}
+            style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+          >
+            <h4>Ngày {index + 1}</h4>
+            <h3>{scheduleDate}</h3>
+            <p>{schedule.description}</p>
+            {isComing && <div className="label-coming">Coming</div>}
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
+
+
   return (
 
 
@@ -58,7 +90,7 @@ const OrderBookTourDetail = () => {
         >
           <div className="ecommerce-widget">
             <div className="row row-with-margin">
-              <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
+              {/* <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div className="destination">
                   <div className="text p-3">
                     <div className="row">
@@ -102,7 +134,7 @@ const OrderBookTourDetail = () => {
                     <hr />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
@@ -128,7 +160,7 @@ const OrderBookTourDetail = () => {
 
 
                               </div>
-                             
+
 
                             </div>
                           </div>
@@ -150,7 +182,7 @@ const OrderBookTourDetail = () => {
                               <h2>Lịch Trình</h2>
                             </header>
                             <div className="contents">
-                              {/* {renderTourSchedules()} */}
+                              {renderTourSchedules()}
                             </div>
                           </section>
                         </main>
@@ -276,19 +308,19 @@ const OrderBookTourDetail = () => {
                       </tr>
                     </thead>
                     <tbody>
-                    {orderDetail && orderDetail.tourVisitorDTOList.map((tourVisitor, index) => (
+                      {orderDetail && orderDetail.tourVisitorDTOList.map((tourVisitor, index) => (
 
-                      <tr>
-                        <td style={{ padding: "15px" }}>
-                          {tourVisitor.name}
-                        </td>
-                        <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
-                        <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
-                        <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
-                        <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+                        <tr>
+                          <td style={{ padding: "15px" }}>
+                            {tourVisitor.name}
+                          </td>
+                          <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                          <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                          <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                          <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
 
-                      </tr>
-                    ))}
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
