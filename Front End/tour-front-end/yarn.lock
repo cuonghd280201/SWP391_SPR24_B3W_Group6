@@ -5022,10 +5022,22 @@
     "type-is" "~1.6.18"
     "unpipe" "1.0.0"
 
+<<<<<<< HEAD
+bootstrap@^5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.3.tgz#de35e1a765c897ac940021900fcbb831602bac38"
+  integrity sha512-8HLCdWgyoMguSO9o+aH+iuZ+aht+mzW0u3HIMzVu7Srrpv7EBBxTnrFlSCskwdY1+EOFQSm7uMJhNQHkdPcmjg==
+
+brace-expansion@^1.1.7:
+  version "1.1.11"
+  resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz"
+  integrity sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
+=======
 "body-parser@1.20.2":
   "integrity" "sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA=="
   "resolved" "https://registry.npmjs.org/body-parser/-/body-parser-1.20.2.tgz"
   "version" "1.20.2"
+>>>>>>> fd040fffa212e50969acb1fdfd3559350b90eed8
   dependencies:
     "bytes" "3.1.2"
     "content-type" "~1.0.5"
