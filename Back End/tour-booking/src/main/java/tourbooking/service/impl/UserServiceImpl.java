@@ -105,8 +105,7 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-    // Hàm logic để lấy số lượng người dùng từ cơ sở dữ liệu
-    public Long getUserCount() {
-        return userRepository.count(); // Sử dụng phương thức count() của JpaRepository để đếm số lượng người dùng
+   public List<User> getAllUsers() {
+        return userRepository.findAll(); // Lấy tất cả người dùng từ cơ sở dữ liệu
     }
 }
