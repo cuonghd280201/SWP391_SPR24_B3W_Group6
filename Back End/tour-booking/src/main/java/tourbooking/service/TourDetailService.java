@@ -9,5 +9,7 @@ import tourbooking.entity.User;
 import java.security.Principal;
 
 public interface TourDetailService {
-    TourDetail createTourDetail(User user , TourDetailCreateForm tourDetailCreateForm);
+    ResponseEntity<BaseResponseDTO> createTourDetail(Principal principal, TourDetailCreateForm tourDetailCreateForm);
+
+    TourDetail createTourDetail(User user, TourDetailCreateForm tourDetailCreateForm);
 }

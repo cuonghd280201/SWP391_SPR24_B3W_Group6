@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -102,5 +103,10 @@ public class UserServiceImpl implements UserService {
         userDTO = modelMapper.map(user, UserDTO.class);
         userDTO.setRole(user.getRole().getName());
         return userDTO;
+    }
+
+    // Hàm logic để lấy số lượng người dùng từ cơ sở dữ liệu
+    public Long getUserCount() {
+        return userRepository.count(); // Sử dụng phương thức count() của JpaRepository để đếm số lượng người dùng
     }
 }
