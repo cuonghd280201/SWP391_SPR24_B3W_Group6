@@ -30,7 +30,7 @@ public class TransactionController {
                                                        @RequestParam(defaultValue = "6") int pageSize,
 
                                                        @Parameter(description = "Sort by (EX: title, price,...)")
-                                                       @RequestParam(defaultValue = "title") String sortBy,
+                                                       @RequestParam(defaultValue = "createDate") String sortBy,
 
                                                        @Parameter(description = "Sort order (EX: asc, desc)")
                                                        @RequestParam(defaultValue = "desc") String sortOrder) {
