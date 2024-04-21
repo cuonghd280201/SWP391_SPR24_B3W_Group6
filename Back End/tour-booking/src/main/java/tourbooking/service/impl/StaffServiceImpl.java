@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.TourStatus;
 import tourbooking.dto.*;
+import tourbooking.entity.Orders;
 import tourbooking.entity.Tour.*;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
@@ -132,6 +133,43 @@ public class StaffServiceImpl implements StaffService {
     public ResponseEntity<BaseResponseDTO> deleteImage(UUID id) {
         tourImageService.deleteImage(id);
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Delete Image Successfully!"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> viewTourTimeDetailById(UUID id) {
+         TourTime tourTime = tourTimeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Time not found!"));
+
+         Set<GroupVisitorDTO> groupVisitorDTOSet = new HashSet<>();
+
+         Set<Orders> ordersSet = tourTime.getOrdersSet();
+         for(Orders orders : ordersSet){
+//             User user = orders.getUser();
+//             Set<Orders> orderUserSet = user.getOrdersSet();
+//             for(Orders orders1 : orderUserSet){
+//                 Set<TourVisitor> tourVisitorSet = orders1.getTourTime().getTourVisitorSet();
+//             }
+
+
+             GroupVisitorDTO groupVisitorDTO = new GroupVisitorDTO();
+             groupVisitorDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
+             groupVisitorDTO.setOrderDTO(modelMapper.map(orders, OrderDTO.class));
+
+             Set<TourVisitorDTO> tourVisitorDTOSet = new HashSet<>();
+             Set<TourVisitor> tourVisitorSet = orders.getTourTime().getTourVisitorSet();
+             for(TourVisitor tourVisitor : tourVisitorSet){
+                 TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+                 tourVisitorDTOSet.add(tourVisitorDTO);
+             }
+             groupVisitorDTO.setTourVisitorDTOSet(tourVisitorDTOSet);
+             groupVisitorDTOSet.add(groupVisitorDTO);
+         }
+
+         TourTimeDetailDTO tourTimeDetailDTO = new TourTimeDetailDTO();
+         tourTimeDetailDTO.setTourTimeDTO(modelMapper.map(tourTime, TourTimeDTO.class));
+         tourTimeDetailDTO.setTourDTO(modelMapper.map(tourTime.getTour(), TourDTO.class));
+         tourTimeDetailDTO.setGroupVisitorDTOSet(groupVisitorDTOSet);
+
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "View Time Detail Successfully", tourTimeDetailDTO));
     }
 
     @Override

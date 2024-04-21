@@ -15,6 +15,8 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> addMoreImage(TourImageAddMoreForm tourImageAddMoreForm);
     ResponseEntity<BaseResponseDTO> updateImage(TourImageDTO tourImageDTO);
     ResponseEntity<BaseResponseDTO> deleteImage(UUID id);
+
+    ResponseEntity<BaseResponseDTO> viewTourTimeDetailById(UUID id);
     ResponseEntity<BaseResponseDTO> updateTour(Principal principal, Tour tour);
     ResponseEntity<BaseResponseDTO> listTour();
     ResponseEntity<BaseResponseDTO> searchTour(String title);
