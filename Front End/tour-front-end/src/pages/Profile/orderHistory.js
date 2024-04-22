@@ -59,11 +59,9 @@ const OrderHistory = () => {
     const totalItems = dummyData.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    // Calculate start and end indexes for the current page
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
-    // Function to handle page navigation
     const goToPage = (page) => {
         setCurrentPage(page);
     };
@@ -202,21 +200,27 @@ const OrderHistory = () => {
                                                                         <div className="s-rate">
                                                                             <span className="s-comment">
                                                                                 <h6 className="fw-bold mb-0"></h6>
-                                                                                <p className="mb-0">Số đặt lịch: {order.id}</p>
+                                                                                <p className="mb-0">Số đặt lịch:<b> {order.id}</b></p>
                                                                             </span>
                                                                         </div>
+
                                                                         <p className="mb-0">
-                                                                            <span className="text-muted">Tour code: 233434134MDFadf </span>
+                                                                            <span className="text-muted">% Tiền Trả:<b> {order.paid}</b> </span>
+                                                                        </p>
+                                                                        <p className="mb-0">
+                                                                            <span className="text-muted">Số tiền thanh còn lại:<b> {order.priceAfterPaid}</b> </span>
                                                                         </p>
                                                                         <p className="card-text">
-                                                                            <small className="text-muted">Hoàn Trả : {order.refund} </small>
+                                                                            <small className="text-muted">Số tiền đã thanh toán :<b> {order.amount}</b> </small>
                                                                         </p>
 
                                                                     </div>
                                                                 </div>
                                                             </Col>
                                                             <Col md={4} xs={5} className="text-end">
-                                                                <h6 className="text-primary mb-2">{order.orderStatus}</h6>
+                                                                <span className={order.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
+                                                                    {order.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
+                                                                </span>
                                                                 <h5 className="text-primary fw-bold">{order.price}₫</h5>
                                                                 <div className="destination">
                                                                     <div className="text p-2">
@@ -266,13 +270,11 @@ const OrderHistory = () => {
                                                         </Row>
                                                     </CardBody>
                                                 </Card>
-                                                {/* Additional booking cards go here */}
                                             </div>
                                         </TabPane>
                                     ))}
 
 
-                                    {/* Additional tab panes for "Chưa Thanh Toán" and "Đã Đặt" go here */}
                                 </TabContent>
                             </div>
                         </Col>

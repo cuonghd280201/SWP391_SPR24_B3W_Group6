@@ -2,13 +2,12 @@
 import urlConstant from "../common/urlConstant";
 import axiosLocalHost from "../utils/customAxios";
 
-const createOrder = async (tourTimeId, passengers) => {
+const createOrder = async (tourTimeId, paid, passengers) => {
  
-    const baseUrl = urlConstant.endpoint.order.createOrder; 
-    const queryParams = `tourTimeId=${tourTimeId}&paid=1`; 
-    const serviceUrl = `${baseUrl}?${queryParams}`;    
+    const baseUrl = urlConstant.endpoint.order.createOrder.replace("${tourTimeId}", tourTimeId).replace("${paid}", paid);;   
+    // const serviceUrl = `${baseUrl}?tourTimeId=${encodeURIComponent(tourTimeId)}&paid=1`;
     try {
-        const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "POST", passengers);
+        const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", passengers);
         return response.data; 
     } catch (error) {
         console.error("Error creating order:", error);

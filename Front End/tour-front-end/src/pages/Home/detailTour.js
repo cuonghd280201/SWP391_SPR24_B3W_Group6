@@ -14,47 +14,133 @@ const DetailTour = () => {
     const { state } = useLocation();
 
     const [tourDetailCustomer, setTourDetailCustomer] =
-    useState(null);
+        useState(null);
     const fetchTourDetailCustomer = async () => {
         let response;
-        try{
+        try {
             response = await tourServices.getDetailTourByCustomer(state?.tourId);
             console.log("Response:", response); // Log the response object
             setTourDetailCustomer(response.data.data);
-            
+
             return response;
 
-        }catch(error){
+        } catch (error) {
             console.error("Error fetching tour:", error);
         }
     }
 
     useEffect(() => {
         fetchTourDetailCustomer();
-      }, []);
+    }, []);
 
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
 
-      // Function to navigate to /findTour with tourId
-      const navigateToFindTour = () => {
+    const navigateToFindTour = () => {
         if (tourDetailCustomer) {
-            // Navigate to FindTour page
             navigate('/findTour', { state: { tourId: tourDetailCustomer.id } });
-          }
+        }
     };
     const navigateInfomationTour = () => {
-        if (tourDetailCustomer){
-            navigate('/infomationTour', { state: {tourId: tourDetailCustomer.id}});
+        if (tourDetailCustomer) {
+            navigate('/infomationTour', { state: { tourId: tourDetailCustomer.id } });
         }
     }
 
 
-    
+
 
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+
+    //Schedule
+
+    // Hàm chuyển đổi ngày từ DD-MM-YYYY sang YYYY-MM-DD
+    
+    // const renderTourSchedules = () => {
+    //     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
+    //         return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+    //             const scheduleDate = convertDateFormat(tourDetailCustomer?.tourTimeSet[0]?.startDate);
+
+    //             // So sánh createDate với currentDate
+    //             const isComing = scheduleDate < currentDate;
+
+    //             return (
+    //                 <div
+    //                     key={schedule.id}
+    //                     className={`box`}
+    //                     style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+    //                 >
+    //                     <h4>Ngày {index + 1}</h4>
+    //                     <h3>{tourDetailCustomer?.tourTimeSet[0]?.startDate}</h3>
+    //                     <p>{schedule.description}</p>
+    //                     {isComing && <div className="label-coming">Coming</div>}
+    //                 </div>
+    //             );
+    //         });
+    //     }
+    //     return null;
+    // };
+    // Function to add days to a date and return the date in dd-mm-yyyy format
+    const convertDateFormat = (dateString) => {
+        const [day, month, year] = dateString.split('-');
+        return `${year}-${month}-${day}`;
+    };
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const addDaysToDate = (dateString, days) => {
+        const [day, month, year] = dateString.split('-');
+        const date = new Date(`${year}-${month}-${day}`);
+        date.setDate(date.getDate() + days);
+        const newDay = date.getDate().toString().padStart(2, '0');
+        const newMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+        const newYear = date.getFullYear();
+        return `${newDay}-${newMonth}-${newYear}`;
+    };
+
+    // Modified renderTourSchedules function
+    const renderTourSchedules = () => {
+        if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
+            return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+                const startDate = tourDetailCustomer?.tourTimeSet[0]?.startDate;
+                const scheduleDate = addDaysToDate(startDate, index);
+                const isComing = scheduleDate <= currentDate;
+                return (
+                    <div
+                        key={schedule.id}
+                        className={`box`}
+                        style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+                    >
+                        <h4>Ngày {index + 1}</h4>
+                        <h3>{scheduleDate}</h3>
+                        <p>{schedule.title}</p>
+                        {isComing && <div className="label-coming">Coming</div>}
+                    </div>
+                );
+            });
+        }
+        return null;
+    };
+
+    const renderTourSchedulesDescription = () => {
+        if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
+            return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+                return (
+                    <div         
+                    >
+                        <h4>Ngày {index + 1}: {schedule.title}</h4>
+                        <p>{schedule.description}</p>
+                    </div>
+                );
+            });
+        }
+        return null;
+    };
+
+    const formatPrice = (price) => {
+        return (price).toLocaleString('vi-VN').replace(/,/g, '.');
+      };
     return (
         <div>
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
@@ -107,6 +193,7 @@ const DetailTour = () => {
                                 <div className="col-md-6 left">
                                     <div className="warp-mark">
                                         <i className="fal fa-ticket" />
+                                        <img src="/images/tour.png" className="icon-img" />
                                         <label>{tourDetailCustomer?.tourTimeSet[0]?.id}</label>
                                     </div>
                                     <h1 className="title">🔥 {tourDetailCustomer?.title}</h1>
@@ -116,12 +203,12 @@ const DetailTour = () => {
                                     <div className="group-price">
                                         <div className="sale-price">
                                             <p>
-                                                <span className="price">{tourDetailCustomer?.price}&nbsp;₫</span>/ khách
-                                                </p>
+                                                <span className="price">{tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>/ khách
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="group-add-cart">
-                                        <a  title="Đặt ngay" className="add-to-cart" onClick={navigateInfomationTour}>
+                                        <a title="Đặt ngay" className="add-to-cart" onClick={navigateInfomationTour}>
                                             <i className="fal fa-shopping-cart"></i> Đặt ngay
                                         </a>
                                         <a href="#" className="add-to-group">Liên hệ tư vấn</a></div>
@@ -168,21 +255,24 @@ const DetailTour = () => {
 
 
             <section className="ftco-about d-md-flex">
-                <div className="one-half img"  style={{ backgroundImage: `url(${tourDetailCustomer?.coverImage})` }} />
-                <div className="one-half ftco-animate">
+                <div className="one-half img" style={{ backgroundImage: `url(${tourDetailCustomer?.coverImage})` }} />
+                <div className="one-half e">
                     <div className="row">
-                        <div className="col-md-4 ftco-animate">
-                            <a href="#" className="destination-entry img" style={{ backgroundImage: 'url(images/destination-1.jpg)' }}>
-                            </a>
-                        </div>
-                        <div className="col-md-4 ftco-animate">
+                        {tourDetailCustomer && tourDetailCustomer.tourImagesSet.map((tourTime, index) => (
+
+                            <div className="col-md-4 ">
+                                <a href="#" className="destination-entry img" style={{ backgroundImage: `url(${tourTime?.image})` }}>
+                                </a>
+                            </div>
+                        ))}
+                        {/* <div className="col-md-4 ">
                             <a href="#" className="destination-entry img" style={{ backgroundImage: 'url(images/destination-2-1.jpg)' }}>
                             </a>
                         </div>
-                        <div className="col-md-4 ftco-animate">
+                        <div className="col-md-4">
                             <a href="#" className="destination-entry img" style={{ backgroundImage: 'url(images/destination-3.jpg)' }}>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
@@ -194,10 +284,11 @@ const DetailTour = () => {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="col-md-5 left">
+                                    <p class="s-title-03 tour-des"> {tourDetailCustomer?.description} </p>
                                         <div className="box-order">
                                             <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
                                             </p>
-                                            {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
+                                                {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
                                                 </p> */}
                                                 <p>Thời gian <b>7 ngày</b>
                                                 </p><p>Nơi khởi hành <b>{tourDetailCustomer?.starLocation}</b>
@@ -208,53 +299,40 @@ const DetailTour = () => {
                                                     <i className="icon icon--calendar" />
 
                                                     <label>
-                <a onClick={navigateToFindTour}>
-                    Ngày khác
-                </a>
-            </label>                                                  </div>
+                                                        <a onClick={navigateToFindTour}>
+                                                            Ngày khác
+                                                        </a>
+                                                    </label>                                                  </div>
                                             </div>
 
                                         </div>
                                     </div>
                                     <div className="col-md-7  right">
                                         <div className="group-services">
-                                            <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
+                                            <div className="item"><img src="/images/co1.jpg" className="icon-img" />
                                                 <label>Thời gian</label>
                                                 <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
+                                                <img src="/images/co2.jpg" className="icon-img" />
                                                 <label>Phương tiện di chuyển</label>
                                                 <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
+                                                <img src="/images/co3.jpg" className="icon-img" />
                                                 <label>Điểm tham quan</label>
                                                 <p>{tourDetailCustomer?.tourDetail.location}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/am thuc.png" className="icon-img" />
+                                                <img src="/images/co4.jpg" className="icon-img" />
                                                 <label>Ẩm thực</label>
-                                                
+
                                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/khach san.png" className="icon-img" />
+                                                <img src="/images/co5.png" className="icon-img" />
                                                 <label>Khách sạn</label>
                                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
-                                                </div>
-
-                                            <div className="item">
-                                                <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
-                                                <label>Thời gian lý tưởng</label><p>Quanh năm</p>
-                                            </div><div className="item">
-                                                <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
-                                                <label>Đối tượng thích hợp</label>
-                                                <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
-                                            </div>
-                                            <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
-                                                <label>Ưu đãi</label>
-                                                <p>Ưu đãi trực tiếp vào giá tour</p>
                                             </div>
                                         </div>
                                     </div>
@@ -275,29 +353,18 @@ const DetailTour = () => {
                                         <header class="title">
                                             <h2>Lịch Trình</h2>
                                         </header>
-                                        <div class="contents">
-                                            <div class="box">
-                                                <h4>Ngày 1</h4>
-                                                <h3>16/04/2024</h3>
-                                                <p>TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA(Ăn trưa, tối)</p>
-                                            </div>
-                                            <div class="box">
-                                                <h4>Ngày 2</h4>
-                                                <h3>17/04/2024</h3>
-                                                <p>ĐỀN CHÂN LÝ – CAFÉ & BÁNH PHỦ VÀNG(Ăn sáng, trưa, tối)</p>
-                                            </div>
-                                            <div class="box">
-                                                <h4>Ngày 3</h4>
-                                                <h3>18/04/2024</h3>
-                                                <p>ĐỀN CHÂN LÝ – CAFÉ & BÁNH PHỦ VÀNG(Ăn sáng, trưa, tối)</p>
-                                            </div>
+                                        <div className="contents">
+                                            {renderTourSchedules()}
                                         </div>
                                     </section>
                                 </main>
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
+                            <div>
+                            {renderTourSchedulesDescription()}
+                            </div>
+                            {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                                 <div className="excerpt"><span className="line" /><div>
                                     <title />
@@ -354,7 +421,7 @@ const DetailTour = () => {
                                         &nbsp;<br />
                                         <strong>Nghỉ đêm tại Bangkok.</strong><br />
                                         &nbsp;</div>
-                                </div></div></div>
+                                </div></div></div> */}
                         </div>
                     </div>
                 </div>
