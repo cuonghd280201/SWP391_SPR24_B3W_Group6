@@ -16,112 +16,44 @@ const { Content } = Layout;
 const { Option } = Select;
 
 const ListTourStaff = () => {
-  // Dummy data
-  const [dummyData, setDummyData] = useState([
-    {
-      id: 1,
-      title: "Tour 1",
-      date: "2024-04-12",
-      price: "2.000.000",
-    },
-    {
-      id: 2,
-      title: "Tour 2",
-      date: "2024-04-18",
-      price: "3.000.000",
-    },
-    {
-      id: 3,
-      title: "Tour 3",
-      date: "2024-04-14",
-      price: "4.000.000",
-    },
-    {
-      id: 4,
-      title: "Tour 4",
-      date: "2024-04-16",
-      price: "3.600.000",
-    },
-    {
-      id: 5,
-      title: "Tour 4",
-      date: "2024-04-11",
-      price: "4.200.000",
-    },
-  ]);
-
-  // State for pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
-  const totalItems = dummyData.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Calculate start and end indexes for the current page
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-
-  // Function to handle page navigation
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Function to handle sorting by price
-  const handleSortByPrice = (value) => {
-    let sortedData = [...dummyData]; // Create a copy of the dummyData array
-
-    if (value === "asc") {
-      // Sort data by price in ascending order
-      sortedData.sort(
-        (a, b) =>
-          parseFloat(a.price.replace(/\D/g, "")) -
-          parseFloat(b.price.replace(/\D/g, ""))
-      );
-    } else if (value === "desc") {
-      // Sort data by price in descending order
-      sortedData.sort(
-        (a, b) =>
-          parseFloat(b.price.replace(/\D/g, "")) -
-          parseFloat(a.price.replace(/\D/g, ""))
-      );
-    } else if (value === "date") {
-      // Sort data by date
-      sortedData.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (value === "date2") {
-      // Sort data by date
-      sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    // Update the state with the sorted data
-    setDummyData(sortedData);
-  };
-
-  //List Tour Staff
   const [tours, setTours] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-
-
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 4; 
+  
   useEffect(() => {
     fetchTourData();
   }, [currentPage, pageSize]);
 
-
-  const fetchTourData = async (sortBy = 'title', sortOrder = 'desc') => {
+  const fetchTourData = async (sortBy = "title", sortOrder = "desc") => {
     try {
-      const response = await tourServices.getAllTourAndPaging(currentPage - 1, pageSize, sortBy, sortOrder);
-      console.log("Response:", response); // Log the response object
+      const response = await tourServices.getAllTourAndPaging(
+        currentPage - 1,
+        pageSize,
+        sortBy,
+        sortOrder
+      );
+      console.log("Response:", response); 
 
       setTours(response.data.data);
       setLoading(false);
-
     } catch (error) {
       console.error("Error fetching tours:", error);
       setError(error);
       setLoading(false);
     }
   };
+
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+  };
+
+ 
+  
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -151,7 +83,6 @@ const ListTourStaff = () => {
               <Select
                 defaultValue="Tìm kiếm theo"
                 style={{ width: 250, height: 40 }}
-                onChange={handleSortByPrice}
               >
                 <Option value="asc">Giá: Thấp đến cao</Option>
                 <Option value="desc">Giá: Cao đến thấp</Option>
@@ -189,23 +120,29 @@ const ListTourStaff = () => {
             </div>
 
             {/* Display tours for the current page */}
-            {dummyData.slice(startIndex, endIndex).map((tour) => (
+            {tours.map((tour) => (
               <div key={tour.id} className="row row-with-margin">
                 <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                   <div className="card border-5 border-top border-success-subtle">
                     <div className="card-body-dashboard">
                       <div className="destination">
-                        {tours.map(tour => (
+                        {tours.map((tour) => (
                           <div className="text p-3">
                             <div className="row">
                               {/* Tour details */}
-                              < div className="col-4" >
+                              <div className="col-4">
                                 <Link
                                   to="/listTourStaffDetail"
                                   className="text-dark"
                                   state={{ tourId: tour.id }} // Pass tourId as state data
                                 >
-                                  <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                  <a
+                                    href=""
+                                    className="img img-2 d-flex justify-content-center align-items-center"
+                                    style={{
+                                      backgroundImage: `url(${tour.coverImage})`,
+                                    }}
+                                  >
                                     <div className="icon d-flex justify-content-center align-items-center">
                                       <span className="icon-link" />
                                     </div>
@@ -221,7 +158,7 @@ const ListTourStaff = () => {
                                 </h4>
                                 <p style={{ fontSize: 14, marginBottom: 5 }}>
                                   <span style={{ color: "#666" }}>
-                                  Tên Chuyến Đi: {tour.title}
+                                    Tên Chuyến Đi: {tour.title}
                                   </span>
                                 </p>
                                 <p
@@ -278,7 +215,6 @@ const ListTourStaff = () => {
                             <hr />
                           </div>
                         ))}
-
                       </div>
                     </div>
                   </div>
@@ -315,8 +251,8 @@ const ListTourStaff = () => {
             </div>
           </Content>
         </div>
-      </Layout >
-    </Layout >
+      </Layout>
+    </Layout>
   );
 };
 
