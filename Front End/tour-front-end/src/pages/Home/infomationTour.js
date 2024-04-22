@@ -10,10 +10,33 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import tourServices from "../../services/tour.services";
 import orderServices from "../../services/order.services";
+import paymentServices from "../../services/payment.services";
 
 const InfomationTour = () => {
     // Get Imfomation
     const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [adultCount, setAdultCount] = useState(0);
+    const [childCount, setChildCount] = useState(0);
+    const [adultNames, setAdultNames] = useState([]);
+    const [childNames, setChildNames] = useState([]);
+    const [paid, setPaid] = useState(50); // Initialize paid state variable
+
+
+    const toggle = () => setIsOpen(!isOpen);
+
+    const handleSendForm = () => {
+        const formData = {
+            adultCount: adultCount,
+            childCount: childCount,
+            adultNames: adultNames,
+            childNames: childNames
+        };
+        console.log(formData); // Just for testing, you can send this data to your server or handle it as needed
+    };
+
+   
 
 
     const { state } = useLocation();
@@ -44,49 +67,58 @@ const InfomationTour = () => {
     // Create Order 
 
 
-
     const createOrderTour = async () => {
         try {
             const tourTimeId = tourDetailCustomer?.tourTimeSet[0]?.id;
             const passengers = [];
-    
-            // Loop through the adult passengers
+
             for (let i = 0; i < adultCount; i++) {
                 const name = document.getElementById(`adult-name-${i}`).value;
                 const phone = document.getElementById(`adult-phone-${i}`).value;
                 const idCard = document.getElementById(`adult-idCard-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`adult-dateOfBirth-${i}`).value;
-    
-                // Convert date format from YYYY-MM-DD to DD-MM-YYYY
+
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
-    
-                // Create an object for each adult passenger
+
                 passengers.push({ name, phone, idCard, dateOfBirth: formattedDateOfBirth });
             }
-    
-            // Loop through the child passengers
+
             for (let i = 0; i < childCount; i++) {
                 const name = document.getElementById(`child-name-${i}`).value;
                 const phone = document.getElementById(`child-phone-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`child-dateOfBirth-${i}`).value;
-    
-                // Convert date format from YYYY-MM-DD to DD-MM-YYYY
+
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
-    
-                // Create an object for each child passenger
+
                 passengers.push({ name, phone, idCard: null, dateOfBirth: formattedDateOfBirth });
             }
-    
-            // Send the request to create the tour order
-            const response = await orderServices.createOrder(tourTimeId, passengers);
-            
-            toast.success("Create Information Visitor Successfully!");
-            navigate("/payment");
+
+            const response = await orderServices.createOrder(tourTimeId, paid, passengers); // Pass the paid value
+            const responseData = response.data[0];
+            localStorage.setItem('orderResponse', responseData);
+            toast.success("Tạo Thông Tin Khách Hàng Thành Công");
+            //  navigate("/payment");
         } catch (error) {
-            toast.error("Visitor Failed!");
+            toast.error("Thất Bại!");
             console.error("Error creating tour order:", error);
         }
     };
+
+    const createCheckout = async () => {
+        try {
+            const orderResponseString = localStorage.getItem('orderResponse');
+            const response = await paymentServices.createCheckout(orderResponseString);
+            toast.success("Thanh Toán Thành Công");
+        } catch (error) {
+            toast.error("Thanh Toán Thất Bại");
+            console.error("Error payment failed:", error);
+        }
+    };
+
+    const handlePaymentClick = async () => {
+        await createCheckout();
+    };
+
 
     const renderAdultFields = () => {
         const fields = [];
@@ -94,7 +126,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/icons/persons/adult.svg" />Người lớn
+                        <img src="/images/adult.png" />Người lớn (Trên 16 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -134,7 +166,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/icons/persons/child.svg" />Trẻ em
+                        <img src="/images/kid.png" />Trẻ em (Dưới 16 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -163,26 +195,8 @@ const InfomationTour = () => {
     };
 
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [adultCount, setAdultCount] = useState(0);
-    const [childCount, setChildCount] = useState(0);
-    const [adultNames, setAdultNames] = useState([]);
-    const [childNames, setChildNames] = useState([]);
 
-    const toggle = () => setIsOpen(!isOpen);
 
-    const handleSendForm = () => {
-        const formData = {
-            adultCount: adultCount,
-            childCount: childCount,
-            adultNames: adultNames,
-            childNames: childNames
-        };
-        console.log(formData); // Just for testing, you can send this data to your server or handle it as needed
-    };
-
-    // const location = useLocation();
-    // const { adultCount = 0, childCount = 0 } = location.state || {};
 
     return (
         <>
@@ -324,8 +338,31 @@ const InfomationTour = () => {
                                         <div className="title-section mb-3 title-hotel-flight-infor">Thông tin hành khách</div>
                                         {renderAdultFields()}
                                         {renderChildFields()}
-                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Tour</button>
-                                    </section>
+                                        <div className="payment-options">
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={50}
+                                                    checked={paid === 50}
+                                                    onChange={() => setPaid(50)}
+                                                />
+                                                Thanh toán trước 50%
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={100}
+                                                    checked={paid === 100}
+                                                    onChange={() => setPaid(100)}
+                                                />
+                                                Thanh toán trước 100%
+                                            </label>
+                                        </div>
+
+                                        {/* Button to create the tour order */}
+                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>                                    </section>
                                 </div>
                             </section>
 
@@ -368,36 +405,51 @@ const InfomationTour = () => {
                                                 <th className="l1">
                                                     <i className="fal fa-users me-1" id="AmoutPerson" />Hành khách</th>
                                                 <th className="l2  text-right">
-                                                    <span className="total-booking">9.990.000&nbsp;₫</span>
+                                                {tourDetailCustomer?.price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr className="detail">
                                                 <td>Người lớn</td>
-                                                <td className="t-price text-right">1 x 9.990.000&nbsp;₫</td>
-                                            </tr>
+                                                <td className="t-price text-right">
+                                                    {adultCount} x {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp; &nbsp;=&nbsp; {adultCount * tourDetailCustomer?.price}&nbsp;₫
+                                                </td>                                            </tr>
                                             <tr className="detail">
                                                 <td>Người nhở</td>
-                                                <td className="t-price text-right">1 x 5.990.000&nbsp;₫</td>
-                                            </tr>
+                                                <td className="t-price text-right">
+                                                    {childCount} x {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp; &nbsp;=&nbsp; {childCount * (tourDetailCustomer?.price) / 2}&nbsp;₫
+                                                </td>                                            </tr>
                                             <tr className="total">
                                                 <td>Tổng tiền </td>
-                                                <td className="t-price text-right">9.990.000&nbsp;₫</td>
+                                                <td className="t-price text-right">{((adultCount * tourDetailCustomer?.price) + (childCount * (tourDetailCustomer?.price) / 2)).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp;</td>
+
                                             </tr>
+                                            {/* <Link to="/orderHistory">
+                                                <button
+                                                    onClick={handlePaymentClick}
+                                                    className="btn btn-primary btn-order">Thanh Toán</button>
+                                            </Link> */}
                                             <tr className="cuppon promotion-broder">
                                                 <tr className="total">
                                                     <td>Tiền Đặt Cọc (50%) </td>
-                                                    <td className="t-price text-right">5.990.000&nbsp;₫</td>
+                                                    <td className="t-price text-right">{(((adultCount * tourDetailCustomer?.price) + (childCount * (tourDetailCustomer?.price) / 2)) / 2).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp;</td>
+
                                                 </tr>
+                                                <Link to="/orderHistory">
+                                                    <button
+                                                        onClick={handlePaymentClick}
+
+                                                        className="btn btn-primary btn-order">Thanh Toán Đặt Cọc</button>
+                                                </Link>
                                             </tr>
 
                                         </tbody></table>
-                                    <Link to="/payment">
+                                    {/* <Link to="/payment">
                                         <button
 
                                             className="btn btn-primary btn-order">Đặt ngay</button>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>

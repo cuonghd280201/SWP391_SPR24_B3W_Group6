@@ -105,6 +105,12 @@ const CustomNavbar = (props) => {
                                                     border: "0px",
                                                 }}
                                             >
+                                                
+                                                <div className="me-1 d-flex flex-column align-items-center">
+                                                <p>Welcome</p>
+                                                <p>{user && user.email}</p>
+                                                    {/* <span>{roleString}</span> */}
+                                                </div>
                                                 <div>
                                                     <img
                                                         src={user.photoURL}
@@ -115,10 +121,6 @@ const CustomNavbar = (props) => {
                                                             objectFit: "cover",
                                                         }}
                                                     />
-                                                </div>
-                                                <div className="me-1 d-flex flex-column align-items-center">
-                                                <p>Welcome, {user && user.email}</p>
-                                                    {/* <span>{roleString}</span> */}
                                                 </div>
                                             </DropdownToggle>
                                             <DropdownMenu

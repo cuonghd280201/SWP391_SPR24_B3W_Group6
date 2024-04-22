@@ -6,6 +6,10 @@ import { Layout } from "antd";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import orderServices from "../../services/order.services";
+import paymentServices from "../../services/payment.services";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { Content } = Layout;
 
 const OrderBookTourDetail = () => {
@@ -32,6 +36,77 @@ const OrderBookTourDetail = () => {
     fetchOrderDetail();
   }, []);
 
+
+
+
+
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const renderTourSchedules = () => {
+    const scheduleDate = orderDetail?.tourTimeDTO?.startDate;
+
+    if (orderDetail && orderDetail.tourScheduleDTOList && scheduleDate) {
+      const [day, month, year] = scheduleDate.split('-');
+      const initialDate = new Date(`${year}-${month}-${day}`);
+      return orderDetail.tourScheduleDTOList.map((schedule, index) => {
+        initialDate.setDate(initialDate.getDate() + index);
+        const adjustedDate = `${String(initialDate.getDate()).padStart(2, '0')}-${String(initialDate.getMonth() + 1).padStart(2, '0')}-${initialDate.getFullYear()}`;
+        const isComing = adjustedDate === currentDate || adjustedDate < currentDate;
+        return (
+          <div
+            key={schedule.id}
+            className="box"
+            style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+          >
+            <h4>Ngày {index + 1}</h4>
+            <h3>{adjustedDate}</h3>
+            <p>{schedule.description}</p>
+            {isComing && <div className="label-coming">Đã Đến</div>}
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
+  const renderTourSchedulesDescription = () => {
+    if (orderDetail && orderDetail.tourScheduleDTOList) {
+      return orderDetail.tourScheduleDTOList.map((schedule, index) => {
+        return (
+          <div
+          >
+            <h4>Ngày {index + 1}: {schedule.title}</h4>
+            <p>{schedule.description}</p>
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
+
+  const createCheckout = async () => {
+    try {
+      const notDoneIds = orderDetail?.paymentDTOList
+        .filter(order => order.paymentStatus === "NOT_DONE")
+        .map(order => order.id);
+      const response = await paymentServices.createCheckout(notDoneIds);
+      console("reponse", response);
+      toast.success("Thanh Toán Thành Công");
+    } catch (error) {
+      toast.error("Thanh Toán Thất Bại");
+      console.error("Error payment failed:", error);
+    }
+  };
+
+  const handlePaymentClick = async () => {
+    await createCheckout();
+  };
+
+  const handleButtonClick = () => {
+    toast.success("Bạn đã thanh toán đầy đủ chi phí");
+  };
 
   return (
 
@@ -62,21 +137,10 @@ const OrderBookTourDetail = () => {
                 <div className="destination">
                   <div className="text p-3">
                     <div className="row">
-                      <div className="col-4">
-                        <img
-                          src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg"
-                          className="img-fluid rounded"
-                          alt="Tour Image"
-                          style={{
-                            width: "100%",
-                            height: 200,
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div className="col-4">
-                        <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                          Mã Chuyến Đi:{" "}
+
+                      <div className="col-10">
+                        <h4 style={{ fontSize: 20, marginTop: 10 }}>
+                          Mã đặt chuyến đi: <b>{orderDetail?.id}</b>
                           <span style={{ color: "#666" }}>
 
                           </span>
@@ -88,21 +152,48 @@ const OrderBookTourDetail = () => {
                             marginBottom: 5,
                           }}
                         >
-                          VNĐ
+                          Giá chuyến đi:  <b> {orderDetail?.price} VNĐ</b>
                         </p>
                         <p
-                          className="text-primary"
-                          style={{ fontSize: 14, marginBottom: 5 }}
+                          style={{ fontSize: 18, marginBottom: 5 }}
                         >
-                          Giờ đi:
-
+                          Phần Trăm Tiền Đã Trả:<b> {orderDetail?.paid} %</b>
                         </p>
+                        <p
+                          style={{ fontSize: 18, marginBottom: 5 }}
+                        >
+                          Số tiền đã trả: <b>{orderDetail?.amount} VND</b>
+                        </p>
+                        <p
+                          style={{ fontSize: 18, marginBottom: 5 }}
+                        >
+                          Số tiền hoàn trả:<b>{orderDetail?.refund} VND</b>
+                        </p>
+                      </div>
+                      <div className="col-2">
+                        <p>
+                          <span className={orderDetail?.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
+                            {orderDetail?.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
+                          </span>
+                        </p>
+                        <p>
+                          {orderDetail?.orderStatus === "NOT_DONE" ? (
+                            <Link to="/orderHistory">
+                              <button onClick={handlePaymentClick} className="btn btn-primary btn-order">Thanh Toán</button>
+                            </Link>
+                          ) : (
+                            <button onClick={handleButtonClick} className="btn btn-primary btn-order">Thanh Toán Hoàn Tất</button>
+                          )}
+                        </p>
+
                       </div>
                     </div>
                     <hr />
                   </div>
                 </div>
               </div>
+
+
 
               <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
@@ -112,23 +203,24 @@ const OrderBookTourDetail = () => {
                         <div className="row">
                           <div className="col-md-24 left">
                             <div className="box-order">
-                              <div className="time"><p>Khởi hành <b> </b>
-                              </p>
+                              <div className="time"><h1
+                                className="text-primary"
+                              ><b>Khởi hành </b>
+                              </h1>
                                 {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
                                                 </p> */}
                                 <p>Ngày đi:  <b>{orderDetail?.tourTimeDTO.startDate}</b>
                                 </p>
                                 <p>Ngày về:  <b> {orderDetail?.tourTimeDTO.endDate}</b>
-                                </p><p>Thời gian đi:   <b> {orderDetail?.tourTimeDTO.startTime}</b>
-                                </p><p>Số lượng người đi:   <b> {orderDetail?.tourTimeDTO.slotNumberActual}</b>
-                                  <p>Số lượng chỗ:   <b> {orderDetail?.tourTimeDTO.slotNumber}</b></p>
-                                  <p>Trạng thái chuyến đi:   <b> {orderDetail?.tourTimeDTO.timeStatus}</b></p>
-
                                 </p>
-
+                                <p>Thời gian đi:   <b> {orderDetail?.tourTimeDTO.startTime}</b>
+                                </p>
+                                <p>Số lượng người đi:   <b> {orderDetail?.tourTimeDTO.slotNumberActual}</b></p>
+                                <p>Số lượng chỗ còn:   <b> {orderDetail?.tourTimeDTO.slotNumber}</b></p>
+                                <p>Trạng thái chuyến đi:   <b> {orderDetail?.tourTimeDTO.timeStatus}</b></p>
 
                               </div>
-                             
+
 
                             </div>
                           </div>
@@ -147,17 +239,22 @@ const OrderBookTourDetail = () => {
                         <main class="row">
                           <section className="col">
                             <header className="title">
-                              <h2>Lịch Trình</h2>
+                              <h2 className="text-primary">Lịch Trình</h2>
+                              <p>Màu xanh: Đã Tới Điểm Hẹn</p>
+                              <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
                             </header>
                             <div className="contents">
-                              {/* {renderTourSchedules()} */}
+                              {renderTourSchedules()}
                             </div>
                           </section>
                         </main>
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
+                      <div>
+                        {renderTourSchedulesDescription()}
+                      </div>
+                      {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                         <div className="excerpt"><span className="line" /><div>
                           <title />
@@ -214,7 +311,7 @@ const OrderBookTourDetail = () => {
                             &nbsp;<br />
                             <strong>Nghỉ đêm tại Bangkok.</strong><br />
                             &nbsp;</div>
-                        </div></div></div>
+                        </div></div></div> */}
                     </div>
                   </div>
                 </div>
@@ -276,7 +373,19 @@ const OrderBookTourDetail = () => {
                       </tr>
                     </thead>
                     <tbody>
-                   
+                      {orderDetail && orderDetail.tourVisitorDTOList.map((tourVisitor, index) => (
+
+                        <tr>
+                          <td style={{ padding: "15px" }}>
+                            {tourVisitor.name}
+                          </td>
+                          <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                          <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                          <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                          <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

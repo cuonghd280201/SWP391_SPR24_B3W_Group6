@@ -35,6 +35,52 @@ const SlotTourStaffDetai = () => {
   }, []);
 
 
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const renderTourSchedules = () => {
+    const scheduleDate = timeDetail?.tourTimeDTO?.startDate;
+  
+    if (timeDetail && timeDetail.tourScheduleDTOSet && scheduleDate) {
+      const [day, month, year] = scheduleDate.split('-');
+      const initialDate = new Date(`${year}-${month}-${day}`);
+      return timeDetail.tourScheduleDTOSet.map((schedule, index) => {
+        initialDate.setDate(initialDate.getDate() + index);   
+        const adjustedDate = `${String(initialDate.getDate()).padStart(2, '0')}-${String(initialDate.getMonth() + 1).padStart(2, '0')}-${initialDate.getFullYear()}`;
+        const isComing = adjustedDate === currentDate || adjustedDate < currentDate;
+        return (
+          <div
+            key={schedule.id}
+            className="box"
+            style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+          >
+            <h4>Ngày {index + 1}</h4>
+            <h3>{adjustedDate}</h3>
+            <p>{schedule.description}</p>
+            {isComing && <div className="label-coming">Đã Đến</div>}
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
+  const renderTourSchedulesDescription = () => {
+    if (timeDetail && timeDetail.tourScheduleDTOSet) {
+        return timeDetail.tourScheduleDTOSet.map((schedule, index) => {
+            return (
+                <div         
+                >
+                    <h4>Ngày {index + 1}: {schedule.title}</h4>
+                    <p>{schedule.description}</p>
+                </div>
+            );
+        });
+    }
+    return null;
+};
+
+
   return (
     <React.Fragment>
       <Layout style={{ minHeight: "100vh" }}>
@@ -84,7 +130,7 @@ const SlotTourStaffDetai = () => {
                               marginBottom: 5,
                             }}
                           >
-                            {timeDetail?.tourDTO.price}  VNĐ
+                            {timeDetail?.tourDTO.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} 
                           </p>
                           <p
                             className="text-primary"
@@ -113,6 +159,7 @@ const SlotTourStaffDetai = () => {
                         <div className="container-fluid">
                           <div className="row">
                             <div className="col-md-24 left">
+                            <p class="s-title-03 tour-des"> {timeDetail?.tourDTO.description} </p>
                               <div className="box-order">
                                 <div className="time"><p>Khởi hành <b> </b>
                                 </p>
@@ -125,8 +172,8 @@ const SlotTourStaffDetai = () => {
                                   </p><p>Số lượng người đi:   <b> {timeDetail?.tourTimeDTO.slotNumberActual}</b>
                                     <p>Số lượng chỗ:   <b> {timeDetail?.tourTimeDTO.slotNumber}</b></p>
                                     Trạng thái chuyến đi:   <b>  {timeDetail?.tourTimeDTO.timeStatus}</b>
-                                    
-                                    
+
+
                                   </p>
                                 </div>
 
@@ -143,130 +190,133 @@ const SlotTourStaffDetai = () => {
                   <div class="container-fluid">
                     <div className="row">
                       <div className="col-md-5">
-                        <div class="container-fluid">
-                          <main class="row">
-                            <section className="col">
-                              <header className="title">
-                                <h2>Lịch Trình</h2>
-                              </header>
-                              <div className="contents">
-                                {/* {renderTourSchedules()} */}
-                              </div>
-                            </section>
-                          </main>
-                        </div>
+                      <div class="container-fluid">
+                        <main class="row">
+                          <section className="col">
+                            <header className="title">
+                              <h2>Lịch Trình</h2>
+                              <p>Màu xanh: Đã Tới Điểm Hẹn</p>
+                              <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
+                            </header>
+                            <div className="contents">
+                              {renderTourSchedules()}
+                            </div>
+                          </section>
+                        </main>
                       </div>
-                      <div className="col-md-6">
-                        {timeDetail?.tourDTO.description}
+                    </div>
+                    <div className="col-md-6">
+                      <div>
+                        {renderTourSchedulesDescription()}
+                      </div>
                       </div>
                     </div>
                   </div>
 
                 </section>
-
-                <div className="flight-hotel-detail detail tour-detail  ">
-                  <div className="entry-head">
-                    <div className="overview active">
-                      <section className="section-03 mb-5">
-                        <div className="container-fluid">
-                          <div className="row">
-                            <div className="col-md-24 left">
-                              <div className="box-order">
-                                <h2 className="tt mt-3">Thông tin người đặt</h2>
-                                <div className="table-price"><div className="more-info more-info-2">
-                                  <div className="block">
-                                    <div className="info">
-                                      <h3>Tên Người Đặt: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.name}</h3><p>Địa chỉ e-mail: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.email}</p>
-                                      <span>Số Điện Thoại: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.phone}</span>
+                {timeDetail && timeDetail?.groupVisitorDTOSet?.map((groupVisitorDTOSet, index) => (
+                  <section>
+                    <div className="flight-hotel-detail detail tour-detail  ">
+                      <div className="entry-head">
+                        <div className="overview active">
+                          <section className="section-03 mb-5">
+                            <div className="container-fluid">
+                              <div className="row">
+                                <div className="col-md-24 left">
+                                  <div className="box-order">
+                                    <h2 className="tt mt-3">Thông tin người đặt</h2>
+                                    <div className="table-price"><div className="more-info more-info-2">
+                                      <div className="block">
+                                        <div className="info">
+                                          <h3>Tên Người Đặt: {groupVisitorDTOSet?.userDTO?.name}</h3><p>Địa chỉ e-mail: {timeDetail?.groupVisitorDTOSet?.[0]?.userDTO?.email}</p>
+                                          <span>Số Điện Thoại: {groupVisitorDTOSet?.userDTO?.phone}</span>
+                                        </div>
+                                      </div>
+                                    </div>
                                     </div>
                                   </div>
                                 </div>
+                                <h2
+                                  style={{
+                                    fontSize: "28px",
+                                    color: "#333",
+                                    marginBottom: "20px",
+                                  }}
+                                >
+                                  Thông tin khách hàng tham gia chuyến đi
+                                </h2>
+                                <div class="table-responsive">
+                                  <table
+                                    class="table table-striped"
+                                    style={{ width: "100%", borderCollapse: "collapse" }}
+                                  >
+                                    <thead>
+                                      <tr
+                                        style={{
+                                          backgroundColor: "#f8f9fa",
+                                          borderBottom: "2px solid #dee2e6",
+                                        }}
+                                      >
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Tên khách
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Số điện thoại
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          CMND
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Ngày Sinh
+                                        </th>
+                                        <th
+                                          scope="col"
+                                          style={{ padding: "15px", color: "#495057" }}
+                                        >
+                                          Loại Khách
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {groupVisitorDTOSet && groupVisitorDTOSet?.tourVisitorDTOSet?.map((tourVisitor, index) => (
+
+                                        <tr>
+                                          <td style={{ padding: "15px" }}>
+                                            {tourVisitor.name}
+                                          </td>
+                                          <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
+                                          <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
+                                          <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
+                                          <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
+
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
                                 </div>
+
                               </div>
                             </div>
-
-                          </div>
+                          </section>
                         </div>
-                      </section>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </section>
+                ))}
 
 
-
-
-                <div class="col-md-6 col-12">
-                  <h2
-                    style={{
-                      fontSize: "28px",
-                      color: "#333",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    Thông tin khách hàng tham gia chuyến đi
-                  </h2>
-                  <div class="table-responsive">
-                    <table
-                      class="table table-striped"
-                      style={{ width: "100%", borderCollapse: "collapse" }}
-                    >
-                      <thead>
-                        <tr
-                          style={{
-                            backgroundColor: "#f8f9fa",
-                            borderBottom: "2px solid #dee2e6",
-                          }}
-                        >
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Tên khách
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Số điện thoại
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            CMND
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Ngày Sinh
-                          </th>
-                          <th
-                            scope="col"
-                            style={{ padding: "15px", color: "#495057" }}
-                          >
-                            Loại Khách
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {timeDetail && timeDetail?.groupVisitorDTOSet?.[0]?.tourVisitorDTOSet?.map((tourVisitor, index) => (
-
-                          <tr>
-                            <td style={{ padding: "15px" }}>
-                              {tourVisitor.name}
-                            </td>
-                            <td style={{ padding: "15px" }}> {tourVisitor.phone}</td>
-                            <td style={{ padding: "15px" }}> {tourVisitor.idCard}</td>
-                            <td style={{ padding: "15px" }}>  {tourVisitor.dateOfBirth}</td>
-                            <td style={{ padding: "15px" }}>  {tourVisitor.tourVisitorType}</td>
-
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
                 <Link to="/listTourStaff" style={{ textDecoration: "none" }}>
                   <button
                     style={{
