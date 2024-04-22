@@ -40,18 +40,10 @@ const ListTourStaffDetail = () => {
   }, []);
 
   const renderTourSchedules = () => {
-    // Lấy ngày hiện tại
     const currentDate = new Date().toISOString().split('T')[0];
-
-
     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
       return tourDetailCustomer.tourSchedules.map((schedule, index) => {
-        // So sánh ngày lịch trình với ngày hiện tại
         const scheduleDate = schedule.createDate.split(' ')[0];
-
-        // Cập nhật biến trạng thái
-
-
         return (
           <div key={schedule.id} className={`box`}>
             <h4>Ngày {index + 1}</h4>
@@ -63,6 +55,21 @@ const ListTourStaffDetail = () => {
     }
     return null;
   };
+
+  const renderTourSchedulesDescription = () => {
+    if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
+        return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+            return (
+                <div         
+                >
+                    <h4>Ngày {index + 1}: {schedule.title}</h4>
+                    <p>{schedule.description}</p>
+                </div>
+            );
+        });
+    }
+    return null;
+};
 
 
   return (
@@ -97,7 +104,7 @@ const ListTourStaffDetail = () => {
                           }}
                         />
                       </div>
-                      <div className="col-4">
+                      <div className="col-8">
                         <h4 style={{ fontSize: 16, marginTop: 10 }}>
                           Mã Chuyến Đi:{" "}
                           <span style={{ color: "#666" }}>
@@ -113,7 +120,7 @@ const ListTourStaffDetail = () => {
                             marginBottom: 5,
                           }}
                         >
-                          {tourDetailCustomer?.price} VNĐ
+                          {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                         </p>
                         <p
                           className="text-primary"
@@ -163,44 +170,33 @@ const ListTourStaffDetail = () => {
                           </div>
                           <div className="col-md-7  right">
                             <div className="group-services">
-                              <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
+                              <div className="item">
+                              <img src="/images/co1.jpg" className="icon-img" />
                                 <label>Thời gian</label>
                                 <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                               </div>
                               <div className="item">
-                                <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
+                              <img src="/images/co2.jpg" className="icon-img" />
                                 <label>Phương tiện di chuyển</label>
                                 <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
                               </div>
                               <div className="item">
-                                <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
+                              <img src="/images/co3.jpg" className="icon-img" />
                                 <label>Điểm tham quan</label>
                                 <p>{tourDetailCustomer?.tourDetail.location}</p>
                               </div>
                               <div className="item">
-                                <img src="/images/icons/utility/am thuc.png" className="icon-img" />
+                              <img src="/images/co4.jpg" className="icon-img" />
                                 <label>Ẩm thực</label>
 
                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                               </div>
                               <div className="item">
-                                <img src="/images/icons/utility/khach san.png" className="icon-img" />
+                              <img src="/images/co5.png" className="icon-img" />
                                 <label>Khách sạn</label>
                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                               </div>
 
-                              <div className="item">
-                                <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
-                                <label>Thời gian lý tưởng</label><p>Quanh năm</p>
-                              </div><div className="item">
-                                <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
-                                <label>Đối tượng thích hợp</label>
-                                <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
-                              </div>
-                              <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
-                                <label>Ưu đãi</label>
-                                <p>Ưu đãi trực tiếp vào giá tour</p>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -228,7 +224,10 @@ const ListTourStaffDetail = () => {
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
+                    <div>
+                            {renderTourSchedulesDescription()}
+                            </div>
+                      {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                         <div className="excerpt"><span className="line" /><div>
                           <title />
@@ -285,7 +284,7 @@ const ListTourStaffDetail = () => {
                             &nbsp;<br />
                             <strong>Nghỉ đêm tại Bangkok.</strong><br />
                             &nbsp;</div>
-                        </div></div></div>
+                        </div></div></div> */}
                     </div>
                   </div>
                 </div>

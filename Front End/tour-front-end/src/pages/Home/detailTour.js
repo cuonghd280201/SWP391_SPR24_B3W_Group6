@@ -114,8 +114,23 @@ const DetailTour = () => {
                     >
                         <h4>Ngày {index + 1}</h4>
                         <h3>{scheduleDate}</h3>
-                        <p>{schedule.description}</p>
+                        <p>{schedule.title}</p>
                         {isComing && <div className="label-coming">Coming</div>}
+                    </div>
+                );
+            });
+        }
+        return null;
+    };
+
+    const renderTourSchedulesDescription = () => {
+        if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
+            return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+                return (
+                    <div         
+                    >
+                        <h4>Ngày {index + 1}: {schedule.title}</h4>
+                        <p>{schedule.description}</p>
                     </div>
                 );
             });
@@ -346,7 +361,10 @@ const DetailTour = () => {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
+                            <div>
+                            {renderTourSchedulesDescription()}
+                            </div>
+                            {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                                 <div className="excerpt"><span className="line" /><div>
                                     <title />
@@ -403,7 +421,7 @@ const DetailTour = () => {
                                         &nbsp;<br />
                                         <strong>Nghỉ đêm tại Bangkok.</strong><br />
                                         &nbsp;</div>
-                                </div></div></div>
+                                </div></div></div> */}
                         </div>
                     </div>
                 </div>

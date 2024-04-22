@@ -15,7 +15,8 @@ export default {
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
             getTourDetailByID: "/tour/get/${tourId}",
             getSlotDetailByID: "/staff/tourTime/getTimeDetail/${timeId}",
-            filterTour: "/tour/filter"
+            filterTour: "/tour/filter",
+            keyWord: "keyWord=${keyWord}"
         }, 
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",

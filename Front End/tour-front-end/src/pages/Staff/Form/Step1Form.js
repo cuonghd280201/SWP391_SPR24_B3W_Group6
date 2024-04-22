@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Layout } from 'antd';
 import FileUploadImage from '../../Profile/FileUploadImage';
+
 
 const Step1Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
@@ -17,61 +18,64 @@ const Step1Form = ({ formData, onNext }) => {
     };
 
     return (
+        <Layout>
+                <h2>Tạo Thông Tin Chính Của Chuyến Đi</h2>
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
             <Form.Item
-                label="Title"
+                label="Tiêu đề"
                 name="title"
-                rules={[{ required: true, message: 'Please enter the title!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
-                label="Start Location"
+                label="Nơi bắt đầu"
                 name="starLocation"
-                rules={[{ required: true, message: 'Please enter the start location!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập nơi bắt đầu!' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
-                label="End Location"
+                label="Nơi Kết Thúc"
                 name="endLocation"
-                rules={[{ required: true, message: 'Please enter the end location!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập nơi kết thúc!' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
-                label="Description"
+                label="Mô tả"
                 name="description"
-                rules={[{ required: true, message: 'Please enter the description!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
             >
                 <Input.TextArea />
             </Form.Item>
             <Form.Item
-                label="Price"
+                label="Giá"
                 name="price"
-                rules={[{ required: true, message: 'Please enter the price!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
             >
                 <Input type="number" />
             </Form.Item>
             <Form.Item
-                label="Cover Image"
+                label="Ảnh Chính"
                 name="coverImage"
-                rules={[{ required: true, message: 'Please upload the cover image!' }]}
+                rules={[{ required: true, message: 'Vui Lòng nhập ảnh chính!' }]}
             >
                 {/* Pass the function to set the uploaded image URL */}
                 <FileUploadImage setUploadedImageUrl={handleImageUpload} />
             </Form.Item>
             <Form.Item
-                label="City"
+                label="Thành Phố"
                 name="city"
-                rules={[{ required: true, message: 'Please enter the city!' }]}
+                rules={[{ required: true, message: 'Vui Lòng Nhập Thành Phố!' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit">Next</Button>
+                <Button type="primary" htmlType="submit">Bước Tiếp Theo</Button>
             </Form.Item>
         </Form>
+        </Layout>
     );
 };
 

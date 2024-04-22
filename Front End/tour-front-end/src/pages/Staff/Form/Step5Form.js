@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Space } from 'antd';
+import { Form, Button, Space, Layout } from 'antd';
 import FileUploadImage from '../../Profile/FileUploadImage';
 
 const Step5Form = ({ formData, onNext }) => {
@@ -28,6 +28,8 @@ const Step5Form = ({ formData, onNext }) => {
     };
 
     return (
+        <Layout>
+        <h2>Thêm Ảnh Minh Họa</h2>
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
             {/* Form.List to handle multiple image inputs */}
             <Form.List name="tourImageCreateForms">
@@ -39,7 +41,7 @@ const Step5Form = ({ formData, onNext }) => {
                                     {...restField}
                                     name={[name, 'image']}
                                     fieldKey={[fieldKey, 'image']}
-                                    rules={[{ required: true, message: 'Please upload the image!' }]}
+                                    rules={[{ required: true, message: 'Vui Lòng Nhập Ảnh Phụ!' }]}
                                 >
                                     {/* Pass the handleImageUpload function to FileUploadImage */}
                                     <FileUploadImage
@@ -47,13 +49,13 @@ const Step5Form = ({ formData, onNext }) => {
                                     />
                                 </Form.Item>
                                 {/* Remove button for each form list item */}
-                                <Button type="link" onClick={() => remove(name)}>Remove</Button>
+                                <Button type="link" onClick={() => remove(name)}>Xóa</Button>
                             </Space>
                         ))}
                         {/* Button to add new image */}
                         <Form.Item>
                             <Button type="dashed" onClick={() => add()} block>
-                                Add Image
+                                Thêm Ảnh Khác
                             </Button>
                         </Form.Item>
                     </>
@@ -61,9 +63,10 @@ const Step5Form = ({ formData, onNext }) => {
             </Form.List>
             {/* Submit button */}
             <Form.Item>
-                <Button type="primary" htmlType="submit">Submit</Button>
+                <Button type="primary" htmlType="submit">Bước Tiếp Theo</Button>
             </Form.Item>
         </Form>
+        </Layout>
     );
 };
 

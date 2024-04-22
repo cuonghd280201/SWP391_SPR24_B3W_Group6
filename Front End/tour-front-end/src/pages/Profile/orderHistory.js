@@ -219,7 +219,7 @@ const OrderHistory = () => {
                                                             </Col>
                                                             <Col md={4} xs={5} className="text-end">
                                                                 <span className={order.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
-                                                                    {order.orderStatus}
+                                                                    {order.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
                                                                 </span>
                                                                 <h5 className="text-primary fw-bold">{order.price}₫</h5>
                                                                 <div className="destination">

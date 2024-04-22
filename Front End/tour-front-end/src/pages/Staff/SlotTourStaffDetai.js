@@ -35,6 +35,52 @@ const SlotTourStaffDetai = () => {
   }, []);
 
 
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const renderTourSchedules = () => {
+    const scheduleDate = timeDetail?.tourTimeDTO?.startDate;
+  
+    if (timeDetail && timeDetail.tourScheduleDTOSet && scheduleDate) {
+      const [day, month, year] = scheduleDate.split('-');
+      const initialDate = new Date(`${year}-${month}-${day}`);
+      return timeDetail.tourScheduleDTOSet.map((schedule, index) => {
+        initialDate.setDate(initialDate.getDate() + index);   
+        const adjustedDate = `${String(initialDate.getDate()).padStart(2, '0')}-${String(initialDate.getMonth() + 1).padStart(2, '0')}-${initialDate.getFullYear()}`;
+        const isComing = adjustedDate === currentDate || adjustedDate < currentDate;
+        return (
+          <div
+            key={schedule.id}
+            className="box"
+            style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
+          >
+            <h4>Ngày {index + 1}</h4>
+            <h3>{adjustedDate}</h3>
+            <p>{schedule.description}</p>
+            {isComing && <div className="label-coming">Đã Đến</div>}
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
+  const renderTourSchedulesDescription = () => {
+    if (timeDetail && timeDetail.tourScheduleDTOSet) {
+        return timeDetail.tourScheduleDTOSet.map((schedule, index) => {
+            return (
+                <div         
+                >
+                    <h4>Ngày {index + 1}: {schedule.title}</h4>
+                    <p>{schedule.description}</p>
+                </div>
+            );
+        });
+    }
+    return null;
+};
+
+
   return (
     <React.Fragment>
       <Layout style={{ minHeight: "100vh" }}>
@@ -84,7 +130,7 @@ const SlotTourStaffDetai = () => {
                               marginBottom: 5,
                             }}
                           >
-                            {timeDetail?.tourDTO.price}  VNĐ
+                            {timeDetail?.tourDTO.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} 
                           </p>
                           <p
                             className="text-primary"
@@ -113,6 +159,7 @@ const SlotTourStaffDetai = () => {
                         <div className="container-fluid">
                           <div className="row">
                             <div className="col-md-24 left">
+                            <p class="s-title-03 tour-des"> {timeDetail?.tourDTO.description} </p>
                               <div className="box-order">
                                 <div className="time"><p>Khởi hành <b> </b>
                                 </p>
@@ -143,21 +190,25 @@ const SlotTourStaffDetai = () => {
                   <div class="container-fluid">
                     <div className="row">
                       <div className="col-md-5">
-                        <div class="container-fluid">
-                          <main class="row">
-                            <section className="col">
-                              <header className="title">
-                                <h2>Lịch Trình</h2>
-                              </header>
-                              <div className="contents">
-                                {/* {renderTourSchedules()} */}
-                              </div>
-                            </section>
-                          </main>
-                        </div>
+                      <div class="container-fluid">
+                        <main class="row">
+                          <section className="col">
+                            <header className="title">
+                              <h2>Lịch Trình</h2>
+                              <p>Màu xanh: Đã Tới Điểm Hẹn</p>
+                              <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
+                            </header>
+                            <div className="contents">
+                              {renderTourSchedules()}
+                            </div>
+                          </section>
+                        </main>
                       </div>
-                      <div className="col-md-6">
-                        {timeDetail?.tourDTO.description}
+                    </div>
+                    <div className="col-md-6">
+                      <div>
+                        {renderTourSchedulesDescription()}
+                      </div>
                       </div>
                     </div>
                   </div>

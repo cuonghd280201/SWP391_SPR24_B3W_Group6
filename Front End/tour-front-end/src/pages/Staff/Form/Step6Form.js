@@ -11,14 +11,14 @@ const Step6Form = ({ formData, onNext }) => {
     return (
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
             <Form.Item
-                label="Confirmation"
+                label="Xác Nhận Đầy Đủ Thông Tin"
                 name="submitHere"
-                rules={[{ required: true, message: 'Please confirm by typing "submit"' }]}
+                rules={[{ required: true, message: 'Vui lòng xác nhận trước khi tạo chuyến đi' }]}
             >
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit">Submit Tour</Button>
+                <Button type="primary" htmlType="submit">Tạo</Button>
             </Form.Item>
         </Form>
     );

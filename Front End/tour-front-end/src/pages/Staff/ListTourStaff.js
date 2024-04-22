@@ -239,8 +239,12 @@ const ListTourStaff = () => {
                                 </p>
                                 <p className=" d-flex">
                                   <span className="ml-auto">
+                                  <Link
+                                  to="/listTourStaffDetail"
+                                  className="text-dark"
+                                  state={{ tourId: tour.id }} // Pass tourId as state data
+                                >
                                     <a
-                                      href="/listTourStaffDetail"
                                       style={{
                                         fontSize: "15px",
                                         color: "blueviolet",
@@ -266,6 +270,7 @@ const ListTourStaff = () => {
                                     >
                                       Xem chi tiết
                                     </a>
+                                    </Link>
                                   </span>
                                 </p>
                               </div>

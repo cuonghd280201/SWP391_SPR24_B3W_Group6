@@ -4,6 +4,8 @@ import { Row, Col, TabContent, TabPane, Input, Button } from 'reactstrap';
 import tourServices from "../../services/tour.services";
 import { Link } from "react-router-dom";
 import HomeSlider from "../HomeSlider/homeSlider";
+import { useNavigate } from 'react-router-dom';
+
 
 
 // Import Swiper styles
@@ -55,13 +57,30 @@ const Home = () => {
     };
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
 
+
+    //Tim Chuyen Di
+
+    const [keyword, setKeyword] = useState('');
+    const navigate = useNavigate();
+
+    const fetchData = async () => {
+        try { 
+            const sortBy = 'title';
+            const sortOrder = 'desc';
+            const response = await tourServices.searchAllTour(currentPage - 1, pageSize, sortBy, sortOrder, keyword);
+
+            setTours(response.data.data);
+        } catch (error) {
+            console.error('Lỗi khi gọi API:', error);
+        }
+    };
     return (
         <>
             <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
                 <div className="overlay" />
                 <div className="container">
                     <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
-                        <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                        <div className="col-md-9 text-center" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Trang Chủ</a></span> <span>Chuyến Đi</span></p>
                             <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Chuyến Đi</h1>
                         </div>
@@ -123,20 +142,23 @@ const Home = () => {
                 </div>
             </section>
             <h1></h1>
-            <HomeSlider></HomeSlider>
 
             <section className="ftco-section">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-3 sidebar order-md-last ftco-animate">
-                            <div className="sidebar-wrap ftco-animate">
+                        <div className="col-lg-3 sidebar order-md-last">
+                            <div className="sidebar-wrap">
                                 <h3 className="heading mb-4">Tìm Chuyến Đi</h3>
                                 <form action="#">
                                     <div className="fields">
                                         <div className="form-group">
-                                            <input type="text" className="form-control" placeholder="Destination, City" />
-                                        </div>
-                                        <div className="form-group">
+                                            <Input
+                                                type="text"
+                                                value={keyword}
+                                                onChange={(e) => setKeyword(e.target.value)}
+                                                placeholder="Nhập từ khóa..."
+                                            />                                        </div>
+                                        {/* <div className="form-group">
                                             <div className="select-wrap one-third">
                                                 <div className="icon"><span className="ion-ios-arrow-down" /></div>
                                                 <select name id className="form-control" placeholder="Keyword search">
@@ -163,9 +185,9 @@ const Home = () => {
                                                 <input defaultValue={1000} min={0} max={120000} step={500} type="range" />
                                                 <input defaultValue={50000} min={0} max={120000} step={500} type="range" />
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="form-group">
-                                            <input type="submit" defaultValue="Search" className="btn btn-primary py-3 px-5" />
+                                            <Button color="primary" onClick={fetchData}>Tìm kiếm</Button>
                                         </div>
                                     </div>
                                 </form>
@@ -207,7 +229,7 @@ const Home = () => {
                                                 <span><img src="/images/tour.png" className="icon-img" />
                                                     {tour.id}</span>
                                                 <p>Nơi Khởi Hành:  {tour.starLocation}</p>
-                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>    
+                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>
                                                 <h3>Giá : {formatPrice(tour.price)} &nbsp;₫</h3>
                                                 <hr />
                                                 <p className="bottom-area d-flex">
@@ -242,6 +264,7 @@ const Home = () => {
                 </div>
             </section> {/* .section */}
 
+            <HomeSlider></HomeSlider>
 
             <section className="ftco-section">
                 <div className="container">

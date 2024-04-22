@@ -45,18 +45,22 @@ const OrderBookTourDetail = () => {
 
   const renderTourSchedules = () => {
     const scheduleDate = orderDetail?.tourTimeDTO?.startDate;
-    if (orderDetail && orderDetail.tourScheduleDTOList) {
 
+    if (orderDetail && orderDetail.tourScheduleDTOList && scheduleDate) {
+      const [day, month, year] = scheduleDate.split('-');
+      const initialDate = new Date(`${year}-${month}-${day}`);
       return orderDetail.tourScheduleDTOList.map((schedule, index) => {
-        const isComing = scheduleDate <= currentDate;
+        initialDate.setDate(initialDate.getDate() + index);
+        const adjustedDate = `${String(initialDate.getDate()).padStart(2, '0')}-${String(initialDate.getMonth() + 1).padStart(2, '0')}-${initialDate.getFullYear()}`;
+        const isComing = adjustedDate === currentDate || adjustedDate < currentDate;
         return (
           <div
             key={schedule.id}
-            className={`box`}
+            className="box"
             style={{ backgroundColor: isComing ? 'lightgreen' : 'white' }}
           >
             <h4>Ngày {index + 1}</h4>
-            <h3>{scheduleDate}</h3>
+            <h3>{adjustedDate}</h3>
             <p>{schedule.description}</p>
             {isComing && <div className="label-coming">Đã Đến</div>}
           </div>
@@ -65,6 +69,22 @@ const OrderBookTourDetail = () => {
     }
     return null;
   };
+
+  const renderTourSchedulesDescription = () => {
+    if (orderDetail && orderDetail.tourScheduleDTOList) {
+      return orderDetail.tourScheduleDTOList.map((schedule, index) => {
+        return (
+          <div
+          >
+            <h4>Ngày {index + 1}: {schedule.title}</h4>
+            <p>{schedule.description}</p>
+          </div>
+        );
+      });
+    }
+    return null;
+  };
+
 
   const createCheckout = async () => {
     try {
@@ -86,7 +106,6 @@ const OrderBookTourDetail = () => {
 
   const handleButtonClick = () => {
     toast.success("Bạn đã thanh toán đầy đủ chi phí");
-    // Thêm bất kỳ logic xử lý thanh toán nào ở đây
   };
 
   return (
@@ -136,19 +155,16 @@ const OrderBookTourDetail = () => {
                           Giá chuyến đi:  <b> {orderDetail?.price} VNĐ</b>
                         </p>
                         <p
-                          className="text-primary"
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
                           Phần Trăm Tiền Đã Trả:<b> {orderDetail?.paid} %</b>
                         </p>
                         <p
-                          className="text-primary"
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
                           Số tiền đã trả: <b>{orderDetail?.amount} VND</b>
                         </p>
                         <p
-                          className="text-primary"
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
                           Số tiền hoàn trả:<b>{orderDetail?.refund} VND</b>
@@ -157,12 +173,12 @@ const OrderBookTourDetail = () => {
                       <div className="col-2">
                         <p>
                           <span className={orderDetail?.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
-                            {orderDetail?.orderStatus}
+                            {orderDetail?.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
                           </span>
                         </p>
                         <p>
                           {orderDetail?.orderStatus === "NOT_DONE" ? (
-                            <Link to="/orderBookTouDetail">
+                            <Link to="/orderHistory">
                               <button onClick={handlePaymentClick} className="btn btn-primary btn-order">Thanh Toán</button>
                             </Link>
                           ) : (
@@ -187,8 +203,10 @@ const OrderBookTourDetail = () => {
                         <div className="row">
                           <div className="col-md-24 left">
                             <div className="box-order">
-                              <div className="time"><p>Khởi hành <b> </b>
-                              </p>
+                              <div className="time"><h1
+                                className="text-primary"
+                              ><b>Khởi hành </b>
+                              </h1>
                                 {/* <p>Tập trung <b>04:05 ngày 01/05/2024</b>
                                                 </p> */}
                                 <p>Ngày đi:  <b>{orderDetail?.tourTimeDTO.startDate}</b>
@@ -221,7 +239,7 @@ const OrderBookTourDetail = () => {
                         <main class="row">
                           <section className="col">
                             <header className="title">
-                              <h2>Lịch Trình</h2>
+                              <h2 className="text-primary">Lịch Trình</h2>
                               <p>Màu xanh: Đã Tới Điểm Hẹn</p>
                               <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
                             </header>
@@ -233,7 +251,10 @@ const OrderBookTourDetail = () => {
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
+                      <div>
+                        {renderTourSchedulesDescription()}
+                      </div>
+                      {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                         <div className="excerpt"><span className="line" /><div>
                           <title />
@@ -290,7 +311,7 @@ const OrderBookTourDetail = () => {
                             &nbsp;<br />
                             <strong>Nghỉ đêm tại Bangkok.</strong><br />
                             &nbsp;</div>
-                        </div></div></div>
+                        </div></div></div> */}
                     </div>
                   </div>
                 </div>

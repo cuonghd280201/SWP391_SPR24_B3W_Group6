@@ -126,7 +126,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/icons/persons/adult.svg" />Người lớn
+                        <img src="/images/adult.png" />Người lớn (Trên 16 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -166,7 +166,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/icons/persons/child.svg" />Trẻ em
+                        <img src="/images/kid.png" />Trẻ em (Dưới 16 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -362,7 +362,7 @@ const InfomationTour = () => {
                                         </div>
 
                                         {/* Button to create the tour order */}
-                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Tour</button>                                    </section>
+                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>                                    </section>
                                 </div>
                             </section>
 

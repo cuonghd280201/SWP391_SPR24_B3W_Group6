@@ -183,7 +183,6 @@ const CreateTourStaff = () => {
                     }}
                 >                <Content style={{ padding: "30px", background: "white", margin: "30px", borderRadius: "12px" }}>
                     <div>
-                        <h2>Create Tour for Staff</h2>
                         {renderCurrentStep()}
                         <div style={{ marginTop: "20px" }}>
                             {currentStep > 1 && (
