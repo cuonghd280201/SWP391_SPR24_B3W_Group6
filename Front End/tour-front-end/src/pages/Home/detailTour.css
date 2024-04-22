@@ -6,6 +6,10 @@
     max-height: 400px; /* Adjust the maximum height as needed */
     overflow-y: auto;
 }
+
+.past-schedule {
+    background-color: yellow; /* Màu nền bạn muốn */
+  }
 *, :after, :before {
     box-sizing: border-box;
 }

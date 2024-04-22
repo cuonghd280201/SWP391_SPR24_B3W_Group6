@@ -20,9 +20,8 @@ import java.util.UUID;
 public class TourScheduleDTO {
 
     private UUID id;
-
     private String day;
-
+    private String title;
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)

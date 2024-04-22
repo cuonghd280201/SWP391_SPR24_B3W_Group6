@@ -81,11 +81,11 @@ const SiderBarWebStaff = ({ choose }) => {
       link: "/listTourBook",
     },
     {
-      label: "Báo Cáo Hoàn Tiền",
+      label: "Báo Cáo Tiền",
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
-      className: "listAccountStaff",
-      link: "/listAccountStaff", // Add the link property
+      className: "listTransaction",
+      link: "/listTransaction", // Add the link property
     },
      {
        label: "Chuyến Đi Bị Hủy",

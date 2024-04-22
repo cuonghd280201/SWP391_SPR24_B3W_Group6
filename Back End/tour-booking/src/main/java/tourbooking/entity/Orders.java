@@ -32,6 +32,8 @@ public class Orders {
     private BigDecimal price;
 
     private BigDecimal paid;
+    private BigDecimal priceAfterPaid;
+    private BigDecimal amount;
 
     private BigDecimal refund;
 

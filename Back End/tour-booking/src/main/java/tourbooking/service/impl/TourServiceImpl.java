@@ -14,10 +14,13 @@ import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourImages;
 import tourbooking.entity.Tour.TourSchedule;
 import tourbooking.entity.Tour.TourTime;
+import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.TourRepository;
 import tourbooking.service.TourService;
+import tourbooking.utils.DateTimeUtils;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -48,43 +51,62 @@ public class TourServiceImpl implements TourService {
                                                                String sortBy,
                                                                String sortOrder,
                                                                String keyWord,
-                                                               TourFilterRequest tourFilterRequest) {
+                                                               String endLocation,
+                                                               BigDecimal minPrice,
+                                                               BigDecimal maxPrice,
+                                                               String startDate) {
         PageableRequest pageableRequest = new PageableRequest(pageNumber, pageSize, sortBy, sortOrder);
         Pageable pageable = pageableRequest.toPageable();
         Page<Tour> tourPage = null;
         List<Tour> tourList = null;
         List<TourDTO> tourDTOS = null;
-        if ((keyWord == null || keyWord.isEmpty()) && tourFilterRequest == null) {
+        if ((keyWord == null || keyWord.isEmpty())) {
             // Trường hợp không có keyWord, lọc trên toàn bộ danh sách và sau đó phân trang
             tourPage = tourRepository.findAll(pageable);
             tourList = tourPage.getContent();
             tourDTOS = tourList.stream().map(this::convertToTourDTO).toList();
         }
-        if (keyWord != null && tourFilterRequest == null) {
+        if (keyWord != null) {
             tourPage = tourRepository.searchByKeyWord(keyWord, pageable);
             tourList = tourPage.getContent();
             tourDTOS = tourList.stream().map(this::convertToTourDTO).toList();
         }
-        if (tourFilterRequest != null && keyWord == null) {
+        if (minPrice != null && maxPrice != null) {
             tourPage = tourRepository.findAll(pageable);
             tourList = tourPage.getContent();
-            tourDTOS = tourList.stream().filter(tour -> matchesFilter(tour, tourFilterRequest)).map(this::convertToTourDTO).toList();
+            tourDTOS = tourList.stream()
+                    .filter(tour -> tour.getPrice().compareTo(minPrice) >= 0 && tour.getPrice().compareTo(maxPrice) <= 0)
+                    .map(this::convertToTourDTO)
+                    .toList();
         }
-        if(tourFilterRequest != null && keyWord != null) {
-            tourPage = tourRepository.searchByKeyWord(keyWord, pageable);
+        if(endLocation != null) {
+            tourPage = tourRepository.findAll(pageable);
             tourList = tourPage.getContent();
-            tourDTOS = tourList.stream().filter(tour -> matchesFilter(tour, tourFilterRequest)).map(this::convertToTourDTO).toList();
+            tourDTOS = tourList.stream().filter(tour -> tour.getEndLocation().equals(endLocation)).map(this::convertToTourDTO).toList();
+        }
+        if (startDate != null) {
+            tourPage = tourRepository.findAll(pageable);
+            tourList = tourPage.getContent();
+            for (Tour tour: tourList
+                 ) {
+                tour.getTourTimeSet().stream().map(TourTime::getStartDate).anyMatch(tourTimeStartDate -> {
+                    try {
+                        return tourTimeStartDate.equals(DateTimeUtils.convertStringToLocalDate(startDate));
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
         }
         Pagination pagination = new Pagination(tourPage.getNumber(), tourPage.getTotalElements(), tourPage.getTotalPages());
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", pagination, tourDTOS));
     }
+    @Override
+    public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(UUID tourId) {
 
-    private boolean matchesFilter(Tour tour, TourFilterRequest tourFilterRequest) {
-        BigDecimal tourPrice = tour.getPrice();
-        return (tourFilterRequest.getEndLocation() == null || tour.getEndLocation().equals(tourFilterRequest.getEndLocation())) &&
-                (tourPrice.compareTo(tourFilterRequest.getMinPrice()) >= 0) &&
-                (tourPrice.compareTo(tourFilterRequest.getMaxPrice()) <= 0) &&
-                (tour.getTourTimeSet().stream().map(TourTime::getStartDate).anyMatch(startDate -> startDate.equals(tourFilterRequest.getStartDate())));
+        Tour tour = tourRepository.findById(tourId).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+        TourInfoDTO tourInfoDTO = convertToTourInfoDTO(tour);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.FOUND, "Get Tour Detail Successfully!", tourInfoDTO));
     }
 
     public TourDTO convertToTourDTO(Tour tour) {

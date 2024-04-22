@@ -15,11 +15,14 @@ import tourbooking.utils.DateTimeUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private UUID id;
     private String name;
     private String phone;
     private String email;
@@ -27,11 +30,9 @@ public class UserDTO {
     @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
     private LocalDate dateOfBirth;
     private Gender gender;
-    @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime createDate;
-    @LastModifiedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime updateDate;

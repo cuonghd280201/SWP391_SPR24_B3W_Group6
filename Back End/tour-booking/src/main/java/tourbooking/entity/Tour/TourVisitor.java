@@ -38,6 +38,8 @@ public class TourVisitor {
     @Pattern(regexp = "\\d+", message = "Phone number must contain only digits")
     private String phone;
 
+    private String idCard;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
     private LocalDate dateOfBirth;
@@ -61,7 +63,7 @@ public class TourVisitor {
     @JoinColumn(name = "tour_time_id", referencedColumnName = "id")
     private TourTime tourTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UUID userId;
 }

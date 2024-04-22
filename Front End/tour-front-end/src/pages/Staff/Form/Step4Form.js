@@ -1,86 +1,79 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
+import { Form, Button, Input, Space, DatePicker } from 'antd';
+import moment from 'moment';
 
-import {
-  
-  Layout,
-  
-} from "antd";
+const Step4Form = ({ formData, onNext }) => {
+    const [form] = Form.useForm();
 
-import { Editor } from "@tinymce/tinymce-react";
+    const handleSubmit = (values) => {
+        // Định dạng các giá trị ngày tháng trong values
+        const formattedValues = values.tourTimeCreateFormSet.map((item) => {
+            return {
+                ...item,
+                startDate: item.startDate.format('DD-MM-YYYY'),
+                endDate: item.endDate.format('DD-MM-YYYY'),
+            };
+        });
 
+        // Gọi onNext với giá trị đã định dạng
+        onNext({ tourTimeCreateFormSet: formattedValues });
+    };
 
-const { Content } = Layout;
-
-const Step4Form = () => {
-  return (
-      <Layout>
-        <div
-          style={{
-            padding: "30px",
-            background: "white",
-            margin: "30px",
-            borderRadius: "12px",
-            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-          }}
-        >
-          <Content>
-            <div class="row justify-content-center">
-              <div class="col-lg-12">
-                <div class="rounded shadow bg-white p-4">
-                  <div class="custom-form">
-                    <div id="message3"></div>
-                    <form
-                      method="post"
-                      action="php/contact.php"
-                      name="contact-form"
-                      id="contact-form3"
-                    > 
-                      <h4 class="text-dark mb-3">Tạo lịch chuyến đi </h4>
-                     
-                    
-
-                     
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">
-                              Số lượng ngày
-                            </label>
-                            <input
-                              type="number"
-                              class="form-control resume"
-                              placeholder="1"
-                              min="1"
-                              max="10"
-                            ></input>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-group app-label mt-2">
-                            <label class="text-muted">Mô tả</label>
-                            <input
-                              id="job-title"
-                              type="text"
-                              class="form-control resume"
-                              maxlength="100"
-                              required
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-        
-
-                      
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Content>
-        </div>
-      </Layout>
-  );
+    return (
+        <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
+            <Form.List name="tourTimeCreateFormSet">
+                {(fields, { add, remove }) => (
+                    <>
+                        {fields.map(({ key, name, fieldKey, ...restField }) => (
+                            <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'startDate']}
+                                    fieldKey={[fieldKey, 'startDate']}
+                                    rules={[{ required: true, message: 'Please enter the start date!' }]}
+                                >
+                                    <DatePicker placeholder="Start Date" format="DD-MM-YYYY" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'endDate']}
+                                    fieldKey={[fieldKey, 'endDate']}
+                                    rules={[{ required: true, message: 'Please enter the end date!' }]}
+                                >
+                                    <DatePicker placeholder="End Date" format="DD-MM-YYYY" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'startTime']}
+                                    fieldKey={[fieldKey, 'startTime']}
+                                    rules={[{ required: true, message: 'Please enter the start time!' }]}
+                                >
+                                    <Input placeholder="Start Time (HH:MM)" />
+                                </Form.Item>
+                                <Form.Item
+                                    {...restField}
+                                    name={[name, 'slotNumber']}
+                                    fieldKey={[fieldKey, 'slotNumber']}
+                                    rules={[{ required: true, message: 'Please enter the slot number!' }]}
+                                >
+                                    <Input placeholder="Slot Number" type="number" />
+                                </Form.Item>
+                                <Button type="link" onClick={() => remove(name)}>Remove</Button>
+                            </Space>
+                        ))}
+                        <Form.Item>
+                            <Button type="dashed" onClick={() => add()} block icon="+">
+                                Add Time
+                            </Button>
+                        </Form.Item>
+                    </>
+                )}
+            </Form.List>
+            <Form.Item>
+                <Button type="primary" htmlType="submit">Next</Button>
+            </Form.Item>
+        </Form>
+    );
 };
 
 export default Step4Form;

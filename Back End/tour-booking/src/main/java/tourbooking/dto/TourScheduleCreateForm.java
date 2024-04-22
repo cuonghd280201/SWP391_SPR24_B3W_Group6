@@ -12,6 +12,6 @@ import lombok.Setter;
 public class TourScheduleCreateForm {
 
     private String day;
-
+    private String title;
     private String description;
 }

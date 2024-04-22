@@ -38,4 +38,11 @@ public class DateTimeUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
         return LocalDateTime.parse(date,formatter);
     }
+
+    public int actualCompareInfo(LocalDate actualDate, LocalDate infoDate){
+        // < 0 actual before info
+        // > 0 actual after info
+        // = 0 actual = info
+        return actualDate.compareTo(infoDate);
+    }
 }
