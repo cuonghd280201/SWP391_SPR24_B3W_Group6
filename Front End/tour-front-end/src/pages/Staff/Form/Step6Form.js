@@ -10,7 +10,7 @@ const Step6Form = ({ formData, onNext }) => {
 
     return (
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
-            <Form.List name="tourImageCreateForms">
+            <Form.List name="">
                 {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, fieldKey, ...restField }) => (

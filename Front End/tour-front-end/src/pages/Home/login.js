@@ -19,10 +19,11 @@ const Login = () => {
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
             navigate("/");  
-            toast.success("Login successfully!")
+            toast.success("Đăng nhập thành công!")
 
         }catch(error){
             console.error(error);
+            toast.error("Đăng nhập thất bại!")
         }
 
     }
@@ -49,7 +50,7 @@ const { googleSignIn, user } = UserAuth();
                     <div className="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
                         <div className="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
                             <p className="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span className="mr-2"><a href="index.html">Home</a></span> <span>Hotel</span></p>
-                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Tours</h1>
+                            <h1 className="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Chuyến Đi</h1>
                         </div>
                     </div>
                 </div>
@@ -59,7 +60,7 @@ const { googleSignIn, user } = UserAuth();
                     <div className="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
                         <form className="login100-form validate-form flex-sb flex-w">
                             <span className="login100-form-title p-b-53">
-                                Sign In With
+                                Đăng Nhập
                             </span>
                             <a href="#" className="btn-face m-b-20">
                                 <i className="fa fa-facebook-official" />
@@ -71,7 +72,7 @@ const { googleSignIn, user } = UserAuth();
                             </a>
                             <div className="p-t-31 p-b-9">
                                 <span className="txt1">
-                                    Username
+                                    Tài Khoản
                                 </span>
                             </div>
                             <div className="wrap-input100 validate-input" data-validate="Username is required">
@@ -80,10 +81,10 @@ const { googleSignIn, user } = UserAuth();
                             </div>
                             <div className="p-t-13 p-b-9">
                                 <span className="txt1">
-                                    Password
+                                    Mật Khẩu
                                 </span>
                                 <a href="#" className="txt2 bo1 m-l-5">
-                                    Forgot?
+                                    Quên Mật Khẩu?
                                 </a>
                             </div>
                             <div className="wrap-input100 validate-input" data-validate="Password is required">
@@ -93,16 +94,16 @@ const { googleSignIn, user } = UserAuth();
                             <div className="container-login100-form-btn m-t-17">
                             <Link to="/listTourStaff">
                                 <button className="login100-form-btn">
-                                    Sign In
+                                    Đăng Nhập
                                 </button>
                                 </Link>
                             </div>
                             <div className="w-full text-center p-t-55">
                                 <span className="txt2">
-                                    Not a member?
+                                    Không có tài khoản?
                                 </span>
                                 <a href="#" className="txt2 bo1">
-                                    Sign up now
+                                    Đăng ký tại đây
                                 </a>
                             </div>
                         </form>

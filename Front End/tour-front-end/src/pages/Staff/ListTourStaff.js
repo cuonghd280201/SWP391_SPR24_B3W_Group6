@@ -100,7 +100,7 @@ const ListTourStaff = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+  const [pageSize, setPageSize] = useState(3); // Initialize pageSize state
 
 
   useEffect(() => {
@@ -121,6 +121,10 @@ const ListTourStaff = () => {
       setError(error);
       setLoading(false);
     }
+  };
+
+  const formatPrice = (price) => {
+    return (price).toLocaleString('vi-VN').replace(/,/g, '.');
   };
 
   return (
@@ -240,7 +244,7 @@ const ListTourStaff = () => {
                                     marginBottom: 5,
                                   }}
                                 >
-                                  {tour.price} VNĐ
+                                  {formatPrice(tour.price)} VNĐ
                                 </p>
                                 <p className=" d-flex">
                                   <span className="ml-auto">

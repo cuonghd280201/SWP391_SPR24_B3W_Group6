@@ -66,7 +66,7 @@ const CreateTourStaff = () => {
                 console.log("Tour created successfully:", response.data);
                 setCurrentStep(1); // Đặt lại bước hiện tại về bước đầu tiên
                 // Thực hiện các hành động khác khi tạo tour thành công
-                toast.success("Create Tour Successfully");
+                toast.success("Tạo Chuyến Đi Thành Công");
             } else {
                 console.error("Error creating tour:", response.data);
             }
@@ -108,7 +108,10 @@ const CreateTourStaff = () => {
                                 </Button>
                             )}
                             {currentStep < 6 ? (
-                                <Button type="primary" onClick={renderCurrentStep().props.onNext}>
+                                <Button
+                                    type="primary"
+                                    onClick={() => renderCurrentStep().props.onNext(formData[`step${currentStep}Data`])}
+                                >
                                     Next
                                 </Button>
                             ) : (

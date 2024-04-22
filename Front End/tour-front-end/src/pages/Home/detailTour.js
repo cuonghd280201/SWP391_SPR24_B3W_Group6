@@ -130,7 +130,9 @@ const DetailTour = () => {
         return null;
     };
 
-
+    const formatPrice = (price) => {
+        return (price).toLocaleString('vi-VN').replace(/,/g, '.');
+      };
     return (
         <div>
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
@@ -183,6 +185,7 @@ const DetailTour = () => {
                                 <div className="col-md-6 left">
                                     <div className="warp-mark">
                                         <i className="fal fa-ticket" />
+                                        <img src="/images/tour.png" className="icon-img" />
                                         <label>{tourDetailCustomer?.tourTimeSet[0]?.id}</label>
                                     </div>
                                     <h1 className="title">🔥 {tourDetailCustomer?.title}</h1>
@@ -192,7 +195,7 @@ const DetailTour = () => {
                                     <div className="group-price">
                                         <div className="sale-price">
                                             <p>
-                                                <span className="price">{tourDetailCustomer?.price}&nbsp;₫</span>/ khách
+                                                <span className="price">{tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>/ khách
                                             </p>
                                         </div>
                                     </div>
@@ -273,6 +276,7 @@ const DetailTour = () => {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="col-md-5 left">
+                                    <p class="s-title-03 tour-des"> {tourDetailCustomer?.description} </p>
                                         <div className="box-order">
                                             <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
                                             </p>
@@ -297,43 +301,30 @@ const DetailTour = () => {
                                     </div>
                                     <div className="col-md-7  right">
                                         <div className="group-services">
-                                            <div className="item"><img src="/images/icons/utility/thoi gian.png" className="icon-img" />
+                                            <div className="item"><img src="/images/co1.jpg" className="icon-img" />
                                                 <label>Thời gian</label>
                                                 <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/phuong tien di chuyen.png" className="icon-img" />
+                                                <img src="/images/co2.jpg" className="icon-img" />
                                                 <label>Phương tiện di chuyển</label>
                                                 <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/diem tham quan.png" className="icon-img" />
+                                                <img src="/images/co3.jpg" className="icon-img" />
                                                 <label>Điểm tham quan</label>
                                                 <p>{tourDetailCustomer?.tourDetail.location}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/am thuc.png" className="icon-img" />
+                                                <img src="/images/co4.jpg" className="icon-img" />
                                                 <label>Ẩm thực</label>
 
                                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                                             </div>
                                             <div className="item">
-                                                <img src="/images/icons/utility/khach san.png" className="icon-img" />
+                                                <img src="/images/co5.png" className="icon-img" />
                                                 <label>Khách sạn</label>
                                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
-                                            </div>
-
-                                            <div className="item">
-                                                <img src="/images/icons/utility/thoi gian ly tuong.png" className="icon-img" />
-                                                <label>Thời gian lý tưởng</label><p>Quanh năm</p>
-                                            </div><div className="item">
-                                                <img src="/images/icons/utility/doi tuong thich hop.png" className="icon-img" />
-                                                <label>Đối tượng thích hợp</label>
-                                                <p>Cặp đôi, Gia đình nhiều thế hệ, Thanh niên</p>
-                                            </div>
-                                            <div className="item"><img src="/images/icons/utility/uu dai.png" className="icon-img" />
-                                                <label>Ưu đãi</label>
-                                                <p>Ưu đãi trực tiếp vào giá tour</p>
                                             </div>
                                         </div>
                                     </div>

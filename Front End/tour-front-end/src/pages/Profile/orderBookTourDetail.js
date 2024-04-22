@@ -6,6 +6,10 @@ import { Layout } from "antd";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import orderServices from "../../services/order.services";
+import paymentServices from "../../services/payment.services";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { Content } = Layout;
 
 const OrderBookTourDetail = () => {
@@ -34,9 +38,9 @@ const OrderBookTourDetail = () => {
 
 
 
- 
 
- 
+
+
   const currentDate = new Date().toISOString().split('T')[0];
 
   // Modified renderTourSchedules function
@@ -55,7 +59,7 @@ const OrderBookTourDetail = () => {
             <h4>Ngày {index + 1}</h4>
             <h3>{scheduleDate}</h3>
             <p>{schedule.description}</p>
-            {isComing && <div className="label-coming">Coming</div>}
+            {isComing && <div className="label-coming">Đã Đến</div>}
           </div>
         );
       });
@@ -63,7 +67,28 @@ const OrderBookTourDetail = () => {
     return null;
   };
 
+  const createCheckout = async () => {
+    try {
+      const notDoneIds = orderDetail?.paymentDTOList
+        .filter(order => order.paymentStatus === "NOT_DONE")
+        .map(order => order.id);
+      const response = await paymentServices.createCheckout(notDoneIds);
+      console("reponse", response);
+      toast.success("Thanh Toán Thành Công");
+    } catch (error) {
+      toast.error("Thanh Toán Thất Bại");
+      console.error("Error payment failed:", error);
+    }
+  };
 
+  const handlePaymentClick = async () => {
+    await createCheckout();
+  };
+
+  const handleButtonClick = () => {
+    toast.success("Bạn đã thanh toán đầy đủ chi phí");
+    // Thêm bất kỳ logic xử lý thanh toán nào ở đây
+  };
 
   return (
 
@@ -90,25 +115,14 @@ const OrderBookTourDetail = () => {
         >
           <div className="ecommerce-widget">
             <div className="row row-with-margin">
-              {/* <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
+              <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div className="destination">
                   <div className="text p-3">
                     <div className="row">
-                      <div className="col-4">
-                        <img
-                          src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg"
-                          className="img-fluid rounded"
-                          alt="Tour Image"
-                          style={{
-                            width: "100%",
-                            height: 200,
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div className="col-4">
-                        <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                          Mã Chuyến Đi:{" "}
+
+                      <div className="col-10">
+                        <h4 style={{ fontSize: 20, marginTop: 10 }}>
+                          Mã đặt chuyến đi: <b>{orderDetail?.id}</b>
                           <span style={{ color: "#666" }}>
 
                           </span>
@@ -120,21 +134,51 @@ const OrderBookTourDetail = () => {
                             marginBottom: 5,
                           }}
                         >
-                          VNĐ
+                          Giá chuyến đi:  <b> {orderDetail?.price} VNĐ</b>
                         </p>
                         <p
                           className="text-primary"
-                          style={{ fontSize: 14, marginBottom: 5 }}
+                          style={{ fontSize: 18, marginBottom: 5 }}
                         >
-                          Giờ đi:
-
+                          Phần Trăm Tiền Đã Trả:<b> {orderDetail?.paid} %</b>
                         </p>
+                        <p
+                          className="text-primary"
+                          style={{ fontSize: 18, marginBottom: 5 }}
+                        >
+                          Số tiền đã trả: <b>{orderDetail?.amount} VND</b>
+                        </p>
+                        <p
+                          className="text-primary"
+                          style={{ fontSize: 18, marginBottom: 5 }}
+                        >
+                          Số tiền hoàn trả:<b>{orderDetail?.refund} VND</b>
+                        </p>
+                      </div>
+                      <div className="col-2">
+                        <p>
+                          <span className={orderDetail?.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
+                            {orderDetail?.orderStatus}
+                          </span>
+                        </p>
+                        <p>
+                          {orderDetail?.orderStatus === "NOT_DONE" ? (
+                            <Link to="/orderBookTouDetail">
+                              <button onClick={handlePaymentClick} className="btn btn-primary btn-order">Thanh Toán</button>
+                            </Link>
+                          ) : (
+                            <button onClick={handleButtonClick} className="btn btn-primary btn-order">Thanh Toán Hoàn Tất</button>
+                          )}
+                        </p>
+
                       </div>
                     </div>
                     <hr />
                   </div>
                 </div>
-              </div> */}
+              </div>
+
+
 
               <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
@@ -151,13 +195,12 @@ const OrderBookTourDetail = () => {
                                 <p>Ngày đi:  <b>{orderDetail?.tourTimeDTO.startDate}</b>
                                 </p>
                                 <p>Ngày về:  <b> {orderDetail?.tourTimeDTO.endDate}</b>
-                                </p><p>Thời gian đi:   <b> {orderDetail?.tourTimeDTO.startTime}</b>
-                                </p><p>Số lượng người đi:   <b> {orderDetail?.tourTimeDTO.slotNumberActual}</b>
-                                  <p>Số lượng chỗ:   <b> {orderDetail?.tourTimeDTO.slotNumber}</b></p>
-                                  <p>Trạng thái chuyến đi:   <b> {orderDetail?.tourTimeDTO.timeStatus}</b></p>
-
                                 </p>
-
+                                <p>Thời gian đi:   <b> {orderDetail?.tourTimeDTO.startTime}</b>
+                                </p>
+                                <p>Số lượng người đi:   <b> {orderDetail?.tourTimeDTO.slotNumberActual}</b></p>
+                                <p>Số lượng chỗ còn:   <b> {orderDetail?.tourTimeDTO.slotNumber}</b></p>
+                                <p>Trạng thái chuyến đi:   <b> {orderDetail?.tourTimeDTO.timeStatus}</b></p>
 
                               </div>
 
@@ -180,6 +223,8 @@ const OrderBookTourDetail = () => {
                           <section className="col">
                             <header className="title">
                               <h2>Lịch Trình</h2>
+                              <p>Màu xanh: Đã Tới Điểm Hẹn</p>
+                              <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
                             </header>
                             <div className="contents">
                               {renderTourSchedules()}

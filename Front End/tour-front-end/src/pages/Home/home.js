@@ -28,7 +28,7 @@ const Home = () => {
     }, [currentPage, pageSize]);
 
 
-    const fetchTourData = async (sortBy = 'title', sortOrder = 'desc') => {
+    const fetchTourData = async (sortBy = 'title', sortOrder = 'asc') => {
         try {
             const response = await tourServices.getAllTourAndPaging(currentPage - 1, pageSize, sortBy, sortOrder);
             console.log("Response:", response);
@@ -50,7 +50,9 @@ const Home = () => {
         setCurrentPage(currentPage + 1);
     };
 
-
+    const formatPrice = (price) => {
+        return (price).toLocaleString('vi-VN').replace(/,/g, '.');
+    };
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
 
     return (
@@ -180,7 +182,7 @@ const Home = () => {
                                             <Link
                                                 to="/detailTour"
                                                 className="text-dark"
-                                                state={{ tourId: tour.id }} 
+                                                state={{ tourId: tour.id }}
                                             >
                                                 <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
                                                     <div className="icon d-flex justify-content-center align-items-center">
@@ -202,11 +204,11 @@ const Home = () => {
                                                         <span className="price per-price">{tour.price}<br /><small>/tour</small></span>
                                                     </div>
                                                 </div>
-                                                <h3>Mã Chuyến Đi</h3>
-                                                <span><i className="icon-map-o" /> {tour.id}</span>
+                                                <span><img src="/images/tour.png" className="icon-img" />
+                                                    {tour.id}</span>
                                                 <p>Nơi Khởi Hành:  {tour.starLocation}</p>
-                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>
-                                                <h3>Giá : {tour.price}</h3>
+                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>    
+                                                <h3>Giá : {formatPrice(tour.price)} &nbsp;₫</h3>
                                                 <hr />
                                                 <p className="bottom-area d-flex">
                                                     <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
@@ -216,10 +218,10 @@ const Home = () => {
                                         </div>
                                     </div>
                                 ))}
-                                
+
                             </div>
-                
-                         
+
+
                             <div className="row mt-5">
                                 <div className="col text-center">
                                     <div className="block-27">
