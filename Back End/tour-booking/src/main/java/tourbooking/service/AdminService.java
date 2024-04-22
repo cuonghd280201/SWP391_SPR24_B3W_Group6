@@ -12,4 +12,6 @@ import java.security.Principal;
 import java.util.UUID;
 
 public interface AdminService {
+    ResponseEntity<BaseResponseDTO>countAllUser();
+
 }
