@@ -30,10 +30,8 @@ const ListTourStaffDetail = () => {
 
   const navigate = useNavigate();
 
-  // Function to navigate to /findTour with tourId
   const navigateToFindTour = () => {
     if (tourDetailCustomer) {
-        // Navigate to FindTour page
         navigate('/slotTourStaff', { state: { tourId: tourDetailCustomer.id } });
       }
 };

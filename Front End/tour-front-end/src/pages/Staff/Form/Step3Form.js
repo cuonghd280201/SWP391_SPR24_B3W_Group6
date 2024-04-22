@@ -10,19 +10,39 @@ const Step3Form = ({ formData, onNext }) => {
 
     return (
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
-            <Form.Item label="Time" name="time" rules={[{ required: true, message: 'Please enter the time!' }]}>
+            <Form.Item
+                label="Time"
+                name="time"
+                rules={[{ required: true, message: 'Please enter the time!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Vehicle" name="vehicle" rules={[{ required: true, message: 'Please enter the vehicle!' }]}>
+            <Form.Item
+                label="Vehicle"
+                name="vehicle"
+                rules={[{ required: true, message: 'Please enter the vehicle!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Location" name="location" rules={[{ required: true, message: 'Please enter the location!' }]}>
+            <Form.Item
+                label="Location"
+                name="location"
+                rules={[{ required: true, message: 'Please enter the location!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Food" name="food" rules={[{ required: true, message: 'Please enter the food!' }]}>
+            <Form.Item
+                label="Food"
+                name="food"
+                rules={[{ required: true, message: 'Please enter the food!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Hotel" name="hotel" rules={[{ required: true, message: 'Please enter the hotel!' }]}>
+            <Form.Item
+                label="Hotel"
+                name="hotel"
+                rules={[{ required: true, message: 'Please enter the hotel!' }]}
+            >
                 <Input />
             </Form.Item>
             <Form.Item>

@@ -36,10 +36,8 @@ const DetailTour = () => {
 
     const navigate = useNavigate();
 
-    // Function to navigate to /findTour with tourId
     const navigateToFindTour = () => {
         if (tourDetailCustomer) {
-            // Navigate to FindTour page
             navigate('/findTour', { state: { tourId: tourDetailCustomer.id } });
         }
     };
@@ -106,13 +104,8 @@ const DetailTour = () => {
         if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
             return tourDetailCustomer.tourSchedules.map((schedule, index) => {
                 const startDate = tourDetailCustomer?.tourTimeSet[0]?.startDate;
-
-                // Calculate the new date by adding the index to the start date
                 const scheduleDate = addDaysToDate(startDate, index);
-
-                // Compare scheduleDate with currentDate
                 const isComing = scheduleDate <= currentDate;
-
                 return (
                     <div
                         key={schedule.id}

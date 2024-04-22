@@ -67,7 +67,7 @@ const { googleSignIn, user } = UserAuth();
                                 Facebook
                             </a>
                             <a href="#" className="btn-google m-b-20" onClick={handleSignWithGoogle}>
-                                <img src="images/icons/icon-google.png" alt="GOOGLE" />
+                                <img src="images/icongoogle.jpg" alt="GOOGLE" />
                                 Google
                             </a>
                             <div className="p-t-31 p-b-9">

@@ -43,7 +43,6 @@ const OrderBookTourDetail = () => {
 
   const currentDate = new Date().toISOString().split('T')[0];
 
-  // Modified renderTourSchedules function
   const renderTourSchedules = () => {
     const scheduleDate = orderDetail?.tourTimeDTO?.startDate;
     if (orderDetail && orderDetail.tourScheduleDTOList) {
