@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Button, Input, Space } from 'antd';
+import { Form, Button, Input, Space, Layout } from 'antd';
+
 
 const Step2Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
@@ -9,6 +10,8 @@ const Step2Form = ({ formData, onNext }) => {
     };
 
     return (
+        <Layout>
+        <h2>Lịch Trình</h2>
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
             <Form.List name="listTourSchedule">
                 {(fields, { add, remove }) => (
@@ -19,41 +22,42 @@ const Step2Form = ({ formData, onNext }) => {
                                     {...restField}
                                     name={[name, 'day']}
                                     fieldKey={[fieldKey, 'day']}
-                                    rules={[{ required: true, message: 'Please enter the day!' }]}
+                                    rules={[{ required: true, message: 'Vui lòng nhập ngày!' }]}
                                 >
-                                    <Input placeholder="Day" />
+                                    <Input placeholder="Ngày" />
                                 </Form.Item>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'title']}
                                     fieldKey={[fieldKey, 'title']}
-                                    rules={[{ required: true, message: 'Please enter the title!' }]}
+                                    rules={[{ required: true, message: 'Vui lòng nhập tiêu đề!' }]}
                                 >
-                                    <Input placeholder="Title" />
+                                    <Input placeholder="Tiêu đề" />
                                 </Form.Item>
                                 <Form.Item
                                     {...restField}
                                     name={[name, 'description']}
                                     fieldKey={[fieldKey, 'description']}
-                                    rules={[{ required: true, message: 'Please enter the description!' }]}
+                                    rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
                                 >
-                                    <Input placeholder="Description" />
+                                    <Input placeholder="Mô tả" />
                                 </Form.Item>
-                                <Button type="link" onClick={() => remove(name)}>Remove</Button>
+                                <Button type="link" onClick={() => remove(name)}>Xóa</Button>
                             </Space>
                         ))}
                         <Form.Item>
                             <Button type="dashed" onClick={() => add()} block icon="+">
-                                Add Schedule
+                                Thêm Lịch
                             </Button>
                         </Form.Item>
                     </>
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType="submit">Next</Button>
+                <Button type="primary" htmlType="submit">Bước tiếp theo</Button>
             </Form.Item>
         </Form>
+        </Layout>
     );
 };
 

@@ -15,6 +15,20 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
   return response;
 };
 
+const searchAllTour = async (currentPage, pageSize, sortBy, sortOrder, keyWord) => {
+  const serviceUrl = urlConstant.endpoint.tour.filterTour + "?";
+  const pagingUrl = urlConstant.endpoint.tour.paging
+    .replace("${currentPage}", currentPage)
+    .replace("${pageSize}", pageSize);
+  const sortUrl = urlConstant.endpoint.tour.sorting
+    .replace("${sortBy}", sortBy)
+    .replace("${sortOrder}", sortOrder);
+  const keywordUrl = urlConstant.endpoint.tour.keyWord.replace("${keyWord}", keyWord);
+  const fullUrl = serviceUrl + pagingUrl + '&' + sortUrl + '&' + keywordUrl;
+  const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "POST");
+  return response;
+}
+
 const getDetailTourByCustomer = async (tourId) => {
   const serviceUrl =
     urlConstant.endpoint.tour.getTourDetailByID.replace(
@@ -43,14 +57,14 @@ const getDetailSlotByStaff = async (timeId) => {
 
 
 const createTour = async (formData) => {
- 
-  const baseUrl = urlConstant.endpoint.tour.createTour;    
+
+  const baseUrl = urlConstant.endpoint.tour.createTour;
   try {
-      const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", formData);
-      return response.data; 
+    const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", formData);
+    return response.data;
   } catch (error) {
-      console.error("Error creating order:", error);
-      throw error; 
+    console.error("Error creating order:", error);
+    throw error;
   }
 };
 
@@ -59,5 +73,6 @@ export default {
   getAllTourAndPaging,
   getDetailTourByCustomer,
   createTour,
-  getDetailSlotByStaff
+  getDetailSlotByStaff,
+  searchAllTour,
 }

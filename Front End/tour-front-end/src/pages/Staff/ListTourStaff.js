@@ -50,48 +50,39 @@ const ListTourStaff = () => {
     },
   ]);
 
-  // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
   const totalItems = dummyData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Calculate start and end indexes for the current page
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
-  // Function to handle page navigation
   const goToPage = (page) => {
     setCurrentPage(page);
   };
 
-  // Function to handle sorting by price
   const handleSortByPrice = (value) => {
-    let sortedData = [...dummyData]; // Create a copy of the dummyData array
+    let sortedData = [...dummyData]; 
 
     if (value === "asc") {
-      // Sort data by price in ascending order
       sortedData.sort(
         (a, b) =>
           parseFloat(a.price.replace(/\D/g, "")) -
           parseFloat(b.price.replace(/\D/g, ""))
       );
     } else if (value === "desc") {
-      // Sort data by price in descending order
       sortedData.sort(
         (a, b) =>
           parseFloat(b.price.replace(/\D/g, "")) -
           parseFloat(a.price.replace(/\D/g, ""))
       );
     } else if (value === "date") {
-      // Sort data by date
       sortedData.sort((a, b) => new Date(a.date) - new Date(b.date));
     } else if (value === "date2") {
-      // Sort data by date
       sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
 
-    // Update the state with the sorted data
     setDummyData(sortedData);
   };
 
@@ -100,7 +91,7 @@ const ListTourStaff = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+  const [pageSize, setPageSize] = useState(3); // Initialize pageSize state
 
 
   useEffect(() => {
@@ -121,6 +112,10 @@ const ListTourStaff = () => {
       setError(error);
       setLoading(false);
     }
+  };
+
+  const formatPrice = (price) => {
+    return (price).toLocaleString('vi-VN').replace(/,/g, '.');
   };
 
   return (
@@ -240,12 +235,16 @@ const ListTourStaff = () => {
                                     marginBottom: 5,
                                   }}
                                 >
-                                  {tour.price} VNĐ
+                                  {formatPrice(tour.price)} VNĐ
                                 </p>
                                 <p className=" d-flex">
                                   <span className="ml-auto">
+                                  <Link
+                                  to="/listTourStaffDetail"
+                                  className="text-dark"
+                                  state={{ tourId: tour.id }} // Pass tourId as state data
+                                >
                                     <a
-                                      href="/listTourStaffDetail"
                                       style={{
                                         fontSize: "15px",
                                         color: "blueviolet",
@@ -271,6 +270,7 @@ const ListTourStaff = () => {
                                     >
                                       Xem chi tiết
                                     </a>
+                                    </Link>
                                   </span>
                                 </p>
                               </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Layout } from 'antd';
+
 
 const Step3Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
@@ -9,26 +10,49 @@ const Step3Form = ({ formData, onNext }) => {
     };
 
     return (
+        <Layout>
+        <h2>Thông Tin Chi Tiết</h2>
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
-            <Form.Item label="Time" name="time" rules={[{ required: true, message: 'Please enter the time!' }]}>
+            <Form.Item
+                label="Thời Gian"
+                name="time"
+                rules={[{ required: true, message: 'Vui lòng nhập thời gian!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Vehicle" name="vehicle" rules={[{ required: true, message: 'Please enter the vehicle!' }]}>
+            <Form.Item
+                label="Phương Tiện"
+                name="vehicle"
+                rules={[{ required: true, message: 'Vui lòng nhập phương tiện!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Location" name="location" rules={[{ required: true, message: 'Please enter the location!' }]}>
+            <Form.Item
+                label="Vị trí"
+                name="location"
+                rules={[{ required: true, message: 'Vui lòng nhập vị trí!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Food" name="food" rules={[{ required: true, message: 'Please enter the food!' }]}>
+            <Form.Item
+                label="Thức Ăn"
+                name="food"
+                rules={[{ required: true, message: 'Vui long nhập thức ăn!' }]}
+            >
                 <Input />
             </Form.Item>
-            <Form.Item label="Hotel" name="hotel" rules={[{ required: true, message: 'Please enter the hotel!' }]}>
+            <Form.Item
+                label="Khách Sạn"
+                name="hotel"
+                rules={[{ required: true, message: 'Vui lòng nhập khách sạn!' }]}
+            >
                 <Input />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" htmlType="submit">Next</Button>
+                <Button type="primary" htmlType="submit">Bước Tiếp Theo</Button>
             </Form.Item>
         </Form>
+        </Layout>
     );
 };
 

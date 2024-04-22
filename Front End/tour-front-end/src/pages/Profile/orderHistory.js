@@ -59,11 +59,9 @@ const OrderHistory = () => {
     const totalItems = dummyData.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    // Calculate start and end indexes for the current page
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
-    // Function to handle page navigation
     const goToPage = (page) => {
         setCurrentPage(page);
     };
@@ -221,7 +219,7 @@ const OrderHistory = () => {
                                                             </Col>
                                                             <Col md={4} xs={5} className="text-end">
                                                                 <span className={order.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
-                                                                    {order.orderStatus}
+                                                                    {order.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
                                                                 </span>
                                                                 <h5 className="text-primary fw-bold">{order.price}₫</h5>
                                                                 <div className="destination">
@@ -272,13 +270,11 @@ const OrderHistory = () => {
                                                         </Row>
                                                     </CardBody>
                                                 </Card>
-                                                {/* Additional booking cards go here */}
                                             </div>
                                         </TabPane>
                                     ))}
 
 
-                                    {/* Additional tab panes for "Chưa Thanh Toán" and "Đã Đặt" go here */}
                                 </TabContent>
                             </div>
                         </Col>
