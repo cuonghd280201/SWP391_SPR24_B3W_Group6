@@ -18,6 +18,7 @@ import tourbooking.service.PaymentService;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -47,17 +48,24 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found!"));
         payment.setPaymentStatus(PaymentStatus.DONE);
         Orders orders = payment.getOrders();
-        if (orders.getPriceAfterPaid().compareTo(BigDecimal.ZERO) != 0) {
-            Payment newPayment = createPayment(orders.getUser(),orders,null);
+        //Check co 1 payment co status not_done thi tao them 1 payment nua
+        if (orderRepository.countPaymentsByOrder(orders) == 1) {
+            System.out.println("start count");
+            Payment newPayment = createPayment(orders.getUser(), orders, null);
             paymentRepository.saveAndFlush(newPayment);
         }
+
         paymentRepository.save(payment);
 
-        if(orderRepository.findOrderHaveAllPaymentDone(orders)) {
+        if (orderRepository.checkOrderHaveAllPaymentDone(orders)) {
+            System.out.println("check order");
+            // If all payments are done, update order status
             orders.setPriceAfterPaid(BigDecimal.ZERO);
+            orders.setAmount(BigDecimal.ZERO);
             orders.setOrderStatus(OrderStatus.DONE);
             orderRepository.save(orders);
         }
+
         transactionService.createTransaction(orders.getUser(), payment, "Thanh toán thành công cho đơn " + orders.getId());
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully"));
     }

@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
     private final TourVisitorRepository tourVisitorRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentServiceImpl paymentService;
+    private final TourServiceImpl tourService;
     private final ModelMapper modelMapper;
     @Override
     public ResponseEntity<BaseResponseDTO> createOrder(Principal principal, UUID tourTimeId, BigDecimal paid, List<TourVisitorForm> tourVisitorFormList) {
@@ -53,12 +54,18 @@ public class OrderServiceImpl implements OrderService {
         //Tạo tour visitor
         for (TourVisitorForm tourVisitorForm: tourVisitorFormList
              ) {
-            TourVisitor tourVisitor = modelMapper.map(tourVisitorForm, TourVisitor.class);
+            TourVisitor tourVisitor = new TourVisitor();
+            tourVisitor.setName(tourVisitorForm.getName());
+            tourVisitor.setDateOfBirth(tourVisitorForm.getDateOfBirth());
             if (tourVisitorForm.getPhone() == null) {
                 tourVisitor.setPhone(null);
+            }else {
+                tourVisitor.setPhone(tourVisitorForm.getPhone());
             }
             if (tourVisitorForm.getIdCard() == null) {
                 tourVisitor.setIdCard(null);
+            }else {
+                tourVisitor.setIdCard(tourVisitorForm.getIdCard());
             }
             int age = dateNow.minusYears(tourVisitor.getDateOfBirth().getYear()).minusDays(1).getYear();
             if (age >= 12) {
@@ -79,16 +86,16 @@ public class OrderServiceImpl implements OrderService {
         int slotNumberInTime = tourTimeRepository.countVisitor(tourTimeId);
         //int listVisitCount = tourVisitorFormList.size();
         //int slotNumberActual = slotNumberInTime + listVisitCount;
-        System.out.println(slotNumberInTime);
         tourTime.setSlotNumberActual(slotNumberInTime);
-        tourTime.setSlotNumber(tourTime.getSlotNumber() - slotNumberInTime);
+        tourTime.setSlotNumber(tourTime.getSlotNumber() - tourVisitorFormList.size());
+        System.out.println(tourVisitorFormList.size());
         tourTimeRepository.save(tourTime);
         //Tính giá tiền cho trẻ em
         BigDecimal tourPrice = tourTime.getTour().getPrice();
-        int babyNumber = tourVisitorRepository.countBabyInTourTime(tourTimeId);
+        long babyNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("BABY")).count();
         BigDecimal babyPrice = tourPrice.multiply(new BigDecimal("0.5")).multiply(BigDecimal.valueOf(babyNumber));
         //Tính giá tiền cho người lớn
-        int adultNumber = tourVisitorRepository.countAdultInTourTime(tourTimeId);
+        long adultNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("ADULT")).count();
         BigDecimal adultPrice = tourPrice.multiply(BigDecimal.valueOf(adultNumber));
         //Tính giá tiền cho order
         BigDecimal paidPrice;
@@ -125,6 +132,7 @@ public class OrderServiceImpl implements OrderService {
         for (Orders orders: ordersList
              ) {
             OrderDTO orderDTO = modelMapper.map(orders, OrderDTO.class);
+            orderDTO.setTourInfoDTO(tourService.convertToTourInfoDTO(orders.getTourTime().getTour()));
             orderDTOList.add(orderDTO);
         }
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", orderDTOList));
