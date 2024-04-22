@@ -14,4 +14,5 @@ import java.util.UUID;
 public interface AdminService {
     ResponseEntity<BaseResponseDTO>countAllUser();
 
+    ResponseEntity<BaseResponseDTO> getOrderSummary();
 }

@@ -12,4 +12,6 @@ public interface TransactionService {
     Transaction createTransaction(User user, Payment payment, String description);
 
     ResponseEntity<BaseResponseDTO> getAllTransaction(Principal principal, int pageNumber, int pageSize, String sortBy, String sortOrder);
+
+
 }

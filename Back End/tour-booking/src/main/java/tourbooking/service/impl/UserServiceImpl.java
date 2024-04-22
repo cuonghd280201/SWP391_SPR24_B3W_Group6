@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-   public List<User> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll(); // Lấy tất cả người dùng từ cơ sở dữ liệu
     }
 
