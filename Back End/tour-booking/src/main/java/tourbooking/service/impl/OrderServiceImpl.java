@@ -115,8 +115,6 @@ public class OrderServiceImpl implements OrderService {
         //Cập nhật số lượng khách thực tế
         tourTime.setTourVisitorSet(tourVisitorSet);
         int slotNumberInTime = tourTimeRepository.countVisitor(tourTimeId);
-        //int listVisitCount = tourVisitorFormList.size();
-        //int slotNumberActual = slotNumberInTime + listVisitCount;
         tourTime.setSlotNumberActual(slotNumberInTime);
         tourTime.setSlotNumber(tourTime.getSlotNumber() - tourVisitorFormList.size());
         tourTimeRepository.save(tourTime);
