@@ -45,14 +45,14 @@ const SiderBarWebAdmin = ({ choose }) => {
     },
 
     {
-      label: "Quản Lý Nhân Viên",
+      label: "Quản Lý Khách Hàng",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
       className: "listAccountManager",
-      link: "/listAccountStaff",
+      link: "/listAccountCustomer",
     },
     {
-      label: "Quản Lý Khách Hàng",
+      label: "Quản Lý Nhân Viên",
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
       className: "listAccountStaff",
