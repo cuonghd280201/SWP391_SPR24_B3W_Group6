@@ -1,17 +1,17 @@
-//package tourbooking.service.impl;
-//
-//import jakarta.persistence.criteria.Order;
-//import org.springframework.http.ResponseEntity;
-//import tourbooking.dto.BaseResponseDTO;
-//import tourbooking.dto.CountRoleDTO;
-//import tourbooking.dto.OrderSummaryDTO;
-//import tourbooking.repository.OrderRepository;
-//import tourbooking.service.DashboardService;
+package tourbooking.service.impl;
+
+import jakarta.persistence.criteria.Order;
+import org.springframework.http.ResponseEntity;
+import tourbooking.dto.BaseResponseDTO;
+import tourbooking.dto.CountRoleDTO;
+import tourbooking.dto.OrderSummaryDTO;
+import tourbooking.repository.OrderRepository;
+import tourbooking.service.DashboardService;
 //
 //import java.time.LocalDateTime;
 //import java.util.List;
 //
-//public class DashboardServiceImpl implements DashboardService {
+public class DashboardServiceImpl implements DashboardService {
 //    private final OrderRepository orderRepository;
 //
 //    @Override
@@ -36,4 +36,4 @@
 //        OrderSummaryDTO orderSummaryDTO = new OrderSummaryDTO(totalAmount, completedCount, refundedCount);
 //        return new OrderSummaryDTO(totalAmount, completedCount, refundedCount);
 //    }
-//}
+}
