@@ -16,6 +16,7 @@ import tourbooking.dto.UserDTO;
 import tourbooking.entity.Transaction;
 import tourbooking.entity.User;
 import tourbooking.service.AdminService;
+import tourbooking.service.DashboardService;
 import tourbooking.service.OrderService;
 import tourbooking.service.TransactionService;
 import tourbooking.service.impl.AdminServiceImpl;
@@ -33,6 +34,7 @@ public class DashboardController {
 
 //    @Autowired
     private final AdminService adminService;
+    private final DashboardService dashboardService;
     private final UserServiceImpl userService;
     private final TransactionService transactionService;
     private final OrderService orderService;
@@ -82,4 +84,9 @@ public class DashboardController {
     public ResponseEntity<BaseResponseDTO> getAllOrderByStatus( @RequestParam OrderStatus orderStatus) {
         return adminService.getAllOrderByStatus(orderStatus);
     }
+    @PostMapping("order/revenue")
+    public ResponseEntity<BaseResponseDTO> revenueStatistic(@RequestParam int days) {
+        return dashboardService.revenueStatistic(days);
+    }
+
 }

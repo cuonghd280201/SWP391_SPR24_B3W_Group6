@@ -36,7 +36,9 @@ export default {
         },
         admin:{
             orderSumary:"/dashboard/orderSumary",
-            getRoleNumber: "/dashboard/getRoleNumber"
+            getRoleNumber: "/dashboard/getRoleNumber",
+            getAllUser: "/dashboard/getAllUser",
+            getAllStaff: "/dashboard/getAllStaff"
         }
         
         

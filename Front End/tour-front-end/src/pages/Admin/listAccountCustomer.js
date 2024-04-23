@@ -1,150 +1,116 @@
 import React, { useEffect, useState } from "react";
-import {Layout,Table,Space,Input,Switch} from "antd";
-
+import { Layout, Table, Space, Input, Switch } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
+import adminServices from "../../services/admin.services";
 const page = {
-  pageSize: 6, // Number of items per page
+  pageSize: 5, // Number of items per page
 };
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 const { Search } = Input;
 
 const ListAccountCustomer = () => {
-  // Dummy data generation
-  const generateDummyData = () => {
-    const dummyData = [];
-    for (let i = 0; i < 10; i++) {
-      dummyData.push({
-        key: i,
-        firstName: `User ${i + 1}`,
-        lastName: `LastName ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        password: `password${i + 1}`,
-        phoneNumber: `12345678${i}`,
-        dateOfBirth: `200${i}-01-01`,
-        roleString: `Role ${i + 1}`,
-        statusString: i % 2 === 0 ? 'Active' : 'Inactive',
-        userId: i + 1
-      });
-    }
-    return dummyData;
-  };
-
-  // Dummy data
-  const dummyData = generateDummyData();
-
   // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
+  const [allUser, setAllUser] = useState();
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
+
+  const fetchAllUser = async () => {
+    const response = await adminServices.getAllUser();
+    setAllUser(response.data.data);
+  };
 
   return (
-    <React.Fragment>
-      <Layout style={{ minHeight: "100vh" }}>
-        <SiderBarWebAdmin choose={"menu-key/2"}></SiderBarWebAdmin>
-        <Layout>
-          <NavBarWebAdmin></NavBarWebAdmin>
+    <Layout style={{ minHeight: "100vh" }}>
+      <SiderBarWebAdmin choose={"menu-key/2"}></SiderBarWebAdmin>
+      <Layout>
+        <NavBarWebAdmin></NavBarWebAdmin>
 
-          <div
-            style={{
-              padding: "10px 5px 0px 5px",
-              background: "white",
-              margin: "30px",
-              borderRadius: "12px",
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-            }}
-          >
-            <Content>
-              <h1
-                style={{
-                  padding: "5px 0px 0px 0px",
-                  margin: "0px 0px 0px 20px",
-                  color: "#4a4a4a", 
-                  fontSize: "24px", 
-                  fontWeight: "bold",
-                  fontFamily: "Arial, sans-serif", 
-                  textTransform: "uppercase", 
-                  letterSpacing: "1px", 
-                  borderBottom: "4px solid #6546D2", 
-                  display: "inline-block", 
-                }}
-              >
-                MANAGE CUSTOMER
-              </h1>
+        <div
+          style={{
+            padding: "10px 5px 0px 5px",
+            background: "white",
+            margin: "30px",
+            borderRadius: "12px",
+            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+          }}
+        >
+          <Content>
+            <h1
+              style={{
+                padding: "5px 0px 0px 0px",
+                margin: "0px 0px 0px 20px",
+                color: "#4a4a4a",
+                fontSize: "24px",
+                fontWeight: "bold",
+                fontFamily: "Arial, sans-serif",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                borderBottom: "4px solid #6546D2",
+                display: "inline-block",
+              }}
+            >
+              QUẢN LÝ KHÁCH HÀNG
+            </h1>
 
-              <div
-                style={{
-                  padding: 25,
-                  minHeight: 400,
-                }}
-              >
-                <div style={{ height: "600px", overflow: "auto" }}>
-                  <Table
-                    className="custom-table"
-                    dataSource={dummyData}
-                    pagination={page}
-                    size="middle"
-                    components={{
-                      header: {
-                        cell: (props) => (
-                          <th
-                            {...props}
-                            style={{
-                              background: "hsl(253deg 61% 85%)",
-                              border: "none",
-                            }}
-                          />
-                        ),
-                      },
-                    }}
-                    onRow={(record, rowIndex) => {
-                      return {
-                        onClick: (event) => {
-                          // Handle row click
-                        },
-                      };
-                    }}
-                    rowClassName={(record, index) =>
-                      index % 2 === 0 ? "even-row" : "odd-row"
-                    }
-                  >
-              
-                    <Column
-                      title="FirstName"
-                      dataIndex="firstName"
-                      key="firstName"
-                    />
-                    <Column
-                      title="LastName"
-                      dataIndex="lastName"
-                      key="lastName"
-                    />
-                    <Column title="Email" dataIndex="email" key="email" />
-                    <Column
-                      title="password"
-                      dataIndex="password"
-                      key="password"
-                    />
-                    <Column
-                      title="Phone Number"
-                      dataIndex="phoneNumber"
-                      key="phoneNumber"
-                    />
-                    <Column
-                      title="Date Of Birth"
-                      dataIndex="dateOfBirth"
-                      key="dateOfBirth"
-                    />
-                    <Column
-                      title="Role"
-                      dataIndex="roleString"
-                      key="roleString"
-                    />
-                    <Column
-                      title="Status"
+            <div
+              style={{
+                padding: 25,
+                minHeight: 400,
+              }}
+            >
+              <div style={{ height: "600px", overflow: "auto" }}>
+                <Table
+                  className="custom-table"
+                  dataSource={allUser}
+                  pagination={page}
+                  size="middle"
+                  components={{
+                    header: {
+                      cell: (props) => (
+                        <th
+                          {...props}
+                          style={{
+                            background: "hsl(253deg 61% 85%)",
+                            border: "none",
+                          }}
+                        />
+                      ),
+                    },
+                  }}
+                >
+                  <Column title="ID" dataIndex="id" key="id" />
+                  <Column title="Tên" dataIndex="name" key="name" />
+                  <Column title="Số điện thoại" dataIndex="phone" key="phone" />
+                  <Column title="Email" dataIndex="email" key="email" />
+                  <Column
+                    title="Ngày sinh"
+                    dataIndex="dateOfBirth"
+                    key="dateOfBirth"
+                  />
+                  <Column title="Giới tính" dataIndex="gender" key="gender" />
+                  <Column title="Vai trò" dataIndex="role" key="role" />
+                  <Column
+                    title="Avatar"
+                    dataIndex="image"
+                    key="image"
+                    render={(img) => (
+                      <img
+                        src={img}
+                        style={{ width: 45, height: 45, borderRadius: 5 }}
+                      />
+                    )}
+                  />
+                  {/* <Column
+                      title="Trạng thái"
                       dataIndex="statusString"
                       key="statusString"
                       render={(text, record) => (
@@ -162,7 +128,7 @@ const ListAccountCustomer = () => {
                       )}
                     />
                     <Column
-                      title="Action"
+                      title="Vô hiệu hóa"
                       key="action"
                       render={(_, record) => (
                         <Space size="middle">
@@ -180,19 +146,14 @@ const ListAccountCustomer = () => {
                           />
                         </Space>
                       )}
-                    />
-                  </Table>
-                </div>
+                    /> */}
+                </Table>
               </div>
-            </Content>
-          </div>
-
-        
-          
-        
-        </Layout>
+            </div>
+          </Content>
+        </div>
       </Layout>
-    </React.Fragment>
+    </Layout>
   );
 };
 
