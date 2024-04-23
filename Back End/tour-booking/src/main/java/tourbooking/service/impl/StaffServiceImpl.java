@@ -202,9 +202,12 @@ public class StaffServiceImpl implements StaffService {
     public ResponseEntity<BaseResponseDTO> updateTime(TourTimeDTO tourTimeDTO) {
         TourTime tourTime = tourTimeService.findById(tourTimeDTO.getId());
 
-        if(tourTimeDTO.getStartDate() == null)
+        LocalDate startDate = tourTimeDTO.getStartDate();
+        LocalDate endDate = tourTimeDTO.getEndDate();
+
+        if(startDate == null)
             tourTime.setStartTime(tourTime.getStartTime());
-        if(tourTimeDTO.getEndDate() == null)
+        if(endDate == null)
             tourTime.setEndDate(tourTime.getEndDate());
         if(tourTimeDTO.getStartTime() == null)
             tourTime.setStartDate(tourTime.getStartDate());
@@ -217,8 +220,8 @@ public class StaffServiceImpl implements StaffService {
         List<String> listMessage = new ArrayList<>();
         int scheduleDayDistance = tour.getTourSchedules().size();
 
-        LocalDate startDate = tourTimeDTO.getStartDate();
-        LocalDate endDate = tourTimeDTO.getEndDate();
+        startDate = tourTimeDTO.getStartDate();
+        endDate = tourTimeDTO.getEndDate();
         LocalDate dateNow = LocalDate.now();
 
         int startDateResult = DateTimeUtils.actualCompareInfo(dateNow, startDate);
