@@ -11,7 +11,7 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
     .replace("${sortOrder}", sortOrder);
 
   const fullUrl = serviceUrl + pagingUrl + '&' + sortUrl;
-  const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "GET");
+  const response = await axiosLocalHost.normalRequest(fullUrl);
   return response;
 };
 
@@ -35,9 +35,8 @@ const getDetailTourByCustomer = async (tourId) => {
       "${tourId}",
       tourId
     );
-  const response = await axiosLocalHost.sendAuthorizedRequest(
-    serviceUrl,
-    "GET"
+  const response = await axiosLocalHost.normalRequest(
+    serviceUrl
   );
   return response;
 };
