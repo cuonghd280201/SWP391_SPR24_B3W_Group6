@@ -5,6 +5,7 @@ import {Layout,Table,Space,Input,Switch} from "antd";
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
+import adminServices from "../../services/admin.services";
 const page = {
   pageSize: 6, // Number of items per page
 };
@@ -40,9 +41,18 @@ const ListAccountCustomer = () => {
 
   // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
+  const [allUser, setAllUser] = useState();
+
+  useEffect(() => {
+    fetchAllUser();
+  }, [])
+
+  const fetchAllUser = async () => {
+    const response = await adminServices.getUserProfile();
+    setAllUser(response.data.data);
+}
 
   return (
-    <React.Fragment>
       <Layout style={{ minHeight: "100vh" }}>
         <SiderBarWebAdmin choose={"menu-key/2"}></SiderBarWebAdmin>
         <Layout>
@@ -100,51 +110,36 @@ const ListAccountCustomer = () => {
                         ),
                       },
                     }}
-                    onRow={(record, rowIndex) => {
-                      return {
-                        onClick: (event) => {
-                          // Handle row click
-                        },
-                      };
-                    }}
-                    rowClassName={(record, index) =>
-                      index % 2 === 0 ? "even-row" : "odd-row"
-                    }
                   >
               
                     <Column
-                      title="FirstName"
+                      title="ID"
                       dataIndex="firstName"
-                      key="firstName"
+                      key="id"
                     />
                     <Column
-                      title="LastName"
+                      title="Tên"
                       dataIndex="lastName"
                       key="lastName"
                     />
-                    <Column title="Email" dataIndex="email" key="email" />
-                    <Column
-                      title="password"
-                      dataIndex="password"
-                      key="password"
-                    />
-                    <Column
-                      title="Phone Number"
+                     <Column
+                      title="Số điện thoại"
                       dataIndex="phoneNumber"
                       key="phoneNumber"
                     />
+                    <Column title="Email" dataIndex="email" key="email" />
                     <Column
-                      title="Date Of Birth"
+                      title="Ngày sinh"
                       dataIndex="dateOfBirth"
                       key="dateOfBirth"
                     />
                     <Column
-                      title="Role"
-                      dataIndex="roleString"
-                      key="roleString"
+                      title="Giới tính"
+                      dataIndex="dateOfBirth"
+                      key="dateOfBirth"
                     />
                     <Column
-                      title="Status"
+                      title="Trạng thái"
                       dataIndex="statusString"
                       key="statusString"
                       render={(text, record) => (
@@ -162,7 +157,7 @@ const ListAccountCustomer = () => {
                       )}
                     />
                     <Column
-                      title="Action"
+                      title="Vô hiệu hóa"
                       key="action"
                       render={(_, record) => (
                         <Space size="middle">
@@ -186,13 +181,9 @@ const ListAccountCustomer = () => {
               </div>
             </Content>
           </div>
-
-        
-          
         
         </Layout>
       </Layout>
-    </React.Fragment>
   );
 };
 

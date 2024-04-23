@@ -13,7 +13,15 @@ const getRoleNumber = () => {
     return response;
 }
 
+const getUserProfile = () => {
+    const serviceUrl = urlConstant.endpoint.admin.getUserProfile
+    const response = axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+    return response;
+}
+
+
 export default {
     getOrderSumary,
-    getRoleNumber
+    getRoleNumber,
+    getUserProfile
 } 
