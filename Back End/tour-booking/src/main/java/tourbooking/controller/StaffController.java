@@ -63,4 +63,24 @@ public class StaffController {
         return staffService.cancelOrder(principal, orderId);
     }
 
+    @PostMapping("/tourBanner/addMoreBanner")
+    public ResponseEntity<BaseResponseDTO> addMoreBanner(@RequestBody BannerAddMoreForm bannerAddMoreForm){
+        return staffService.addMoreBanner(bannerAddMoreForm);
+    }
+
+    @PutMapping("/tourBanner/updateBanner")
+    public ResponseEntity<BaseResponseDTO> updateBanner(@RequestBody BannerDTO bannerDTO){
+        return staffService.updateBanner(bannerDTO);
+    }
+
+    @DeleteMapping("/tourBanner/deleteBanner")
+    public ResponseEntity<BaseResponseDTO> deleteBanner(UUID id){
+        return staffService.deleteBanner(id);
+    }
+
+    @GetMapping("/tourBanner/viewBanner")
+    public ResponseEntity<BaseResponseDTO> viewBannerList(){
+        return staffService.viewBannerList();
+    }
+
 }
