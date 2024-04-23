@@ -67,6 +67,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         transactionService.createTransaction(orders.getUser(), payment, "Thanh toán thành công cho đơn " + orders.getId());
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
     }
 }

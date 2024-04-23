@@ -81,7 +81,7 @@ public class StaffServiceImpl implements StaffService {
             tourImagesRepository.save(tourImages);
         }
 
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Create Successfully"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
     }
 
     @Override
