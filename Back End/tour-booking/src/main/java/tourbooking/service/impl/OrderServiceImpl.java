@@ -108,6 +108,7 @@ public class OrderServiceImpl implements OrderService {
             tourVisitor.setTourTime(tourTime);
 
             tourVisitor.setUserId(user.getId());
+            tourVisitor.setOrderId(orders.getId());
 
             tourVisitorRepository.save(tourVisitor);
             tourVisitorSet.add(tourVisitor);

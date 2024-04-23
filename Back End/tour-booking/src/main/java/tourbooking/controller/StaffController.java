@@ -63,8 +63,4 @@ public class StaffController {
         return staffService.cancelOrder(principal, orderId);
     }
 
-    @PostMapping("/order/cancel/{orderId}")
-    public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal,@PathVariable("orderId") UUID orderId) {
-        return staffService.cancelOrder(principal, orderId);
-    }
 }
