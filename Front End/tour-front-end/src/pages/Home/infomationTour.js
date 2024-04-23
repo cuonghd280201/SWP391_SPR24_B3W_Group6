@@ -36,7 +36,7 @@ const InfomationTour = () => {
         console.log(formData); // Just for testing, you can send this data to your server or handle it as needed
     };
 
-   
+
 
 
     const { state } = useLocation();
@@ -77,20 +77,20 @@ const InfomationTour = () => {
                 const phone = document.getElementById(`adult-phone-${i}`).value;
                 const idCard = document.getElementById(`adult-idCard-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`adult-dateOfBirth-${i}`).value;
-
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
-
-                passengers.push({ name, phone, idCard, dateOfBirth: formattedDateOfBirth });
+                const type = 'ADULT';
+                passengers.push({ name, phone, idCard, type, dateOfBirth: formattedDateOfBirth });
             }
 
             for (let i = 0; i < childCount; i++) {
                 const name = document.getElementById(`child-name-${i}`).value;
                 const phone = document.getElementById(`child-phone-${i}`).value;
                 const rawDateOfBirth = document.getElementById(`child-dateOfBirth-${i}`).value;
-
                 const formattedDateOfBirth = rawDateOfBirth.split('-').reverse().join('-');
+                const type = 'BABY';
 
-                passengers.push({ name, phone, idCard: null, dateOfBirth: formattedDateOfBirth });
+
+                passengers.push({ name, phone, idCard: null, type, dateOfBirth: formattedDateOfBirth });
             }
 
             const response = await orderServices.createOrder(tourTimeId, paid, passengers); // Pass the paid value
@@ -126,7 +126,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/adult.png" />Người lớn (Trên 16 tuổi)
+                        <img src="/images/adult.png" />Người lớn (Trên 12 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -150,9 +150,16 @@ const InfomationTour = () => {
                         <div className="col-lg-3">
                             <div className="form-group">
                                 <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
-                                <input type="date" id={`adult-dateOfBirth-${i}`} className="form-control fullName hotel-flight-input" />
+                                <input
+                                    type="date"
+                                    id={`adult-dateOfBirth-${i}`}
+                                    className="form-control fullName hotel-flight-input"
+                                    min={new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]}  // Optional: set the minimum age (100 years in the past)
+                                    max={new Date(new Date().setFullYear(new Date().getFullYear() - 12)).toISOString().split('T')[0]}
+                                />
                             </div>
                         </div>
+
                     </div>
                 </div>
             );
@@ -166,7 +173,7 @@ const InfomationTour = () => {
             fields.push(
                 <div className="group-fields-input-contact-adult group-fields-input-contact-wrapper mb-3" key={i}>
                     <div className="title-persona">
-                        <img src="/images/kid.png" />Trẻ em (Dưới 16 tuổi)
+                        <img src="/images/kid.png" />Trẻ em (Dưới 12 tuổi)
                     </div>
                     <div className="row">
                         <div className="col-lg-3">
@@ -184,9 +191,16 @@ const InfomationTour = () => {
                         <div className="col-lg-3">
                             <div className="form-group">
                                 <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
-                                <input type="date" id={`child-dateOfBirth-${i}`} className="form-control fullName hotel-flight-input" />
+                                <input
+                                    type="date"
+                                    id={`adult-dateOfBirth-${i}`}
+                                    className="form-control fullName hotel-flight-input"
+                                    min={new Date(new Date().setFullYear(new Date().getFullYear() - 12)).toISOString().split('T')[0]}
+                                    max={new Date().toISOString().split('T')[0]}
+                                />
                             </div>
                         </div>
+
                     </div>
                 </div>
             );
@@ -203,42 +217,7 @@ const InfomationTour = () => {
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row justify-content-center">
-                        <div className="col-md-10">
-                            {/* <div className="row">
-                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                                    <div className="block-18 text-center">
-                                        <div className="text">
-                                            <strong className="number" data-number={100000}>0</strong>
-                                            <span>Happy Customers</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                                    <div className="block-18 text-center">
-                                        <div className="text">
-                                            <strong className="number" data-number={40000}>0</strong>
-                                            <span>Destination Places</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                                    <div className="block-18 text-center">
-                                        <div className="text">
-                                            <strong className="number" data-number={87000}>0</strong>
-                                            <span>Hotels</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                                    <div className="block-18 text-center">
-                                        <div className="text">
-                                            <strong className="number" data-number={56400}>0</strong>
-                                            <span>Restaurant</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
-                        </div>
+                       
                     </div>
                 </div>
             </section>
@@ -405,7 +384,7 @@ const InfomationTour = () => {
                                                 <th className="l1">
                                                     <i className="fal fa-users me-1" id="AmoutPerson" />Hành khách</th>
                                                 <th className="l2  text-right">
-                                                {tourDetailCustomer?.price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    {tourDetailCustomer?.price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                                 </th>
                                             </tr>
                                         </thead>

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-@Where(clause = "deleted=false")
+//@Where(clause = "deleted=false")
 public class Banner {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)

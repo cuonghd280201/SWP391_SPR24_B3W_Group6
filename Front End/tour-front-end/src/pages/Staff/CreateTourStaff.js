@@ -12,12 +12,14 @@ import Step6Form from "../Staff/Form/Step6Form";
 import tourServices from "../../services/tour.services";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
 const CreateTourStaff = () => {
     // Initialize form data with default values
     const [currentStep, setCurrentStep] = useState(1);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         step1Data: {
             title: "",
@@ -109,8 +111,10 @@ const CreateTourStaff = () => {
                     },
                 });
                 setCurrentStep(1);
+                navigate("/listTourStaff");
             } else {
                 toast.success("Tour created successfully!");
+                navigate("/listTourStaff");
             }
         } catch (error) {
             console.error("Error creating tour:", error);
@@ -170,7 +174,7 @@ const CreateTourStaff = () => {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
- <SiderBarWebStaff choose={"menu-key/2"} />
+ <SiderBarWebStaff choose={"menu-key/1"} />
             <Layout>
                 <NavBarWebStaff />
                 <div
@@ -181,7 +185,7 @@ const CreateTourStaff = () => {
                         borderRadius: "12px",
                         boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
                     }}
-                >                <Content style={{ padding: "30px", background: "white", margin: "30px", borderRadius: "12px" }}>
+                >       
                     <div>
                         {renderCurrentStep()}
                         <div style={{ marginTop: "20px" }}>
@@ -204,7 +208,6 @@ const CreateTourStaff = () => {
                             )}
                         </div>
                     </div>
-                </Content>
                 </div>
 
             </Layout>

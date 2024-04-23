@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tourbooking.dto.*;
+import tourbooking.entity.Banner;
 import tourbooking.service.StaffService;
 import tourbooking.service.TourVisitorService;
 
@@ -34,6 +35,11 @@ public class StaffController {
         return staffService.updateTime(tourTimeDTO);
     }
 
+    @PutMapping("/tourTime/cancelTime/{tourTimeId}")
+    public ResponseEntity<BaseResponseDTO> cancelTime(@PathVariable("tourTimeId") UUID tourTimeId){
+        return staffService.cancelTime(tourTimeId);
+    }
+
     @PostMapping("/tourImage/addMoreImage")
     public ResponseEntity<BaseResponseDTO> addMoreImage(@RequestBody TourImageAddMoreForm tourImageAddMoreForm){
         return staffService.addMoreImage(tourImageAddMoreForm);
@@ -57,5 +63,25 @@ public class StaffController {
     @PutMapping("/tourVisitor/updateTourVisitor")
     public ResponseEntity<BaseResponseDTO> updateTourVisitor(@RequestBody TourVisitorDTO tourVisitorDTO){
         return tourVisitorService.updateTourVisitorById(tourVisitorDTO);
+    }
+
+    @PostMapping("/tourBanner/addMoreBanner")
+    public ResponseEntity<BaseResponseDTO> addMoreBanner(@RequestBody BannerAddMoreForm bannerAddMoreForm){
+        return staffService.addMoreBanner(bannerAddMoreForm);
+    }
+
+    @PutMapping("/tourBanner/updateBanner")
+    public ResponseEntity<BaseResponseDTO> updateBanner(@RequestBody BannerDTO bannerDTO){
+        return staffService.updateBanner(bannerDTO);
+    }
+
+    @DeleteMapping("/tourBanner/deleteBanner")
+    public ResponseEntity<BaseResponseDTO> deleteBanner(UUID id){
+        return staffService.deleteBanner(id);
+    }
+
+    @GetMapping("/tourBanner/viewBanner")
+    public ResponseEntity<BaseResponseDTO> viewBannerList(){
+        return staffService.viewBannerList();
     }
 }
