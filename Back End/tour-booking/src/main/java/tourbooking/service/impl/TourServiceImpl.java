@@ -79,6 +79,7 @@ public class TourServiceImpl implements TourService {
                     .filter(tour -> tour.getPrice().compareTo(minPrice) >= 0 && tour.getPrice().compareTo(maxPrice) <= 0)
                     .map(this::convertToTourDTO)
                     .toList();
+
         }
         if(endLocation != null) {
             tourPage = tourRepository.findAll(pageable);
