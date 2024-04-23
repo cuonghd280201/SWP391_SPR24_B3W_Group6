@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
         Set<TourVisitor> tourVisitorSet = new HashSet<>();
         orders.setUser(user);
         orders.setTourTime(tourTime);
+        orders.setPaid(paid);
         //Tính giá tiền cho trẻ em
         BigDecimal tourPrice = tourTime.getTour().getPrice();
         long babyNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("BABY")).count();
@@ -83,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
         paymentRepository.save(payment);
         //Tạo tour visitor
         for (TourVisitorForm tourVisitorForm: tourVisitorFormList
-        ) {
+             ) {
             TourVisitor tourVisitor = new TourVisitor();
             tourVisitor.setName(tourVisitorForm.getName());
             tourVisitor.setDateOfBirth(tourVisitorForm.getDateOfBirth());
@@ -107,7 +108,6 @@ public class OrderServiceImpl implements OrderService {
             tourVisitor.setTourTime(tourTime);
 
             tourVisitor.setUserId(user.getId());
-            tourVisitor.setOrderId(orders.getId());
 
             tourVisitorRepository.save(tourVisitor);
             tourVisitorSet.add(tourVisitor);
@@ -115,6 +115,8 @@ public class OrderServiceImpl implements OrderService {
         //Cập nhật số lượng khách thực tế
         tourTime.setTourVisitorSet(tourVisitorSet);
         int slotNumberInTime = tourTimeRepository.countVisitor(tourTimeId);
+        //int listVisitCount = tourVisitorFormList.size();
+        //int slotNumberActual = slotNumberInTime + listVisitCount;
         tourTime.setSlotNumberActual(slotNumberInTime);
         tourTime.setSlotNumber(tourTime.getSlotNumber() - tourVisitorFormList.size());
         tourTimeRepository.save(tourTime);
@@ -165,7 +167,6 @@ public class OrderServiceImpl implements OrderService {
         UserDTO userDTO = modelMapper.map(orders.getUser(), UserDTO.class);
         userDTO.setRole(orders.getUser().getRole().getName());
         orderDetailDTO.setUserDTO(userDTO);
-
         //set tour schedule
         List<TourScheduleDTO> tourScheduleDTOList = new ArrayList<>();
         for (TourSchedule tourSchedule: orders.getTourTime().getTour().getTourSchedules()
@@ -182,7 +183,6 @@ public class OrderServiceImpl implements OrderService {
                 TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
                 tourVisitorDTOList.add(tourVisitorDTO);
             }
-
         }
         //set tour dto
         orderDetailDTO.setTourDTO(modelMapper.map(orders.getTourTime().getTour(), TourDTO.class));

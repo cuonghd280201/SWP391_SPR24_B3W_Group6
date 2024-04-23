@@ -45,6 +45,7 @@ public class DashboardController {
     public ResponseEntity<BaseResponseDTO> getRoleNumber() {
         return adminService.countAllUser();
     }
+
     @GetMapping("/transactions")
     public ResponseEntity<BaseResponseDTO> getAllTransaction(Principal principal,
                                                              @Min(value = 0, message = "pageNumber must be greater than or equal to 0")
@@ -63,6 +64,7 @@ public class DashboardController {
         return transactionService.getAllTransaction(principal,pageNumber,pageSize,sortBy,sortOrder);
         // Xử lý dữ liệu và trả về response
     }
+
     @GetMapping("/orderSumary")
     public ResponseEntity<BaseResponseDTO> getOrderSumary() {
         return adminService.getOrderSummary();
