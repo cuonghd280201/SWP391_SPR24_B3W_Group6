@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -103,4 +104,10 @@ public class UserServiceImpl implements UserService {
         userDTO.setRole(user.getRole().getName());
         return userDTO;
     }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll(); // Lấy tất cả người dùng từ cơ sở dữ liệu
+    }
+
+
 }

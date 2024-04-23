@@ -9,18 +9,23 @@ import tourbooking.common.OrderStatus;
 import tourbooking.common.TimeStatus;
 import tourbooking.common.TourStatus;
 import tourbooking.dto.*;
+import tourbooking.entity.Banner;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Tour.*;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
+import tourbooking.service.BannerService;
 import tourbooking.service.StaffService;
-import tourbooking.service.TourDetailService;
 import tourbooking.utils.DateTimeUtils;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.time.Period;
 import java.util.*;
 
@@ -41,6 +46,8 @@ public class StaffServiceImpl implements StaffService {
     private final TourDetailServiceImpl tourDetailService;
     private final TourScheduleServiceImpl tourScheduleService;
     private final TourImageServiceImpl tourImageService;
+    private final BannerServiceImpl bannerService;
+    private final BannerRepository bannerRepository;
 
     @Override
     public ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm) {
@@ -308,6 +315,32 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> addMoreBanner(BannerAddMoreForm bannerAddMoreForm) {
+
+        Set<Banner> bannerSet = bannerService.createBanner(bannerAddMoreForm.getBannerCreateFormSet());
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Add More Banner Successfully"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> updateBanner(BannerDTO banner) {
+        bannerService.updateBanner(banner);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Banner Successfully!"));
+    }
+
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> deleteBanner(UUID id) {
+        bannerService.deleteBanner(id);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Delete Banner Successfully!"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> viewBannerList() {
+        List<Banner> banner = bannerService.viewBannerList();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "View List Banner Successfully", banner));
     }
 
     public TourInfoDTO convertToTourInfoDTO(Tour tour){
