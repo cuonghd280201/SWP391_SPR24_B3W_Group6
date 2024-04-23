@@ -24,6 +24,7 @@ import SlotTourStaff from "../pages/Staff/SlotTourStaff";
 import SlotTourStaffDetai from "../pages/Staff/SlotTourStaffDetai";
 import Contact from "../pages/Home/contact";
 import ListTransaction from "../pages/Staff/ListTransaction";
+import ListOrderStatus from "../pages/Admin/listOrderStatus";
 import FilterHome from "../pages/Home/filterHome";
 import ManageBanner from "../pages/Staff/ManageBanner";
 import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
@@ -69,6 +70,7 @@ const authRoutes = [
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
   { path: "/contact", component: <Contact/>},
   { path: "/listTransaction", component: <ListTransaction/>},
+  { path: "/listOrderStatus", component: <ListOrderStatus /> }
   { path: "/manageBanner", component: <ManageBanner/>},
   { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
 

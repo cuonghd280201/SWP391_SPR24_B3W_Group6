@@ -51,7 +51,8 @@ export default {
             orderSumary:"/dashboard/orderSumary",
             getRoleNumber: "/dashboard/getRoleNumber",
             getAllUser: "/dashboard/getAllUser",
-            getAllStaff: "/dashboard/getAllStaff"
+            getAllStaff: "/dashboard/getAllStaff",
+            getOrderStatus: "/dashboard/orderStatus",
         }
         
         
