@@ -5,6 +5,7 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import tourbooking.common.OrderStatus;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Payment;
 import tourbooking.entity.User;
@@ -23,4 +24,6 @@ public interface OrderRepository extends JpaRepository<Orders, UUID> {
     int countPaymentsByOrder(@Param("orders") Orders orders);
 //    boolean findOrderHaveAllPaymentDone(@Param("orders") Orders orders);
 //    List<Orders> findByOrderDateBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
+
+    List<Orders> findAllByOrderStatus (OrderStatus orderStatus);
 }
