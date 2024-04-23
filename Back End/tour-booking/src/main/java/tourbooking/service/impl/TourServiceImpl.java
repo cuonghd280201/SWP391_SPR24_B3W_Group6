@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.PageableRequest;
 import tourbooking.common.Pagination;
+import tourbooking.common.TimeStatus;
 import tourbooking.dto.*;
 import tourbooking.entity.Tour.Tour;
 import tourbooking.entity.Tour.TourImages;
@@ -147,8 +148,10 @@ public class TourServiceImpl implements TourService {
 
         Set<TourTimeDTO> tourTimeDTOSet = new HashSet<>();
         for(TourTime tourTime : tour.getTourTimeSet()){
-            TourTimeDTO tourTimeDTO = modelMapper.map(tourTime, TourTimeDTO.class);
-            tourTimeDTOSet.add(tourTimeDTO);
+            if(tourTime.getTimeStatus().equals(TimeStatus.ACTIVE)){
+                TourTimeDTO tourTimeDTO = modelMapper.map(tourTime, TourTimeDTO.class);
+                tourTimeDTOSet.add(tourTimeDTO);
+            }
         }
 
         tourInfoDTO.setTourDetail(tourDetailDTO);

@@ -34,6 +34,11 @@ public class StaffController {
         return staffService.updateTime(tourTimeDTO);
     }
 
+    @PutMapping("/tourTime/cancelTime/{tourTimeId}")
+    public ResponseEntity<BaseResponseDTO> cancelTime(@PathVariable("tourTimeId") UUID tourTimeId){
+        return staffService.cancelTime(tourTimeId);
+    }
+
     @PostMapping("/tourImage/addMoreImage")
     public ResponseEntity<BaseResponseDTO> addMoreImage(@RequestBody TourImageAddMoreForm tourImageAddMoreForm){
         return staffService.addMoreImage(tourImageAddMoreForm);
