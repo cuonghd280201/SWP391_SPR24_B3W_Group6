@@ -2,7 +2,6 @@ package tourbooking.service;
 
 import org.springframework.http.ResponseEntity;
 import tourbooking.dto.*;
-import tourbooking.entity.Banner;
 import tourbooking.entity.Tour.Tour;
 
 import java.security.Principal;
@@ -12,7 +11,6 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm);
     ResponseEntity<BaseResponseDTO> addMoreTime(TourTimeAddMoreForm tourTimeAddMoreForm);
     ResponseEntity<BaseResponseDTO> updateTime(TourTimeDTO tourTimeDTO);
-    ResponseEntity<BaseResponseDTO> cancelTime(UUID timeId);
 
     ResponseEntity<BaseResponseDTO> addMoreImage(TourImageAddMoreForm tourImageAddMoreForm);
     ResponseEntity<BaseResponseDTO> updateImage(TourImageDTO tourImageDTO);
@@ -23,9 +21,5 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> listTour();
     ResponseEntity<BaseResponseDTO> searchTour(String title);
     ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id);
-
-    ResponseEntity<BaseResponseDTO> addMoreBanner(BannerAddMoreForm bannerAddMoreForm);
-    ResponseEntity<BaseResponseDTO> updateBanner(BannerDTO banner);
-    ResponseEntity<BaseResponseDTO> deleteBanner(UUID id);
-    ResponseEntity<BaseResponseDTO> viewBannerList();
+    ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId);
 }

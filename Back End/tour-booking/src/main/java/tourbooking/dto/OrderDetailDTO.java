@@ -38,5 +38,6 @@ public class OrderDetailDTO {
     private List<TourScheduleDTO> tourScheduleDTOList;
     private List<TourVisitorDTO> tourVisitorDTOList;
     private List<PaymentDTO> paymentDTOList;
+    private TourDTO tourDTO;
     private UserDTO userDTO;
 }

@@ -42,12 +42,25 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+    public Payment createPaymentRefund(User user, Orders orders) {
+        Payment payment = new Payment();
+        payment.setAmount(orders.getPaid());
+        payment.setOrders(orders);
+        payment.setCreateBy(user.getName());
+        payment.setVnPayCode(null);
+        payment.setPaymentStatus(PaymentStatus.DONE);
+        paymentRepository.save(payment);
+        return payment;
+    }
+
     @Override
     public ResponseEntity<BaseResponseDTO> checkOut(UUID paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found!"));
         payment.setPaymentStatus(PaymentStatus.DONE);
         Orders orders = payment.getOrders();
+        BigDecimal paid = orders.getPaid();
+        orders.setPaid(paid.add(payment.getAmount()));
         //Check co 1 payment co status not_done thi tao them 1 payment nua
         if (orderRepository.countPaymentsByOrder(orders) == 1) {
             System.out.println("start count");
@@ -59,12 +72,12 @@ public class PaymentServiceImpl implements PaymentService {
 
         if (orderRepository.checkOrderHaveAllPaymentDone(orders)) {
             System.out.println("check order");
-            // If all payments are done, update order status
             orders.setPriceAfterPaid(BigDecimal.ZERO);
             orders.setAmount(BigDecimal.ZERO);
             orders.setOrderStatus(OrderStatus.DONE);
-            orderRepository.save(orders);
+
         }
+        orderRepository.save(orders);
 
         transactionService.createTransaction(orders.getUser(), payment, "Thanh toán thành công cho đơn " + orders.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
