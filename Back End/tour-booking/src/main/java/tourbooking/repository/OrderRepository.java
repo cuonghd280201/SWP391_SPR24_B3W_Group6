@@ -21,6 +21,6 @@ public interface OrderRepository extends JpaRepository<Orders, UUID> {
 
     @Query(value = "SELECT COUNT(p) FROM Payment p WHERE p.orders = :orders")
     int countPaymentsByOrder(@Param("orders") Orders orders);
-    boolean findOrderHaveAllPaymentDone(@Param("orders") Orders orders);
+//    boolean findOrderHaveAllPaymentDone(@Param("orders") Orders orders);
 //    List<Orders> findByOrderDateBetween(LocalDateTime startOfMonth, LocalDateTime endOfMonth);
 }
