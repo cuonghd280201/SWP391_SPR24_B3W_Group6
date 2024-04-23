@@ -9,6 +9,7 @@ import tourbooking.common.OrderStatus;
 import tourbooking.dto.BaseResponseDTO;
 
 import tourbooking.dto.CountRoleDTO;
+import tourbooking.dto.OrderDetailDTO;
 import tourbooking.dto.OrderSummaryDTO;
 import tourbooking.entity.Orders;
 import tourbooking.entity.User;
@@ -19,6 +20,7 @@ import tourbooking.service.AdminService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +29,7 @@ public class AdminServiceImpl implements AdminService {
 //    @Autowired
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final OrderServiceImpl orderService;
 
     // Hàm logic để lấy số lượng người dùng từ cơ sở dữ liệu
     public Long getUserCount() {
@@ -71,5 +74,16 @@ public class AdminServiceImpl implements AdminService {
         }
         OrderSummaryDTO orderSummaryDTO = new OrderSummaryDTO(completedMoney, refundedMoney );
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get Role Number Successfully", orderSummaryDTO));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> getAllOrderByStatus(OrderStatus orderStatus) {
+        List<Orders> ordersList= orderRepository.findAllByOrderStatus(orderStatus);
+        List<OrderDetailDTO> orderDetailDTOList = new ArrayList<>();
+        for(Orders orders: ordersList){
+            OrderDetailDTO orderDetailDTO = orderService.convertToOrderDetailDTO(orders);
+            orderDetailDTOList.add(orderDetailDTO);
+        }
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get Order Status Successfully", orderDetailDTOList));
     }
 }
