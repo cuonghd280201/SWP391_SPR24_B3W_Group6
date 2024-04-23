@@ -68,6 +68,42 @@ const createTour = async (formData) => {
   }
 };
 
+const addMoreImage = async(formData) => {
+  const baseUrl = urlConstant.endpoint.staff.addMoreImage;
+  try{
+    const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", formData);
+    return response.data;
+  }catch(error) {
+    console.error("Error add more image", error);
+    throw error;
+  }
+}
+
+const updateImage = async(formData) => {
+  const baseUrl = urlConstant.endpoint.staff.updateImage;
+  try{
+    const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "PUT", formData);
+    return response.data;
+  }catch(error){
+    console.error("Error update Image", error);
+    throw error;
+  }
+}
+
+const deleteImage = async (imageId) => {
+  const serviceUrl =
+    urlConstant.endpoint.staff.deleteImage.replace(
+      "${imageId}",
+      imageId
+    );
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "DELETE"
+  );
+  return response;
+};
+
+
 
 export default {
   getAllTourAndPaging,
@@ -75,4 +111,7 @@ export default {
   createTour,
   getDetailSlotByStaff,
   searchAllTour,
+  addMoreImage,
+  updateImage,
+  deleteImage,
 }

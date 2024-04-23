@@ -28,6 +28,11 @@ export default {
             transaction: "/transaction/all",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+        },
+        staff:{
+            updateImage:"/staff/tourImage/updateImage",
+            addMoreImage:"/staff/tourImage/addMoreImage",
+            deleteImage:"/staff/tourImage/${imageId}",
         }
         
         
