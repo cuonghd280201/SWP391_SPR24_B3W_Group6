@@ -32,9 +32,9 @@ const ListTourStaffDetail = () => {
 
   const navigateToFindTour = () => {
     if (tourDetailCustomer) {
-        navigate('/slotTourStaff', { state: { tourId: tourDetailCustomer.id } });
-      }
-};
+      navigate('/slotTourStaff', { state: { tourId: tourDetailCustomer.id } });
+    }
+  };
   useEffect(() => {
     fetchTourDetailCustomer();
   }, []);
@@ -58,18 +58,18 @@ const ListTourStaffDetail = () => {
 
   const renderTourSchedulesDescription = () => {
     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
-        return tourDetailCustomer.tourSchedules.map((schedule, index) => {
-            return (
-                <div         
-                >
-                    <h4>Ngày {index + 1}: {schedule.title}</h4>
-                    <p>{schedule.description}</p>
-                </div>
-            );
-        });
+      return tourDetailCustomer.tourSchedules.map((schedule, index) => {
+        return (
+          <div
+          >
+            <h4>Ngày {index + 1}: {schedule.title}</h4>
+            <p>{schedule.description}</p>
+          </div>
+        );
+      });
     }
     return null;
-};
+  };
 
 
   return (
@@ -94,7 +94,7 @@ const ListTourStaffDetail = () => {
                     <div className="row">
                       <div className="col-4">
                         <img
-                          src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg"
+                          src={tourDetailCustomer?.coverImage}
                           className="img-fluid rounded"
                           alt="Tour Image"
                           style={{
@@ -128,7 +128,6 @@ const ListTourStaffDetail = () => {
                         >
 
                           Giờ đi: {tourDetailCustomer?.starLocation}
-
                         </p>
                       </div>
                     </div>
@@ -136,6 +135,34 @@ const ListTourStaffDetail = () => {
                   </div>
                 </div>
               </div>
+
+              <section className="ftco-about d-md-flex">
+                <a href="" className="one-half img d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tourDetailCustomer?.coverImage})` }}>
+                  <div className="icon d-flex justify-content-center align-items-center">
+                    <span className="icon-link" />
+                  </div>
+                </a>
+                <div className="one-half e">
+                  <div className="row">
+                    {tourDetailCustomer && tourDetailCustomer.tourImagesSet.map((tourTime, index) => (
+                      <div key={index} className="col-md-4">
+                        <div className="destination-entry img" style={{ backgroundImage: `url(${tourTime?.image})` }}>
+                          {/* Add the remove button */}
+                          {/* <button className="remove-button" onClick={() => handleRemoveImage(index)}>X</button> */}
+                          <button className="remove-button" onClick={() => (index)}>X</button>
+
+                        </div>
+                      </div>
+                    ))}
+                    <div className="col-md-4">
+                      <button className="add-image-button" onClick={""}>
+                        Thêm hình ảnh
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </section>
 
               <div className="flight-hotel-detail detail tour-detail  ">
                 <div className="entry-head">
@@ -160,10 +187,10 @@ const ListTourStaffDetail = () => {
 
 
                                   <label>
-                <a onClick={navigateToFindTour}>
-                    Ngày khác
-                </a>
-            </label>                          </div>
+                                    <a onClick={navigateToFindTour}>
+                                      Ngày khác
+                                    </a>
+                                  </label>                          </div>
                               </div>
 
                             </div>
@@ -171,28 +198,28 @@ const ListTourStaffDetail = () => {
                           <div className="col-md-7  right">
                             <div className="group-services">
                               <div className="item">
-                              <img src="/images/co1.jpg" className="icon-img" />
+                                <img src="/images/co1.jpg" className="icon-img" />
                                 <label>Thời gian</label>
                                 <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                               </div>
                               <div className="item">
-                              <img src="/images/co2.jpg" className="icon-img" />
+                                <img src="/images/co2.jpg" className="icon-img" />
                                 <label>Phương tiện di chuyển</label>
                                 <p>{tourDetailCustomer?.tourDetail.vehicle}</p>
                               </div>
                               <div className="item">
-                              <img src="/images/co3.jpg" className="icon-img" />
+                                <img src="/images/co3.jpg" className="icon-img" />
                                 <label>Điểm tham quan</label>
                                 <p>{tourDetailCustomer?.tourDetail.location}</p>
                               </div>
                               <div className="item">
-                              <img src="/images/co4.jpg" className="icon-img" />
+                                <img src="/images/co4.jpg" className="icon-img" />
                                 <label>Ẩm thực</label>
 
                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                               </div>
                               <div className="item">
-                              <img src="/images/co5.png" className="icon-img" />
+                                <img src="/images/co5.png" className="icon-img" />
                                 <label>Khách sạn</label>
                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                               </div>
@@ -224,9 +251,9 @@ const ListTourStaffDetail = () => {
                       </div>
                     </div>
                     <div className="col-md-6">
-                    <div>
-                            {renderTourSchedulesDescription()}
-                            </div>
+                      <div>
+                        {renderTourSchedulesDescription()}
+                      </div>
                       {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
                         <div className="excerpt"><span className="line" /><div>

@@ -207,11 +207,11 @@ const ListTourStaff = () => {
                                   </a>
                                 </Link>
                               </div>
-                              <div className="col-4">
+                              <div className="col-5">
                                 <h4 style={{ fontSize: 16, marginTop: 10 }}>
                                   Mã Chuyến Đi:{" "}
                                   <span style={{ color: "#666" }}>
-                                    {tours.id}
+                                    {tour.id}
                                   </span>
                                 </h4>
                                 <p style={{ fontSize: 14, marginBottom: 5 }}>
@@ -226,7 +226,7 @@ const ListTourStaff = () => {
                                   Nơi Khởi Hành: {tour.starLocation}
                                 </p>
                               </div>
-                              <div className="col-4">
+                              <div className="col-3">
                                 <p
                                   className="text-right"
                                   style={{

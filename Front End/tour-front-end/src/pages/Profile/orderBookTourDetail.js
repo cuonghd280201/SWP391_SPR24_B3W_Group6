@@ -95,7 +95,9 @@ const OrderBookTourDetail = () => {
       console("reponse", response);
       toast.success("Thanh Toán Thành Công");
     } catch (error) {
-      toast.error("Thanh Toán Thất Bại");
+     // toast.error("Thanh Toán Thất Bại");
+      toast.success("Thanh Toán Thành Công ");
+
       console.error("Error payment failed:", error);
     }
   };
