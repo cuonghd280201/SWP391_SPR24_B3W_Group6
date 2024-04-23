@@ -36,6 +36,7 @@ public class Orders {
     private BigDecimal amount;
 
     private BigDecimal refund;
+    private String updateBy;
 
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)

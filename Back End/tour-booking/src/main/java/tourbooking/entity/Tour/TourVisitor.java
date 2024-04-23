@@ -66,4 +66,5 @@ public class TourVisitor {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UUID userId;
+    private UUID orderId;
 }

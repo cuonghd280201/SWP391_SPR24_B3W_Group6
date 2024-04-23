@@ -50,10 +50,40 @@ public class OrderServiceImpl implements OrderService {
         Set<TourVisitor> tourVisitorSet = new HashSet<>();
         orders.setUser(user);
         orders.setTourTime(tourTime);
-        orders.setPaid(paid);
+        //Tính giá tiền cho trẻ em
+        BigDecimal tourPrice = tourTime.getTour().getPrice();
+        long babyNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("BABY")).count();
+        BigDecimal babyPrice = tourPrice.multiply(new BigDecimal("0.5")).multiply(BigDecimal.valueOf(babyNumber));
+        //Tính giá tiền cho người lớn
+        long adultNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("ADULT")).count();
+        BigDecimal adultPrice = tourPrice.multiply(BigDecimal.valueOf(adultNumber));
+        //Tính giá tiền cho order
+        BigDecimal paidPrice;
+        BigDecimal orderPrice = babyPrice.add(adultPrice);
+        orders.setPrice(orderPrice);
+        orders.setPaid(BigDecimal.ZERO);
+        //Tạo payment
+        if (paid.compareTo(BigDecimal.ZERO) == 0) {
+            paidPrice = BigDecimal.valueOf(0);
+            orders.setAmount(orderPrice);
+            orders.setOrderStatus(OrderStatus.DONE);
+        } else {
+            paidPrice = orderPrice.multiply(paid.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
+            orders.setAmount(paidPrice);
+            orders.setOrderStatus(OrderStatus.NOT_DONE);
+        }
+        orders.setPriceAfterPaid(orderPrice.subtract(paidPrice));
+        orders.setRefund(BigDecimal.ZERO);
+
+        Payment payment = paymentService.createPayment(user,orders,null);
+        Set<Payment> paymentSet = new HashSet<>();
+        paymentSet.add(payment);
+        orders.setPaymentSet(paymentSet);
+        orderRepository.save(orders);
+        paymentRepository.save(payment);
         //Tạo tour visitor
         for (TourVisitorForm tourVisitorForm: tourVisitorFormList
-             ) {
+        ) {
             TourVisitor tourVisitor = new TourVisitor();
             tourVisitor.setName(tourVisitorForm.getName());
             tourVisitor.setDateOfBirth(tourVisitorForm.getDateOfBirth());
@@ -77,6 +107,7 @@ public class OrderServiceImpl implements OrderService {
             tourVisitor.setTourTime(tourTime);
 
             tourVisitor.setUserId(user.getId());
+            tourVisitor.setOrderId(orders.getId());
 
             tourVisitorRepository.save(tourVisitor);
             tourVisitorSet.add(tourVisitor);
@@ -84,43 +115,10 @@ public class OrderServiceImpl implements OrderService {
         //Cập nhật số lượng khách thực tế
         tourTime.setTourVisitorSet(tourVisitorSet);
         int slotNumberInTime = tourTimeRepository.countVisitor(tourTimeId);
-        //int listVisitCount = tourVisitorFormList.size();
-        //int slotNumberActual = slotNumberInTime + listVisitCount;
         tourTime.setSlotNumberActual(slotNumberInTime);
         tourTime.setSlotNumber(tourTime.getSlotNumber() - tourVisitorFormList.size());
-        System.out.println(tourVisitorFormList.size());
         tourTimeRepository.save(tourTime);
-        //Tính giá tiền cho trẻ em
-        BigDecimal tourPrice = tourTime.getTour().getPrice();
-        long babyNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("BABY")).count();
-        BigDecimal babyPrice = tourPrice.multiply(new BigDecimal("0.5")).multiply(BigDecimal.valueOf(babyNumber));
-        //Tính giá tiền cho người lớn
-        long adultNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("ADULT")).count();
-        BigDecimal adultPrice = tourPrice.multiply(BigDecimal.valueOf(adultNumber));
-        //Tính giá tiền cho order
-        BigDecimal paidPrice;
-        BigDecimal orderPrice = babyPrice.add(adultPrice);
-        orders.setPrice(orderPrice);
-        //Tạo payment
-        if (paid.compareTo(BigDecimal.ZERO) == 0) {
-            paidPrice = BigDecimal.valueOf(0);
-            orders.setAmount(orderPrice);
-            orders.setOrderStatus(OrderStatus.DONE);
-        } else {
-            paidPrice = orderPrice.multiply(paid.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP));
-            orders.setAmount(paidPrice);
-            orders.setOrderStatus(OrderStatus.NOT_DONE);
-        }
-        orders.setPriceAfterPaid(orderPrice.subtract(paidPrice));
-        orders.setRefund(BigDecimal.ZERO);
-
-        Payment payment = paymentService.createPayment(user,orders,null);
-        Set<Payment> paymentSet = new HashSet<>();
-        paymentSet.add(payment);
-        orders.setPaymentSet(paymentSet);
-        orderRepository.save(orders);
-        paymentRepository.save(payment);
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully", orders.getPaymentSet().stream().map(Payment::getId)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully", orders.getId()));
     }
 
     @Override
@@ -145,6 +143,17 @@ public class OrderServiceImpl implements OrderService {
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", convertToOrderDetailDTO(orders)));
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> cancelOrder(UUID uuid) {
+        Orders orders = orderRepository.findById(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found!"));
+
+        orders.setOrderStatus(OrderStatus.WAITING_CANCEL);
+        orderRepository.save(orders);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
+    }
+
     public OrderDetailDTO convertToOrderDetailDTO (Orders orders) {
         if (orders == null) {
             return null;
@@ -153,7 +162,10 @@ public class OrderServiceImpl implements OrderService {
         //set tour time dto
         orderDetailDTO.setTourTimeDTO(modelMapper.map(orders.getTourTime(), TourTimeDTO.class));
         //set user dto
-        orderDetailDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
+        UserDTO userDTO = modelMapper.map(orders.getUser(), UserDTO.class);
+        userDTO.setRole(orders.getUser().getRole().getName());
+        orderDetailDTO.setUserDTO(userDTO);
+
         //set tour schedule
         List<TourScheduleDTO> tourScheduleDTOList = new ArrayList<>();
         for (TourSchedule tourSchedule: orders.getTourTime().getTour().getTourSchedules()
@@ -166,10 +178,14 @@ public class OrderServiceImpl implements OrderService {
         List<TourVisitorDTO> tourVisitorDTOList = new ArrayList<>();
         for (TourVisitor tourVisitor: orders.getTourTime().getTourVisitorSet()
              ) {
-            TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
-//            if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()))
-            tourVisitorDTOList.add(tourVisitorDTO);
+            if (tourVisitor.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId()) ) {
+                TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+                tourVisitorDTOList.add(tourVisitorDTO);
+            }
+
         }
+        //set tour dto
+        orderDetailDTO.setTourDTO(modelMapper.map(orders.getTourTime().getTour(), TourDTO.class));
         orderDetailDTO.setTourVisitorDTOList(tourVisitorDTOList);
         //set payment dto
         List<PaymentDTO> paymentDTOList = new ArrayList<>();
