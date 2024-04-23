@@ -33,6 +33,10 @@ export default {
             updateImage:"/staff/tourImage/updateImage",
             addMoreImage:"/staff/tourImage/addMoreImage",
             deleteImage:"/staff/tourImage/${imageId}",
+        },
+        admin:{
+            orderSumary:"/dashboard/orderSumary",
+            getRoleNumber: "/dashboard/getRoleNumber"
         }
         
         
