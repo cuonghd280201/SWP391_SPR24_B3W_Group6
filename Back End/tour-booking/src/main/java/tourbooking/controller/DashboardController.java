@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tourbooking.common.OrderStatus;
 import tourbooking.dto.BaseResponseDTO;
+import tourbooking.dto.OrderDetailDTO;
 import tourbooking.dto.UserDTO;
 import tourbooking.entity.Transaction;
 import tourbooking.entity.User;
@@ -35,10 +37,10 @@ public class DashboardController {
     private final TransactionService transactionService;
     private final OrderService orderService;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/getAllUser")
     public ResponseEntity<BaseResponseDTO> dashboard() {
-        List<User> userList = userService.getAllUsers();
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", userList));
+        List<UserDTO> userList = userService.getAllUsers();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get All User Successfully", userList));
     }
 
     @GetMapping("/getRoleNumber")
@@ -66,5 +68,10 @@ public class DashboardController {
     @GetMapping("/orderSumary")
     public ResponseEntity<BaseResponseDTO> getOrderSumary() {
         return adminService.getOrderSummary();
+    }
+
+    @GetMapping("/orderStatus")
+    public ResponseEntity<BaseResponseDTO> getAllOrderByStatus( @RequestParam OrderStatus orderStatus) { 
+        return adminService.getAllOrderByStatus(orderStatus);
     }
 }
