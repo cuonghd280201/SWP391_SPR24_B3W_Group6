@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class BannerAddMoreForm {
-    private UUID id;
+//    private UUID id;
 
     private Set<BannerCreateForm> bannerCreateFormSet;
 }

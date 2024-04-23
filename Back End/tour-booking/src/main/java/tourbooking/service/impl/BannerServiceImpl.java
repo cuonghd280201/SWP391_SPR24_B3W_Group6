@@ -37,6 +37,8 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public void updateBanner(BannerDTO bannerDTO) {
         Banner banner = bannerRepository.findById(bannerDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("Banner not found!"));
+        if(bannerDTO.getImage() == null)
+            bannerDTO.setImage(banner.getImage());
         banner.setImage(bannerDTO.getImage());
         bannerRepository.save(banner);
     }

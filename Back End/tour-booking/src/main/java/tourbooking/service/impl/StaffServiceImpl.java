@@ -198,8 +198,55 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseEntity<BaseResponseDTO> updateTime(TourTimeDTO tourTimeDTO) {
         TourTime tourTime = tourTimeService.findById(tourTimeDTO.getId());
+
+        if(tourTimeDTO.getStartDate() == null)
+            tourTime.setStartTime(tourTime.getStartTime());
+        if(tourTimeDTO.getEndDate() == null)
+            tourTime.setEndDate(tourTime.getEndDate());
+        if(tourTimeDTO.getStartTime() == null)
+            tourTime.setStartDate(tourTime.getStartDate());
+        if(tourTimeDTO.getSlotNumber() == 0){
+            tourTime.setSlotNumber(tourTime.getSlotNumber());
+            tourTime.setSlotNumberActual(tourTime.getSlotNumberActual());
+        }
+
+        Tour tour = tourTime.getTour();
+        List<String> listMessage = new ArrayList<>();
+        int scheduleDayDistance = tour.getTourSchedules().size();
+
+        LocalDate startDate = tourTimeDTO.getStartDate();
+        LocalDate endDate = tourTimeDTO.getEndDate();
+        LocalDate dateNow = LocalDate.now();
+
+        int startDateResult = DateTimeUtils.actualCompareInfo(dateNow, startDate);
+        if (startDateResult >= 0) {
+            listMessage.add("Start Date " + startDate + " must be in the future.");
+        }
+
+        int endDateResult = DateTimeUtils.actualCompareInfo(dateNow, endDate);
+        if (endDateResult >= 0) {
+            listMessage.add("End Date " + endDate + " must be in the future.");
+        }
+
+        int bothDateResult = DateTimeUtils.actualCompareInfo(startDate, endDate);
+        if (endDateResult >= 0) {
+            listMessage.add("End Date " + endDate + " must be after Start Date " + startDate + " .");
+        }
+
+        Period period = startDate.until(endDate);
+        int dayDistance = period.getDays();
+        if ((dayDistance + 1) != scheduleDayDistance) {
+            listMessage.add("The number from Start Date " + startDate + " to End Date " + endDate + " doesn't match with Schedule Days.");
+        }
+
+        if (!listMessage.isEmpty()) {
+            return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "These fields do not validate!", listMessage));
+        }
+
         int dateCompareResult = DateTimeUtils.actualCompareInfo(LocalDate.now(), tourTime.getEndDate());
-        if(tourTime.getSlotNumberActual() == 0 || dateCompareResult > 0){
+        if (tourTime.getSlotNumberActual() == 0 || dateCompareResult > 0) {
+            tourTimeDTO.setTimeStatus(TimeStatus.ACTIVE);
+            tourTimeDTO.setDeleted(false);
             tourTimeService.updateTime(tourTimeDTO, tourTime);
         }else {
             return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED, "This Time has been booked!"));
@@ -341,6 +388,11 @@ public class StaffServiceImpl implements StaffService {
     public ResponseEntity<BaseResponseDTO> viewBannerList() {
         List<Banner> banner = bannerService.viewBannerList();
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "View List Banner Successfully", banner));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId) {
+        return null;
     }
 
     public TourInfoDTO convertToTourInfoDTO(Tour tour){
