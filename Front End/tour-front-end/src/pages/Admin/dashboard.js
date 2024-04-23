@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 
 import '../Admin/dashboard.css'
-import { Table, Space, Modal, Button, Form, message, Input, Select, Layout, Badge, Switch, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 
 
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
-import Footer from "../../layout/CommonLayout/Footer";
+import adminServices from "../../services/admin.services";
 const { Content } = Layout;
 
 
 const Dashboard = () => {
+    const [orderSumary, setOrderSumary] = useState(); // Initialize users as an object
+    const [roleNumber, setRoleNumber] = useState(); //
+
+    useEffect(() => {
+        fetchOrderSumary();
+        fetchRoleNumber();
+    }, []);
+
+    const fetchOrderSumary = async () => {
+        const response = await adminServices.getOrderSumary();
+        setOrderSumary(response.data.data);
+    }
+
+    const fetchRoleNumber = async () => {
+        const response = await adminServices.getRoleNumber();
+        setRoleNumber(response.data.data);
+    }
     return (
 
         <Layout style={{ minHeight: "100vh" }}>
@@ -40,9 +57,9 @@ const Dashboard = () => {
                                 <div className="col-xl-3 ">
                                     <div className="card border-5 border-top border-info-subtle">
                                         <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Total Tour Order</h5>
+                                            <h5 className="text-muted">Tổng tiền</h5>
                                             <div className="metric-value d-inline-block">
-                                                <h2>1</h2>
+                                                <h2>{orderSumary?.completedCount}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -50,9 +67,9 @@ const Dashboard = () => {
                                 <div className="col-xl-3">
                                     <div className="card border-5 border-top border-success-subtle">
                                         <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Total Refund By User</h5>
+                                            <h5 className="text-muted">Tổng số tiền hoàn trả</h5>
                                             <div className="metric-value d-inline-block">
-                                                <h2>1</h2>
+                                            <h2>{orderSumary?.refundedCount}</h2>
 
                                             </div>
                                         </div>
@@ -61,9 +78,9 @@ const Dashboard = () => {
                                 <div className="col-xl-3">
                                     <div className="card border-5 border-top border-warning-subtle">
                                         <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Total User</h5>
+                                            <h5 className="text-muted">Số lượng khách hàng</h5>
                                             <div className="metric-value d-inline-block">
-                                                <h2>1</h2>
+                                                <h2>{roleNumber?.countUser}</h2>
 
                                             </div>
                                         </div>
@@ -72,9 +89,9 @@ const Dashboard = () => {
                                 <div className="col-xl-3">
                                     <div className="card border-5 border-top border-primary-subtle">
                                         <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Total Money</h5>
+                                            <h5 className="text-muted">Số lượng nhân viên</h5>
                                             <div className="metric-value d-inline-block">
-                                                <h2>1</h2>
+                                            <h2>{roleNumber?.countStaff}</h2>
 
                                             </div>
 
