@@ -41,7 +41,7 @@ export default {
         banner:{
             listBanner:"/staff/tourBanner/viewBanner",
             postBanner:"/staff/tourBanner/addMoreBanner",     
-            deleteBanner:"/staff/tourBanner/deleteBanner/&{id}",  
+            deleteBanner:"/staff/tourBanner/deleteBanner?id=${id}", 
         }
         
         

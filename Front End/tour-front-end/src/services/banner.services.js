@@ -9,7 +9,8 @@ const getListBanner = async () => {
 
   const deleteBanner = async (id) => {
     const serviceUrl =
-      urlConstant.endpoint.tour.deleteBanner.replace(
+      urlConstant.endpoint.banner.deleteBanner
+      .replace(
         "${id}",
         id
       );
@@ -22,7 +23,7 @@ const getListBanner = async () => {
 
   const createBanner = async (formData) => {
 
-    const baseUrl = urlConstant.endpoint.tour.createBanner;
+    const baseUrl = urlConstant.endpoint.banner.postBanner;
     try {
       const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", formData);
       return response.data;
@@ -31,6 +32,8 @@ const getListBanner = async () => {
       throw error;
     }
   };
+
+  
 
 
 export default {

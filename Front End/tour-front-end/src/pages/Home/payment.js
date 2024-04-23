@@ -1,6 +1,9 @@
 import React from "react";
 import '../Home/payment.css'
-const InfomationTour = () => {
+const Payment = () => {
+
+
+
     return (
         <div>
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
@@ -21,20 +24,20 @@ const InfomationTour = () => {
                                 </div>
                                 <form action="#">
                                     <input type="radio" name="payment" id="visa" />
-                                    <input type="radio" name="payment" id="mastercard" />
-                                    <input type="radio" name="payment" id="paypal" />
-                                    <input type="radio" name="payment" id="AMEX" />
+                                    {/* <input type="radio" name="payment" id="mastercard" />
+                                    <input type="radio" name="payment" id="paypal" /> */}
+                                    {/* <input type="radio" name="payment" id="AMEX" /> */}
                                     <div className="category">
-                                        <label htmlFor="visa" className="visaMethod">
+                                        <label htmlFor="VNPAY" className="visaMethod">
                                             <div className="imgName">
                                                 <div className="imgContainer visa">
-                                                    <img src="https://i.ibb.co/vjQCN4y/Visa-Card.png" alt />
+                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQULr3Ust3Yw-IS1KvGuHQFys81W1ava9Ohd8gduuRPXA&s" alt />
                                                 </div>
-                                                <span className="name">VISA</span>
+                                                <span className="name">VNPAY</span>
                                             </div>
                                             <span className="check"><i className="fa-solid fa-circle-check" style={{ color: '#6064b6' }} /></span>
                                         </label>
-                                        <label htmlFor="mastercard" className="mastercardMethod">
+                                        {/* <label htmlFor="mastercard" className="mastercardMethod">
                                             <div className="imgName">
                                                 <div className="imgContainer mastercard">
                                                     <img src="https://i.ibb.co/vdbBkgT/mastercard.jpg" alt />
@@ -60,7 +63,7 @@ const InfomationTour = () => {
                                                 <span className="name">AMEX</span>
                                             </div>
                                             <span className="check"><i className="fa-solid fa-circle-check" style={{ color: '#6064b6' }} /></span>
-                                        </label>
+                                        </label> */}
                                     </div>
                                 </form>
                             </div>
@@ -200,4 +203,4 @@ const InfomationTour = () => {
         </div>
     );
 }
-export default InfomationTour;
+export default Payment;
