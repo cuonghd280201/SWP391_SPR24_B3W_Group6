@@ -20,5 +20,6 @@ public class OrderDTO {
     private BigDecimal priceAfterPaid;
     private BigDecimal amount;
     private BigDecimal refund;
+    private TourInfoDTO tourInfoDTO;
     private OrderStatus orderStatus;
 }

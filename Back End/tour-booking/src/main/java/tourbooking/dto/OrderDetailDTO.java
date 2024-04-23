@@ -35,6 +35,9 @@ public class OrderDetailDTO {
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime updateDate;
     private TourTimeDTO tourTimeDTO;
+    private List<TourScheduleDTO> tourScheduleDTOList;
     private List<TourVisitorDTO> tourVisitorDTOList;
+    private List<PaymentDTO> paymentDTOList;
+    private TourDTO tourDTO;
     private UserDTO userDTO;
 }

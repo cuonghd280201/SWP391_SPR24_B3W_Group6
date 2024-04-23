@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Builder
-@Where(clause = "deleted=false")
+//@Where(clause = "deleted=false")
 public class Transaction {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)

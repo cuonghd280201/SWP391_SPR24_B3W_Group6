@@ -39,6 +39,9 @@ public class TourImageServiceImpl implements TourImageService {
         TourImages tourImages = tourImagesRepository.findById(tourImageDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Image not found!"));
 
+        if(tourImageDTO.getImage() == null)
+            tourImageDTO.setImage(tourImages.getImage());
+
         tourImages.setImage(tourImageDTO.getImage());
         tourImagesRepository.save(tourImages);
     }

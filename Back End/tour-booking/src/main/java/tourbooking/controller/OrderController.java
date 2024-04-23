@@ -33,4 +33,9 @@ public class OrderController {
     public ResponseEntity<BaseResponseDTO> getOrderDetailById (@PathVariable("orderId") UUID uuid) {
         return orderService.getOrderDetailById(uuid);
     }
+
+    @PostMapping("/cancel/{orderId}")
+    public ResponseEntity<BaseResponseDTO> requestCancelOrder(@PathVariable("orderId") UUID orderId) {
+        return orderService.cancelOrder(orderId);
+    }
 }

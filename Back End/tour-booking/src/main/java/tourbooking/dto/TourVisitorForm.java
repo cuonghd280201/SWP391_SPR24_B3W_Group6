@@ -21,4 +21,5 @@ public class TourVisitorForm {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATE_FORMAT)
     private LocalDate dateOfBirth;
+    private String type;
 }

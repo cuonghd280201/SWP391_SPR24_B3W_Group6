@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully"));
     }
 
+
     //Chuyển danh sách authorities thành claims
     public Map<String, Object> convertAuthoritiesToClaims(Collection<? extends GrantedAuthority> authorities) {
         Map<String, Object> claims = new HashMap<>();
@@ -103,4 +105,27 @@ public class UserServiceImpl implements UserService {
         userDTO.setRole(user.getRole().getName());
         return userDTO;
     }
+
+    public List<UserDTO> getAllUsers() {
+        List<User> userList = userRepository.findAllByRole(roleRepository.findByName("USER"));
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for(User user: userList) {
+
+            UserDTO userDTO = convertToDTO(user);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList; // Lấy tất cả người dùng từ cơ sở dữ liệu
+    }
+    public List<UserDTO> getAllStaff() {
+        List<User> userList = userRepository.findAllByRole(roleRepository.findByName("STAFF"));
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for(User user: userList) {
+
+            UserDTO userDTO = convertToDTO(user);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList; // Lấy tất cả người dùng từ cơ sở dữ liệu
+    }
+
+
 }

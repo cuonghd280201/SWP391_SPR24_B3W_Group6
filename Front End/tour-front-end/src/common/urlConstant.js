@@ -47,6 +47,11 @@ export default {
             customerCancel:"/order/cancel/${orderId}",
             getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
             staffCancel:"/staff/order/cancel/${orderId}",
+        admin:{
+            orderSumary:"/dashboard/orderSumary",
+            getRoleNumber: "/dashboard/getRoleNumber",
+            getAllUser: "/dashboard/getAllUser",
+            getAllStaff: "/dashboard/getAllStaff"
         }
         
         
