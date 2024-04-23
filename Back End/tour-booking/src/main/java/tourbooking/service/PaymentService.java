@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public interface PaymentService {
     Payment createPayment(User user, Orders orders, String vnPayCode);
+    Payment createPaymentRefund(User user, Orders orders);
 
     ResponseEntity<BaseResponseDTO> checkOut(UUID paymentId);
 }

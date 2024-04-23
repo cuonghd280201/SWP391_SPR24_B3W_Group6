@@ -84,4 +84,9 @@ public class StaffController {
     public ResponseEntity<BaseResponseDTO> viewBannerList(){
         return staffService.viewBannerList();
     }
+
+    @PostMapping("/order/cancel/{orderId}")
+    public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal,@PathVariable("orderId") UUID orderId) {
+        return staffService.cancelOrder(principal, orderId);
+    }
 }
