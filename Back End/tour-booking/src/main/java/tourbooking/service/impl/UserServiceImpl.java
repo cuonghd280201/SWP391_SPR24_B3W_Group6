@@ -116,6 +116,16 @@ public class UserServiceImpl implements UserService {
         }
         return userDTOList; // Lấy tất cả người dùng từ cơ sở dữ liệu
     }
+    public List<UserDTO> getAllStaff() {
+        List<User> userList = userRepository.findAllByRole(roleRepository.findByName("STAFF"));
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for(User user: userList) {
+
+            UserDTO userDTO = convertToDTO(user);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList; // Lấy tất cả người dùng từ cơ sở dữ liệu
+    }
 
 
 }

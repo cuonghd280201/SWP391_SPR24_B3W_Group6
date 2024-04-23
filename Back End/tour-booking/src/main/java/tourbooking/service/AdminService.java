@@ -17,4 +17,6 @@ public interface AdminService {
 
     ResponseEntity<BaseResponseDTO> getOrderSummary();
     ResponseEntity<BaseResponseDTO> getAllOrderByStatus(OrderStatus orderStatus);
+
+
 }

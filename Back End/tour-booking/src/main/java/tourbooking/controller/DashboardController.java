@@ -43,6 +43,12 @@ public class DashboardController {
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get All User Successfully", userList));
     }
 
+    @GetMapping("/getAllStaff")
+    public ResponseEntity<BaseResponseDTO> dashboard1() {
+        List<UserDTO> userList = userService.getAllStaff();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get All Staff Successfully", userList));
+    }
+
     @GetMapping("/getRoleNumber")
     public ResponseEntity<BaseResponseDTO> getRoleNumber() {
         return adminService.countAllUser();
@@ -71,7 +77,7 @@ public class DashboardController {
     }
 
     @GetMapping("/orderStatus")
-    public ResponseEntity<BaseResponseDTO> getAllOrderByStatus( @RequestParam OrderStatus orderStatus) { 
+    public ResponseEntity<BaseResponseDTO> getAllOrderByStatus( @RequestParam OrderStatus orderStatus) {
         return adminService.getAllOrderByStatus(orderStatus);
     }
 }
