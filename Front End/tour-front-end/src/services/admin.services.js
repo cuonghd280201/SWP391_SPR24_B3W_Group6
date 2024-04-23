@@ -19,9 +19,16 @@ const getAllUser = () => {
     return response;
 }
 
+const getAllStaff = () => {
+    const serviceUrl = urlConstant.endpoint.admin.getAllStaff
+    const response = axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+    return response;
+}
+
 
 export default {
     getOrderSumary,
     getRoleNumber,
-    getAllUser
+    getAllUser,
+    getAllStaff
 } 

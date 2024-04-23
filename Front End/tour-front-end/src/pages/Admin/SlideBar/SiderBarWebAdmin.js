@@ -56,7 +56,7 @@ const SiderBarWebAdmin = ({ choose }) => {
       key: "menu-key/3",
       icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
       className: "listAccountStaff",
-      link: "/listAccountCustomer", // Add the link property
+      link: "/listAccountStaff", // Add the link property
     },
      {
        label: "Quản Lý Hoàn Tiền",

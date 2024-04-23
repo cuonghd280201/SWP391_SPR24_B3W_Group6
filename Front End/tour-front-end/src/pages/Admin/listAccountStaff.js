@@ -4,41 +4,29 @@ import { Layout, Table, Space, Input, Switch } from "antd";
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 // import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
+import adminServices from "../../services/admin.services";
 const page = {
-  pageSize: 6, // Number of items per page
+  pageSize: 5, // Number of items per page
 };
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 const { Search } = Input;
 
 const ListAccountStaff = () => {
-  // Dummy data generation
-  const generateDummyData = () => {
-    const dummyData = [];
-    for (let i = 0; i < 10; i++) {
-      dummyData.push({
-        key: i,
-        firstName: `Staff ${i + 1}`,
-        lastName: `LastName ${i + 1}`,
-        email: `staff${i + 1}@example.com`,
-        password: `password${i + 1}`,
-        phoneNumber: `12345678${i}`,
-        dateOfBirth: `200${i}-01-01`,
-        roleString: `Role ${i + 1}`,
-        statusString: i % 2 === 0 ? "Active" : "Inactive",
-        userId: i + 1,
-      });
-    }
-    return dummyData;
-  };
-
-  // Dummy data
-  const dummyData = generateDummyData();
-
   // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
+  const [allStaff, setAllStaff] = useState();
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
+
+  const fetchAllUser = async () => {
+    const response = await adminServices.getAllStaff();
+    setAllStaff(response.data.data);
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -70,7 +58,7 @@ const ListAccountStaff = () => {
                 display: "inline-block",
               }}
             >
-              MANAGE CUSTOMER
+              QUẢN LÝ NHÂN VIÊN
             </h1>
 
             <div
@@ -82,7 +70,7 @@ const ListAccountStaff = () => {
               <div style={{ height: "600px", overflow: "auto" }}>
                 <Table
                   className="custom-table"
-                  dataSource={dummyData}
+                  dataSource={allStaff}
                   pagination={page}
                   size="middle"
                   components={{
@@ -99,75 +87,66 @@ const ListAccountStaff = () => {
                     },
                   }}
                 >
-                  <Column title="ID" dataIndex="firstName" key="id" />
-                  <Column title="Tên" dataIndex="lastName" key="lastName" />
-                  <Column
-                    title="Số điện thoại"
-                    dataIndex="phoneNumber"
-                    key="phoneNumber"
-                  />
+                  <Column title="ID" dataIndex="id" key="id" />
+                  <Column title="Tên" dataIndex="name" key="name" />
+                  <Column title="Số điện thoại" dataIndex="phone" key="phone" />
                   <Column title="Email" dataIndex="email" key="email" />
                   <Column
                     title="Ngày sinh"
                     dataIndex="dateOfBirth"
                     key="dateOfBirth"
                   />
+                  <Column title="Giới tính" dataIndex="gender" key="gender" />
+                  <Column title="Vai trò" dataIndex="role" key="role" />
                   <Column
-                    title="Giới tính"
-                    dataIndex="dateOfBirth"
-                    key="dateOfBirth"
-                  />
-                  <Column
-                    title="Trạng thái"
-                    dataIndex="statusString"
-                    key="statusString"
-                    render={(text, record) => (
-                      <span
-                        className={
-                          text === "Active"
-                            ? "badge text-bg-success"
-                            : text === "OnTasking"
-                            ? "badge bg-warning text-light"
-                            : "badge text-bg-danger"
-                        }
-                      >
-                        {text}
-                      </span>
+                    title="Avatar"
+                    dataIndex="image"
+                    key="image"
+                    render={(img) => (
+                      <img
+                        src={img}
+                        style={{ width: 45, height: 45, borderRadius: 5 }}
+                      />
                     )}
                   />
-                  <Column
-                    title="Vô hiệu hóa"
-                    key="action"
-                    render={(_, record) => (
-                      <Space size="middle">
-                        <Switch
-                          checked={
-                            record.statusString === "Active" &&
-                            (switchStatusMap[record.userId] || true)
+                  {/* <Column
+                      title="Trạng thái"
+                      dataIndex="statusString"
+                      key="statusString"
+                      render={(text, record) => (
+                        <span
+                          className={
+                            text === "Active"
+                              ? "badge text-bg-success"
+                              : text === "OnTasking"
+                                ? "badge bg-warning text-light"
+                                : "badge text-bg-danger"
                           }
-                          onChange={(checked, event) => {
-                            event.stopPropagation();
+                        >
+                          {text}
+                        </span>
+                      )}
+                    />
+                    <Column
+                      title="Vô hiệu hóa"
+                      key="action"
+                      render={(_, record) => (
+                        <Space size="middle">
+                      
+                          <Switch
+                            checked={record.statusString === 'Active' && (switchStatusMap[record.userId] || true)}
+                            onChange={(checked, event) => {
+                              event.stopPropagation();
 
-                            setSwitchStatusMap((prevMap) => ({
-                              ...prevMap,
-                              [record.userId]: checked,
-                            }));
-                          }}
-                          size="small" // Set size to "small" for iOS-like appearance
-                          style={{
-                            backgroundColor:
-                              record.statusString === "Active"
-                                ? "#4CD964"
-                                : "#D1D1D6",
-                            borderColor:
-                              record.statusString === "Active"
-                                ? "#4CD964"
-                                : "#D1D1D6",
-                          }}
-                        />
-                      </Space>
-                    )}
-                  />
+                              setSwitchStatusMap((prevMap) => ({ ...prevMap, [record.userId]: checked }));
+                            }}
+
+                            size="small" // Set size to "small" for iOS-like appearance
+                            style={{ backgroundColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6', borderColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6' }}
+                          />
+                        </Space>
+                      )}
+                    /> */}
                 </Table>
               </div>
             </div>
