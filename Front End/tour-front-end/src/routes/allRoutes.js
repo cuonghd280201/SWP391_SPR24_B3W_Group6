@@ -24,6 +24,10 @@ import SlotTourStaff from "../pages/Staff/SlotTourStaff";
 import SlotTourStaffDetai from "../pages/Staff/SlotTourStaffDetai";
 import Contact from "../pages/Home/contact";
 import ListTransaction from "../pages/Staff/ListTransaction";
+import FilterHome from "../pages/Home/filterHome";
+import ManageBanner from "../pages/Staff/ManageBanner";
+import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
+
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -38,7 +42,10 @@ const userRoutes = [
   { path: "/profileInfo", component: <ProfileInfo/>},
   { path: "/orderHistory", component: <OrderHistory/>},
   { path: "/infomationTour", component: <InfomationTour/>},
-  { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>}
+  { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
+  { path: "/filterHome", component: <FilterHome/>},
+
+
 
 
 
@@ -61,7 +68,12 @@ const authRoutes = [
   { path: "/slotTourStaffDetail", component: <SlotTourStaffDetai/>},
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
   { path: "/contact", component: <Contact/>},
-  { path: "/listTransaction", component: <ListTransaction/>}
+  { path: "/listTransaction", component: <ListTransaction/>},
+  { path: "/manageBanner", component: <ManageBanner/>},
+  { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
+
+
+
 
 
 

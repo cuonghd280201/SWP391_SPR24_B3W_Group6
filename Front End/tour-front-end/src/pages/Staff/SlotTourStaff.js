@@ -130,12 +130,7 @@ const SlotTourStaff = () => {
                                                     >
                                                         Số chỗ còn nhận
                                                     </th>
-                                                    <th
-                                                        scope="col"
-                                                        style={{ padding: "15px", color: "#495057" }}
-                                                    >
-                                                        Hành Động
-                                                    </th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody>

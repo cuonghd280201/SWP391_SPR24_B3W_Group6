@@ -16,82 +16,19 @@ const { Content } = Layout;
 const { Option } = Select;
 
 const ListTourStaff = () => {
-  // Dummy data
-  const [dummyData, setDummyData] = useState([
-    {
-      id: 1,
-      title: "Tour 1",
-      date: "2024-04-12",
-      price: "2.000.000",
-    },
-    {
-      id: 2,
-      title: "Tour 2",
-      date: "2024-04-18",
-      price: "3.000.000",
-    },
-    {
-      id: 3,
-      title: "Tour 3",
-      date: "2024-04-14",
-      price: "4.000.000",
-    },
-    {
-      id: 4,
-      title: "Tour 4",
-      date: "2024-04-16",
-      price: "3.600.000",
-    },
-    {
-      id: 5,
-      title: "Tour 4",
-      date: "2024-04-11",
-      price: "4.200.000",
-    },
-  ]);
+  
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
-  const totalItems = dummyData.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [error, setError] = useState(null);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
-
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleSortByPrice = (value) => {
-    let sortedData = [...dummyData]; 
-
-    if (value === "asc") {
-      sortedData.sort(
-        (a, b) =>
-          parseFloat(a.price.replace(/\D/g, "")) -
-          parseFloat(b.price.replace(/\D/g, ""))
-      );
-    } else if (value === "desc") {
-      sortedData.sort(
-        (a, b) =>
-          parseFloat(b.price.replace(/\D/g, "")) -
-          parseFloat(a.price.replace(/\D/g, ""))
-      );
-    } else if (value === "date") {
-      sortedData.sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (value === "date2") {
-      sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    setDummyData(sortedData);
-  };
-
+ 
   //List Tour Staff
   const [tours, setTours] = useState([]);
 
+  const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+  const [totalPages, setTotalPages] = useState(1); // Add state for total pages
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [pageSize, setPageSize] = useState(3); // Initialize pageSize state
+
 
 
   useEffect(() => {
@@ -113,6 +50,9 @@ const ListTourStaff = () => {
       setLoading(false);
     }
   };
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+};
 
   const formatPrice = (price) => {
     return (price).toLocaleString('vi-VN').replace(/,/g, '.');
@@ -143,16 +83,7 @@ const ListTourStaff = () => {
 
             {/* Filter by price */}
             <div className="d-flex justify-content-between mb-4">
-              <Select
-                defaultValue="Tìm kiếm theo"
-                style={{ width: 250, height: 40 }}
-                onChange={handleSortByPrice}
-              >
-                <Option value="asc">Giá: Thấp đến cao</Option>
-                <Option value="desc">Giá: Cao đến thấp</Option>
-                <Option value="date">Ngày:sớm nhất đến trễ nhất</Option>
-                <Option value="date2">Ngày:trễ nhất đến sớm nhất</Option>
-              </Select>
+            
 
               <span style={{ display: "inline-block" }}>
                 <a
@@ -184,8 +115,7 @@ const ListTourStaff = () => {
             </div>
 
             {/* Display tours for the current page */}
-            {dummyData.slice(startIndex, endIndex).map((tour) => (
-              <div key={tour.id} className="row row-with-margin">
+              <div className="row row-with-margin">
                 <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                   <div className="card border-5 border-top border-success-subtle">
                     <div className="card-body-dashboard">
@@ -284,35 +214,23 @@ const ListTourStaff = () => {
                   </div>
                 </div>
               </div>
-            ))}
+
+              <div className="row mt-5">
+                                <div className="col text-center">
+                                    <div className="block-27">
+                                        <ul>
+                                            <li><a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>&lt;</a></li>
+                                            <li className={currentPage ? 'active' : ''}>
+                                                <span> {currentPage}</span>
+                                            </li>
+                                            <li><a href="#" onClick={() => handlePageChange(currentPage + 1)}>&gt;</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
             {/* Pagination */}
-            <div className="text-center mt-3">
-              <Button
-                disabled={currentPage === 1}
-                onClick={() => goToPage(currentPage - 1)}
-                style={{ marginRight: 10 }}
-              >
-                <LeftOutlined />
-              </Button>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <Button
-                  key={i}
-                  onClick={() => goToPage(i + 1)}
-                  style={{ margin: "0 5px" }}
-                  type={currentPage === i + 1 ? "primary" : "default"}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-              <Button
-                disabled={currentPage === totalPages}
-                onClick={() => goToPage(currentPage + 1)}
-                style={{ marginLeft: 10 }}
-              >
-                <RightOutlined />
-              </Button>
-            </div>
+
           </Content>
         </div>
       </Layout >

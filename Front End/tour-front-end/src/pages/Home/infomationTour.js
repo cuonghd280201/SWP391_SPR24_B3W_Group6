@@ -94,30 +94,30 @@ const InfomationTour = () => {
             }
 
             const response = await orderServices.createOrder(tourTimeId, paid, passengers); // Pass the paid value
-            const responseData = response.data[0];
-            localStorage.setItem('orderResponse', responseData);
+           // const responseData = response.data[0];
+            localStorage.setItem('orderResponse', response.data);
             toast.success("Tạo Thông Tin Khách Hàng Thành Công");
-            //  navigate("/payment");
+            navigate("/payment");
         } catch (error) {
             toast.error("Thất Bại!");
             console.error("Error creating tour order:", error);
         }
     };
 
-    const createCheckout = async () => {
-        try {
-            const orderResponseString = localStorage.getItem('orderResponse');
-            const response = await paymentServices.createCheckout(orderResponseString);
-            toast.success("Thanh Toán Thành Công");
-        } catch (error) {
-            toast.error("Thanh Toán Thất Bại");
-            console.error("Error payment failed:", error);
-        }
-    };
+    // const createCheckout = async () => {
+    //     try {
+    //         const orderResponseString = localStorage.getItem('orderResponse');
+    //         const response = await paymentServices.createCheckout(orderResponseString);
+    //         toast.success("Thanh Toán Thành Công");
+    //     } catch (error) {
+    //         toast.error("Thanh Toán Thất Bại");
+    //         console.error("Error payment failed:", error);
+    //     }
+    // };
 
-    const handlePaymentClick = async () => {
-        await createCheckout();
-    };
+    // const handlePaymentClick = async () => {
+    //     await createCheckout();
+    // };
 
 
     const renderAdultFields = () => {
@@ -193,7 +193,7 @@ const InfomationTour = () => {
                                 <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
                                 <input
                                     type="date"
-                                    id={`adult-dateOfBirth-${i}`}
+                                    id={`child-dateOfBirth-${i}`}
                                     className="form-control fullName hotel-flight-input"
                                     min={new Date(new Date().setFullYear(new Date().getFullYear() - 12)).toISOString().split('T')[0]}
                                     max={new Date().toISOString().split('T')[0]}
@@ -292,7 +292,15 @@ const InfomationTour = () => {
                                                     className="form-control fullName hotel-flight-input"
                                                     placeholder="Nhập số lượng"
                                                     value={adultCount === 0 ? '' : adultCount}
-                                                    onChange={(e) => setAdultCount(parseInt(e.target.value) || 0)}
+                                                    onChange={(e) => {
+                                                        const newAdultCount = parseInt(e.target.value) || 0;
+                                                        if (newAdultCount + childCount > tourDetailCustomer?.tourTimeSet[0]?.slotNumber) {
+                                                            toast.error(`Tổng số người lớn và trẻ em phải nhỏ hơn hoặc bằng ${tourDetailCustomer?.tourTimeSet[0]?.slotNumber}.`);
+                                                            e.target.value = adultCount;
+                                                        } else {
+                                                            setAdultCount(newAdultCount);
+                                                        }
+                                                    }}                                                    
                                                 />
                                             </div>
                                         </div>
@@ -305,7 +313,16 @@ const InfomationTour = () => {
                                                     className="form-control fullName hotel-flight-input"
                                                     placeholder="Nhập số lượng"
                                                     value={childCount === 0 ? '' : childCount}
-                                                    onChange={(e) => setChildCount(parseInt(e.target.value) || 0)}
+                                                    onChange={(e) => {
+                                                        const newChildCount = parseInt(e.target.value) || 0;
+                                                        if (adultCount + newChildCount > tourDetailCustomer?.tourTimeSet[0]?.slotNumber) {
+                                                            toast.error(`Tổng số người lớn và trẻ em phải nhỏ hơn hoặc bằng ${tourDetailCustomer?.tourTimeSet[0]?.slotNumber}.`);
+                                                            e.target.value = childCount;
+                                                        } else {
+                                                            setChildCount(newChildCount);
+                                                        }
+                                                    }}
+                                                    disabled={adultCount === 0}
                                                 />
                                             </div>
                                         </div>
@@ -317,31 +334,7 @@ const InfomationTour = () => {
                                         <div className="title-section mb-3 title-hotel-flight-infor">Thông tin hành khách</div>
                                         {renderAdultFields()}
                                         {renderChildFields()}
-                                        <div className="payment-options">
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    name="paid"
-                                                    value={50}
-                                                    checked={paid === 50}
-                                                    onChange={() => setPaid(50)}
-                                                />
-                                                Thanh toán trước 50%
-                                            </label>
-                                            <label>
-                                                <input
-                                                    type="radio"
-                                                    name="paid"
-                                                    value={100}
-                                                    checked={paid === 100}
-                                                    onChange={() => setPaid(100)}
-                                                />
-                                                Thanh toán trước 100%
-                                            </label>
-                                        </div>
-
-                                        {/* Button to create the tour order */}
-                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>                                    </section>
+                                                                            </section>
                                 </div>
                             </section>
 
@@ -415,12 +408,37 @@ const InfomationTour = () => {
                                                     <td className="t-price text-right">{(((adultCount * tourDetailCustomer?.price) + (childCount * (tourDetailCustomer?.price) / 2)) / 2).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp;</td>
 
                                                 </tr>
-                                                <Link to="/orderHistory">
+                                                <div className="payment-options">
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={50}
+                                                    checked={paid === 50}
+                                                    onChange={() => setPaid(50)}
+                                                />
+                                                Thanh toán trước 50%
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={100}
+                                                    checked={paid === 100}
+                                                    onChange={() => setPaid(100)}
+                                                />
+                                                Thanh toán trước 100%
+                                            </label>
+                                        </div>
+
+                                        {/* Button to create the tour order */}
+                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>
+                                                {/* <Link to="/orderHistory">
                                                     <button
                                                         onClick={handlePaymentClick}
 
                                                         className="btn btn-primary btn-order">Thanh Toán Đặt Cọc</button>
-                                                </Link>
+                                                </Link> */}
                                             </tr>
 
                                         </tbody></table>

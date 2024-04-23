@@ -95,7 +95,7 @@ const OrderBookTourDetail = () => {
       console("reponse", response);
       toast.success("Thanh Toán Thành Công");
     } catch (error) {
-     // toast.error("Thanh Toán Thất Bại");
+      // toast.error("Thanh Toán Thất Bại");
       toast.success("Thanh Toán Thành Công ");
 
       console.error("Error payment failed:", error);
@@ -174,8 +174,28 @@ const OrderBookTourDetail = () => {
                       </div>
                       <div className="col-2">
                         <p>
-                          <span className={orderDetail?.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
-                            {orderDetail?.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
+                          <span
+                            className={
+                              orderDetail?.orderStatus === "NOT_DONE"
+                                ? "badge bg-info text-dark"
+                                : orderDetail?.orderStatus === "DONE"
+                                  ? "badge bg-success"
+                                  : orderDetail?.orderStatus === "WAITING_CANCEL"
+                                    ? "badge bg-warning text-dark"
+                                    : orderDetail?.orderStatus === "CANCEL"
+                                      ? "badge bg-danger"
+                                      : ""
+                            }
+                          >
+                            {orderDetail?.orderStatus === "NOT_DONE"
+                              ? "CHƯA HOÀN TẤT"
+                              : orderDetail?.orderStatus === "DONE"
+                                ? "HOÀN TẤT"
+                                : orderDetail?.orderStatus === "WAITING_CANCEL"
+                                  ? "CHỜ HUỶ"
+                                  : orderDetail?.orderStatus === "CANCEL"
+                                    ? "HUỶ BỎ"
+                                    : ""}
                           </span>
                         </p>
                         <p>
