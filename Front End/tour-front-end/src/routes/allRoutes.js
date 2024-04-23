@@ -24,6 +24,7 @@ import SlotTourStaff from "../pages/Staff/SlotTourStaff";
 import SlotTourStaffDetai from "../pages/Staff/SlotTourStaffDetai";
 import Contact from "../pages/Home/contact";
 import ListTransaction from "../pages/Staff/ListTransaction";
+import ListOrderStatus from "../pages/Admin/listOrderStatus";
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -61,8 +62,8 @@ const authRoutes = [
   { path: "/slotTourStaffDetail", component: <SlotTourStaffDetai/>},
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
   { path: "/contact", component: <Contact/>},
-  { path: "/listTransaction", component: <ListTransaction/>}
-
+  { path: "/listTransaction", component: <ListTransaction/>},
+  { path: "/listOrderStatus", component: <ListOrderStatus /> }
 
 
 ];
