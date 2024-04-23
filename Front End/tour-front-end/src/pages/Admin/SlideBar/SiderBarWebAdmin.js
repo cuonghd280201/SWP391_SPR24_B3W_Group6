@@ -65,6 +65,13 @@ const SiderBarWebAdmin = ({ choose }) => {
        className: "listAccountHR",
        link: "/listOrderStatus", // Add the link property
      },
+     {
+      label: "Báo Cáo Giao Dịch",
+      key: "menu-key/4",
+      icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
+      className: "listTransaction",
+      link: "/listTransaction", // Add the link property
+    },
    
   ];
 

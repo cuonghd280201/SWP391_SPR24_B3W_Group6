@@ -6,6 +6,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
 import tourServices from "../../services/tour.services";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 const { Content } = Layout;
 
 const ListTourStaffDetail = () => {
@@ -149,14 +151,15 @@ const ListTourStaffDetail = () => {
                         <div className="destination-entry img" style={{ backgroundImage: `url(${tourTime?.image})` }}>
                           {/* Add the remove button */}
                           {/* <button className="remove-button" onClick={() => handleRemoveImage(index)}>X</button> */}
-                          <button className="remove-button" onClick={() => (index)}>X</button>
-
+                          <button className="remove-button" onClick={() => (index)}>
+                            <FontAwesomeIcon icon={faTimes} />
+                          </button>
                         </div>
                       </div>
                     ))}
                     <div className="col-md-4">
-                      <button className="add-image-button" onClick={""}>
-                        Thêm hình ảnh
+                      <button className="destination-entry img" onClick={""}>
+                        <FontAwesomeIcon icon={faPlusCircle} size="lg"/>
                       </button>
                     </div>
                   </div>

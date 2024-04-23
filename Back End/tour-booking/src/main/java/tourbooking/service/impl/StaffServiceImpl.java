@@ -6,24 +6,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tourbooking.common.OrderStatus;
+import tourbooking.common.TimeStatus;
 import tourbooking.common.TourStatus;
 import tourbooking.dto.*;
+import tourbooking.entity.Banner;
 import tourbooking.entity.Orders;
 import tourbooking.entity.Payment;
 import tourbooking.entity.Tour.*;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
+import tourbooking.service.BannerService;
 import tourbooking.service.StaffService;
-import tourbooking.service.TourDetailService;
 import tourbooking.utils.DateTimeUtils;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.time.Period;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,25 +41,76 @@ public class StaffServiceImpl implements StaffService {
     private final TourImagesRepository tourImagesRepository;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
+    private final TourVisitorRepository tourVisitorRepository;
     private final OrderRepository orderRepository;
     private final TourTimeServiceImpl tourTimeService;
     private final TourDetailServiceImpl tourDetailService;
     private final TourScheduleServiceImpl tourScheduleService;
     private final TourImageServiceImpl tourImageService;
+    private final BannerServiceImpl bannerService;
+    private final BannerRepository bannerRepository;
     private final PaymentServiceImpl paymentService;
     private final TransactionServiceImpl transactionService;
-    private final TourVisitorRepository tourVisitorRepository;
 
     @Override
     public ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm) {
         User user = userRepository.findByFireBaseUid(principal.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        List<String> listMessage = new ArrayList<>();
+
+        if(tourCreateForm.getTourDetailCreateForm() == null){
+            listMessage.add("Tour Detail needed to be input.");
+        }
+
+        if(tourCreateForm.getListTourSchedule() == null){
+            listMessage.add("Tour Schedule needed to be input.");
+        }else{
+            int scheduleDayDistance = tourCreateForm.getListTourSchedule().size();
+            Set<TourTimeCreateForm> tourTimeCreateFormSet = tourCreateForm.getTourTimeCreateFormSet();
+            for(TourTimeCreateForm tourTimeCreateForm : tourTimeCreateFormSet){
+                LocalDate startDate = tourTimeCreateForm.getStartDate();
+                LocalDate endDate = tourTimeCreateForm.getEndDate();
+                LocalDate dateNow = LocalDate.now();
+
+                int startDateResult = DateTimeUtils.actualCompareInfo(dateNow, startDate);
+                if(startDateResult >= 0){
+                    listMessage.add("Start Date " + startDate+ " must be in the future.");
+                }
+
+                int endDateResult = DateTimeUtils.actualCompareInfo(dateNow, endDate);
+                if(endDateResult >= 0){
+                    listMessage.add("End Date " + endDate + " must be in the future.");
+                }
+
+                int bothDateResult = DateTimeUtils.actualCompareInfo(startDate, endDate);
+                if(endDateResult >= 0){
+                    listMessage.add("End Date " + endDate + " must be after Start Date " + startDate + " .");
+                }
+
+                Period period = startDate.until(endDate);
+                int dayDistance = period.getDays();
+                if((dayDistance + 1) != scheduleDayDistance){
+                    listMessage.add("The number from Start Date " + startDate + " to End Date " + endDate + " doesn't match with Schedule Days.");
+                }
+            }
+        }
+
+        if (!listMessage.isEmpty()){
+            return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "These fields do not validate!", listMessage));
+        }
 
         TourDetail tourDetail = tourDetailService.createTourDetail(user, tourCreateForm.getTourDetailCreateForm());
-
-        Set<TourTime> tourTimeSet = tourTimeService.createTime(tourCreateForm.getTourTimeCreateFormSet());
         Set<TourSchedule> tourScheduleSet = tourScheduleService.createTourSchedule(tourCreateForm.getListTourSchedule());
-        Set<TourImages> tourImagesSet = tourImageService.createImage(tourCreateForm.getTourImageCreateForms());
+
+        Set<TourTime> tourTimeSet = new HashSet<>();
+        if(tourCreateForm.getTourTimeCreateFormSet() != null){
+            tourTimeSet = tourTimeService.createTime(tourCreateForm.getTourTimeCreateFormSet());
+        }
+
+        Set<TourImages> tourImagesSet = new HashSet<>();
+        if(tourCreateForm.getTourImageCreateForms() != null){
+            tourImagesSet = tourImageService.createImage(tourCreateForm.getTourImageCreateForms());
+        }
 
         Tour tour = new Tour();
         tour.setTitle(tourCreateForm.getTitle());
@@ -72,9 +128,11 @@ public class StaffServiceImpl implements StaffService {
         tour.setTourSchedules(tourScheduleSet);
         tour.setTourImagesSet(tourImagesSet);
         tourRepository.save(tour);
-        for(TourTime tourTime: tourTimeSet) {
-            tourTime.setTour(tour);
-            tourTimeRepository.save(tourTime);
+        if(tourCreateForm.getTourTimeCreateFormSet() != null) {
+            for (TourTime tourTime : tourTimeSet) {
+                tourTime.setTour(tour);
+                tourTimeRepository.save(tourTime);
+            }
         }
 
         for(TourSchedule tourSchedule : tourScheduleSet){
@@ -82,9 +140,11 @@ public class StaffServiceImpl implements StaffService {
             tourScheduleRepository.save(tourSchedule);
         }
 
-        for(TourImages tourImages : tourImagesSet){
-            tourImages.setTour(tour);
-            tourImagesRepository.save(tourImages);
+        if(tourCreateForm.getTourImageCreateForms() != null) {
+            for (TourImages tourImages : tourImagesSet) {
+                tourImages.setTour(tour);
+                tourImagesRepository.save(tourImages);
+            }
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
@@ -93,6 +153,40 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseEntity<BaseResponseDTO> addMoreTime(TourTimeAddMoreForm tourTimeAddMoreForm) {
         Tour tour = tourRepository.findById(tourTimeAddMoreForm.getId()).orElseThrow(() -> new ResourceNotFoundException("Tour not found!"));
+
+        List<String> listMessage = new ArrayList<>();
+        int scheduleDayDistance = tour.getTourSchedules().size();
+        Set<TourTimeCreateForm> tourTimeCreateFormSet = tourTimeAddMoreForm.getTourTimeCreateFormSet();
+        for(TourTimeCreateForm tourTimeCreateForm : tourTimeCreateFormSet){
+            LocalDate startDate = tourTimeCreateForm.getStartDate();
+            LocalDate endDate = tourTimeCreateForm.getEndDate();
+            LocalDate dateNow = LocalDate.now();
+
+            int startDateResult = DateTimeUtils.actualCompareInfo(dateNow, startDate);
+            if(startDateResult >= 0){
+                listMessage.add("Start Date " + startDate+ " must be in the future.");
+            }
+
+            int endDateResult = DateTimeUtils.actualCompareInfo(dateNow, endDate);
+            if(endDateResult >= 0){
+                listMessage.add("End Date " + endDate + " must be in the future.");
+            }
+
+            int bothDateResult = DateTimeUtils.actualCompareInfo(startDate, endDate);
+            if(endDateResult >= 0){
+                listMessage.add("End Date " + endDate + " must be after Start Date " + startDate + " .");
+            }
+
+            Period period = startDate.until(endDate);
+            int dayDistance = period.getDays();
+            if((dayDistance + 1) != scheduleDayDistance){
+                listMessage.add("The number from Start Date " + startDate + " to End Date " + endDate + " doesn't match with Schedule Days.");
+            }
+        }
+
+        if (!listMessage.isEmpty()){
+            return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "These fields do not validate!", listMessage));
+        }
 
         Set<TourTime> tourTimeSet = tourTimeService.createTime(tourTimeAddMoreForm.getTourTimeCreateFormSet());
         tour.setTourTimeSet(tourTimeSet);
@@ -107,13 +201,85 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseEntity<BaseResponseDTO> updateTime(TourTimeDTO tourTimeDTO) {
         TourTime tourTime = tourTimeService.findById(tourTimeDTO.getId());
+
+        if(tourTimeDTO.getStartDate() == null)
+            tourTime.setStartTime(tourTime.getStartTime());
+        if(tourTimeDTO.getEndDate() == null)
+            tourTime.setEndDate(tourTime.getEndDate());
+        if(tourTimeDTO.getStartTime() == null)
+            tourTime.setStartDate(tourTime.getStartDate());
+        if(tourTimeDTO.getSlotNumber() == 0){
+            tourTime.setSlotNumber(tourTime.getSlotNumber());
+            tourTime.setSlotNumberActual(tourTime.getSlotNumberActual());
+        }
+
+        Tour tour = tourTime.getTour();
+        List<String> listMessage = new ArrayList<>();
+        int scheduleDayDistance = tour.getTourSchedules().size();
+
+        LocalDate startDate = tourTimeDTO.getStartDate();
+        LocalDate endDate = tourTimeDTO.getEndDate();
+        LocalDate dateNow = LocalDate.now();
+
+        int startDateResult = DateTimeUtils.actualCompareInfo(dateNow, startDate);
+        if (startDateResult >= 0) {
+            listMessage.add("Start Date " + startDate + " must be in the future.");
+        }
+
+        int endDateResult = DateTimeUtils.actualCompareInfo(dateNow, endDate);
+        if (endDateResult >= 0) {
+            listMessage.add("End Date " + endDate + " must be in the future.");
+        }
+
+        int bothDateResult = DateTimeUtils.actualCompareInfo(startDate, endDate);
+        if (endDateResult >= 0) {
+            listMessage.add("End Date " + endDate + " must be after Start Date " + startDate + " .");
+        }
+
+        Period period = startDate.until(endDate);
+        int dayDistance = period.getDays();
+        if ((dayDistance + 1) != scheduleDayDistance) {
+            listMessage.add("The number from Start Date " + startDate + " to End Date " + endDate + " doesn't match with Schedule Days.");
+        }
+
+        if (!listMessage.isEmpty()) {
+            return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "These fields do not validate!", listMessage));
+        }
+
         int dateCompareResult = DateTimeUtils.actualCompareInfo(LocalDate.now(), tourTime.getEndDate());
-        if(tourTime.getSlotNumberActual() == 0 || dateCompareResult > 0){
+        if (tourTime.getSlotNumberActual() == 0 || dateCompareResult > 0) {
+            tourTimeDTO.setTimeStatus(TimeStatus.ACTIVE);
+            tourTimeDTO.setDeleted(false);
             tourTimeService.updateTime(tourTimeDTO, tourTime);
         }else {
             return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.METHOD_NOT_ALLOWED, "This Time has been booked!"));
         }
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Time Successfully!"));
+    }
+
+//    @Override
+    public ResponseEntity<BaseResponseDTO> cancelTime(UUID timeId) {
+        TourTime tourTime = tourTimeService.findById(timeId);
+
+        tourTime.setTimeStatus(TimeStatus.CANCEL);
+//        int slotNumber = tourTime.getSlotNumber() + tourTime.getSlotNumberActual();
+//        tourTime.setSlotNumber(slotNumber);
+//        tourTime.setSlotNumberActual(0);
+        Set<TourVisitor> tourVisitorSet = tourTime.getTourVisitorSet();
+        for(TourVisitor tourVisitor : tourVisitorSet){
+            tourVisitor.setDeleted(true);
+            tourVisitorRepository.save(tourVisitor);
+        }
+
+        Set<Orders> ordersSET = tourTime.getOrdersSet();
+        for(Orders orders : ordersSET){
+            orders.setRefund(orders.getAmount());
+            orders.setOrderStatus(OrderStatus.CANCEL);
+            orderRepository.save(orders);
+        }
+        tourTimeRepository.save(tourTime);
+
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Cancel Time Successfully!"));
     }
 
     @Override
@@ -149,20 +315,21 @@ public class StaffServiceImpl implements StaffService {
 
          Set<Orders> ordersSet = tourTime.getOrdersSet();
          for(Orders orders : ordersSet){
+             if(!orders.getOrderStatus().equals(OrderStatus.CANCEL)){
+                 GroupVisitorDTO groupVisitorDTO = new GroupVisitorDTO();
+                 groupVisitorDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
+                 groupVisitorDTO.setOrderDTO(modelMapper.map(orders, OrderDTO.class));
 
-             GroupVisitorDTO groupVisitorDTO = new GroupVisitorDTO();
-             groupVisitorDTO.setUserDTO(modelMapper.map(orders.getUser(), UserDTO.class));
-             groupVisitorDTO.setOrderDTO(modelMapper.map(orders, OrderDTO.class));
-
-             Set<TourVisitorDTO> tourVisitorDTOSet = new HashSet<>();
-             Set<TourVisitor> tourVisitorSet = orders.getTourTime().getTourVisitorSet();
-             for(TourVisitor tourVisitor : tourVisitorSet){
-                 TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
-                 if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId()))
-                    tourVisitorDTOSet.add(tourVisitorDTO);
+                 Set<TourVisitorDTO> tourVisitorDTOSet = new HashSet<>();
+                 Set<TourVisitor> tourVisitorSet = orders.getTourTime().getTourVisitorSet();
+                 for(TourVisitor tourVisitor : tourVisitorSet){
+                     TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+                     if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId()))
+                         tourVisitorDTOSet.add(tourVisitorDTO);
+                 }
+                 groupVisitorDTO.setTourVisitorDTOSet(tourVisitorDTOSet);
+                 groupVisitorDTOSet.add(groupVisitorDTO);
              }
-             groupVisitorDTO.setTourVisitorDTOSet(tourVisitorDTOSet);
-             groupVisitorDTOSet.add(groupVisitorDTO);
          }
 
          TourTimeDetailDTO tourTimeDetailDTO = new TourTimeDetailDTO();
@@ -201,6 +368,32 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public ResponseEntity<BaseResponseDTO> addMoreBanner(BannerAddMoreForm bannerAddMoreForm) {
+
+        Set<Banner> bannerSet = bannerService.createBanner(bannerAddMoreForm.getBannerCreateFormSet());
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Add More Banner Successfully"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> updateBanner(BannerDTO banner) {
+        bannerService.updateBanner(banner);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Update Banner Successfully!"));
+    }
+
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> deleteBanner(UUID id) {
+        bannerService.deleteBanner(id);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Delete Banner Successfully!"));
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> viewBannerList() {
+        List<Banner> banner = bannerService.viewBannerList();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "View List Banner Successfully", banner));
+    }
+
+    @Override
     public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId) {
         Orders orders = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found!"));
@@ -215,7 +408,7 @@ public class StaffServiceImpl implements StaffService {
         Set<TourVisitor> tourVisitorSet = new HashSet<>();
         int count = 0;
         for (TourVisitor tourVisitor: tourTime.getTourVisitorSet()
-             ) {
+        ) {
             if (tourVisitor.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId())) {
                 tourVisitor.setTourTime(null);
                 tourVisitorRepository.save(tourVisitor);

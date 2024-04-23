@@ -72,6 +72,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         if (orderRepository.checkOrderHaveAllPaymentDone(orders)) {
             System.out.println("check order");
+
             orders.setPriceAfterPaid(BigDecimal.ZERO);
             orders.setAmount(BigDecimal.ZERO);
             orders.setOrderStatus(OrderStatus.DONE);

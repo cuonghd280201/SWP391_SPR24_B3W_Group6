@@ -9,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tourbooking.common.OrderStatus;
 import tourbooking.dto.BaseResponseDTO;
+import tourbooking.dto.OrderDetailDTO;
 import tourbooking.dto.UserDTO;
 import tourbooking.entity.Transaction;
 import tourbooking.entity.User;
 import tourbooking.service.AdminService;
+import tourbooking.service.DashboardService;
 import tourbooking.service.OrderService;
 import tourbooking.service.TransactionService;
 import tourbooking.service.impl.AdminServiceImpl;
@@ -31,20 +34,28 @@ public class DashboardController {
 
 //    @Autowired
     private final AdminService adminService;
+    private final DashboardService dashboardService;
     private final UserServiceImpl userService;
     private final TransactionService transactionService;
     private final OrderService orderService;
 
-    @GetMapping("/dashboard")
+    @GetMapping("/getAllUser")
     public ResponseEntity<BaseResponseDTO> dashboard() {
-        List<User> userList = userService.getAllUsers();
-        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", userList));
+        List<UserDTO> userList = userService.getAllUsers();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get All User Successfully", userList));
+    }
+
+    @GetMapping("/getAllStaff")
+    public ResponseEntity<BaseResponseDTO> dashboard1() {
+        List<UserDTO> userList = userService.getAllStaff();
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Get All Staff Successfully", userList));
     }
 
     @GetMapping("/getRoleNumber")
     public ResponseEntity<BaseResponseDTO> getRoleNumber() {
         return adminService.countAllUser();
     }
+
     @GetMapping("/transactions")
     public ResponseEntity<BaseResponseDTO> getAllTransaction(Principal principal,
                                                              @Min(value = 0, message = "pageNumber must be greater than or equal to 0")
@@ -63,8 +74,19 @@ public class DashboardController {
         return transactionService.getAllTransaction(principal,pageNumber,pageSize,sortBy,sortOrder);
         // Xử lý dữ liệu và trả về response
     }
+
     @GetMapping("/orderSumary")
     public ResponseEntity<BaseResponseDTO> getOrderSumary() {
         return adminService.getOrderSummary();
     }
+
+    @GetMapping("/orderStatus")
+    public ResponseEntity<BaseResponseDTO> getAllOrderByStatus( @RequestParam OrderStatus orderStatus) {
+        return adminService.getAllOrderByStatus(orderStatus);
+    }
+    @PostMapping("order/revenue")
+    public ResponseEntity<BaseResponseDTO> revenueStatistic(@RequestParam int days) {
+        return dashboardService.revenueStatistic(days);
+    }
+
 }
