@@ -19,8 +19,23 @@ const getListBanner = async () => {
     );
     return response;
   };
+
+  const createBanner = async (formData) => {
+
+    const baseUrl = urlConstant.endpoint.tour.createBanner;
+    try {
+      const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "POST", formData);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      throw error;
+    }
+  };
+
+
 export default {
     getListBanner,
-    deleteBanner
+    deleteBanner,
+    createBanner
 
 }

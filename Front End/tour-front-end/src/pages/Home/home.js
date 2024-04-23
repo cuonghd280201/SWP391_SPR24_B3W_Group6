@@ -22,28 +22,27 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
     const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
     const [totalPages, setTotalPages] = useState(1); // Add state for total pages
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
 
     // Lấy dữ liệu các thành phố
     const [cities, setCities] = useState([]);
 
     useEffect(() => {
-        // Fetch city data when the component mounts
         const fetchDataCity = async () => {
             try {
-                // Fetch city data from the API
                 const response = await tourServices.getAllCity();
-                setCities(response.data.data); // Update cities state with the fetched data
-                setLoading(false); // Set loading to false once data is fetched
+                setCities(response.data.data);
+                setLoading(false);
             } catch (err) {
-                // Handle error and set error state
                 setError("Error fetching city data");
-                setLoading(false); // Set loading to false in case of an error
+                setLoading(false);
             }
         };
 
         fetchDataCity();
     }, []);
+
+
 
 
 
@@ -64,38 +63,59 @@ const Home = () => {
         }
     };
 
-    const handlePrevious = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const handleNext = () => {
-        setCurrentPage(currentPage + 1);
-    };
 
     const formatPrice = (price) => {
         return (price).toLocaleString('vi-VN').replace(/,/g, '.');
     };
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
-
-
-    //Tim Chuyen Di
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     const [keyword, setKeyword] = useState('');
-    const navigate = useNavigate();
+    const [endLocation, setEndLocation] = useState('');
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(100000000);
+    const [startDate, setStartDate] = useState(null);
+
+
+    const handleMinPriceChange = (e) => {
+        setMinPrice(Number(e.target.value));
+    };
+
+    const handleMaxPriceChange = (e) => {
+        setMaxPrice(Number(e.target.value));
+    };
+
+    const handleDateChange = (event) => {
+        const dateValue = event.target.value; 
+        const formattedDate = formatDate(dateValue); 
+        setStartDate(formattedDate); 
+    };
+
+    const formatDate = (dateString) => {
+        const [year, month, day] = dateString.split('-');
+        return `${day}-${month}-${year}`;
+    };
 
     const fetchData = async () => {
-        try { 
+        try {
             const sortBy = 'title';
             const sortOrder = 'desc';
-            const response = await tourServices.searchAllTour(currentPage - 1, pageSize, sortBy, sortOrder, keyword);
-
+            const decodedKeyword = decodeURIComponent(keyword);
+            const response = await tourServices.searchAllTour(currentPage - 1, pageSize, sortBy, sortOrder, decodedKeyword, endLocation, minPrice, maxPrice, startDate);
             setTours(response.data.data);
+            console.log('searchData:', response);
+
         } catch (error) {
             console.error('Lỗi khi gọi API:', error);
         }
     };
+
+    //Giá trị lớn nhỏ 
+
+
+
     return (
         <>
             <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
@@ -110,7 +130,7 @@ const Home = () => {
                 </div>
             </div>
 
-
+            {/* 
             <section className="ftco-section justify-content-end ftco-search">
                 <div className="container-wrap ml-auto">
                     <div className="row">
@@ -163,7 +183,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <h1></h1>
+            <h1></h1> */}
 
             <section className="ftco-section">
                 <div className="container-fluid">
@@ -180,32 +200,75 @@ const Home = () => {
                                                 onChange={(e) => setKeyword(e.target.value)}
                                                 placeholder="Nhập từ khóa..."
                                             />                                        </div>
+
                                         <div className="form-group">
                                             <div className="select-wrap one-third">
-                                                <div className="icon"><span className="ion-ios-arrow-down" /></div>
-                                                <select name id className="form-control" placeholder="Keyword search">
-                                                    <option value>Địa điểm Đi</option>
-                                                    <option value>San Francisco USA</option>
-                                                    <option value>Berlin Germany</option>
-                                                    <option value>Lodon United Kingdom</option>
-                                                    <option value>Paris Italy</option>
+                                                <div className="icon">
+                                                    <span className="ion-ios-arrow-down" />
+                                                </div>
+                                                <select
+                                                    name="endLocation"
+                                                    id="endLocation"
+                                                    className="form-control"
+                                                    value={endLocation}
+                                                    onChange={(e) => setEndLocation(e.target.value)}
+                                                >
+                                                    <option value="">Điểm Kết Thúc</option>
+                                                    {cities.map((city, index) => (
+                                                        <option key={index} value={city.name}>
+                                                            {city.name}
+                                                        </option>
+                                                    ))}
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <input type="text" id="checkin_date" className="form-control checkin_date" placeholder="Ngày Đi" />
-                                        </div>
-                                        <div className="form-group">
-                                            <input type="text" id="checkout_date" className="form-control checkout_date" placeholder="Ngày Về" />
-                                        </div>
+                <div className="select-wrap one-third">
+                    <div className="form-group">
+                        <Input type="date" onChange={handleDateChange} />
+                    </div>
+                </div>
+            </div>
                                         <div className="form-group">
                                             <div className="range-slider">
                                                 <span>
-                                                    <input type="number" defaultValue={25000} min={0} max={120000} />	-
-                                                    <input type="number" defaultValue={50000} min={0} max={120000} />
+                                                    {/* Number input for minPrice */}
+                                                    <input
+                                                        type="number"
+                                                        value={minPrice}
+                                                        min={0}
+                                                        max={100000000}
+                                                        onChange={handleMinPriceChange}
+                                                    />
+                                                    -
+                                                    {/* Number input for maxPrice */}
+                                                    <input
+                                                        type="number"
+                                                        value={maxPrice}
+                                                        min={0}
+                                                        max={100000000}
+                                                        onChange={handleMaxPriceChange}
+                                                    />
                                                 </span>
-                                                <input defaultValue={1000} min={0} max={120000} step={500} type="range" />
-                                                <input defaultValue={50000} min={0} max={120000} step={500} type="range" />
+                                                {/* Range input for minPrice */}
+                                                <input
+                                                    type="range"
+                                                    value={minPrice}
+                                                    min={0}
+                                                    max={100000000}
+                                                    step={500000}
+                                                    onChange={handleMinPriceChange}
+                                                />
+                                                {/* Range input for maxPrice */}
+                                                <input
+                                                    type="range"
+                                                    value={maxPrice}
+                                                    min={0}
+                                                    max={100000000}
+                                                    step={500000}
+                                                    onChange={handleMaxPriceChange}
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -265,18 +328,15 @@ const Home = () => {
 
                             </div>
 
-
                             <div className="row mt-5">
                                 <div className="col text-center">
                                     <div className="block-27">
                                         <ul>
-                                            <li><a href="#" onClick={handlePrevious}>&lt;</a></li>
-                                            {Array.from({ length: totalPages }, (_, index) => (
-                                                <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
-                                                    <a href="#" onClick={() => setCurrentPage(index + 1)}>{index + 1}</a>
-                                                </li>
-                                            ))}
-                                            <li><a href="#" onClick={handleNext}>&gt;</a></li>
+                                            <li><a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>&lt;</a></li>
+                                            <li className={currentPage ? 'active' : ''}>
+                                                <span> {currentPage}</span>
+                                            </li>
+                                            <li><a href="#" onClick={() => handlePageChange(currentPage + 1)}>&gt;</a></li>
                                         </ul>
                                     </div>
                                 </div>

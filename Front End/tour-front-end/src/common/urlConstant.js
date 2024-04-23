@@ -17,6 +17,9 @@ export default {
             getSlotDetailByID: "/staff/tourTime/getTimeDetail/${timeId}",
             filterTour: "/tour/filter",
             keyWord: "keyWord=${keyWord}",
+            endLocation:"endLocation=${endLocation}",
+            price:"minPrice=${minPrice}&maxPrice=${maxPrice}",
+            startDate:"startDate=${startDate}",
             city:"/city/all",
         }, 
         order: {

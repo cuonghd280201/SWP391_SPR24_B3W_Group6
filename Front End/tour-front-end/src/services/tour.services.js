@@ -15,19 +15,38 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
   return response;
 };
 
-const searchAllTour = async (currentPage, pageSize, sortBy, sortOrder, keyWord) => {
+const searchAllTour = async (currentPage, pageSize, sortBy, sortOrder, keyWord, endLocation, minPrice, maxPrice, startDate) => {
   const serviceUrl = urlConstant.endpoint.tour.filterTour + "?";
   const pagingUrl = urlConstant.endpoint.tour.paging
-    .replace("${currentPage}", currentPage)
-    .replace("${pageSize}", pageSize);
+      .replace("${currentPage}", currentPage)
+      .replace("${pageSize}", pageSize);
   const sortUrl = urlConstant.endpoint.tour.sorting
-    .replace("${sortBy}", sortBy)
-    .replace("${sortOrder}", sortOrder);
-  const keywordUrl = urlConstant.endpoint.tour.keyWord.replace("${keyWord}", keyWord);
-  const fullUrl = serviceUrl + pagingUrl + '&' + sortUrl + '&' + keywordUrl;
+      .replace("${sortBy}", sortBy)
+      .replace("${sortOrder}", sortOrder);
+
+  let fullUrl = serviceUrl + pagingUrl + '&' + sortUrl;
+  if (keyWord !== null && keyWord !== '') {
+      const keywordUrl = urlConstant.endpoint.tour.keyWord.replace("${keyWord}", keyWord);
+      fullUrl += '&' + keywordUrl;
+  }
+  if (endLocation !== null && endLocation !== '') {
+      const endLocationUrl = urlConstant.endpoint.tour.endLocation.replace("${endLocation}", endLocation);
+      fullUrl += '&' + endLocationUrl;
+  }
+  if (minPrice !== null && minPrice >= 0 && maxPrice !== null && maxPrice >= 0) {
+      const priceUrl = urlConstant.endpoint.tour.price
+          .replace("${minPrice}", minPrice)
+          .replace("${maxPrice}", maxPrice);
+      fullUrl += '&' + priceUrl;
+  }
+  if (startDate !== null && startDate !== '') {
+      const startDateUrl = urlConstant.endpoint.tour.startDate.replace("${startDate}", startDate);
+      fullUrl += '&' + startDateUrl;
+  }
+
   const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "POST");
   return response;
-}
+};
 
 const getDetailTourByCustomer = async (tourId) => {
   const serviceUrl =

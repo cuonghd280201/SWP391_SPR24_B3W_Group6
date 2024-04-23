@@ -84,7 +84,7 @@ const SlotTourStaffDetai = () => {
   return (
     <React.Fragment>
       <Layout style={{ minHeight: "100vh" }}>
-        <SiderBarWebStaff choose={"menu-key/2"}></SiderBarWebStaff>
+        <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
         <Layout>
           <NavBarWebStaff></NavBarWebStaff>
           <div

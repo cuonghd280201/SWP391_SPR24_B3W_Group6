@@ -9,8 +9,8 @@ const { Option } = Select;
 const Step1Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
     const [uploadedImageUrl, setUploadedImageUrl] = useState(formData.coverImage);
-    const [loading, setLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     const handleSubmit = (values) => {
         values.coverImage = uploadedImageUrl;
