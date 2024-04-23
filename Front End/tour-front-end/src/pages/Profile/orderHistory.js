@@ -250,13 +250,13 @@ const OrderHistory = () => {
                                                                         </div>
 
                                                                         <p className="mb-0">
-                                                                            <span className="text-muted">Tiền Trả:<b> {order.paid}</b> </span>
+                                                                            <span>Tiền Trả:<b> {order.paid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </span>
                                                                         </p>
                                                                         <p className="mb-0">
-                                                                            <span className="text-muted">Số tiền thanh còn lại:<b> {order.priceAfterPaid}</b> </span>
+                                                                            <span>Số tiền thanh còn lại:<b> {order.priceAfterPaid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </span>
                                                                         </p>
-                                                                        <p className="card-text">
-                                                                            <small className="text-muted">Số tiền đã thanh toán :<b> {order.amount}</b> </small>
+                                                                        <p className="mb-0">
+                                                                            <small>Số tiền đã thanh toán :<b> {order.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </small>
                                                                         </p>
 
                                                                     </div>
@@ -287,13 +287,34 @@ const OrderHistory = () => {
                                                                                     : ""}
                                                                 </span>
 
-                                                                <h5 className="text-primary fw-bold">{order.price}₫</h5>
+                                                                <h5 className="text-primary fw-bold">{order.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h5>
                                                                 <div className="destination">
                                                                     <div className="text p-2">
                                                                         <p className="bottom-area d-flex">
                                                                             <span className="ml-auto">
 
-                                                                                <Button onClick={() => showDeleteModal(order.id)}>
+                                                                                <Button  style={{
+                                                                                        fontSize: "15px",
+                                                                                        color: "red",
+                                                                                        textDecoration: "none",
+                                                                                        padding: "8px 16px",
+                                                                                        border: "1px solid red",
+                                                                                        borderRadius: "4px",
+                                                                                        transition:
+                                                                                            "background-color 0.3s, color 0.3s",
+                                                                                        display: "flex",
+                                                                                        alignItems: "center",
+                                                                                    }}
+                                                                                    onMouseEnter={(e) => {
+                                                                                        e.target.style.backgroundColor =
+                                                                                            "red";
+                                                                                        e.target.style.color = "#fff";
+                                                                                    }}
+                                                                                    onMouseLeave={(e) => {
+                                                                                        e.target.style.backgroundColor =
+                                                                                            "transparent";
+                                                                                        e.target.style.color = "blueviolet";
+                                                                                    }} onClick={() => showDeleteModal(order.id)}>
                                                                                     Hủy
                                                                                 </Button>
                                                                             </span>

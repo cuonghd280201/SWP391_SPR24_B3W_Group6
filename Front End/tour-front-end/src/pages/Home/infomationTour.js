@@ -193,7 +193,7 @@ const InfomationTour = () => {
                                 <label className="pb-1 font-700">Ngày Sinh <span className="text-danger">*</span></label>
                                 <input
                                     type="date"
-                                    id={`adult-dateOfBirth-${i}`}
+                                    id={`child-dateOfBirth-${i}`}
                                     className="form-control fullName hotel-flight-input"
                                     min={new Date(new Date().setFullYear(new Date().getFullYear() - 12)).toISOString().split('T')[0]}
                                     max={new Date().toISOString().split('T')[0]}
