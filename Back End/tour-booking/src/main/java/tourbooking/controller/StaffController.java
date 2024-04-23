@@ -58,4 +58,8 @@ public class StaffController {
     public ResponseEntity<BaseResponseDTO> updateTourVisitor(@RequestBody TourVisitorDTO tourVisitorDTO){
         return tourVisitorService.updateTourVisitorById(tourVisitorDTO);
     }
+    @PostMapping("/order/cancel/{orderId}")
+    public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal,@PathVariable("orderId") UUID orderId) {
+        return staffService.cancelOrder(principal, orderId);
+    }
 }

@@ -21,4 +21,5 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> listTour();
     ResponseEntity<BaseResponseDTO> searchTour(String title);
     ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id);
+    ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId);
 }

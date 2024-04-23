@@ -34,7 +34,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Transaction createTransaction(User user, Payment payment, String description) {
+    public void createTransaction(User user, Payment payment, String description) {
 
         Transaction transaction = new Transaction();
         transaction.setAmount(payment.getAmount());
@@ -44,7 +44,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTransactionStatus(TransactionStatus.DONE);
         transactionRepository.save(transaction);
 
-        return transaction;
     }
 
     @Override

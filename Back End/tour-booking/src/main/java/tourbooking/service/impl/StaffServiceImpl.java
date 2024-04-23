@@ -5,9 +5,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tourbooking.common.OrderStatus;
 import tourbooking.common.TourStatus;
 import tourbooking.dto.*;
 import tourbooking.entity.Orders;
+import tourbooking.entity.Payment;
 import tourbooking.entity.Tour.*;
 import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
@@ -34,10 +36,14 @@ public class StaffServiceImpl implements StaffService {
     private final TourImagesRepository tourImagesRepository;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
+    private final OrderRepository orderRepository;
     private final TourTimeServiceImpl tourTimeService;
     private final TourDetailServiceImpl tourDetailService;
     private final TourScheduleServiceImpl tourScheduleService;
     private final TourImageServiceImpl tourImageService;
+    private final PaymentServiceImpl paymentService;
+    private final TransactionServiceImpl transactionService;
+    private final TourVisitorRepository tourVisitorRepository;
 
     @Override
     public ResponseEntity<BaseResponseDTO> createTour(Principal principal, TourCreateForm tourCreateForm) {
@@ -152,7 +158,7 @@ public class StaffServiceImpl implements StaffService {
              Set<TourVisitor> tourVisitorSet = orders.getTourTime().getTourVisitorSet();
              for(TourVisitor tourVisitor : tourVisitorSet){
                  TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
-                 if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()))
+                 if(tourVisitorDTO.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId()))
                     tourVisitorDTOSet.add(tourVisitorDTO);
              }
              groupVisitorDTO.setTourVisitorDTOSet(tourVisitorDTOSet);
@@ -192,6 +198,41 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public ResponseEntity<BaseResponseDTO> deactivateTour(Principal principal, UUID id) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId) {
+        Orders orders = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found!"));
+        User user = userRepository.findByFireBaseUid(principal.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        orders.setUpdateBy(user.getName());
+        orders.setOrderStatus(OrderStatus.CANCEL);
+        orders.setRefund(orders.getPaid());
+        orderRepository.save(orders);
+        //Gỡ danh sách khách hàng trong order ra khỏi ds khách hàng của tour time
+        TourTime tourTime = orders.getTourTime();
+        Set<TourVisitor> tourVisitorSet = new HashSet<>();
+        int count = 0;
+        for (TourVisitor tourVisitor: tourTime.getTourVisitorSet()
+             ) {
+            if (tourVisitor.getUserId().equals(orders.getUser().getId()) && tourVisitor.getOrderId().equals(orders.getId())) {
+                tourVisitor.setTourTime(null);
+                tourVisitorRepository.save(tourVisitor);
+                count++;
+
+            } else {
+                tourVisitorSet.add(tourVisitor);
+            }
+        }
+        tourTime.setTourVisitorSet(tourVisitorSet);
+        //Cập nhật số lượng khách hàng
+        tourTime.setSlotNumberActual(tourVisitorSet.size());
+        tourTime.setSlotNumber(tourTime.getSlotNumber() + count);
+        tourTimeRepository.save(tourTime);
+        Payment payment = paymentService.createPaymentRefund(user, orders);
+        transactionService.createTransaction(user, payment, "Hoàn tiền cho đơn hàng " + orderId + " của user " + orders.getUser().getEmail());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Cancel success"));
     }
 
     public TourInfoDTO convertToTourInfoDTO(Tour tour){
