@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Modal } from 'antd';
 import {
     Container,
     Row,
@@ -17,6 +18,12 @@ import {
 import "../Profile/profile.css";
 import orderServices from "../../services/order.services";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import cancelServices from "../../services/cancel.services";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCanArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 
 const OrderHistory = () => {
@@ -88,7 +95,43 @@ const OrderHistory = () => {
             setError(error);
         }
     };
+    // Huy don hang
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [orderIdToDelete, setOrderIdToDelete] = useState(null);
+
+    const showDeleteModal = (id) => {
+        setOrderIdToDelete(id);
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        handleCancleOrder(orderIdToDelete);
+        setIsModalVisible(false);
+        setOrderIdToDelete(null);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+        setOrderIdToDelete(null);
+    };
+
+    const handleCancleOrder = async (orderId) => {
+        try {
+            const response = await cancelServices.customerCancel(orderId);
+
+            if (response.status === 200) {
+                toast.success("Cancel Order successfully!");
+
+            } else {
+                toast.success("Cancel Order successfully!");
+
+            }
+        } catch (error) {
+            console.error("Error cancel fail:", error);
+            toast.error("An error occurred while cancel the order.");
+        }
+    };
 
 
     return (
@@ -201,11 +244,13 @@ const OrderHistory = () => {
                                                                             <span className="s-comment">
                                                                                 <h6 className="fw-bold mb-0"></h6>
                                                                                 <p className="mb-0">Số đặt lịch:<b> {order.id}</b></p>
+                                                                                <p className="mb-0">Tên Chuyến Đi:<b> {order.tourInfoDTO.title}</b></p>
+
                                                                             </span>
                                                                         </div>
 
                                                                         <p className="mb-0">
-                                                                            <span className="text-muted">% Tiền Trả:<b> {order.paid}</b> </span>
+                                                                            <span className="text-muted">Tiền Trả:<b> {order.paid}</b> </span>
                                                                         </p>
                                                                         <p className="mb-0">
                                                                             <span className="text-muted">Số tiền thanh còn lại:<b> {order.priceAfterPaid}</b> </span>
@@ -218,14 +263,51 @@ const OrderHistory = () => {
                                                                 </div>
                                                             </Col>
                                                             <Col md={4} xs={5} className="text-end">
-                                                                <span className={order.orderStatus === "NOT_DONE" ? "badge bg-info text-dark" : "badge bg-success"}>
-                                                                    {order.orderStatus === "NOT_DONE" ? "CHƯA HOÀN TẤT" : "HOÀN TẤT"}
+                                                                <span
+                                                                    className={
+                                                                        order.orderStatus === "NOT_DONE"
+                                                                            ? "badge bg-info text-dark"
+                                                                            : order.orderStatus === "DONE"
+                                                                                ? "badge bg-success"
+                                                                                : order.orderStatus === "WAITING_CANCEL"
+                                                                                    ? "badge bg-warning text-dark"
+                                                                                    : order.orderStatus === "CANCEL"
+                                                                                        ? "badge bg-danger"
+                                                                                        : ""
+                                                                    }
+                                                                >
+                                                                    {order.orderStatus === "NOT_DONE"
+                                                                        ? "CHƯA HOÀN TẤT"
+                                                                        : order.orderStatus === "DONE"
+                                                                            ? "HOÀN TẤT"
+                                                                            : order.orderStatus === "WAITING_CANCEL"
+                                                                                ? "CHỜ HUỶ"
+                                                                                : order.orderStatus === "CANCEL"
+                                                                                    ? "HUỶ BỎ"
+                                                                                    : ""}
                                                                 </span>
+
                                                                 <h5 className="text-primary fw-bold">{order.price}₫</h5>
                                                                 <div className="destination">
                                                                     <div className="text p-2">
                                                                         <p className="bottom-area d-flex">
-                                                                            <span className="ml-auto"><a href="/createToutStaff">Hủy Chuyến Đi</a></span>
+                                                                            <span className="ml-auto">
+
+                                                                                <Button onClick={() => showDeleteModal(order.id)}>
+                                                                                    Hủy
+                                                                                </Button>
+                                                                            </span>
+
+                                                                            <Modal
+                                                                                title="Xác nhận xóa"
+                                                                                visible={isModalVisible}
+                                                                                onOk={handleOk}
+                                                                                onCancel={handleCancel}
+                                                                                okText="Có"
+                                                                                cancelText="Không"
+                                                                            >
+                                                                                <p>Bạn có chắc chắn muốn gửi yêu cầu hủy đơn hàng này không?</p>
+                                                                            </Modal>
                                                                         </p>
                                                                     </div>
                                                                     <p className=" d-flex">

@@ -94,30 +94,30 @@ const InfomationTour = () => {
             }
 
             const response = await orderServices.createOrder(tourTimeId, paid, passengers); // Pass the paid value
-            const responseData = response.data[0];
-            localStorage.setItem('orderResponse', responseData);
+           // const responseData = response.data[0];
+            localStorage.setItem('orderResponse', response.data);
             toast.success("Tạo Thông Tin Khách Hàng Thành Công");
-            //  navigate("/payment");
+            navigate("/payment");
         } catch (error) {
             toast.error("Thất Bại!");
             console.error("Error creating tour order:", error);
         }
     };
 
-    const createCheckout = async () => {
-        try {
-            const orderResponseString = localStorage.getItem('orderResponse');
-            const response = await paymentServices.createCheckout(orderResponseString);
-            toast.success("Thanh Toán Thành Công");
-        } catch (error) {
-            toast.error("Thanh Toán Thất Bại");
-            console.error("Error payment failed:", error);
-        }
-    };
+    // const createCheckout = async () => {
+    //     try {
+    //         const orderResponseString = localStorage.getItem('orderResponse');
+    //         const response = await paymentServices.createCheckout(orderResponseString);
+    //         toast.success("Thanh Toán Thành Công");
+    //     } catch (error) {
+    //         toast.error("Thanh Toán Thất Bại");
+    //         console.error("Error payment failed:", error);
+    //     }
+    // };
 
-    const handlePaymentClick = async () => {
-        await createCheckout();
-    };
+    // const handlePaymentClick = async () => {
+    //     await createCheckout();
+    // };
 
 
     const renderAdultFields = () => {
@@ -217,7 +217,7 @@ const InfomationTour = () => {
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row justify-content-center">
-
+                       
                     </div>
                 </div>
             </section>
@@ -300,7 +300,7 @@ const InfomationTour = () => {
                                                         } else {
                                                             setAdultCount(newAdultCount);
                                                         }
-                                                    }}
+                                                    }}                                                    
                                                 />
                                             </div>
                                         </div>
@@ -334,7 +334,7 @@ const InfomationTour = () => {
                                         <div className="title-section mb-3 title-hotel-flight-infor">Thông tin hành khách</div>
                                         {renderAdultFields()}
                                         {renderChildFields()}
-                                    </section>
+                                                                            </section>
                                 </div>
                             </section>
 
@@ -409,30 +409,30 @@ const InfomationTour = () => {
 
                                                 </tr>
                                                 <div className="payment-options">
-                                                    <label>
-                                                        <input
-                                                            type="radio"
-                                                            name="paid"
-                                                            value={50}
-                                                            checked={paid === 50}
-                                                            onChange={() => setPaid(50)}
-                                                        />
-                                                        Thanh toán trước 50%
-                                                    </label>
-                                                    <label>
-                                                        <input
-                                                            type="radio"
-                                                            name="paid"
-                                                            value={100}
-                                                            checked={paid === 100}
-                                                            onChange={() => setPaid(100)}
-                                                        />
-                                                        Thanh toán trước 100%
-                                                    </label>
-                                                </div>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={50}
+                                                    checked={paid === 50}
+                                                    onChange={() => setPaid(50)}
+                                                />
+                                                Thanh toán trước 50%
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="paid"
+                                                    value={100}
+                                                    checked={paid === 100}
+                                                    onChange={() => setPaid(100)}
+                                                />
+                                                Thanh toán trước 100%
+                                            </label>
+                                        </div>
 
-                                                {/* Button to create the tour order */}
-                                                <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>
+                                        {/* Button to create the tour order */}
+                                        <button className="btn btn-primary" onClick={createOrderTour}>Đặt Chuyến Đi</button>
                                                 {/* <Link to="/orderHistory">
                                                     <button
                                                         onClick={handlePaymentClick}

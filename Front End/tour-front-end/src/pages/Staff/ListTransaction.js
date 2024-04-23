@@ -8,9 +8,10 @@ import {
 } from "@ant-design/icons"; // Import arrow icons
 import { Link } from "react-router-dom";
 
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
+
 import paymentServices from "../../services/payment.services";
+import SiderBarWebAdmin from "../Admin/SlideBar/SiderBarWebAdmin";
+import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -57,7 +58,7 @@ const ListTransaction = () => {
   return (
     <React.Fragment>
       <Layout style={{ minHeight: "100vh" }}>
-        <SiderBarWebStaff choose={"menu-key/3"}></SiderBarWebStaff>
+        <SiderBarWebAdmin choose={"menu-key/3"}></SiderBarWebAdmin>
         <Layout>
           <NavBarWebStaff></NavBarWebStaff>
 

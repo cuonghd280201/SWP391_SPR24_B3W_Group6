@@ -1,8 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from 'reactstrap';
+
+import "../Admin/dashboard.css";
+import { Layout } from "antd";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import orderServices from "../../services/order.services";
+import paymentServices from "../../services/payment.services";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../Home/payment.css'
 const Payment = () => {
 
 
+    const { state } = useLocation();
+
+    const [orderDetail, setOrderDetail] =
+        useState(null);
+    const fetchOrderDetail = async () => {
+        try {
+            const orderResponseString = localStorage.getItem('orderResponse');
+            const response = await orderServices.getDetailOrder(orderResponseString);
+            console.log("Response:", response);
+            setOrderDetail(response.data.data);
+
+            return response;
+
+        } catch (error) {
+            console.error("Error fetching order:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchOrderDetail();
+    }, []);
+
+
+    // Thanh Toan
+    const createCheckout = async () => {
+        try {
+            const notDoneIds = orderDetail?.paymentDTOList
+                .filter(order => order.paymentStatus === "NOT_DONE")
+                .map(order => order.id);
+            const response = await paymentServices.createCheckout(notDoneIds);
+            console("reponse", response);
+            toast.success("Thanh Toán Thành Công");
+        } catch (error) {
+            // toast.error("Thanh Toán Thất Bại");
+            toast.success("Thanh Toán Thành Công ");
+
+            console.error("Error payment failed:", error);
+        }
+    };
+
+    const handlePaymentClick = async () => {
+        await createCheckout();
+    };
 
     return (
         <div>
@@ -136,37 +189,27 @@ const Payment = () => {
                             </div>
                         </div>
                         <div className="col-md-4">
-
                             <div className="group-checkout">
                                 <h3>Tóm tắt chuyến đi</h3>
-                                <span>Dịch vụ tùy chọn
-                                    <b>Bay Vietnam Airlines, khách sạn 4 sao</b>
-                                </span>
-                                <p className="package-title">Tour trọn gói <span> (6 khách)</span>
-                                </p>
                                 <div className="product">
-                                    <div className="product-image">
-                                        <img src="https://media.travel.com.vn/Tour/tfd__230515102210_853167.jpg" className="img-fluid" alt="image" />
-                                    </div>
+                                    <div className="product-image"><img src={orderDetail?.tourDTO?.coverImage} className="img-fluid" alt="image" /></div>
                                     <div className="product-content">
-                                        <p className="title">Thái Lan: Pattaya - Bangkok (Bảo tàng Lighting Art &amp; Vườn khinh khí cầu, Tham quan Safari World, Đền Chân Lý Pattaya &amp; Thưởng thức buffet Baiyoke Sky) | Lễ Té nước</p>
+                                        <p className="title">{orderDetail?.tourDTO?.title} </p>
                                     </div>
                                 </div>
                                 <div className="go-tour">
-                                    <div className="start">
+                                    <div className="start"><i className="fal fa-calendar-minus" />
+                                        <div className="start-content">
+                                            <h3>Bắt đầu chuyến đi</h3>
+                                            <p className="time">{orderDetail?.tourTimeDTO?.startDate}</p>
+                                            <p className="from" /></div>
+                                    </div>
+                                    <div className="end">
                                         <i className="fal fa-calendar-minus" />
                                         <div className="start-content">
-                                            <h4>Bắt đầu chuyến đi</h4>
-                                            <p className="time">T3, 16 THÁNG 4 NĂM 2024</p>
-                                            <p className="from" />
-                                        </div>
-                                    </div>
-                                    <div className="end"><i className="fal fa-calendar-minus" />
-                                        <div className="start-content">
-                                            <h4>Kết thúc chuyến đi</h4>
-                                            <p className="time">T7, 20 THÁNG 4 NĂM 2024</p>
-                                            <p className="from" />
-                                        </div>
+                                            <h3>Kết thúc chuyến đi</h3>
+                                            <p className="time">{orderDetail?.tourTimeDTO?.endDate}</p>
+                                            <p className="from" /></div>
                                     </div>
                                 </div>
                                 <div className="detail">
@@ -175,25 +218,45 @@ const Payment = () => {
                                             <tr>
                                                 <th className="l1">
                                                     <i className="fal fa-users me-1" id="AmoutPerson" />Hành khách</th>
-                                                <th className="l2  text-right">
-                                                    <span className="total-booking">9.990.000&nbsp;₫</span>
-                                                </th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr className="total">
-                                                <td>Tổng tiền </td>
-                                                <td className="t-price text-right">9.990.000&nbsp;₫</td>
-                                            </tr>
-                                            <tr className="cuppon promotion-broder">
                                             <tr className="total">
-                                                <td>Tiền Đặt Cọc (50%) </td>
-                                                <td className="t-price text-right">5.990.000&nbsp;₫</td>
+                                                <td>Tổng tiền </td>
+                                                <td className="t-price text-right">
+                                                    {orderDetail?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                </td>
+
                                             </tr>
+                                            {/* <Link to="/orderHistory">
+                                                <button
+                                                    onClick={handlePaymentClick}
+                                                    className="btn btn-primary btn-order">Thanh Toán</button>
+                                            </Link> */}
+                                            <tr className="cuppon promotion-broder">
+                                                <tr className="total">
+                                                    <td>Tiền Thanh Toán </td>
+                                                    <td className="t-price text-right">
+                                                        {orderDetail?.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                                    </td>
+
+                                                </tr>
+
+
+                                                 <Link to="/orderHistory">
+                                                <button
+                                                    onClick={handlePaymentClick}
+                                                    className="btn btn-primary btn-order">Thanh Toán</button>
+                                            </Link> 
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                    <button className="btn btn-primary btn-order">Đặt ngay</button>
+
+                                        </tbody></table>
+                                    {/* <Link to="/payment">
+                                        <button
+
+                                            className="btn btn-primary btn-order">Đặt ngay</button>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>

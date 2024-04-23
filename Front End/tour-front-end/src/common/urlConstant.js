@@ -42,6 +42,11 @@ export default {
             listBanner:"/staff/tourBanner/viewBanner",
             postBanner:"/staff/tourBanner/addMoreBanner",     
             deleteBanner:"/staff/tourBanner/deleteBanner?id=${id}", 
+        },
+        cancel:{
+            customerCancel:"/order/cancel/${orderId}",
+            getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
+            staffCancel:"/staff/order/cancel/${orderId}",
         }
         
         

@@ -26,6 +26,8 @@ import Contact from "../pages/Home/contact";
 import ListTransaction from "../pages/Staff/ListTransaction";
 import FilterHome from "../pages/Home/filterHome";
 import ManageBanner from "../pages/Staff/ManageBanner";
+import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
+
 
 const Home = React.lazy(() => import("../pages/Home/home"));
 
@@ -68,6 +70,8 @@ const authRoutes = [
   { path: "/contact", component: <Contact/>},
   { path: "/listTransaction", component: <ListTransaction/>},
   { path: "/manageBanner", component: <ManageBanner/>},
+  { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
+
 
 
 
