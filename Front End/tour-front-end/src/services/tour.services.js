@@ -103,6 +103,12 @@ const deleteImage = async (imageId) => {
 };
 
 
+const getAllCity = async () => {
+  const serviceUrl = urlConstant.endpoint.tour.city;
+  const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+  return response;
+};
+
 
 export default {
   getAllTourAndPaging,
@@ -113,4 +119,5 @@ export default {
   addMoreImage,
   updateImage,
   deleteImage,
+  getAllCity,
 }

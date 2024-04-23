@@ -16,7 +16,8 @@ export default {
             getTourDetailByID: "/tour/get/${tourId}",
             getSlotDetailByID: "/staff/tourTime/getTimeDetail/${timeId}",
             filterTour: "/tour/filter",
-            keyWord: "keyWord=${keyWord}"
+            keyWord: "keyWord=${keyWord}",
+            city:"/city/all",
         }, 
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
@@ -33,6 +34,11 @@ export default {
             updateImage:"/staff/tourImage/updateImage",
             addMoreImage:"/staff/tourImage/addMoreImage",
             deleteImage:"/staff/tourImage/${imageId}",
+        },
+        banner:{
+            listBanner:"/staff/tourBanner/viewBanner",
+            postBanner:"/staff/tourBanner/addMoreBanner",     
+            deleteBanner:"/staff/tourBanner/deleteBanner/&{id}",  
         }
         
         

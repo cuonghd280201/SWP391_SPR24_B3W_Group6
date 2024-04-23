@@ -22,6 +22,28 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
     const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
     const [totalPages, setTotalPages] = useState(1); // Add state for total pages
+    const [loading, setLoading] = useState(true); 
+
+    // Lấy dữ liệu các thành phố
+    const [cities, setCities] = useState([]);
+
+    useEffect(() => {
+        // Fetch city data when the component mounts
+        const fetchDataCity = async () => {
+            try {
+                // Fetch city data from the API
+                const response = await tourServices.getAllCity();
+                setCities(response.data.data); // Update cities state with the fetched data
+                setLoading(false); // Set loading to false once data is fetched
+            } catch (err) {
+                // Handle error and set error state
+                setError("Error fetching city data");
+                setLoading(false); // Set loading to false in case of an error
+            }
+        };
+
+        fetchDataCity();
+    }, []);
 
 
 
@@ -158,7 +180,7 @@ const Home = () => {
                                                 onChange={(e) => setKeyword(e.target.value)}
                                                 placeholder="Nhập từ khóa..."
                                             />                                        </div>
-                                        {/* <div className="form-group">
+                                        <div className="form-group">
                                             <div className="select-wrap one-third">
                                                 <div className="icon"><span className="ion-ios-arrow-down" /></div>
                                                 <select name id className="form-control" placeholder="Keyword search">
@@ -185,7 +207,7 @@ const Home = () => {
                                                 <input defaultValue={1000} min={0} max={120000} step={500} type="range" />
                                                 <input defaultValue={50000} min={0} max={120000} step={500} type="range" />
                                             </div>
-                                        </div> */}
+                                        </div>
                                         <div className="form-group">
                                             <Button color="primary" onClick={fetchData}>Tìm kiếm</Button>
                                         </div>

@@ -309,7 +309,8 @@ const DetailTour = () => {
                                     </div>
                                     <div className="col-md-7  right">
                                         <div className="group-services">
-                                            <div className="item"><img src="/images/co1.jpg" className="icon-img" />
+                                            <div className="item">
+                                                <img src="/images/co1.jpg" className="icon-img" />
                                                 <label>Thời gian</label>
                                                 <p>{tourDetailCustomer?.tourTimeSet[0]?.startDate}:{tourDetailCustomer?.tourTimeSet[0]?.endDate} </p>
                                             </div>
