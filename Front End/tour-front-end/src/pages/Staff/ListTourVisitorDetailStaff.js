@@ -16,6 +16,7 @@ const ListTourVisitorDetailStaff = () => {
 
     const [tourDetailCustomer, setTourDetailCustomer] =
         useState(null);
+    // Xem chi tiết chuyến đi
     const fetchTourDetailCustomer = async () => {
         let response;
         try {
@@ -30,11 +31,20 @@ const ListTourVisitorDetailStaff = () => {
         }
     }
 
+    // danh sách khách hàng tham gia chuyên đi
+
+  
     const navigate = useNavigate();
 
     const navigateToFindTour = () => {
         if (tourDetailCustomer) {
             navigate('/slotTourStaff', { state: { tourId: tourDetailCustomer.id } });
+        }
+    };
+
+    const navigateToFindVisitor = () => {
+        if (tourDetailCustomer) {
+            navigate('/listVisitorTourByTour', { state: { tourTimeId: tourDetailCustomer.tourTimeSet[0].id}});
         }
     };
     useEffect(() => {
@@ -340,7 +350,7 @@ const ListTourVisitorDetailStaff = () => {
                                 </Link>
 
                                 {/* Add your new button here */}
-                                <button
+                                <button onClick={navigateToFindVisitor}
                                     style={{
                                         backgroundColor: "#FFA500",
                                         color: "white",

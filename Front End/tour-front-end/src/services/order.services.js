@@ -44,6 +44,19 @@ const getAllOrder = async (orderStatus, keyWord) => {
     return response;
   };
 
+  const getAllTourVisitor = async (tourTimeId) => {
+    const serviceUrl =
+      urlConstant.endpoint.order.getTourVisitor.replace(
+        "${tourTimeId}",
+        tourTimeId
+      );
+    const response = await axiosLocalHost.sendAuthorizedRequest(
+      serviceUrl,
+      "GET"
+    );
+    return response;
+  };
+
   const getTourOrdered = async (keyWord) => {
     const serviceUrl = urlConstant.endpoint.order.getTourOrdered + "?";
     let fullUrl = serviceUrl;
@@ -59,5 +72,6 @@ export default {
     createOrder,
     getAllOrder,
     getDetailOrder,
-    getTourOrdered
+    getTourOrdered,
+    getAllTourVisitor,
 };

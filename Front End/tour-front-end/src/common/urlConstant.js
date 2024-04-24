@@ -33,6 +33,7 @@ export default {
             getOrderDetailByID: "/order/${orderId}",
             getTourOrdered: "/staff/tour/ordered",
             keyWord: "keyWord=${keyWord}",
+            getTourVisitor: "/staff/tourVisitor/${tourTimeId}",
         },
         payment: {
             checkout: "/payment/check-out?uuid=${uuid}",

@@ -201,8 +201,6 @@ const ProfileInfo = () => {
                                     <NavItem>
                                         <NavLink aria-expanded="false" aria-current="page" className="d-inline-flex align-items-center rounded collapsed active" href="/profile/info">
                                             <h6 className="fw-bold">Tài khoản</h6>
-
-
                                         </NavLink>
                                         <div id="getting-started-collapse" className="collapse show">
                                             <ul className="list-unstyled fw-normal pb-1 small">
