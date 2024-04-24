@@ -47,4 +47,6 @@ public class Transaction {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
+
+    private String code;
 }

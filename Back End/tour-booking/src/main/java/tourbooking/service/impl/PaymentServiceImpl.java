@@ -14,6 +14,7 @@ import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.OrderRepository;
 import tourbooking.repository.PaymentRepository;
 import tourbooking.service.PaymentService;
+import tourbooking.utils.CodeGenerator;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -38,6 +39,13 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setCreateBy(user.getName());
         payment.setVnPayCode(vnPayCode);
         payment.setPaymentStatus(PaymentStatus.NOT_DONE);
+
+//        String code = CodeGenerator.generate("PM");
+//        while (paymentRepository.findByCode(code).isPresent()){
+//            code = CodeGenerator.generate("PM");
+//        }
+//        payment.setCode(code);
+
         return payment;
 
     }
@@ -49,6 +57,13 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setCreateBy(user.getName());
         payment.setVnPayCode(null);
         payment.setPaymentStatus(PaymentStatus.DONE);
+
+//        String code = CodeGenerator.generate("RF");
+//        while (paymentRepository.findByCode(code).isPresent()){
+//            code = CodeGenerator.generate("RF");
+//        }
+//        payment.setCode(code);
+
         paymentRepository.save(payment);
         return payment;
     }

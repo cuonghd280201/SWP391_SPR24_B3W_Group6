@@ -471,6 +471,9 @@ public class StaffServiceImpl implements StaffService {
         for (TourVisitor tourVisitor: tourTime.getTourVisitorSet()
              ) {
             TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+            User user = userRepository.findById(tourVisitor.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+            tourVisitorDTO.setUserEmail(user.getEmail());
             tourVisitorDTOList.add(tourVisitorDTO);
         }
         //Lấy ds khách hàng đã hủy trong tour time
@@ -480,6 +483,9 @@ public class StaffServiceImpl implements StaffService {
                 for (TourVisitor tourVisitor:tourVisitorRepository.findAllByOrderId(orders.getId())
                      ) {
                     TourVisitorDTOCancel tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTOCancel.class);
+                    User user = userRepository.findById(tourVisitor.getUserId())
+                            .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+                    tourVisitorDTO.setUserEmail(user.getEmail());
                     tourVisitorDTOCancelList.add(tourVisitorDTO);
                 }
             }

@@ -33,4 +33,6 @@ public class PaymentDTO {
     private LocalDateTime createDate;
 
     private PaymentStatus paymentStatus;
+
+//    private String code;
 }
