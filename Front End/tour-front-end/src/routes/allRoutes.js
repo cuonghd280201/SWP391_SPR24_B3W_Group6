@@ -30,6 +30,7 @@ import ManageBanner from "../pages/Staff/ManageBanner";
 import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
 import ListTourVitorStaff from "../pages/Staff/ListTourVisitorStaff";
 import ListTourVisitorDetailStaff from "../pages/Staff/ListTourVisitorDetailStaff";
+import HistoryPayment from "../pages/Profile/historyPayment";
 
 
 const Home = React.lazy(() => import("../pages/Home/home"));
@@ -47,6 +48,9 @@ const userRoutes = [
   { path: "/infomationTour", component: <InfomationTour/>},
   { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
   { path: "/filterHome", component: <FilterHome/>},
+  { path: "/historyPayment", component: <HistoryPayment/>},
+
+
 
 
 

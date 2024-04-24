@@ -1,79 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from 'antd';
-import {
-    Container,
-    Row,
-    Col,
-    Nav,
-    NavItem,
-    NavLink,
-    TabContent,
-    TabPane,
-    Input,
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-} from "reactstrap";
+import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from "reactstrap";
 import "../Profile/profile.css";
 import orderServices from "../../services/order.services";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cancelServices from "../../services/cancel.services";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCanArrowUp } from '@fortawesome/free-solid-svg-icons';
 
-
 const OrderHistory = () => {
-    const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
-    const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-    const [totalPages, setTotalPages] = useState(pageSize); // Add state for total pages
-    const [loading, setLoading] = useState(true);
-
-    const calculatePageRange = (currentPage, totalPages) => {
-        const pageRangeSize = 6;
-        let startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
-        let endPage = startPage + pageRangeSize - 1;
-        if (endPage > totalPages) {
-            endPage = totalPages;
-            startPage = Math.max(1, endPage - pageRangeSize + 1);
-        }
-
-        return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
-    };
-    const pageRange = calculatePageRange(currentPage, totalPages);
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
-
-    
-
-
-    //Get ALL ORDER 
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState(null);
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 5; // Number of orders per page
 
     useEffect(() => {
-        fetchTourData();
+        fetchOrderData();
     }, []);
 
-
-    const fetchTourData = async () => {
+    const fetchOrderData = async () => {
         try {
             const response = await orderServices.getAllOrder();
-            console.log("Response:", response);
             setOrders(response.data.data);
-
         } catch (error) {
-            console.error("Error fetching tours:", error);
+            console.error("Error fetching orders:", error);
             setError(error);
         }
     };
-    // Huy don hang
 
+    // Handle order cancellation
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [orderIdToDelete, setOrderIdToDelete] = useState(null);
 
@@ -83,7 +40,7 @@ const OrderHistory = () => {
     };
 
     const handleOk = () => {
-        handleCancleOrder(orderIdToDelete);
+        handleCancelOrder(orderIdToDelete);
         setIsModalVisible(false);
         setOrderIdToDelete(null);
     };
@@ -93,23 +50,32 @@ const OrderHistory = () => {
         setOrderIdToDelete(null);
     };
 
-    const handleCancleOrder = async (orderId) => {
+    const handleCancelOrder = async (orderId) => {
         try {
             const response = await cancelServices.customerCancel(orderId);
-
             if (response.status === 200) {
-                toast.success("Cancel Order successfully!");
-
+                toast.success("Order canceled successfully!");
+                fetchOrderData(); 
             } else {
-                toast.success("Cancel Order successfully!");
-
+                toast.success("Order canceled successfully!");
+                fetchOrderData();
             }
         } catch (error) {
-            console.error("Error cancel fail:", error);
-            toast.error("An error occurred while cancel the order.");
+            console.error("Error canceling order:", error);
+            toast.error("An error occurred while canceling the order.");
         }
     };
 
+    const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <main role="main">
@@ -145,10 +111,9 @@ const OrderHistory = () => {
                     </Row>
                 </div>
                 <TabContent id="pills-tabContent">
-                    {orders.map(order => (
-
-                        <TabPane id="pills-all" active role="tabpanel">
-                            {/* Booking item starts */}
+                    {/* Render current orders */}
+                    {currentOrders.map(order => (
+                        <TabPane id="pills-all" active role="tabpanel" key={order.id}>
                             <CardBody style={{ position: 'relative', display: 'flex', flexDirection: 'column', minWidth: 0, overflowWrap: 'break-word', background: 'rgb(255, 255, 255)', border: '0.5px solid rgb(213, 213, 213)', borderRadius: 10, boxSizing: 'border-box', marginBottom: '1rem', padding: '1rem' }}>
                                 <Row className="align-items-center">
                                     <Col md={8} xs={7}>
@@ -159,10 +124,8 @@ const OrderHistory = () => {
                                                         <h6 className="fw-bold mb-0"></h6>
                                                         <p className="mb-0">Số đặt lịch:<b> {order.id}</b></p>
                                                         <p className="mb-0">Tên Chuyến Đi:<b> {order.tourInfoDTO.title}</b></p>
-
                                                     </span>
                                                 </div>
-
                                                 <p className="mb-0">
                                                     <span>Tiền Trả:<b> {order.paid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </span>
                                                 </p>
@@ -170,9 +133,8 @@ const OrderHistory = () => {
                                                     <span>Số tiền thanh còn lại:<b> {order.priceAfterPaid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </span>
                                                 </p>
                                                 <p className="mb-0">
-                                                    <small>Số tiền đã thanh toán :<b> {order.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </small>
+                                                    <small>Số tiền đã thanh toán:<b> {order.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b> </small>
                                                 </p>
-
                                             </div>
                                         </div>
                                     </Col>
@@ -206,45 +168,29 @@ const OrderHistory = () => {
                                             <div className="text p-2">
                                                 <p className="bottom-area d-flex">
                                                     <span className="ml-auto">
-
-                                                        <Button style={{
-                                                            fontSize: "15px",
-                                                            color: "red",
-                                                            textDecoration: "none",
-                                                            padding: "8px 16px",
-                                                            border: "1px solid red",
-                                                            borderRadius: "4px",
-                                                            transition:
-                                                                "background-color 0.3s, color 0.3s",
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                        }}
-                                                            onMouseEnter={(e) => {
-                                                                e.target.style.backgroundColor =
-                                                                    "red";
-                                                                e.target.style.color = "#fff";
+                                                        <Button
+                                                            style={{
+                                                                fontSize: "15px",
+                                                                color: "red",
+                                                                textDecoration: "none",
+                                                                padding: "8px 16px",
+                                                                border: "1px solid red",
+                                                                borderRadius: "4px",
+                                                                transition: "background-color 0.3s, color 0.3s",
+                                                                display: "flex",
+                                                                alignItems: "center",
+                                                                justifyContent: "center",
+                                                                cursor: "pointer",
                                                             }}
-                                                            onMouseLeave={(e) => {
-                                                                e.target.style.backgroundColor =
-                                                                    "transparent";
-                                                                e.target.style.color = "blueviolet";
-                                                            }} onClick={() => showDeleteModal(order.id)}>
-                                                            Hủy
+                                                            onClick={() => showDeleteModal(order.id)}
+                                                        >
+                                                            <FontAwesomeIcon icon={faTrashCanArrowUp} />
+                                                            &nbsp; Hủy Đơn
                                                         </Button>
                                                     </span>
-
-                                                    <Modal
-                                                        title="Xác nhận xóa"
-                                                        visible={isModalVisible}
-                                                        onOk={handleOk}
-                                                        onCancel={handleCancel}
-                                                        okText="Có"
-                                                        cancelText="Không"
-                                                    >
-                                                        <p>Bạn có chắc chắn muốn gửi yêu cầu hủy đơn hàng này không?</p>
-                                                    </Modal>
                                                 </p>
                                             </div>
+                                            <div className="text p-2">
                                             <p className=" d-flex">
                                                 <span className="ml-auto">
                                                     <Link
@@ -282,45 +228,49 @@ const OrderHistory = () => {
                                                     </Link>
                                                 </span>
                                             </p>
+                                            </div>
                                         </div>
+                                        
                                     </Col>
                                 </Row>
                             </CardBody>
                         </TabPane>
                     ))}
 
-
+                    {/* Pagination buttons */}
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => handlePageChange(i + 1)}
+                                style={{
+                                    margin: '0 5px',
+                                    padding: '10px 20px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    backgroundColor: currentPage === i + 1 ? 'blue' : 'gray',
+                                    color: 'white',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                    </div>
                 </TabContent>
-                <div className="row mt-5">
-                                <div className="col text-center">
-                                    <div className="block-27">
-                                        <ul>
-                                            <li>
-                                                <a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                                                    &lt;
-                                                </a>
-                                            </li>
-                                            {pageRange.map((page) => (
-                                                <li key={page} className={currentPage === page ? 'active' : ''}>
-                                                    <a href="#" onClick={() => handlePageChange(page)}>
-                                                        {page}
-                                                    </a>
-                                                </li>
-                                            ))}
-                                            <li>
-                                                <a href="#" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                                                    &gt;
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
             </div>
 
-
+            {/* Modal for confirmation */}
+            <Modal
+                title="Xác nhận hủy đơn"
+                visible={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <p>Bạn có chắc chắn muốn hủy đơn này không?</p>
+            </Modal>
         </main>
     );
-}
+};
 
 export default OrderHistory;

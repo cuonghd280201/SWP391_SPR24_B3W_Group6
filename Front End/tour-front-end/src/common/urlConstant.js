@@ -5,7 +5,11 @@ export default {
     endpoint:{
         auth: {    
             profile: "/user/profile",   
-            updateProfile: "/user/update"
+            updateProfile: "/user/update",
+            transaction: "/transaction/all",
+            paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
+            sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+            
 
         },
         tour: {
@@ -46,7 +50,7 @@ export default {
         },
         cancel:{
             customerCancel:"/order/cancel/${orderId}",
-            getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
+            getAllOrderStatus:"/dashboard/orderStatus",
             staffCancel:"/staff/order/cancel/${orderId}",
         },
 

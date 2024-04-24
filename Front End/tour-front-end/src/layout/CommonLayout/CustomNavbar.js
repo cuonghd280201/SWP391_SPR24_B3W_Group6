@@ -150,6 +150,14 @@ const CustomNavbar = (props) => {
 
                                                 <DropdownItem style={{ padding: "0px" }}>
                                                     <div>
+                                                        <Link to="/historyPayment" className="dropdown-item">
+                                                            Lịch sử thanh toán
+                                                        </Link>
+                                                    </div>
+                                                </DropdownItem>
+
+                                                <DropdownItem style={{ padding: "0px" }}>
+                                                    <div>
                                                         <Link  className="dropdown-item" onClick={handleLogout}>
                                                             Đăng Xuất
                                                         </Link>
