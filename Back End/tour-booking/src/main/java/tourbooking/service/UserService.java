@@ -13,5 +13,6 @@ public interface UserService {
     ResponseEntity<BaseResponseDTO> saveUser(String uid) throws FirebaseAuthException;
     ResponseEntity<BaseResponseDTO> viewUserProfile(Principal principal);
     ResponseEntity<BaseResponseDTO> updateProfile(Principal principal, UpdateProfileForm updateProfileForm);
+    ResponseEntity<BaseResponseDTO> changeUserClaims(String firebaseId, String role) throws FirebaseAuthException;
 
 }

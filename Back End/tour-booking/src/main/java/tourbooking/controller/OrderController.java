@@ -2,6 +2,7 @@ package tourbooking.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourVisitorForm;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/order")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
 public class OrderController {
     private final OrderService orderService;
 

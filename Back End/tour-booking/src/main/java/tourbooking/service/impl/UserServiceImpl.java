@@ -75,6 +75,19 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully"));
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> changeUserClaims(String firebaseId, String role) throws FirebaseAuthException {
+        UserRecord userRecord = firebaseAuth.getUser(firebaseId);
+        User user = userRepository.findByFireBaseUid(firebaseId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        user.setRole(roleRepository.findByName(role));
+        userRepository.save(user);
+        Map<String, Object> claims = convertAuthoritiesToClaims(user.getAuthorities());
+        firebaseAuth.setCustomUserClaims(firebaseId, claims);
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully"));
+
+    }
+
 
     //Chuyển danh sách authorities thành claims
     public Map<String, Object> convertAuthoritiesToClaims(Collection<? extends GrantedAuthority> authorities) {

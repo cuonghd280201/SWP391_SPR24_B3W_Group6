@@ -17,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/tour")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
 public class TourController {
     private final TourService tourService;
     @GetMapping("/all")

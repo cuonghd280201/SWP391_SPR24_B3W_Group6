@@ -2,6 +2,7 @@ package tourbooking.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tourbooking.dto.*;
 import tourbooking.service.StaffService;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/staff")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
 public class StaffController {
 
     private final StaffService staffService;

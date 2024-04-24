@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/tour-detail")
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_STAFF')")
 @RequiredArgsConstructor
 public class TourDetailController {
     private final TourDetailService tourDetailService;
