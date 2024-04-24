@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from 'antd';
+import { Layout, Select, Modal } from "antd";
 import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Input, Button, Card, CardHeader, CardBody } from "reactstrap";
 import "../Profile/profile.css";
 import orderServices from "../../services/order.services";
@@ -10,25 +10,40 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCanArrowUp } from '@fortawesome/free-solid-svg-icons';
 
+const { Content } = Layout;
+const { Option } = Select;
+
 const OrderHistory = () => {
     const [orders, setOrders] = useState([]);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const ordersPerPage = 5; // Number of orders per page
 
-    useEffect(() => {
-        fetchOrderData();
-    }, []);
 
+
+
+
+    const [keyword, setKeyword] = useState('');
+    const [orderStatus, setOrderStatus] = useState("WAITING_CANCEL");
+    const handleOrderStatusChange = (value) => {
+        setOrderStatus(value);
+    }
     const fetchOrderData = async () => {
         try {
-            const response = await orderServices.getAllOrder();
+            const decodedKeyword = decodeURIComponent(keyword);
+            const response = await orderServices.getAllOrder(orderStatus, decodedKeyword);
             setOrders(response.data.data);
         } catch (error) {
             console.error("Error fetching orders:", error);
             setError(error);
         }
     };
+
+    useEffect(() => {
+        fetchOrderData();
+    }, [orderStatus]);
+
+
 
     // Handle order cancellation
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,7 +70,7 @@ const OrderHistory = () => {
             const response = await cancelServices.customerCancel(orderId);
             if (response.status === 200) {
                 toast.success("Order canceled successfully!");
-                fetchOrderData(); 
+                fetchOrderData();
             } else {
                 toast.success("Order canceled successfully!");
                 fetchOrderData();
@@ -89,7 +104,7 @@ const OrderHistory = () => {
                 </Container>
             </section>
             <div style={{ padding: '20px 20px 20px 20px', margin: '10px 20px 20px 20px' }}>
-                <Nav tabs className="flex-sm-row mb-3" style={{ marginTop: 0, listStyle: 'none', display: 'flex', flexFlow: 'wrap', paddingLeft: 0, background: 'rgb(255, 255, 255)', border: '0.5px solid rgb(213, 213, 213)', borderRadius: 10, marginBottom: '1rem', paddingTop: '1rem', paddingBottom: '1rem', WebkitBoxOrient: 'horizontal', WebkitBoxDirection: 'normal' }}>
+                {/* <Nav tabs className="flex-sm-row mb-3" style={{ marginTop: 0, listStyle: 'none', display: 'flex', flexFlow: 'wrap', paddingLeft: 0, background: 'rgb(255, 255, 255)', border: '0.5px solid rgb(213, 213, 213)', borderRadius: 10, marginBottom: '1rem', paddingTop: '1rem', paddingBottom: '1rem', WebkitBoxOrient: 'horizontal', WebkitBoxDirection: 'normal' }}>
                     <NavItem className="flex-sm-fill text-sm-center">
                         <NavLink href="#" active>Tất cả</NavLink>
                     </NavItem>
@@ -99,16 +114,29 @@ const OrderHistory = () => {
                     <NavItem className="flex-sm-fill text-sm-center">
                         <NavLink href="#">Đã Đặt</NavLink>
                     </NavItem>
-                </Nav>
+                </Nav> */}
+
+                <Select
+                    defaultValue="WAITING_CANCEL"
+                    onChange={handleOrderStatusChange}
+                    style={{ width: "200px" }}
+                >
+                    <Option value="DONE">ĐÃ HOÀN THÀNH</Option>
+                    <Option value="NOT_DONE">CHƯA HOÀN THÀNH</Option>
+                    <Option value="WAITING_CANCEL">CHỜ HỦY</Option>
+                    <Option value="CANCEL">HỦY</Option>
+                </Select>
                 <div className="form-search mb-4">
-                    <Row className="align-items-center">
-                        <Col md="8">
-                            <Input type="text" placeholder="Tìm kiếm theo tên tour/ tourCode hoặc số booking" aria-label="default input example" />
-                        </Col>
-                        <Col md="2">
-                            <Button color="primary">Tìm kiếm</Button>
-                        </Col>
-                    </Row>
+                    <div className="form-group">
+                        <Input
+                            type="text"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                            placeholder="Nhập từ khóa..."
+                        />                                        </div>
+                    <div className="form-group">
+                        <Button color="primary" onClick={fetchOrderData}>Tìm kiếm</Button>
+                    </div>
                 </div>
                 <TabContent id="pills-tabContent">
                     {/* Render current orders */}
@@ -191,46 +219,46 @@ const OrderHistory = () => {
                                                 </p>
                                             </div>
                                             <div className="text p-2">
-                                            <p className=" d-flex">
-                                                <span className="ml-auto">
-                                                    <Link
-                                                        to="/orderBookTouDetail"
-                                                        className="text-dark"
-                                                        state={{ orderId: order.id }}
-                                                    >
-
-                                                        <a
-                                                            style={{
-                                                                fontSize: "15px",
-                                                                color: "blueviolet",
-                                                                textDecoration: "none",
-                                                                padding: "8px 16px",
-                                                                border: "1px solid blueviolet",
-                                                                borderRadius: "4px",
-                                                                transition:
-                                                                    "background-color 0.3s, color 0.3s",
-                                                                display: "flex",
-                                                                alignItems: "center",
-                                                            }}
-                                                            onMouseEnter={(e) => {
-                                                                e.target.style.backgroundColor =
-                                                                    "blueviolet";
-                                                                e.target.style.color = "#fff";
-                                                            }}
-                                                            onMouseLeave={(e) => {
-                                                                e.target.style.backgroundColor =
-                                                                    "transparent";
-                                                                e.target.style.color = "blueviolet";
-                                                            }}
+                                                <p className=" d-flex">
+                                                    <span className="ml-auto">
+                                                        <Link
+                                                            to="/orderBookTouDetail"
+                                                            className="text-dark"
+                                                            state={{ orderId: order.id }}
                                                         >
-                                                            Xem chi tiết
-                                                        </a>
-                                                    </Link>
-                                                </span>
-                                            </p>
+
+                                                            <a
+                                                                style={{
+                                                                    fontSize: "15px",
+                                                                    color: "blueviolet",
+                                                                    textDecoration: "none",
+                                                                    padding: "8px 16px",
+                                                                    border: "1px solid blueviolet",
+                                                                    borderRadius: "4px",
+                                                                    transition:
+                                                                        "background-color 0.3s, color 0.3s",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                }}
+                                                                onMouseEnter={(e) => {
+                                                                    e.target.style.backgroundColor =
+                                                                        "blueviolet";
+                                                                    e.target.style.color = "#fff";
+                                                                }}
+                                                                onMouseLeave={(e) => {
+                                                                    e.target.style.backgroundColor =
+                                                                        "transparent";
+                                                                    e.target.style.color = "blueviolet";
+                                                                }}
+                                                            >
+                                                                Xem chi tiết
+                                                            </a>
+                                                        </Link>
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
-                                        
+
                                     </Col>
                                 </Row>
                             </CardBody>

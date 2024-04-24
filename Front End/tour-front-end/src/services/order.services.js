@@ -16,9 +16,18 @@ const createOrder = async (tourTimeId, paid, passengers) => {
 };
 
 
-const getAllOrder = async () => {
-    const serviceUrl = urlConstant.endpoint.order.getAllTour;
-    const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+const getAllOrder = async (orderStatus, keyWord) => {
+    const serviceUrl = urlConstant.endpoint.order.getAllTour + "?";
+    let fullUrl = serviceUrl;
+    if (orderStatus !== null && orderStatus !== '') {
+      const orderStatusUrl = urlConstant.endpoint.order.orderStatus.replace("${orderStatus}", orderStatus);
+      fullUrl += orderStatusUrl;
+    }
+    if (keyWord !== null && keyWord !== '') {
+      const keywordUrl = urlConstant.endpoint.order.keyWord.replace("${keyWord}", keyWord);
+      fullUrl += '&' + keywordUrl;
+    }
+    const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "GET");
     return response;
   };
   

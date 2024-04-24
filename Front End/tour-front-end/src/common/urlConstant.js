@@ -29,6 +29,7 @@ export default {
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
             getAllTour: "/order/all",
+            orderStatus: "orderStatus=${orderStatus}",
             getOrderDetailByID: "/order/${orderId}",
             getTourOrdered: "/staff/tour/ordered",
             keyWord: "keyWord=${keyWord}",
