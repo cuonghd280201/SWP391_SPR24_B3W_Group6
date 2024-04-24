@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Orders, UUID> {
-    List<Orders> findAllByUser (User user);
+    List<Orders> findAllByUserAndOrderStatus (User user, OrderStatus orderStatus);
 
     @Query("SELECT CASE WHEN COUNT(p) = 0 THEN true ELSE false END FROM Payment p WHERE p.orders = :orders AND p.paymentStatus <> 'DONE'")
     boolean checkOrderHaveAllPaymentDone(@Param("orders") Orders orders);

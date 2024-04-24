@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import tourbooking.common.OrderStatus;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourVisitorForm;
 import tourbooking.service.OrderService;
@@ -28,8 +29,8 @@ public class OrderController {
         return orderService.createOrder(principal, tourTimeId, paid, tourVisitorFormList);
     }
     @GetMapping("/all")
-    public ResponseEntity<BaseResponseDTO> getAllOrderByUser (Principal principal) {
-        return orderService.getAllOrder(principal);
+    public ResponseEntity<BaseResponseDTO> getAllOrderByUser (Principal principal, @RequestParam OrderStatus orderStatus, @RequestParam String keyWord) {
+        return orderService.getAllOrder(principal, orderStatus, keyWord);
     }
     @GetMapping("/{orderId}")
     public ResponseEntity<BaseResponseDTO> getOrderDetailById (@PathVariable("orderId") UUID uuid) {
