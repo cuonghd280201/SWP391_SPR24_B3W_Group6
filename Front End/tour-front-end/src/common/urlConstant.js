@@ -29,7 +29,9 @@ export default {
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
             getAllTour: "/order/all",
-            getOrderDetailByID: "/order/${orderId}"
+            getOrderDetailByID: "/order/${orderId}",
+            getTourOrdered: "/staff/tour/ordered",
+            keyWord: "keyWord=${keyWord}",
         },
         payment: {
             checkout: "/payment/check-out?uuid=${uuid}",

@@ -238,7 +238,7 @@ const InfomationTour = () => {
                                     </div>
                                     <p className="title" id="title">Siêu Sale 🔥 {tourDetailCustomer?.title} </p>
                                     <div className="entry"><div className="entry-inner">
-                                        <span>Mã Tour <b>{tourDetailCustomer?.tourTimeSet[0]?.id} </b>
+                                        <span>Mã Tour <b>{tourDetailCustomer?.tourTimeSet[0]?.code} </b>
                                         </span>
                                         <span>Khởi hành<b>{tourDetailCustomer?.tourTimeSet[0]?.startDate}</b>
                                         </span><span>Thời gian <b>{tourDetailCustomer?.tourTimeSet[0]?.startTime}</b></span>

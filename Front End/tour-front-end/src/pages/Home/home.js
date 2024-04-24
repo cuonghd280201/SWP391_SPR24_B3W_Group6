@@ -327,7 +327,7 @@ const Home = () => {
                                                     </div>
                                                 </div>
                                                 <span><img src="/images/tour.png" className="icon-img" />
-                                                    {tour.id}</span>
+                                                    {tour.code}</span>
                                                 <p>Nơi Khởi Hành:  {tour.starLocation}</p>
                                                 <p>Nơi Kết Thúc:  {tour.endLocation}</p>
                                                 <h3>Giá : {formatPrice(tour.price)} &nbsp;₫</h3>

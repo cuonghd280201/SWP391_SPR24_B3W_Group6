@@ -35,8 +35,20 @@ const getAllOrder = async () => {
     return response;
   };
 
+  const getTourOrdered = async (keyWord) => {
+    const serviceUrl = urlConstant.endpoint.order.getTourOrdered + "?";
+    let fullUrl = serviceUrl;
+    if (keyWord !== null && keyWord !== '') {
+      const keywordUrl = urlConstant.endpoint.tour.keyWord.replace("${keyWord}", keyWord);
+      fullUrl += keywordUrl;
+  } 
+    const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "GET");
+    return response;
+  };
+
 export default {
     createOrder,
     getAllOrder,
-    getDetailOrder
+    getDetailOrder,
+    getTourOrdered
 };

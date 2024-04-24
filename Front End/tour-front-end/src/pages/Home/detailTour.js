@@ -194,7 +194,7 @@ const DetailTour = () => {
                                     <div className="warp-mark">
                                         <i className="fal fa-ticket" />
                                         <img src="/images/tour.png" className="icon-img" />
-                                        <label>{tourDetailCustomer?.tourTimeSet[0]?.id}</label>
+                                        <label>{tourDetailCustomer?.tourTimeSet[0]?.code}</label>
                                     </div>
                                     <h1 className="title">🔥 {tourDetailCustomer?.title}</h1>
 

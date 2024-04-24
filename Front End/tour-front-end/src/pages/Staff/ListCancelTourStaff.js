@@ -37,7 +37,7 @@ const ListCancelTourStaff = () => {
     const [orderStatus, setOrderStatus] = useState("WAITING_CANCEL");
     const [orderStatusData, setOrderStatusData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const ordersPerPage = 4; 
+    const ordersPerPage = 4;
 
     const [error, setError] = useState(null);
 
@@ -130,86 +130,92 @@ const ListCancelTourStaff = () => {
                             {currentOrders.map((orderS) => (
                                 <TabPane key={orderS.id} id="pills-all" active role="tabpanel">
                                     <div id="accordion">
-                                            <CardBody style={{ position: 'relative', display: 'flex', flexDirection: 'column', minWidth: 0, overflowWrap: 'break-word', background: 'rgb(255, 255, 255)', border: '0.5px solid rgb(213, 213, 213)', borderRadius: 10, boxSizing: 'border-box', marginBottom: '1rem', padding: '1rem' }}>
-                                                <Row className="align-items-center">
-                                                    <Col md={8} xs={7}>
-                                                        <div className="d-flex d-lg-block justify-content-between">
-                                                            <div>
-                                                                <div className="s-rate">
-                                                                    <span className="s-comment">
-                                                                        <h6 className="fw-bold mb-0"></h6>
-                                                                        <p className="mb-0">Mã Đơn Hủy: <b>{orderS.id}</b></p>
-                                                                    </span>
-                                                                </div>
-                                                                <p className="mb-0">
-                                                                    <span className="text-muted">Tên Chuyến Đi: <b>{orderS.tourDTO.title}</b></span>
-                                                                </p>
-                                                                <p className="mb-0">
-                                                                    <span className="text-muted">Giá Chuyến Đi: <b>{orderS.tourDTO.price}</b></span>
-                                                                </p>
-                                                                <p className="mb-0">
-                                                                    <span className="text-muted">Tên Khách Hàng: <b>{orderS.userDTO.name}</b></span>
-                                                                </p>
-                                                                <p className="mb-0">
-                                                                    <span className="text-muted">Số Điện Thoại: <b>{orderS.userDTO.phone}</b></span>
-                                                                </p>
-                                                                <p className="mb-0">
-                                                                    <span className="text-muted">Ngày yêu cầu hoàn trả: <b>{orderS.createDate}</b></span>
-                                                                </p>
+                                        <CardBody style={{ position: 'relative', display: 'flex', flexDirection: 'column', minWidth: 0, overflowWrap: 'break-word', background: 'rgb(255, 255, 255)', border: '0.5px solid rgb(213, 213, 213)', borderRadius: 10, boxSizing: 'border-box', marginBottom: '1rem', padding: '1rem' }}>
+                                            <Row className="align-items-center">
+                                                <Col md={8} xs={7}>
+                                                    <div className="d-flex d-lg-block justify-content-between">
+                                                        <div>
+                                                            <div className="s-rate">
+                                                                <span className="s-comment">
+                                                                    <h6 className="fw-bold mb-0"></h6>
+                                                                    <p className="mb-0">Mã Đơn Hủy: <b>{orderS.code}</b></p>
+                                                                </span>
                                                             </div>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Tên Chuyến Đi: <b>{orderS.tourDTO.title}</b></span>
+                                                            </p>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Giá Chuyến Đi: <b>{orderS.tourDTO.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b></span>
+                                                            </p>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Tên Khách Hàng: <b>{orderS.userDTO.name}</b></span>
+                                                            </p>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Số Điện Thoại: <b>{orderS.userDTO.phone}</b></span>
+                                                            </p>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Ngày yêu cầu hoàn trả: <b>{orderS.createDate}</b></span>
+                                                            </p>
+                                                            <p className="mb-0">
+                                                                <span className="text-muted">Số tiền khác hàng đã trả: <b>{orderS.paid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b></span>
+                                                            </p>
                                                         </div>
-                                                    </Col>
-                                                    <Col md={4} xs={5} className="text-end">
-                                                        <h6 className="text-primary mb-2">
-                                                            <span
-                                                                className={
-                                                                    orderS.orderStatus === "NOT_DONE"
-                                                                        ? "badge bg-info text-dark"
-                                                                        : orderS.orderStatus === "DONE"
-                                                                            ? "badge bg-success"
-                                                                            : orderS.orderStatus === "WAITING_CANCEL"
-                                                                                ? "badge bg-warning text-dark"
-                                                                                : orderS.orderStatus === "CANCEL"
-                                                                                    ? "badge bg-danger"
-                                                                                    : ""
-                                                                }
-                                                            >
-                                                                {orderS.orderStatus === "NOT_DONE"
-                                                                    ? "CHƯA HOÀN TẤT"
+                                                    </div>
+                                                </Col>
+                                                <Col md={4} xs={5} className="text-end">
+                                                    <h6 className="text-primary mb-2">
+                                                        <span
+                                                            className={
+                                                                orderS.orderStatus === "NOT_DONE"
+                                                                    ? "badge bg-info text-dark"
                                                                     : orderS.orderStatus === "DONE"
-                                                                        ? "HOÀN TẤT"
+                                                                        ? "badge bg-success"
                                                                         : orderS.orderStatus === "WAITING_CANCEL"
-                                                                            ? "CHỜ HUỶ"
+                                                                            ? "badge bg-warning text-dark"
                                                                             : orderS.orderStatus === "CANCEL"
-                                                                                ? "HUỶ BỎ"
-                                                                                : ""}
-                                                            </span>
-                                                        </h6>
-                                                        <h5 className="text-primary fw-bold">Số tiền hoàn trả: {orderS.refund}₫</h5>
-                                                        <div className="destination">
-                                                            <div className="text p-2">
-                                                                <p className="bottom-area d-flex">
-                                                                    <span className="ml-auto">
+                                                                                ? "badge bg-danger"
+                                                                                : ""
+                                                            }
+                                                        >
+                                                            {orderS.orderStatus === "NOT_DONE"
+                                                                ? "CHƯA HOÀN TẤT"
+                                                                : orderS.orderStatus === "DONE"
+                                                                    ? "HOÀN TẤT"
+                                                                    : orderS.orderStatus === "WAITING_CANCEL"
+                                                                        ? "CHỜ HUỶ"
+                                                                        : orderS.orderStatus === "CANCEL"
+                                                                            ? "HUỶ BỎ"
+                                                                            : ""}
+                                                        </span>
+                                                    </h6>
+                                                    <h5 className="text-primary fw-bold">Số tiền hoàn trả: {orderS.paid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h5>
+                                                    <div className="destination">
+                                                        <div className="text p-2">
+                                                            <p className="bottom-area d-flex">
+                                                                <span className="ml-auto">
+                                                                    {orderS.orderStatus === "WAITING_CANCEL" && (
                                                                         <Button onClick={() => showDeleteModal(orderS.id)}>
                                                                             Chấp Nhận
                                                                         </Button>
-                                                                    </span>
-                                                                    <Modal
-                                                                        title="Xác nhận xóa"
-                                                                        visible={isModalVisible}
-                                                                        onOk={handleOk}
-                                                                        onCancel={handleCancel}
-                                                                        okText="Có"
-                                                                        cancelText="Không"
-                                                                    >
-                                                                        <p>Bạn có chắc chắn muốn chấp nhận yêu cầu hủy đơn hàng này không?</p>
-                                                                    </Modal>
-                                                                </p>
-                                                            </div>
+                                                                    )}
+
+                                                                </span>
+                                                                <Modal
+                                                                    title="Xác nhận xóa"
+                                                                    visible={isModalVisible}
+                                                                    onOk={handleOk}
+                                                                    onCancel={handleCancel}
+                                                                    okText="Có"
+                                                                    cancelText="Không"
+                                                                >
+                                                                    <p>Bạn có chắc chắn muốn chấp nhận yêu cầu hủy đơn hàng này không?</p>
+                                                                </Modal>
+                                                            </p>
                                                         </div>
-                                                    </Col>
-                                                </Row>
-                                            </CardBody>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </CardBody>
                                     </div>
                                 </TabPane>
                             ))}
