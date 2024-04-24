@@ -122,7 +122,7 @@ const ListTourVisitorDetailStaff = () => {
                                                     <span style={{ color: "#666" }}>
 
 
-                                                        {tourDetailCustomer?.id}
+                                                        {tourDetailCustomer?.code}
                                                     </span>
                                                 </h4>
                                                 <p

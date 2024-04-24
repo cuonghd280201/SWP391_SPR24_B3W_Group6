@@ -141,7 +141,7 @@ const SlotTourStaff = () => {
                                                     onClick={() => handleRowClick(tourTime.id)}
                                                     >
                                                         <td style={{ padding: "15px" }}>
-                                                            {tourTime.id}
+                                                            {tourTime.code}
                                                         </td>
                                                         <td style={{ padding: "15px" }}> {tourDetailCustomer.title}</td>
                                                         <td style={{ padding: "15px" }}> {tourTime.startTime}</td>
