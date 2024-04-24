@@ -18,7 +18,15 @@ const Login = () => {
             console.log(result);  
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
-            navigate("/");  
+            const user = JSON.parse(localStorage.getItem('user'));
+            if(user.role === "ROLE_USER"){
+                navigate("/");  
+            }else if(user.role ==="ROLE_STAFF"){
+                navigate("/listTourStaff");
+                
+            }else{
+                navigate("/dashboard");
+            }
             toast.success("Đăng nhập thành công!")
 
         }catch(error){

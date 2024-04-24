@@ -342,7 +342,7 @@ const ListTourVisitorDetailStaff = () => {
                                 {/* Add your new button here */}
                                 <button
                                     style={{
-                                        backgroundColor: "#1890ff",
+                                        backgroundColor: "#FFA500",
                                         color: "white",
                                         border: "none",
                                         borderRadius: "5px",
@@ -353,7 +353,7 @@ const ListTourVisitorDetailStaff = () => {
                                         transition: "background-color 0.3s",
                                     }}
                                 >
-                                    Your Button Text
+                                    Danh Sách Đi
                                 </button>
                             </div>
 

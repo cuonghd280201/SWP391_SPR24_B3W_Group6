@@ -35,7 +35,9 @@ const Home = () => {
 
         return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
     };
-
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     const pageRange = calculatePageRange(currentPage, totalPages);
 
@@ -83,9 +85,7 @@ const Home = () => {
         return (price).toLocaleString('vi-VN').replace(/,/g, '.');
     };
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
+   
 
     const [keyword, setKeyword] = useState('');
     const [endLocation, setEndLocation] = useState('');

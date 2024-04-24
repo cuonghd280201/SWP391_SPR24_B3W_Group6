@@ -140,13 +140,13 @@ const CustomNavbar = (props) => {
                                                     </div>
                                                 </DropdownItem>
 
-                                                {/* <DropdownItem style={{ padding: "0px" }}>
+                                                <DropdownItem style={{ padding: "0px" }}>
                                                     <div>
-                                                        <Link to="#" className="dropdown-item">
-                                                            Change Password
+                                                        <Link to="/orderHistory" className="dropdown-item">
+                                                            Chuyến Đi Đã Đặt
                                                         </Link>
                                                     </div>
-                                                </DropdownItem> */}
+                                                </DropdownItem>
 
                                                 <DropdownItem style={{ padding: "0px" }}>
                                                     <div>
@@ -155,7 +155,6 @@ const CustomNavbar = (props) => {
                                                         </Link>
 
 
-                                                        {/* <button onClick={handleSignOut}>Đăng Xuất</button> */}
 
                                                     </div>
                                                 </DropdownItem>

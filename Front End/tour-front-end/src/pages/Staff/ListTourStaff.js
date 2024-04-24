@@ -16,19 +16,30 @@ const { Content } = Layout;
 const { Option } = Select;
 
 const ListTourStaff = () => {
-  
 
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [error, setError] = useState(null);
 
- 
+
   //List Tour Staff
   const [tours, setTours] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
   const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-  const [totalPages, setTotalPages] = useState(1); // Add state for total pages
+  const [totalPages, setTotalPages] = useState(pageSize); // Add state for total pages
   const [loading, setLoading] = useState(true);
 
+  const calculatePageRange = (currentPage, totalPages) => {
+    const pageRangeSize = 6;
+    let startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
+    let endPage = startPage + pageRangeSize - 1;
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - pageRangeSize + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+  };
+  const pageRange = calculatePageRange(currentPage, totalPages);
 
 
   useEffect(() => {
@@ -52,7 +63,7 @@ const ListTourStaff = () => {
   };
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-};
+  };
 
   const formatPrice = (price) => {
     return (price).toLocaleString('vi-VN').replace(/,/g, '.');
@@ -83,7 +94,7 @@ const ListTourStaff = () => {
 
             {/* Filter by price */}
             <div className="d-flex justify-content-between mb-4">
-            
+
 
               <span style={{ display: "inline-block" }}>
                 <a
@@ -115,65 +126,65 @@ const ListTourStaff = () => {
             </div>
 
             {/* Display tours for the current page */}
-              <div className="row row-with-margin">
-                <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
-                  <div className="card border-5 border-top border-success-subtle">
-                    <div className="card-body-dashboard">
-                      <div className="destination">
-                        {tours.map(tour => (
-                          <div className="text p-3">
-                            <div className="row">
-                              {/* Tour details */}
-                              < div className="col-4" >
-                                <Link
-                                  to="/listTourStaffDetail"
-                                  className="text-dark"
-                                  state={{ tourId: tour.id }} // Pass tourId as state data
-                                >
-                                  <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
-                                    <div className="icon d-flex justify-content-center align-items-center">
-                                      <span className="icon-link" />
-                                    </div>
-                                  </a>
-                                </Link>
-                              </div>
-                              <div className="col-5">
-                                <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                                  Mã Chuyến Đi:{" "}
-                                  <span style={{ color: "#666" }}>
-                                    {tour.id}
-                                  </span>
-                                </h4>
-                                <p style={{ fontSize: 14, marginBottom: 5 }}>
-                                  <span style={{ color: "#666" }}>
+            <div className="row row-with-margin">
+              <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div className="card border-5 border-top border-success-subtle">
+                  <div className="card-body-dashboard">
+                    <div className="destination">
+                      {tours.map(tour => (
+                        <div className="text p-3">
+                          <div className="row">
+                            {/* Tour details */}
+                            < div className="col-4" >
+                              <Link
+                                to="/listTourStaffDetail"
+                                className="text-dark"
+                                state={{ tourId: tour.id }} // Pass tourId as state data
+                              >
+                                <a href="" className="img img-2 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(${tour.coverImage})` }}>
+                                  <div className="icon d-flex justify-content-center align-items-center">
+                                    <span className="icon-link" />
+                                  </div>
+                                </a>
+                              </Link>
+                            </div>
+                            <div className="col-5">
+                              <h4 style={{ fontSize: 16, marginTop: 10 }}>
+                                Mã Chuyến Đi:{" "}
+                                <span style={{ color: "#666" }}>
+                                  {tour.id}
+                                </span>
+                              </h4>
+                              <p style={{ fontSize: 14, marginBottom: 5 }}>
+                                <span style={{ color: "#666" }}>
                                   Tên Chuyến Đi: {tour.title}
-                                  </span>
-                                </p>
-                                <p
-                                  className="text-primary"
-                                  style={{ fontSize: 14, marginBottom: 5 }}
-                                >
-                                  Nơi Khởi Hành: {tour.starLocation}
-                                </p>
-                              </div>
-                              <div className="col-3">
-                                <p
-                                  className="text-right"
-                                  style={{
-                                    fontSize: 18,
-                                    color: "#ff5722",
-                                    marginBottom: 5,
-                                  }}
-                                >
-                                  {formatPrice(tour.price)} VNĐ
-                                </p>
-                                <p className=" d-flex">
-                                  <span className="ml-auto">
+                                </span>
+                              </p>
+                              <p
+                                className="text-primary"
+                                style={{ fontSize: 14, marginBottom: 5 }}
+                              >
+                                Nơi Khởi Hành: {tour.starLocation}
+                              </p>
+                            </div>
+                            <div className="col-3">
+                              <p
+                                className="text-right"
+                                style={{
+                                  fontSize: 18,
+                                  color: "#ff5722",
+                                  marginBottom: 5,
+                                }}
+                              >
+                                {formatPrice(tour.price)} VNĐ
+                              </p>
+                              <p className=" d-flex">
+                                <span className="ml-auto">
                                   <Link
-                                  to="/listTourStaffDetail"
-                                  className="text-dark"
-                                  state={{ tourId: tour.id }} // Pass tourId as state data
-                                >
+                                    to="/listTourStaffDetail"
+                                    className="text-dark"
+                                    state={{ tourId: tour.id }} // Pass tourId as state data
+                                  >
                                     <a
                                       style={{
                                         fontSize: "15px",
@@ -200,34 +211,46 @@ const ListTourStaff = () => {
                                     >
                                       Xem chi tiết
                                     </a>
-                                    </Link>
-                                  </span>
-                                </p>
-                              </div>
+                                  </Link>
+                                </span>
+                              </p>
                             </div>
-                            <hr />
                           </div>
-                        ))}
+                          <hr />
+                        </div>
+                      ))}
 
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="row mt-5">
-                                <div className="col text-center">
-                                    <div className="block-27">
-                                        <ul>
-                                            <li><a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>&lt;</a></li>
-                                            <li className={currentPage ? 'active' : ''}>
-                                                <span> {currentPage}</span>
-                                            </li>
-                                            <li><a href="#" onClick={() => handlePageChange(currentPage + 1)}>&gt;</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+            <div className="row mt-5">
+              <div className="col text-center">
+                <div className="block-27">
+                  <ul>
+                    <li>
+                      <a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                        &lt;
+                      </a>
+                    </li>
+                    {pageRange.map((page) => (
+                      <li key={page} className={currentPage === page ? 'active' : ''}>
+                        <a href="#" onClick={() => handlePageChange(page)}>
+                          {page}
+                        </a>
+                      </li>
+                    ))}
+                    <li>
+                      <a href="#" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                        &gt;
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
             {/* Pagination */}
 
