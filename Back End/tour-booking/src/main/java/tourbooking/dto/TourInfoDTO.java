@@ -67,4 +67,6 @@ public class TourInfoDTO {
 //    private City city;
 
     private TourDetailDTO tourDetail;
+
+    private String code;
 }

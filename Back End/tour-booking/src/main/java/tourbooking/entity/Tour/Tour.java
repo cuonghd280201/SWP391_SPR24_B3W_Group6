@@ -78,4 +78,6 @@ public class Tour {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")
     private TourDetail tourDetail;
+
+    private String code;
 }

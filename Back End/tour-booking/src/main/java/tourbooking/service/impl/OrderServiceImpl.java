@@ -19,6 +19,7 @@ import tourbooking.entity.User;
 import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
 import tourbooking.service.OrderService;
+import tourbooking.utils.CodeGenerator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -80,6 +81,13 @@ public class OrderServiceImpl implements OrderService {
         Set<Payment> paymentSet = new HashSet<>();
         paymentSet.add(payment);
         orders.setPaymentSet(paymentSet);
+
+        String code = CodeGenerator.generate("OR");
+        while (orderRepository.findByCode(code).isPresent()){
+            code = CodeGenerator.generate("OR");
+        }
+        orders.setCode(code);
+
         orderRepository.save(orders);
         paymentRepository.save(payment);
         //Tạo tour visitor

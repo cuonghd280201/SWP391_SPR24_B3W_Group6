@@ -24,4 +24,6 @@ public interface TourRepository extends JpaRepository<Tour, UUID> {
             "td.food like %:keyWord% or " +
             "td.hotel like %:keyWord%")
     Page<Tour> searchByKeyWord(String keyWord, Pageable pageable);
+
+    Optional<Tour> findByCode(String code);
 }

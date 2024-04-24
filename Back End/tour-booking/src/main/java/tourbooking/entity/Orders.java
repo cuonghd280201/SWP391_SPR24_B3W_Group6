@@ -61,4 +61,6 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private Set<Payment> paymentSet;
+
+    private String code;
 }

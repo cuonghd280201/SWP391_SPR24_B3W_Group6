@@ -13,6 +13,7 @@ public class DateTimeUtils {
     public static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
     public static final String DATE_FORMAT = "dd-MM-yyyy";
     public static final String TIME_FORMAT = "HH:mm";
+    public static final String STRING_DATETIME_FORMAT = "ddMMyyyy";
     //public static final String START_DATE_FORMAT = "yyyy";
 
     public static final DateTimeFormatter DATETIME_FORMATTER =
@@ -37,6 +38,11 @@ public class DateTimeUtils {
     public static LocalDateTime convertStringToLocalDateTime(String date) throws ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
         return LocalDateTime.parse(date,formatter);
+    }
+
+    public static String convertLocalDateToString(LocalDate date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(STRING_DATETIME_FORMAT);
+        return date.format(formatter);
     }
 
     public int actualCompareInfo(LocalDate actualDate, LocalDate infoDate){

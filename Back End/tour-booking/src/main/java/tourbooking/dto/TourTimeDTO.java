@@ -49,4 +49,6 @@ public class TourTimeDTO {
     private TimeStatus timeStatus;
 
     private boolean deleted;
+
+    private String code;
 }

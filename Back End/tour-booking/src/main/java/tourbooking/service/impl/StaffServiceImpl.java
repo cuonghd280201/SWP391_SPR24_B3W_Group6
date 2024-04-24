@@ -18,6 +18,7 @@ import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.*;
 import tourbooking.service.BannerService;
 import tourbooking.service.StaffService;
+import tourbooking.utils.CodeGenerator;
 import tourbooking.utils.DateTimeUtils;
 
 import java.security.Principal;
@@ -127,6 +128,13 @@ public class StaffServiceImpl implements StaffService {
         tour.setTourTimeSet(tourTimeSet);
         tour.setTourSchedules(tourScheduleSet);
         tour.setTourImagesSet(tourImagesSet);
+
+        String code = CodeGenerator.generate("TO");
+        while (tourRepository.findByCode(code).isPresent()){
+            code = CodeGenerator.generate("TO");
+        }
+        tour.setCode(code);
+
         tourRepository.save(tour);
         if(tourCreateForm.getTourTimeCreateFormSet() != null) {
             for (TourTime tourTime : tourTimeSet) {

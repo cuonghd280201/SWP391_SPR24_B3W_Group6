@@ -12,6 +12,7 @@ import tourbooking.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Orders, UUID> {
@@ -27,4 +28,6 @@ public interface OrderRepository extends JpaRepository<Orders, UUID> {
 
     List<Orders> findAllByOrderStatus (OrderStatus orderStatus);
     List<Orders> findByCreateDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+    Optional<Orders> findByCode(String code);
 }

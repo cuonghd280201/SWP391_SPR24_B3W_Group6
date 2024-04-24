@@ -47,4 +47,6 @@ public class TourDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_FORMAT)
     @DateTimeFormat(pattern = DateTimeUtils.DATETIME_FORMAT)
     private LocalDateTime updateDate;
+
+    private String code;
 }

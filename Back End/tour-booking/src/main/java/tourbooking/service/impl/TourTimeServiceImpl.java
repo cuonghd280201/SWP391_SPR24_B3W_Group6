@@ -16,6 +16,7 @@ import tourbooking.repository.OrderRepository;
 import tourbooking.repository.TourTimeRepository;
 import tourbooking.repository.TourVisitorRepository;
 import tourbooking.service.TourTimeService;
+import tourbooking.utils.CodeGenerator;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -44,6 +45,13 @@ public class TourTimeServiceImpl implements TourTimeService {
             tourTime.setSlotNumber(tourTimeCreateForm.getSlotNumber());
             tourTime.setSlotNumberActual(0);
             tourTime.setTimeStatus(TimeStatus.ACTIVE);
+
+            String code = CodeGenerator.generate("TM");
+            while (tourTimeRepository.findByCode(code).isPresent()){
+                code = CodeGenerator.generate("TM");
+            }
+            tourTime.setCode(code);
+
             tourTimeList.add(tourTime);
             tourTimeRepository.save(tourTime);
         }

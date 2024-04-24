@@ -22,4 +22,5 @@ public class OrderDTO {
     private BigDecimal refund;
     private TourInfoDTO tourInfoDTO;
     private OrderStatus orderStatus;
+    private String code;
 }

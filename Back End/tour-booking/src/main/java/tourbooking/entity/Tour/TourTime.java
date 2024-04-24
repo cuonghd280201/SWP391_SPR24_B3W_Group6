@@ -71,4 +71,5 @@ public class TourTime {
     @OneToMany(mappedBy = "tourTime", cascade = CascadeType.ALL)
     private Set<Orders> ordersSet;
 
+    private String code;
 }
