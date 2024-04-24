@@ -28,6 +28,10 @@ import ListOrderStatus from "../pages/Admin/listOrderStatus";
 import FilterHome from "../pages/Home/filterHome";
 import ManageBanner from "../pages/Staff/ManageBanner";
 import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
+import ListTourVitorStaff from "../pages/Staff/ListTourVisitorStaff";
+import ListTourVisitorDetailStaff from "../pages/Staff/ListTourVisitorDetailStaff";
+import HistoryPayment from "../pages/Profile/historyPayment";
+import ListVisitorTourByTour from "../pages/Staff/ListVisitorTourByTour";
 
 
 const Home = React.lazy(() => import("../pages/Home/home"));
@@ -45,6 +49,9 @@ const userRoutes = [
   { path: "/infomationTour", component: <InfomationTour/>},
   { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
   { path: "/filterHome", component: <FilterHome/>},
+  { path: "/historyPayment", component: <HistoryPayment/>},
+
+
 
 
 
@@ -73,6 +80,11 @@ const authRoutes = [
   { path: "/listOrderStatus", component: <ListOrderStatus /> },
   { path: "/manageBanner", component: <ManageBanner/>},
   { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
+  { path: "/listTourVisitorStaff", component: <ListTourVitorStaff/>},
+  { path: "/listTourVisitorDetailStaff", component: <ListTourVisitorDetailStaff/>},
+  { path: "/listVisitorTourByTour", component: <ListVisitorTourByTour/>},
+
+
 
 
 
