@@ -87,17 +87,6 @@ const ListAccountCustomer = () => {
                     },
                   }}
                 >
-                  <Column title="ID" dataIndex="id" key="id" />
-                  <Column title="Tên" dataIndex="name" key="name" />
-                  <Column title="Số điện thoại" dataIndex="phone" key="phone" />
-                  <Column title="Email" dataIndex="email" key="email" />
-                  <Column
-                    title="Ngày sinh"
-                    dataIndex="dateOfBirth"
-                    key="dateOfBirth"
-                  />
-                  <Column title="Giới tính" dataIndex="gender" key="gender" />
-                  <Column title="Vai trò" dataIndex="role" key="role" />
                   <Column
                     title="Avatar"
                     dataIndex="image"
@@ -109,44 +98,72 @@ const ListAccountCustomer = () => {
                       />
                     )}
                   />
-                  {/* <Column
-                      title="Trạng thái"
-                      dataIndex="statusString"
-                      key="statusString"
-                      render={(text, record) => (
-                        <span
-                          className={
-                            text === "Active"
-                              ? "badge text-bg-success"
-                              : text === "OnTasking"
-                                ? "badge bg-warning text-light"
-                                : "badge text-bg-danger"
-                          }
-                        >
-                          {text}
-                        </span>
-                      )}
-                    />
-                    <Column
-                      title="Vô hiệu hóa"
-                      key="action"
-                      render={(_, record) => (
-                        <Space size="middle">
-                      
-                          <Switch
-                            checked={record.statusString === 'Active' && (switchStatusMap[record.userId] || true)}
-                            onChange={(checked, event) => {
-                              event.stopPropagation();
+                  <Column title="Tên" dataIndex="name" key="name" />
+                  <Column title="Số điện thoại" dataIndex="phone" key="phone" />
+                  <Column title="Email" dataIndex="email" key="email" />
+                  <Column
+                    title="Ngày sinh"
+                    dataIndex="dateOfBirth"
+                    key="dateOfBirth"
+                  />
+                  <Column title="Giới tính" dataIndex="gender" key="gender" />
+                  <Column title="Vai trò" dataIndex="role" key="role" />
 
-                              setSwitchStatusMap((prevMap) => ({ ...prevMap, [record.userId]: checked }));
-                            }}
+                  <Column
+                    title="Trạng thái"
+                    dataIndex="enable"
+                    key="enable"
+                    width={"150px"}
+                    render={(text, record) => (
+                      <span
+                        style={{
+                          backgroundColor: text ? "green" : "red",
+                          color: "white",
+                          padding: "4px 8px",
+                          borderRadius: "4px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {text ? "Hoạt động" : "Inactive"}
+                      </span>
+                    )}
+                  />
 
-                            size="small" // Set size to "small" for iOS-like appearance
-                            style={{ backgroundColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6', borderColor: record.statusString === 'Active' ? '#4CD964' : '#D1D1D6' }}
-                          />
-                        </Space>
-                      )}
-                    /> */}
+                  <Column
+                    title="Vô hiệu hóa"
+                    key="action"
+                    render={(text, record) => (
+                      <Space size="middle">
+                        <Switch
+                          checked={record.enable}
+                          onChange={(checked, event) => {
+                            event.stopPropagation();
+
+                            // Toggle the 'enable' property of the record
+                            const newRecord = {
+                              ...record,
+                              enable: !record.enable,
+                            };
+
+                            // Update the switch status map
+                            setSwitchStatusMap((prevMap) => ({
+                              ...prevMap,
+                              [record.userId]: !record.enable,
+                            }));
+
+                            // Update the record in the data source
+                            // Replace this line with your actual update logic
+                            // updateRecord(newRecord);
+                          }}
+                          size="small" // Set size to "small" for iOS-like appearance
+                          style={{
+                            backgroundColor: record.enable ? "green" : "red", // Determine color based on the 'enable' property
+                            borderColor: record.enable ? "green" : "red", // Determine border color accordingly
+                          }}
+                        />
+                      </Space>
+                    )}
+                  />
                 </Table>
               </div>
             </div>
