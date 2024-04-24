@@ -71,7 +71,7 @@ public class DashboardController {
                                                              @Parameter(description = "Sort order (EX: asc, desc)")
                                                                  @RequestParam(defaultValue = "desc") String sortOrder) {
 
-        return transactionService.getAllTransaction(principal,pageNumber,pageSize,sortBy,sortOrder);
+        return transactionService.getAllTransactionForStaff(principal,pageNumber,pageSize,sortBy,sortOrder);
         // Xử lý dữ liệu và trả về response
     }
 

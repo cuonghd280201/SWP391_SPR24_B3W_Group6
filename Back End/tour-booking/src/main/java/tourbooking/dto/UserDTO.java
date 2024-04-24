@@ -38,4 +38,5 @@ public class UserDTO {
     private LocalDateTime updateDate;
     private String image;
     private String role;
+    private boolean isEnable;
 }

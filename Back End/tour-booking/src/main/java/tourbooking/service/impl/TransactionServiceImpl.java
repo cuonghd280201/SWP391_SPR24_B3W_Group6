@@ -1,5 +1,6 @@
 package tourbooking.service.impl;
 
+import jakarta.persistence.criteria.Order;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,9 @@ import tourbooking.common.PageableRequest;
 import tourbooking.common.Pagination;
 import tourbooking.common.TransactionStatus;
 import tourbooking.dto.BaseResponseDTO;
+import tourbooking.dto.OrderDTO;
 import tourbooking.dto.TransactionDTO;
+import tourbooking.entity.Orders;
 import tourbooking.entity.Payment;
 import tourbooking.entity.Transaction;
 import tourbooking.entity.User;
@@ -31,6 +34,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
+    private final UserServiceImpl userService;
+    private final TourServiceImpl tourService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -73,10 +78,41 @@ public class TransactionServiceImpl implements TransactionService {
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", pagination, transactionDTOS));
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> getAllTransactionForStaff(Principal principal, int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        User user = userRepository.findByFireBaseUid(principal.getName())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+
+        PageableRequest  pageableRequest = new PageableRequest(pageNumber, pageSize, sortBy, sortOrder);
+        Pageable pageable = pageableRequest.toPageable();
+        Page<Transaction> transactionPage = null;
+        List<Transaction> transactionList;
+        List<TransactionDTO> transactionDTOS = null;
+        transactionPage = transactionRepository.findAll(pageable);
+        transactionList = transactionPage.getContent();
+
+//        List<Transaction> transactions1 = new ArrayList<>();
+//        for(Transaction transaction : transactionList){
+//            transactions1.add(transaction);
+//        }
+//        transactionList = transactions1;
+
+
+        transactionDTOS = transactionList.stream().map(this::convertToTransactionDTO).toList();
+        Pagination pagination = new Pagination(transactionPage.getNumber(), transactionPage.getTotalElements(), transactionPage.getTotalPages());
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", pagination, transactionDTOS));
+    }
+
     public TransactionDTO convertToTransactionDTO(Transaction transaction){
         if(transaction == null){
             return null;
         }
-        return modelMapper.map(transaction,TransactionDTO.class);
+        Orders orders = transaction.getPayment().getOrders();
+        TransactionDTO transactionDTO = modelMapper.map(transaction,TransactionDTO.class);
+        transactionDTO.setUserDTO(userService.convertToDTO(transaction.getUser()));
+        OrderDTO orderDTO = modelMapper.map(orders, OrderDTO.class);
+        orderDTO.setTourInfoDTO(tourService.convertToTourInfoDTO(orders.getTourTime().getTour()));
+        transactionDTO.setOrderDTO(orderDTO);
+        return transactionDTO;
     }
 }

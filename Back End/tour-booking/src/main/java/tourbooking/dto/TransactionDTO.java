@@ -34,7 +34,9 @@ public class TransactionDTO {
 
     private TransactionStatus transactionStatus;
 
-//    private User user;
+    private UserDTO userDTO;
+
+    private OrderDTO orderDTO;
 //
 //    private Payment payment;
 }
