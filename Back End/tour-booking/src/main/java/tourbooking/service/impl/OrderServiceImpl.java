@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
         Set<TourVisitor> tourVisitorSet = new HashSet<>();
         orders.setUser(user);
         orders.setTourTime(tourTime);
-        orders.setPaid(paid);
+        //orders.setPaid(paid);
         //Tính giá tiền cho trẻ em
         BigDecimal tourPrice = tourTime.getTour().getPrice();
         long babyNumber = tourVisitorFormList.stream().filter(tourVisitorForm -> tourVisitorForm.getType().equals("BABY")).count();
@@ -133,17 +133,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<BaseResponseDTO> getAllOrder(Principal principal) {
+    public ResponseEntity<BaseResponseDTO> getAllOrder(Principal principal, OrderStatus orderStatus, String keyWord) {
         User user = userRepository.findByFireBaseUid(principal.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
-        List<Orders> ordersList = orderRepository.findAllByUser(user);
+        List<Orders> ordersList = new ArrayList<>();
         List<OrderDTO> orderDTOList = new ArrayList<>();
-        for (Orders orders: ordersList
-             ) {
-            OrderDTO orderDTO = modelMapper.map(orders, OrderDTO.class);
-            orderDTO.setTourInfoDTO(tourService.convertToTourInfoDTO(orders.getTourTime().getTour()));
-            orderDTOList.add(orderDTO);
+        if (keyWord == null) {
+            ordersList = orderRepository.findAllByUserAndOrderStatus(user, orderStatus);
+            orderDTOList = convertToListOrderDTO(ordersList);
+        } else {
+            ordersList = orderRepository.findAllByUserAndOrderStatus(user, orderStatus);
+            List<Orders> ordersFilteredList = ordersList.stream().filter(orders -> orders.getCode().equals(keyWord)).toList();
+            orderDTOList = convertToListOrderDTO(ordersFilteredList);
         }
+
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", orderDTOList));
     }
 
@@ -163,6 +166,20 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(orders);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
+    }
+    public List<OrderDTO> convertToListOrderDTO (List<Orders> ordersList) {
+        if (ordersList.isEmpty()) {
+            return null;
+        }
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Orders orders: ordersList
+        ) {
+            OrderDTO orderDTO = modelMapper.map(orders, OrderDTO.class);
+            orderDTO.setTourInfoDTO(tourService.convertToTourInfoDTO(orders.getTourTime().getTour()));
+            orderDTOList.add(orderDTO);
+        }
+        return orderDTOList;
+
     }
 
     public OrderDetailDTO convertToOrderDetailDTO (Orders orders) {

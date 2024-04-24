@@ -29,4 +29,6 @@ public interface StaffService {
     ResponseEntity<BaseResponseDTO> deleteBanner(UUID id);
     ResponseEntity<BaseResponseDTO> viewBannerList();
     ResponseEntity<BaseResponseDTO> cancelOrder(Principal principal, UUID orderId);
+    ResponseEntity<BaseResponseDTO> listTourHasOrdered (String keyWord);
+
 }

@@ -439,6 +439,27 @@ public class StaffServiceImpl implements StaffService {
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Cancel success"));
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> listTourHasOrdered(String keyWord) {
+        List<Tour> tourList = new ArrayList<>();
+        List<TourInfoDTO> tourInfoDTOS = new ArrayList<>();
+        if(keyWord == null) {
+            tourList = tourRepository.findTourHasTourTimeHaveOrder();
+            tourInfoDTOS = tourList.stream().map(this::convertToTourInfoDTO).toList();
+
+        }else {
+            tourList = tourRepository.findTourHasTourTimeHaveOrder();
+            List<Tour> filteredTours = tourList.stream()
+                    .filter(tour -> tour.getCode().equals(keyWord))
+                    .toList();
+
+            tourInfoDTOS = filteredTours.stream().map(this::convertToTourInfoDTO).toList();
+
+
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully", tourInfoDTOS));
+    }
+
     public TourInfoDTO convertToTourInfoDTO(Tour tour){
         TourInfoDTO tourInfoDTO = modelMapper.map(tour, TourInfoDTO.class);
         if(tour.getTourSchedules() == null){

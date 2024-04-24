@@ -85,4 +85,9 @@ public class StaffController {
         return staffService.viewBannerList();
     }
 
+    @GetMapping("/tour/ordered")
+    ResponseEntity<BaseResponseDTO> listTourHasOrdered(@RequestParam(required = false) String keyWord) {
+        return staffService.listTourHasOrdered(keyWord);
+    }
+
 }

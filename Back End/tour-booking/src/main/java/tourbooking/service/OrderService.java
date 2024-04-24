@@ -2,6 +2,7 @@ package tourbooking.service;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.http.ResponseEntity;
+import tourbooking.common.OrderStatus;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourVisitorForm;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 public interface OrderService {
     ResponseEntity<BaseResponseDTO> createOrder (Principal principal, UUID tourTimeId, BigDecimal paid, List<TourVisitorForm> tourVisitorFormList);
 
-    ResponseEntity<BaseResponseDTO> getAllOrder (Principal principal);
+    ResponseEntity<BaseResponseDTO> getAllOrder (Principal principal, OrderStatus orderStatus, String keyWord);
     ResponseEntity<BaseResponseDTO> getOrderDetailById (UUID uuid);
     ResponseEntity<BaseResponseDTO> cancelOrder (UUID uuid);
 

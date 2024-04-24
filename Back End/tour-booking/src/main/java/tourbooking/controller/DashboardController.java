@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/dashboard")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
 public class DashboardController {
 
 //    @Autowired
