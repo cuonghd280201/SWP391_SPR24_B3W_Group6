@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import paymentServices from "../../services/payment.services";
 import SiderBarWebAdmin from "../Admin/SlideBar/SiderBarWebAdmin";
-import NavBarWebStaff from "./Navbar/NavBarWebStaff";
+import NavBarWebAdmin from "../Admin/Navbar/NavBarWebAdmin";
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -60,7 +60,7 @@ const ListTransaction = () => {
       <Layout style={{ minHeight: "100vh" }}>
         <SiderBarWebAdmin choose={"menu-key/5"}></SiderBarWebAdmin>
         <Layout>
-          <NavBarWebStaff></NavBarWebStaff>
+          <NavBarWebAdmin></NavBarWebAdmin>
 
           <div
             style={{
@@ -127,6 +127,12 @@ const ListTransaction = () => {
                               scope="col"
                               style={{ padding: "15px", color: "#495057" }}
                             >
+                              Người Thanh Toán
+                            </th>
+                            <th
+                              scope="col"
+                              style={{ padding: "15px", color: "#495057" }}
+                            >
                               Số Tiền
                             </th>
                             <th
@@ -156,6 +162,12 @@ const ListTransaction = () => {
                               <td style={{ padding: "15px" }}>
                                 {payment.id}
                               </td>
+                              <td style={{ padding: "15px" }}>
+  <a href={`mailto:${payment.userDTO.email}`} style={{ color: "blue", textDecoration: "underline" }}>
+    {payment.userDTO.email}
+  </a>
+</td>
+
                               <td style={{ padding: "15px" }}> {payment.amount}</td>
                               <td style={{ padding: "15px" }}> {payment.createDate}</td>
                               <td style={{ padding: "15px" }}>  {payment.description}</td>
