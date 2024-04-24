@@ -31,7 +31,8 @@ const sendAuthorizedRequest = async (url, method, data = null, config = {}) => {
 
 const axiosLocalHost = {
     sendAuthorizedRequest,
-    normalRequest: axiosClient,
+    normalRequest: axiosClient,    
 };
 
 export default axiosLocalHost;
+

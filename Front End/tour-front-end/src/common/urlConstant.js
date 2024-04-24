@@ -16,7 +16,11 @@ export default {
             getTourDetailByID: "/tour/get/${tourId}",
             getSlotDetailByID: "/staff/tourTime/getTimeDetail/${timeId}",
             filterTour: "/tour/filter",
-            keyWord: "keyWord=${keyWord}"
+            keyWord: "keyWord=${keyWord}",
+            endLocation:"endLocation=${endLocation}",
+            price:"minPrice=${minPrice}&maxPrice=${maxPrice}",
+            startDate:"startDate=${startDate}",
+            city:"/city/all",
         }, 
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
@@ -25,7 +29,7 @@ export default {
         },
         payment: {
             checkout: "/payment/check-out?uuid=${uuid}",
-            transaction: "/transaction/all",
+            transaction: "/dashboard/transactions",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
         },
@@ -34,11 +38,23 @@ export default {
             addMoreImage:"/staff/tourImage/addMoreImage",
             deleteImage:"/staff/tourImage/${imageId}",
         },
+        banner:{
+            listBanner:"/staff/tourBanner/viewBanner",
+            postBanner:"/staff/tourBanner/addMoreBanner",     
+            deleteBanner:"/staff/tourBanner/deleteBanner?id=${id}", 
+        },
+        cancel:{
+            customerCancel:"/order/cancel/${orderId}",
+            getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
+            staffCancel:"/staff/order/cancel/${orderId}",
+        
+            },
         admin:{
             orderSumary:"/dashboard/orderSumary",
             getRoleNumber: "/dashboard/getRoleNumber",
             getAllUser: "/dashboard/getAllUser",
-            getAllStaff: "/dashboard/getAllStaff"
+            getAllStaff: "/dashboard/getAllStaff",
+            getOrderStatus: "/dashboard/orderStatus",
         }
         
         

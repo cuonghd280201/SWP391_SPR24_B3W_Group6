@@ -91,9 +91,16 @@ const SiderBarWebStaff = ({ choose }) => {
        label: "Chuyến Đi Bị Hủy",
        key: "menu-key/4",
        icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
-       className: "listAccountHR",
-       link: "/listAccountHR", // Add the link property
+       className: "listCancelTourStaff",
+       link: "/listCancelTourStaff", // Add the link property
      },
+     {
+      label: "Tạo banner",
+      key: "menu-key/5",
+      icon: <FontAwesomeIcon icon={faUserGear} size="xl" />,
+      className: "manageBanner",
+      link: "/manageBanner", // Add the link property
+    },
     // {
     //   label: "Developer",
     //   key: "menu-key/5",
