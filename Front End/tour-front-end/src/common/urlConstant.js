@@ -29,7 +29,7 @@ export default {
         },
         payment: {
             checkout: "/payment/check-out?uuid=${uuid}",
-            transaction: "/transaction/all",
+            transaction: "/dashboard/transactions",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
         },
@@ -47,6 +47,8 @@ export default {
             customerCancel:"/order/cancel/${orderId}",
             getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
             staffCancel:"/staff/order/cancel/${orderId}",
+        
+            },
         admin:{
             orderSumary:"/dashboard/orderSumary",
             getRoleNumber: "/dashboard/getRoleNumber",

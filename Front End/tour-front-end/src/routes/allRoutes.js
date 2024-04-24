@@ -70,7 +70,7 @@ const authRoutes = [
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
   { path: "/contact", component: <Contact/>},
   { path: "/listTransaction", component: <ListTransaction/>},
-  { path: "/listOrderStatus", component: <ListOrderStatus /> }
+  { path: "/listOrderStatus", component: <ListOrderStatus /> },
   { path: "/manageBanner", component: <ManageBanner/>},
   { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
 
