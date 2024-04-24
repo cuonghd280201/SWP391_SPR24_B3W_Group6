@@ -28,6 +28,8 @@ import ListOrderStatus from "../pages/Admin/listOrderStatus";
 import FilterHome from "../pages/Home/filterHome";
 import ManageBanner from "../pages/Staff/ManageBanner";
 import ListCancelTourStaff from "../pages/Staff/ListCancelTourStaff";
+import ListTourVitorStaff from "../pages/Staff/ListTourVisitorStaff";
+import ListTourVisitorDetailStaff from "../pages/Staff/ListTourVisitorDetailStaff";
 
 
 const Home = React.lazy(() => import("../pages/Home/home"));
@@ -73,6 +75,9 @@ const authRoutes = [
   { path: "/listOrderStatus", component: <ListOrderStatus /> },
   { path: "/manageBanner", component: <ManageBanner/>},
   { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
+  { path: "/listTourVisitorStaff", component: <ListTourVitorStaff/>},
+  { path: "/listTourVisitorDetailStaff", component: <ListTourVisitorDetailStaff/>},
+
 
 
 

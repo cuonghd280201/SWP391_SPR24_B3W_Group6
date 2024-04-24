@@ -21,8 +21,23 @@ const Home = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
     const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-    const [totalPages, setTotalPages] = useState(1); // Add state for total pages
+    const [totalPages, setTotalPages] = useState(pageSize); // Add state for total pages
     const [loading, setLoading] = useState(true);
+
+    const calculatePageRange = (currentPage, totalPages) => {
+        const pageRangeSize = 6;
+        let startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
+        let endPage = startPage + pageRangeSize - 1;
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(1, endPage - pageRangeSize + 1);
+        }
+
+        return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    };
+
+
+    const pageRange = calculatePageRange(currentPage, totalPages);
 
     // Lấy dữ liệu các thành phố
     const [cities, setCities] = useState([]);
@@ -88,9 +103,9 @@ const Home = () => {
     };
 
     const handleDateChange = (event) => {
-        const dateValue = event.target.value; 
-        const formattedDate = formatDate(dateValue); 
-        setStartDate(formattedDate); 
+        const dateValue = event.target.value;
+        const formattedDate = formatDate(dateValue);
+        setStartDate(formattedDate);
     };
 
     const formatDate = (dateString) => {
@@ -224,12 +239,12 @@ const Home = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                <div className="select-wrap one-third">
-                    <div className="form-group">
-                        <Input type="date" onChange={handleDateChange} />
-                    </div>
-                </div>
-            </div>
+                                            <div className="select-wrap one-third">
+                                                <div className="form-group">
+                                                    <Input type="date" onChange={handleDateChange} />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="form-group">
                                             <div className="range-slider">
                                                 <span>
@@ -332,11 +347,23 @@ const Home = () => {
                                 <div className="col text-center">
                                     <div className="block-27">
                                         <ul>
-                                            <li><a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>&lt;</a></li>
-                                            <li className={currentPage ? 'active' : ''}>
-                                                <span> {currentPage}</span>
+                                            <li>
+                                                <a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                                                    &lt;
+                                                </a>
                                             </li>
-                                            <li><a href="#" onClick={() => handlePageChange(currentPage + 1)}>&gt;</a></li>
+                                            {pageRange.map((page) => (
+                                                <li key={page} className={currentPage === page ? 'active' : ''}>
+                                                    <a href="#" onClick={() => handlePageChange(page)}>
+                                                        {page}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                            <li>
+                                                <a href="#" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                                                    &gt;
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
