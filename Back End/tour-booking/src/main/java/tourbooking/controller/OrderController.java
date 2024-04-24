@@ -29,7 +29,9 @@ public class OrderController {
         return orderService.createOrder(principal, tourTimeId, paid, tourVisitorFormList);
     }
     @GetMapping("/all")
-    public ResponseEntity<BaseResponseDTO> getAllOrderByUser (Principal principal, @RequestParam OrderStatus orderStatus, @RequestParam String keyWord) {
+    public ResponseEntity<BaseResponseDTO> getAllOrderByUser (Principal principal,
+                                                              @RequestParam(required = false) OrderStatus orderStatus,
+                                                              @RequestParam(required = false) String keyWord) {
         return orderService.getAllOrder(principal, orderStatus, keyWord);
     }
     @GetMapping("/{orderId}")

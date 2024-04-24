@@ -141,10 +141,14 @@ public class OrderServiceImpl implements OrderService {
         if (keyWord == null) {
             ordersList = orderRepository.findAllByUserAndOrderStatus(user, orderStatus);
             orderDTOList = convertToListOrderDTO(ordersList);
+            orderDTOList.sort(Comparator.comparing(OrderDTO::getCreateDate).reversed());
+
+
         } else {
             ordersList = orderRepository.findAllByUserAndOrderStatus(user, orderStatus);
             List<Orders> ordersFilteredList = ordersList.stream().filter(orders -> orders.getCode().equals(keyWord)).toList();
             orderDTOList = convertToListOrderDTO(ordersFilteredList);
+            orderDTOList.sort(Comparator.comparing(OrderDTO::getCreateDate).reversed());
         }
 
         return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", orderDTOList));

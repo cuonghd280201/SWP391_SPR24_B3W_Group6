@@ -15,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/staff")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class StaffController {
 
     private final StaffService staffService;
@@ -88,6 +88,11 @@ public class StaffController {
     @GetMapping("/tour/ordered")
     ResponseEntity<BaseResponseDTO> listTourHasOrdered(@RequestParam(required = false) String keyWord) {
         return staffService.listTourHasOrdered(keyWord);
+    }
+
+    @GetMapping("/tourVisitor/{tourTimeId}")
+    ResponseEntity<BaseResponseDTO> listTourVisitor(@PathVariable("tourTimeId") UUID tourTimeId) {
+        return staffService.listTourVisitor(tourTimeId);
     }
 
 }
