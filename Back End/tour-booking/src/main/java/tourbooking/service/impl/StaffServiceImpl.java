@@ -460,6 +460,36 @@ public class StaffServiceImpl implements StaffService {
         return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully", tourInfoDTOS));
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> listTourVisitor(UUID tourTimeId) {
+        TourTime tourTime = tourTimeRepository.findById(tourTimeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tour time not found!"));
+        ListTourVisitorAndCancelDTO listTourVisitorAndCancelDTOS = new ListTourVisitorAndCancelDTO();
+        List<TourVisitorDTO> tourVisitorDTOList = new ArrayList<>();
+        List<TourVisitorDTOCancel> tourVisitorDTOCancelList = new ArrayList<>();
+        //Lấy ds khách hàng hiện có trong tour time
+        for (TourVisitor tourVisitor: tourTime.getTourVisitorSet()
+             ) {
+            TourVisitorDTO tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTO.class);
+            tourVisitorDTOList.add(tourVisitorDTO);
+        }
+        //Lấy ds khách hàng đã hủy trong tour time
+        for (Orders orders: tourTime.getOrdersSet()
+             ) {
+            if (orders.getOrderStatus().equals(OrderStatus.CANCEL)) {
+                for (TourVisitor tourVisitor:tourVisitorRepository.findAllByOrderId(orders.getId())
+                     ) {
+                    TourVisitorDTOCancel tourVisitorDTO = modelMapper.map(tourVisitor, TourVisitorDTOCancel.class);
+                    tourVisitorDTOCancelList.add(tourVisitorDTO);
+                }
+            }
+        }
+        listTourVisitorAndCancelDTOS.setTourVisitorDTOList(tourVisitorDTOList);
+        listTourVisitorAndCancelDTOS.setTourVisitorDTOCancelList(tourVisitorDTOCancelList);
+
+        return ResponseEntity.ok(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.OK, "Successfully", listTourVisitorAndCancelDTOS));
+    }
+
     public TourInfoDTO convertToTourInfoDTO(Tour tour){
         TourInfoDTO tourInfoDTO = modelMapper.map(tour, TourInfoDTO.class);
         if(tour.getTourSchedules() == null){
