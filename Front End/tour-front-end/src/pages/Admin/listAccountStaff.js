@@ -18,14 +18,28 @@ const ListAccountStaff = () => {
   // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
   const [allStaff, setAllStaff] = useState();
+  const [filteredStaff, setFilteredStaff] = useState([]);
 
   useEffect(() => {
-    fetchAllUser();
+    fetchAllStaff();
   }, []);
 
-  const fetchAllUser = async () => {
+  const fetchAllStaff = async () => {
     const response = await adminServices.getAllStaff();
     setAllStaff(response.data.data);
+    setFilteredStaff(response.data.data); // Initialize filtered staff with all staff
+  };
+
+  const handleSearch = (value) => {
+    const searchValue = value.toLowerCase().trim();
+    const filtered = allStaff.filter(
+      (staff) => {
+        const name = staff.name.toLowerCase().includes(searchValue);
+        const email = staff.email.toLowerCase().includes(searchValue);
+        return name || email || searchValue === "";
+       }
+    );
+    setFilteredStaff(filtered);
   };
 
   return (
@@ -68,9 +82,15 @@ const ListAccountStaff = () => {
               }}
             >
               <div style={{ height: "600px", overflow: "auto" }}>
+                <Search
+                  placeholder="Enter name to search"
+                  allowClear
+                  onSearch={handleSearch}
+                  style={{ width: 200, marginBottom: 16 }}
+                />
                 <Table
                   className="custom-table"
-                  dataSource={allStaff}
+                  dataSource={filteredStaff}
                   pagination={page}
                   size="middle"
                   components={{
@@ -108,7 +128,7 @@ const ListAccountStaff = () => {
                   />
                   <Column title="Giới tính" dataIndex="gender" key="gender" />
                   <Column title="Vai trò" dataIndex="role" key="role" />
-                  
+
                   <Column
                     title="Trạng thái"
                     dataIndex="enable"
@@ -121,7 +141,7 @@ const ListAccountStaff = () => {
                           color: "white",
                           padding: "4px 8px",
                           borderRadius: "4px",
-                          fontSize: "12px"
+                          fontSize: "12px",
                         }}
                       >
                         {text ? "Hoạt động" : "Inactive"}
@@ -129,7 +149,7 @@ const ListAccountStaff = () => {
                     )}
                   />
 
-<Column
+                  <Column
                     title="Vô hiệu hóa"
                     key="action"
                     render={(text, record) => (

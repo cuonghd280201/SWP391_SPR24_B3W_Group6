@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Layout, Table, Space, Input, Switch } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
-// import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
 import adminServices from "../../services/admin.services";
+
+const { Column } = Table;
+const { Content } = Layout;
+const { Search } = Input;
 const page = {
   pageSize: 5, // Number of items per page
 };
 
-const { Column } = Table;
-
-const { Content } = Layout;
-const { Search } = Input;
-
 const ListAccountCustomer = () => {
-  // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
-  const [allUser, setAllUser] = useState();
+  const [allUser, setAllUser] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     fetchAllUser();
@@ -26,6 +24,20 @@ const ListAccountCustomer = () => {
   const fetchAllUser = async () => {
     const response = await adminServices.getAllUser();
     setAllUser(response.data.data);
+    setFilteredUsers(response.data.data); 
+  };
+
+  const handleSearch = (value) => {
+    const searchValue = value.toLowerCase().trim();
+
+    const filtered = allUser.filter((user) =>{
+      const nameMatch = user.name.toLowerCase().includes(searchValue);
+      const emailMatch = user.email.toLowerCase().includes(searchValue);
+      return nameMatch || emailMatch || searchValue === "";
+    }
+   
+    );
+    setFilteredUsers(filtered);
   };
 
   return (
@@ -68,9 +80,15 @@ const ListAccountCustomer = () => {
               }}
             >
               <div style={{ height: "600px", overflow: "auto" }}>
+                <Search
+                  placeholder="Enter name to search"
+                  allowClear
+                  onSearch={handleSearch}
+                  style={{ width: 200, marginBottom: 16 }}
+                />
                 <Table
                   className="custom-table"
-                  dataSource={allUser}
+                  dataSource={filteredUsers} // Render filtered users instead of all users
                   pagination={page}
                   size="middle"
                   components={{
@@ -87,6 +105,7 @@ const ListAccountCustomer = () => {
                     },
                   }}
                 >
+                  {/* Columns definition */}
                   <Column
                     title="Avatar"
                     dataIndex="image"
@@ -117,7 +136,7 @@ const ListAccountCustomer = () => {
                     render={(text, record) => (
                       <span
                         style={{
-                          backgroundColor: text ? "green" : "red",
+                          backgroundColor: text ? "#32CD32" : "red",
                           color: "white",
                           padding: "4px 8px",
                           borderRadius: "4px",
@@ -151,11 +170,9 @@ const ListAccountCustomer = () => {
                               [record.userId]: !record.enable,
                             }));
 
-                            // Update the record in the data source
-                            // Replace this line with your actual update logic
-                            // updateRecord(newRecord);
+                     
                           }}
-                          size="small" // Set size to "small" for iOS-like appearance
+                          size="small" 
                           style={{
                             backgroundColor: record.enable ? "green" : "red", // Determine color based on the 'enable' property
                             borderColor: record.enable ? "green" : "red", // Determine border color accordingly

@@ -45,7 +45,7 @@ const userRoutes = [
   { path: "/infomationTour", component: <InfomationTour/>},
   { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
   { path: "/filterHome", component: <FilterHome/>},
-
+  { path: "/contact", component: <Contact/>},
 
 
 
@@ -68,12 +68,10 @@ const authRoutes = [
   { path: "/slotTourStaff", component: <SlotTourStaff/>},
   { path: "/slotTourStaffDetail", component: <SlotTourStaffDetai/>},
   { path: "/listTourBookDetail", component: <ListTourStaffDetail/>},
-  { path: "/contact", component: <Contact/>},
   { path: "/listTransaction", component: <ListTransaction/>},
   { path: "/listOrderStatus", component: <ListOrderStatus /> },
   { path: "/manageBanner", component: <ManageBanner/>},
-  { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>},
-
+  { path: "/listCancelTourStaff", component: <ListCancelTourStaff/>}
 
 
 
