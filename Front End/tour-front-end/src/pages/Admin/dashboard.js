@@ -167,7 +167,7 @@ const Dashboard = () => {
                 {
                   name: "series-1",
                   data: revenues,
-                  color: "#007FFF",
+                  color: "#6050DC",
                 },
               ]}
               type="bar"

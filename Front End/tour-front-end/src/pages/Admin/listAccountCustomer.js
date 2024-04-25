@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Layout, Table, Space, Input, Switch } from "antd";
+import React, { useEffect, useState, useMemo } from "react";
+import { Layout, Table, Space, Input, Switch, Select } from "antd";
+import { message } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
@@ -8,6 +9,7 @@ import adminServices from "../../services/admin.services";
 const { Column } = Table;
 const { Content } = Layout;
 const { Search } = Input;
+const { Option } = Select;
 const page = {
   pageSize: 5, // Number of items per page
 };
@@ -16,6 +18,10 @@ const ListAccountCustomer = () => {
   const [switchStatusMap, setSwitchStatusMap] = useState({});
   const [allUser, setAllUser] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [sortedInfo, setSortedInfo] = useState({
+    columnKey: null,
+    order: null,
+  });
 
   useEffect(() => {
     fetchAllUser();
@@ -38,6 +44,46 @@ const ListAccountCustomer = () => {
     setFilteredUsers(filtered);
   };
 
+  const handleSortOptionChange = (value) => {
+    if (value === "NAME_ASC") {
+      handleSort("name", "ascend");
+    } else if (value === "NAME_DESC") {
+      handleSort("name", "descend");
+    }
+  };
+
+  const handleSort = (columnKey, order) => {
+    setSortedInfo({ columnKey, order });
+  };
+
+  const sortedDataSource = useMemo(() => {
+    if (sortedInfo.columnKey && sortedInfo.order) {
+      const sortedData = [...filteredUsers].sort((a, b) => {
+        const result = a[sortedInfo.columnKey].localeCompare(
+          b[sortedInfo.columnKey]
+        );
+        return sortedInfo.order === "ascend" ? result : -result;
+      });
+      return sortedData;
+    }
+    return filteredUsers;
+  }, [sortedInfo, filteredUsers]);
+  const banUserById = async (id) => {
+    try {
+      // Call your backend service to update user status by ID
+      const response = await adminServices.banUserById(id);
+      if (response.status === 200) {
+        message.success("User banned successfully");
+        fetchAllUser();
+      } else {
+        message.error("Failed to ban user");
+      }
+    } catch (error) {
+      console.error("Error banning user:", error);
+      message.error("Failed to ban user");
+    }
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <SiderBarWebAdmin choose={"menu-key/2"}></SiderBarWebAdmin>
@@ -46,7 +92,9 @@ const ListAccountCustomer = () => {
 
         <div
           style={{
-            margin: "20px", padding: "20px", backgroundColor: "#fff"
+            margin: "20px",
+            padding: "20px",
+            backgroundColor: "#fff",
           }}
         >
           <Content>
@@ -72,9 +120,23 @@ const ListAccountCustomer = () => {
                 placeholder="Enter name to search"
                 allowClear
                 onSearch={handleSearch}
-                style={{ width: 250, marginBottom: 16, marginLeft: 490, marginTop: 15 }}
+                style={{
+                  width: 250,
+                  marginBottom: 16,
+                  marginLeft: 490,
+                  marginTop: 15,
+                }}
               />
             </div>
+
+            <Select
+              defaultValue="Sắp xếp theo tên"
+              onChange={handleSortOptionChange}
+              style={{ marginLeft: "20px", width: "200px" }}
+            >
+              <Option value="NAME_ASC">Sắp xếp theo Tên (A - Z)</Option>
+              <Option value="NAME_DESC">Sắp xếp theo Tên (Z - A)</Option>
+            </Select>
 
             <div
               style={{
@@ -85,7 +147,7 @@ const ListAccountCustomer = () => {
               <div style={{ height: "600px", overflow: "auto" }}>
                 <Table
                   className="custom-table"
-                  dataSource={filteredUsers} // Render filtered users instead of all users
+                  dataSource={sortedDataSource}
                   pagination={page}
                   size="middle"
                   components={{
@@ -102,7 +164,6 @@ const ListAccountCustomer = () => {
                     },
                   }}
                 >
-                  {/* Columns definition */}
                   <Column
                     title="Avatar"
                     dataIndex="image"
@@ -124,7 +185,6 @@ const ListAccountCustomer = () => {
                   />
                   <Column title="Giới tính" dataIndex="gender" key="gender" />
                   <Column title="Vai trò" dataIndex="role" key="role" />
-
                   <Column
                     title="Trạng thái"
                     dataIndex="enable"
@@ -140,11 +200,10 @@ const ListAccountCustomer = () => {
                           fontSize: "12px",
                         }}
                       >
-                        {text ? "Hoạt động" : "Inactive"}
+                        {text ? "Hoạt động" : "Không hoạt động"}
                       </span>
                     )}
                   />
-
                   <Column
                     title="Vô hiệu hóa"
                     key="action"
@@ -154,23 +213,20 @@ const ListAccountCustomer = () => {
                           checked={record.enable}
                           onChange={(checked, event) => {
                             event.stopPropagation();
-
-                            // Toggle the 'enable' property of the record
                             const newRecord = {
                               ...record,
                               enable: !record.enable,
                             };
-
-                            // Update the switch status map
                             setSwitchStatusMap((prevMap) => ({
                               ...prevMap,
-                              [record.userId]: !record.enable,
+                              [record.id]: !record.enable,
                             }));
+                            banUserById(record.id, !record.enable);
                           }}
                           size="small"
                           style={{
-                            backgroundColor: record.enable ? "green" : "red", // Determine color based on the 'enable' property
-                            borderColor: record.enable ? "green" : "red", // Determine border color accordingly
+                            backgroundColor: record.enable ? "green" : "red",
+                            borderColor: record.enable ? "green" : "red",
                           }}
                         />
                       </Space>
