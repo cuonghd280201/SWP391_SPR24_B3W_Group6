@@ -41,6 +41,9 @@ export default {
             transaction: "/dashboard/transactions",
             paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
             sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+            postPayment: "/vn-pay/payment",
+            amount: "amount=${amount}",
+            vnp_TxnRef: "vnp_TxnRef=${vnp_TxnRef}",
         },
         staff:{
             updateImage:"/staff/tourImage/updateImage",
