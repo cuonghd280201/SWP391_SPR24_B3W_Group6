@@ -24,26 +24,32 @@ const Login = () => {
 
             // Get user profile and role
             const userProfileResponse = await userServices.getUserProfile();
-            const userProfile = userProfileResponse.data.data;
-            const userRole = userProfile.role;
-            console.log('User Role:', userRole);
+            if (userProfileResponse === 403) {
+                navigate('/forbidden');
+            } else {
+                const userProfile = userProfileResponse.data.data;
+                const userRole = userProfile.role;
+                console.log('User Role:', userRole);
 
-            // Navigate based on user role
-            switch (userRole) {
-                case 'USER':
-                    navigate('/');
-                    break;
-                case 'STAFF':
-                    navigate('/listTourStaff');
-                    break;
-                default:
-                    navigate('/dashboard');
-                    break;
+                // Navigate based on user role
+                switch (userRole) {
+                    case 'USER':
+                        navigate('/');
+                        break;
+                    case 'STAFF':
+                        navigate('/listTourStaff');
+                        break;
+                    default:
+                        navigate('/dashboard');
+                        break;
+                }
+                toast.success('Đăng nhập thành công!');
             }
-            toast.success('Đăng nhập thành công!');
+
         } catch (error) {
             console.error('Error during Google Sign-In:', error);
             toast.error('Đăng nhập thất bại!');
+            navigate('/forbidden')
         }
     };
 
