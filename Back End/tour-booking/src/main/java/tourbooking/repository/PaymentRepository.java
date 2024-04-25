@@ -13,5 +13,5 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
     Payment getPaymentByVnPayCode(String vnPayCode);
     List<Payment> findByPaymentStatusAndCreateDateBetween(PaymentStatus paymentStatus, LocalDateTime startDate, LocalDateTime endDate);
 
-    Optional<Payment> findByCode(String code);
+//    Optional<Payment> findByCode(String code);
 }
