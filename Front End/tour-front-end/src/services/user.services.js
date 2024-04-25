@@ -47,8 +47,24 @@ const getUserProfile = async () => {
 //         });
 //     return response;
 // };
+
+
+const getAllTransaction = async (currentPage, pageSize, sortBy, sortOrder) => {
+    const serviceUrl = urlConstant.endpoint.auth.transaction + "?";
+    const pagingUrl = urlConstant.endpoint.auth.paging
+      .replace("${currentPage}", currentPage)
+      .replace("${pageSize}", pageSize);
+    const sortUrl = urlConstant.endpoint.auth.sorting
+      .replace("${sortBy}", sortBy)
+      .replace("${sortOrder}", sortOrder);
+  
+    const fullUrl = serviceUrl + pagingUrl + '&' + sortUrl;
+    const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "GET");
+    return response;
+  };
 export default {
     getUserProfile,
     updateProfile,
+    getAllTransaction,
 
 }

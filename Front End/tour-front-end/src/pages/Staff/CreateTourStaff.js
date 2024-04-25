@@ -194,7 +194,7 @@ const CreateTourStaff = () => {
                                     Previous
                                 </Button>
                             )}
-                            {currentStep < 6 ? (
+                            {/* {currentStep < 6 ? (
                                 <Button
                                     type="primary"
                                     onClick={() => renderCurrentStep().props.onNext(formData[`step${currentStep}Data`])}
@@ -205,7 +205,7 @@ const CreateTourStaff = () => {
                                 <Button type="primary" onClick={handleCreateTour}>
                                     Submit Tour
                                 </Button>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 </div>

@@ -6,42 +6,69 @@ import { signInWithPopup } from '@firebase/auth';
 import { auth, googleAuthProvider } from '../../utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import userServices from '../../services/user.services';
 
 
 
 const Login = () => {
     const navigate = useNavigate();
 
-    const handleSignWithGoogle = async () => {
-        try{
-            const result  = await signInWithPopup(auth,googleAuthProvider);
-            console.log(result);  
+    const handleSignInWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleAuthProvider);
+            console.log('Google Sign-In Result:', result);
+
+            // Store token and user data in local storage
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
-            navigate("/");  
-            toast.success("Đăng nhập thành công!")
 
-        }catch(error){
-            console.error(error);
-            toast.error("Đăng nhập thất bại!")
+            // Get user profile and role
+            const userProfileResponse = await userServices.getUserProfile();
+            const userProfile = userProfileResponse.data.data;
+            const userRole = userProfile.role;
+            console.log('User Role:', userRole);
+
+            // Navigate based on user role
+            switch (userRole) {
+                case 'USER':
+                    navigate('/');
+                    break;
+                case 'STAFF':
+                    navigate('/listTourStaff');
+                    break;
+                default:
+                    navigate('/dashboard');
+                    break;
+            }
+            toast.success('Đăng nhập thành công!');
+        } catch (error) {
+            console.error('Error during Google Sign-In:', error);
+            toast.error('Đăng nhập thất bại!');
         }
+    };
 
-    }
+    // Check user authentication status
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            navigate('/');
+        }
+    }, [navigate]);
 
-const { googleSignIn, user } = UserAuth();
-  //const navigate = useNavigate();
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (user != null) { 
-      navigate('/login'); 
-    }
-  }, [user]); 
+    const { googleSignIn, user } = UserAuth();
+    //const navigate = useNavigate();
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        if (user != null) {
+            navigate('/login');
+        }
+    }, [user]);
     return (
         <div>
             <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
@@ -66,7 +93,7 @@ const { googleSignIn, user } = UserAuth();
                                 <i className="fa fa-facebook-official" />
                                 Facebook
                             </a>
-                            <a href="#" className="btn-google m-b-20" onClick={handleSignWithGoogle}>
+                            <a href="#" className="btn-google m-b-20" onClick={handleSignInWithGoogle}>
                                 <img src="images/icongoogle.jpg" alt="GOOGLE" />
                                 Google
                             </a>
@@ -92,10 +119,10 @@ const { googleSignIn, user } = UserAuth();
                                 <span className="focus-input100" />
                             </div>
                             <div className="container-login100-form-btn m-t-17">
-                            <Link to="/listTourStaff">
-                                <button className="login100-form-btn">
-                                    Đăng Nhập
-                                </button>
+                                <Link to="/listTourStaff">
+                                    <button className="login100-form-btn">
+                                        Đăng Nhập
+                                    </button>
                                 </Link>
                             </div>
                             <div className="w-full text-center p-t-55">

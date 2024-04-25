@@ -15,12 +15,12 @@ const customerCancel = async (orderId) => {
     return response;
   };
 
-  const getStaffOrderStatus = async (tourTimeId) => {
+  const getStaffOrderStatus = async (orderStatus) => {
  
-    const baseUrl = urlConstant.endpoint.cancel.getAllOrderStatus.replace("${tourTimeId}", tourTimeId);   
+    const baseUrl = `${urlConstant.endpoint.cancel.getAllOrderStatus}?orderStatus=${orderStatus}`;  
     try {
         const response = await axiosLocalHost.sendAuthorizedRequest(baseUrl, "GET");
-        return response.data; 
+        return response; 
     } catch (error) {
         console.error("Error get order:", error);
         throw error; 

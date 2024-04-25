@@ -116,11 +116,11 @@ const FindTour = () => {
                                                         </p>
                                                     </div>
                                                     <div className="two">
-                                                        <span className="price per-price">{tourDetailCustomer.price}<br /><small>/tour</small></span>
+                                                        <span className="price per-price">{tourDetailCustomer.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}<br /><small>/khách</small></span>
                                                     </div>
                                                 </div>
                                                 <span>                                        <img src="/images/tour.png" className="icon-img" />
-                                                    {tourTime.id}</span>
+                                                    {tourTime.code}</span>
                                                 <p>Nơi Khởi Hành:  {tourDetailCustomer.starLocation}</p>
                                                 <p>Nơi Kết Thúc:  {tourDetailCustomer.endLocation}</p>
                                                 <h3>Giá : {tourDetailCustomer.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h3>

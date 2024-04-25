@@ -118,7 +118,13 @@ const SlotTourStaffDetai = () => {
                         </div>
                         <div className="col-4">
                           <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                            Mã Chuyến Đi:{timeDetail?.tourDTO.title}
+                            Mã Chuyến Đi: {timeDetail?.tourDTO.code}
+                            <span style={{ color: "#666" }}>
+
+                            </span>
+                          </h4>
+                          <h4 style={{ fontSize: 16, marginTop: 10 }}>
+                            Tên Chuyến Đi: {timeDetail?.tourDTO.title}
                             <span style={{ color: "#666" }}>
 
                             </span>
