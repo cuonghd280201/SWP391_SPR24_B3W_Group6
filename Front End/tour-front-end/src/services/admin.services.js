@@ -55,11 +55,21 @@ const getRevenue = async (days) => {
   return response;
 };
 
+const banUserById = async (id) => {
+  const serviceUrl = `${urlConstant.endpoint.admin.banUserById}?user_id=${id}`;
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "POST"
+  );
+  return response;
+};
+
 export default {
   getOrderSumary,
   getRoleNumber,
   getAllUser,
   getAllStaff,
   getOrderStatus,
-  getRevenue
+  getRevenue,
+  banUserById
 };

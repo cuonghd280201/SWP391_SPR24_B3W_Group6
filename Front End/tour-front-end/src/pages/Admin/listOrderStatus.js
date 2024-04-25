@@ -14,22 +14,31 @@ const page = {
 const ListOrderStatus = () => {
   const [orderStatus, setOrderStatus] = useState("DONE"); // State to store selected order status
   const [orderStatusData, setOrderStatusData] = useState([]);
+  const [sortOrderMap, setSortOrderMap] = useState({ DONE: "asc", NOT_DONE: "asc", WAITING_CANCEL: "asc", CANCEL: "asc" });
 
   useEffect(() => {
-    const fetchOrderStatusData = async () => {
-      try {
-        const response = await adminServices.getOrderStatus(orderStatus);
-        // Assuming the response.data contains the order data
-        setOrderStatusData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching order status data:", error);
-      }
-    };
     fetchOrderStatusData();
-  }, [orderStatus]);
+  }, [orderStatus, sortOrderMap[orderStatus]]);
+
+  const fetchOrderStatusData = async () => {
+    try {
+      const response = await adminServices.getOrderStatus(
+        orderStatus,
+        sortOrderMap[orderStatus] // Use the sorting order for the current status
+      );
+      setOrderStatusData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching order status data:", error);
+    }
+  };
 
   const handleOrderStatusChange = (value) => {
     setOrderStatus(value); // Update selected order status
+  };
+
+  const handleSortOrderChange = (value) => {
+    const newSortOrderMap = { ...sortOrderMap, [orderStatus]: value };
+    setSortOrderMap(newSortOrderMap); // Update sorting order map for the current status
   };
 
   const getStatusColor = (status) => {
@@ -49,12 +58,14 @@ const ListOrderStatus = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
+      {/* Sidebar and Navbar components */}
       <SiderBarWebAdmin choose={"menu-key/4"}></SiderBarWebAdmin>
       <Layout>
         <NavBarWebAdmin></NavBarWebAdmin>
         <Content
           style={{ margin: "20px", padding: "20px", backgroundColor: "#fff" }}
         >
+          {/* Title and Select component */}
           <h1
             style={{
               padding: "0px 0px 0px 0px",
@@ -81,6 +92,7 @@ const ListOrderStatus = () => {
             <Option value="WAITING_CANCEL">CHỜ HỦY</Option>
             <Option value="CANCEL">HỦY</Option>
           </Select>
+          {/* Table component */}
           <Table
             dataSource={orderStatusData}
             pagination={page}
@@ -97,6 +109,7 @@ const ListOrderStatus = () => {
                 ),
               },
             }}
+            onChange={(pagination, filters, sorter) => handleSortOrderChange(sorter.order)}
           >
             <Column title="Mã đơn hàng" dataIndex="code" key="code" />
             <Column
@@ -142,14 +155,8 @@ const ListOrderStatus = () => {
               title="Tổng tiền thanh toán"
               dataIndex="amount"
               key="amount"
-              render={(text) => (
-                <span style={{ padding: "8px 16px" }}>
-                  {(text / 1).toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
-                </span>
-              )}
+              sorter={(a, b) => a.amount - b.amount} // Enable sorting by total payment amount
+              sortOrder={sortOrderMap[orderStatus]} // Use the sorting order for the current status
             />
             <Column
               title="Tiền hoàn trả"
@@ -164,7 +171,6 @@ const ListOrderStatus = () => {
                 </span>
               )}
             />
-
             <Column
               title="Trạng thái đơn hàng"
               dataIndex="orderStatus"
