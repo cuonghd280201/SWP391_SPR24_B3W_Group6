@@ -22,19 +22,17 @@ const Step1Form = ({ formData, onNext }) => {
         form.setFieldsValue({ coverImage: url });
     };
 
-    const [cities, setCities] = useState([]); // Initialize cities as an empty array
+    const [cities, setCities] = useState([]); 
     useEffect(() => {
-        // Fetch city data when the component mounts
         const fetchDataCity = async () => {
             try {
-                // Fetch city data from the API
                 const response = await tourServices.getAllCity();
-                setCities(response.data.data); // Update cities state with the fetched data
-                setLoading(false); // Set loading to false once data is fetched
+                setCities(response.data.data); 
+                setLoading(false); 
             } catch (err) {
                 // Handle error and set error state
                 setError("Error fetching city data");
-                setLoading(false); // Set loading to false in case of an error
+                setLoading(false); 
             }
         };
 
