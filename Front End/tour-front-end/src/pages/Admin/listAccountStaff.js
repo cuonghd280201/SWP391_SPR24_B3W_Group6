@@ -102,7 +102,7 @@ const ListAccountStaff = () => {
               </h1>
 
               <Search
-                placeholder="Tìm kiếm theo từ khóa"
+                placeholder="Tìm kiếm theo tên và email"
                 allowClear
                 onSearch={handleSearch}
                 style={{

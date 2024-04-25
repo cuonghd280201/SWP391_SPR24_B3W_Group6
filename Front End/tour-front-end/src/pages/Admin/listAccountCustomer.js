@@ -117,7 +117,7 @@ const ListAccountCustomer = () => {
               </h1>
 
               <Search
-                placeholder="Enter name to search"
+                placeholder="Tìm kiếm theo tên và email"
                 allowClear
                 onSearch={handleSearch}
                 style={{

@@ -136,10 +136,10 @@ const ListTransaction = () => {
                 <Select
                   defaultValue={sortOrder}
                   onChange={handleSort} // Handle sorting order change
-                  style={{ width: 150, marginBottom: 16, marginLeft:630 }}
+                  style={{ width: 180, marginBottom: 16, marginLeft:600 }}
                 >
-                  <Option value="asc">Tiền tăng dần</Option>
-                  <Option value="desc">Tiền giảm dần</Option>
+                  <Option value="asc">Tổng tiền tăng dần</Option>
+                  <Option value="desc">Tổng tiền giảm dần</Option>
                 </Select>
                 <Table
                   className="custom-table"
@@ -160,7 +160,7 @@ const ListTransaction = () => {
                     },
                   }}
                 >
-                  <Column title="Mã đơn hàng" dataIndex="id" key="id" />
+                  <Column title="Mã đơn hàng" dataIndex="code" key="code" />
                   <Column
                     title="Mail"
                     dataIndex={["userDTO", "email"]}

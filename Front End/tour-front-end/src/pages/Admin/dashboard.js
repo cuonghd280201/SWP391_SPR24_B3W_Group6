@@ -7,6 +7,7 @@ import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 import adminServices from "../../services/admin.services";
 import Chart from "react-apexcharts";
+import { BiUser, BiGroup, BiMoney,BiDollar  } from "react-icons/bi";
 
 const { Content } = Layout;
 const { Column } = Table;
@@ -78,13 +79,15 @@ const Dashboard = () => {
 
             <div className="ecommerce-widget">
               <div className="row row-with-margin">
-                <div className="col-xl-3 ">
+                <div className="col-xl-2 col-lg-3 col-md-6">
                   <div className="card border-5 border-top border-info-subtle">
-                    <div className="card-body-dashboard">
-                      <h3 className="text-muted">Tổng tiền</h3>
-
-                      <div className="metric-value d-inline-block">
-                        <h4>
+                    <div className="card-body">
+                      <h3 className="text-muted mb-3">
+                        <BiMoney className="mr-2" />
+                        Tổng tiền
+                      </h3>
+                      <div className="metric-value">
+                        <h4 className="text-success">
                           {(orderSumary?.completedCount / 1).toLocaleString(
                             "vi-VN",
                             {
@@ -97,12 +100,15 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3">
+                <div className="col-xl-2 col-lg-3 col-md-6">
                   <div className="card border-5 border-top border-success-subtle">
-                    <div className="card-body-dashboard">
-                      <h3 className="text-muted">Tổng số tiền hoàn trả</h3>
-                      <div className="metric-value d-inline-block">
-                      <h4>
+                    <div className="card-body">
+                      <h3 className="text-muted mb-3">
+                        <BiDollar className="mr-2" />
+                        Tổng số tiền hoàn trả
+                      </h3>
+                      <div className="metric-value">
+                        <h4 className="text-danger">
                           {(orderSumary?.refundedCount / 1).toLocaleString(
                             "vi-VN",
                             {
@@ -111,26 +117,29 @@ const Dashboard = () => {
                             }
                           )}
                         </h4>
-
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3">
+                <div className="col-xl-2 col-lg-3 col-md-6">
                   <div className="card border-5 border-top border-warning-subtle">
-                    <div className="card-body-dashboard">
-                      <h3 className="text-muted">Số lượng khách hàng</h3>
-                      <div className="metric-value d-inline-block">
+                    <div className="card-body">
+                      <h3 className="text-muted mb-3">
+                        <BiGroup className="mr-2" /> Số lượng khách hàng
+                      </h3>
+                      <div className="metric-value">
                         <h4>{roleNumber?.countUser}</h4>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3">
+                <div className="col-xl-2 col-lg-3 col-md-6">
                   <div className="card border-5 border-top border-primary-subtle">
-                    <div className="card-body-dashboard">
-                      <h3 className="text-muted">Số lượng nhân viên</h3>
-                      <div className="metric-value d-inline-block">
+                    <div className="card-body">
+                      <h3 className="text-muted mb-3">
+                        <BiUser className="mr-2" /> Số lượng nhân viên
+                      </h3>
+                      <div className="metric-value">
                         <h4>{roleNumber?.countStaff}</h4>
                       </div>
                     </div>
@@ -138,6 +147,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
             <Select
               defaultValue="Doanh thu trong vòng"
               onChange={handleRevenueDatesChange}
