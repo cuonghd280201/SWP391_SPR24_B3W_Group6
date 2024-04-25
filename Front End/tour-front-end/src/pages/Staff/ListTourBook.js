@@ -29,49 +29,28 @@ const { Content } = Layout;
 const { Option } = Select;
 
 const ListTourBook = () => {
-    const [dummyData, setDummyData] = useState([
-        {
-            id: 1,
-            status: "",
-            title: "Hello",
-            code: "",
-            desscription: "",
-        },
-        {
-            id: 2,
-            title: "Tour 2",
-            date: "2024-04-18",
-            price: "3.000.000",
-        },
-        {
-            id: 3,
-            title: "Tour 3",
-            date: "2024-04-14",
-            price: "4.000.000",
-        },
-        {
-            id: 4,
-            title: "Tour 4",
-            date: "2024-04-16",
-            price: "3.600.000",
-        },
-        {
-            id: 5,
-            title: "Tour 4",
-            date: "2024-04-11",
-            price: "4.200.000",
-        },
-    ]);
+    
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3;
-    const totalItems = dummyData.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
+    const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
+    const [totalPages, setTotalPages] = useState(pageSize); // Add state for total pages
+    const [loading, setLoading] = useState(true);
 
-    // Calculate start and end indexes for the current page
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+    const calculatePageRange = (currentPage, totalPages) => {
+        const pageRangeSize = 6;
+        let startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
+        let endPage = startPage + pageRangeSize - 1;
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(1, endPage - pageRangeSize + 1);
+        }
 
+        return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    };
+    const pageRange = calculatePageRange(currentPage, totalPages);
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
     // Function to handle page navigation
     const goToPage = (page) => {
         setCurrentPage(page);
@@ -215,32 +194,32 @@ const ListTourBook = () => {
                         </TabContent>
 
                         {/* Pagination */}
-                        <div className="text-center mt-3">
-                            <Button
-                                disabled={currentPage === 1}
-                                onClick={() => goToPage(currentPage - 1)}
-                                style={{ marginRight: 10 }}
-                            >
-                                <LeftOutlined />
-                            </Button>
-                            {Array.from({ length: totalPages }, (_, i) => (
-                                <Button
-                                    key={i}
-                                    onClick={() => goToPage(i + 1)}
-                                    style={{ margin: "0 5px" }}
-                                    type={currentPage === i + 1 ? "primary" : "default"}
-                                >
-                                    {i + 1}
-                                </Button>
-                            ))}
-                            <Button
-                                disabled={currentPage === totalPages}
-                                onClick={() => goToPage(currentPage + 1)}
-                                style={{ marginLeft: 10 }}
-                            >
-                                <RightOutlined />
-                            </Button>
-                        </div>
+                       
+                        <div className="row mt-5">
+                                <div className="col text-center">
+                                    <div className="block-27">
+                                        <ul>
+                                            <li>
+                                                <a href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                                                    &lt;
+                                                </a>
+                                            </li>
+                                            {pageRange.map((page) => (
+                                                <li key={page} className={currentPage === page ? 'active' : ''}>
+                                                    <a href="#" onClick={() => handlePageChange(page)}>
+                                                        {page}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                            <li>
+                                                <a href="#" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                                                    &gt;
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                     </Content>
                 </div>
             </Layout >

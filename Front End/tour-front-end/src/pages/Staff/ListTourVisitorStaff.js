@@ -11,11 +11,12 @@ import { Link } from "react-router-dom";
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
 import tourServices from "../../services/tour.services";
+import orderServices from "../../services/order.services";
 
 const { Content } = Layout;
 const { Option } = Select;
 
-const ListTourStaff = () => {
+const ListTourVitorStaff = () => {
 
 
   const [error, setError] = useState(null);
@@ -23,6 +24,7 @@ const ListTourStaff = () => {
 
   //List Tour Staff
   const [tours, setTours] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
   const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
   const [totalPages, setTotalPages] = useState(pageSize); // Add state for total pages
@@ -42,28 +44,26 @@ const ListTourStaff = () => {
   const pageRange = calculatePageRange(currentPage, totalPages);
 
 
+
+  const [keyword, setKeyword] = useState('');
   useEffect(() => {
-    fetchTourData();
-  }, [currentPage, pageSize]);
+    fetchTourOrdered();
+  }, []);
 
-
-  const fetchTourData = async (sortBy = 'title', sortOrder = 'desc') => {
+  const fetchTourOrdered = async () => {
     try {
-      const response = await tourServices.getAllTourAndPaging(currentPage - 1, pageSize, sortBy, sortOrder);
-      console.log("Response:", response); // Log the response object
-
+      const decodedKeyword = decodeURIComponent(keyword);
+      const response = await orderServices.getTourOrdered(decodedKeyword);
       setTours(response.data.data);
-      setLoading(false);
+      console.log('searchData:', response);
 
     } catch (error) {
-      console.error("Error fetching tours:", error);
-      setError(error);
-      setLoading(false);
+      console.error('Lỗi khi gọi API:', error);
     }
   };
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
+
+
+
 
   const formatPrice = (price) => {
     return (price).toLocaleString('vi-VN').replace(/,/g, '.');
@@ -71,7 +71,7 @@ const ListTourStaff = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <SiderBarWebStaff choose={"menu-key/1"} />
+      <SiderBarWebStaff choose={"menu-key/2"} />
       <Layout>
         <NavBarWebStaff />
         <div
@@ -94,35 +94,16 @@ const ListTourStaff = () => {
 
             {/* Filter by price */}
             <div className="d-flex justify-content-between mb-4">
-
-
-              <span style={{ display: "inline-block" }}>
-                <a
-                  href="/createToutStaff"
-                  style={{
-                    fontSize: "15px",
-                    color: "#5cb85c",
-                    textDecoration: "none",
-                    padding: "8px 16px",
-                    border: "1px solid #5cb85c",
-                    borderRadius: "4px",
-                    transition: "background-color 0.3s, color 0.3s",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = "#4cae4c";
-                    e.target.style.color = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = "transparent";
-                    e.target.style.color = "#5cb85c";
-                  }}
-                >
-                  <PlusCircleOutlined style={{ marginRight: "5px" }} />
-                  Tạo chuyến đi mới
-                </a>
-              </span>
+                                        <div className="form-group">
+                                            <Input
+                                                type="text"
+                                                value={keyword}
+                                                onChange={(e) => setKeyword(e.target.value)}
+                                                placeholder="Nhập từ khóa..."
+                                            />                                        </div>
+                                        <div className="form-group">
+                                            <Button color="primary" onClick={fetchTourOrdered}>Tìm kiếm</Button>
+                                        </div>
             </div>
 
             {/* Display tours for the current page */}
@@ -137,7 +118,7 @@ const ListTourStaff = () => {
                             {/* Tour details */}
                             < div className="col-4" >
                               <Link
-                                to="/listTourStaffDetail"
+                                to="/listTourVisitorDetailStaff"
                                 className="text-dark"
                                 state={{ tourId: tour.id }} // Pass tourId as state data
                               >
@@ -152,7 +133,7 @@ const ListTourStaff = () => {
                               <h4 style={{ fontSize: 16, marginTop: 10 }}>
                                 Mã Chuyến Đi:{" "}
                                 <span style={{ color: "#666" }}>
-                                  {tour.id}
+                                  {tour.code}
                                 </span>
                               </h4>
                               <p style={{ fontSize: 14, marginBottom: 5 }}>
@@ -226,7 +207,8 @@ const ListTourStaff = () => {
               </div>
             </div>
 
-            <div className="row mt-5">
+
+            {/* <div className="row mt-5">
               <div className="col text-center">
                 <div className="block-27">
                   <ul>
@@ -250,7 +232,7 @@ const ListTourStaff = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Pagination */}
 
@@ -261,4 +243,4 @@ const ListTourStaff = () => {
   );
 };
 
-export default ListTourStaff;
+export default ListTourVitorStaff;

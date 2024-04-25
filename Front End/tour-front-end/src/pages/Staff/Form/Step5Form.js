@@ -31,7 +31,6 @@ const Step5Form = ({ formData, onNext }) => {
         <Layout>
         <h2>Thêm Ảnh Minh Họa</h2>
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={formData}>
-            {/* Form.List to handle multiple image inputs */}
             <Form.List name="tourImageCreateForms">
                 {(fields, { add, remove }) => (
                     <>
@@ -43,16 +42,13 @@ const Step5Form = ({ formData, onNext }) => {
                                     fieldKey={[fieldKey, 'image']}
                                     rules={[{ required: true, message: 'Vui Lòng Nhập Ảnh Phụ!' }]}
                                 >
-                                    {/* Pass the handleImageUpload function to FileUploadImage */}
                                     <FileUploadImage
                                         setUploadedImageUrl={(url) => handleImageUpload(url, index)}
                                     />
                                 </Form.Item>
-                                {/* Remove button for each form list item */}
                                 <Button type="link" onClick={() => remove(name)}>Xóa</Button>
                             </Space>
                         ))}
-                        {/* Button to add new image */}
                         <Form.Item>
                             <Button type="dashed" onClick={() => add()} block>
                                 Thêm Ảnh Khác

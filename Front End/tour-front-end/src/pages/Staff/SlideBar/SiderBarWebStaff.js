@@ -74,29 +74,23 @@ const SiderBarWebStaff = ({ choose }) => {
     // },
 
     {
-      label: "Danh Sách Đặt Chuyến Đi",
+      label: "Danh Sách Chuyển Đi Đã Đặt",
       key: "menu-key/2",
       icon: <FontAwesomeIcon icon={faUserTie} size="xl" />,
-      className: "listTourBook",
-      link: "/listTourBook",
+      className: "listTourVisitorStaff",
+      link: "/listTourVisitorStaff",
     },
-    {
-      label: "Báo Cáo Tiền",
-      key: "menu-key/3",
-      icon: <FontAwesomeIcon icon={faIdCardClip} size="xl" />,
-      className: "listTransaction",
-      link: "/listTransaction", // Add the link property
-    },
+   
      {
        label: "Chuyến Đi Bị Hủy",
-       key: "menu-key/4",
+       key: "menu-key/3",
        icon: <FontAwesomeIcon icon={faBuildingUser} size="xl" />,
        className: "listCancelTourStaff",
        link: "/listCancelTourStaff", // Add the link property
      },
      {
       label: "Tạo banner",
-      key: "menu-key/5",
+      key: "menu-key/4",
       icon: <FontAwesomeIcon icon={faUserGear} size="xl" />,
       className: "manageBanner",
       link: "/manageBanner", // Add the link property
