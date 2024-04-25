@@ -8,10 +8,10 @@ import tourbooking.entity.User;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
     ResponseEntity<BaseResponseDTO> saveUser(String uid) throws FirebaseAuthException;
     ResponseEntity<BaseResponseDTO> viewUserProfile(Principal principal);
     ResponseEntity<BaseResponseDTO> updateProfile(Principal principal, UpdateProfileForm updateProfileForm);
-
 }

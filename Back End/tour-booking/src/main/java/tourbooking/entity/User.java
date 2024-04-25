@@ -38,6 +38,8 @@ public class User implements UserDetails {
 
     private String name;
 
+
+
     @Size(min = 10, max = 12, message = "Phone number must be between 10 and 12 digits")
     @Pattern(regexp = "\\d+", message = "Phone number must contain only digits")
     private String phone;
@@ -118,4 +120,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnable;
     }
+
+
 }
