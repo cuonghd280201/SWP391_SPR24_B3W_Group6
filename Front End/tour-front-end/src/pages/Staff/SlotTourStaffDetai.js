@@ -56,7 +56,7 @@ const SlotTourStaffDetai = () => {
           >
             <h4>Ngày {index + 1}</h4>
             <h3>{adjustedDate}</h3>
-            <p>{schedule.description}</p>
+            {/* <p>{schedule.description}</p> */}
             {isComing && <div className="label-coming">Đã Đến</div>}
           </div>
         );

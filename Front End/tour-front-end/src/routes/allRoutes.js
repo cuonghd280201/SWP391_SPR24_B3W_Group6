@@ -33,6 +33,7 @@ import ListTourVisitorDetailStaff from "../pages/Staff/ListTourVisitorDetailStaf
 import HistoryPayment from "../pages/Profile/historyPayment";
 import ListVisitorTourByTour from "../pages/Staff/ListVisitorTourByTour";
 import Forbidden from "../pages/Error/error";
+import PaymentSuccess from "../pages/Payment/paymentSuccess";
 
 
 const Home = React.lazy(() => import("../pages/Home/home"));
@@ -53,6 +54,8 @@ const userRoutes = [
   { path: "/contact", component: <Contact/>},
   { path: "/historyPayment", component: <HistoryPayment/>},
   { path: "/forbidden", component: <Forbidden/>},
+  { path: "/paymentSuccess", component: <PaymentSuccess/>},
+
 
 
 

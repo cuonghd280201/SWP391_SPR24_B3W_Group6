@@ -79,11 +79,19 @@ const OrderHistory = () => {
         }
     };
 
-    const totalPages = Math.ceil(orders.length / ordersPerPage);
+    let totalPages = 0;
 
-    const indexOfLastOrder = currentPage * ordersPerPage;
-    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-    const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+    if (orders && Array.isArray(orders)) {
+        totalPages = Math.ceil(orders.length / ordersPerPage);
+    }
+    
+    let currentOrders = [];
+    
+    if (orders && Array.isArray(orders)) {
+        const indexOfLastOrder = currentPage * ordersPerPage;
+        const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+        currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+    }
 
     // Handle page change
     const handlePageChange = (pageNumber) => {
