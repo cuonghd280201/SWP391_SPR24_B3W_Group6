@@ -40,16 +40,17 @@ const ListCancelTourStaff = () => {
     const ordersPerPage = 4;
 
     const [error, setError] = useState(null);
+    const fetchOrderStatusData = async () => {
+        try {
+            const response = await cancelServices.getStaffOrderStatus(orderStatus);
+            setOrderStatusData(response.data.data);
+        } catch (error) {
+            console.error("Error fetching order status data:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchOrderStatusData = async () => {
-            try {
-                const response = await cancelServices.getStaffOrderStatus(orderStatus);
-                setOrderStatusData(response.data.data);
-            } catch (error) {
-                console.error("Error fetching order status data:", error);
-            }
-        };
+       
         fetchOrderStatusData();
     }, [orderStatus]);
 
@@ -69,6 +70,7 @@ const ListCancelTourStaff = () => {
         handleCancelOrder(orderIdToDelete);
         setIsModalVisible(false);
         setOrderIdToDelete(null);
+
     };
 
     const handleCancel = () => {
@@ -81,9 +83,13 @@ const ListCancelTourStaff = () => {
             const response = await cancelServices.staffCancelOrder(orderId);
 
             if (response.status === 200) {
-                toast.success("Staff canceled order successfully!");
+                toast.success("Chấp nhận yều cầu hủy chuyến đi thành công!");
+                fetchOrderStatusData();
+
             } else {
-                toast.error("Failed to cancel order.");
+                toast.success("Chấp nhận yều cầu hủy chuyến đi thành công!");
+                fetchOrderStatusData();
+
             }
         } catch (error) {
             console.error("Error canceling order:", error);
@@ -103,7 +109,7 @@ const ListCancelTourStaff = () => {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <SiderBarWebStaff choose={"menu-key/2"} />
+            <SiderBarWebStaff choose={"menu-key/3"} />
             <Layout>
                 <NavBarWebStaff />
                 <div
@@ -194,7 +200,27 @@ const ListCancelTourStaff = () => {
                                                             <p className="bottom-area d-flex">
                                                                 <span className="ml-auto">
                                                                     {orderS.orderStatus === "WAITING_CANCEL" && (
-                                                                        <Button onClick={() => showDeleteModal(orderS.id)}>
+                                                                        <Button
+                                                                        style={{
+                                                                            fontSize: "15px",
+                                                                            color: "#5cb85c",
+                                                                            textDecoration: "none",
+                                                                            padding: "8px 16px",
+                                                                            border: "1px solid #5cb85c",
+                                                                            borderRadius: "4px",
+                                                                            transition: "background-color 0.3s, color 0.3s",
+                                                                            display: "flex",
+                                                                            alignItems: "center",
+                                                                          }}
+                                                                          onMouseEnter={(e) => {
+                                                                            e.target.style.backgroundColor = "#4cae4c";
+                                                                            e.target.style.color = "#fff";
+                                                                          }}
+                                                                          onMouseLeave={(e) => {
+                                                                            e.target.style.backgroundColor = "transparent";
+                                                                            e.target.style.color = "#5cb85c";
+                                                                          }}
+                                                                        onClick={() => showDeleteModal(orderS.id)}>
                                                                             Chấp Nhận
                                                                         </Button>
                                                                     )}

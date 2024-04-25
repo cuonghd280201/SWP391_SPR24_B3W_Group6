@@ -22,7 +22,7 @@ const OrderHistory = () => {
 
 
     const [keyword, setKeyword] = useState('');
-    const [orderStatus, setOrderStatus] = useState("WAITING_CANCEL");
+    const [orderStatus, setOrderStatus] = useState("NOT_DONE");
     const handleOrderStatusChange = (value) => {
         setOrderStatus(value);
     }
@@ -67,10 +67,10 @@ const OrderHistory = () => {
         try {
             const response = await cancelServices.customerCancel(orderId);
             if (response.status === 200) {
-                toast.success("Order canceled successfully!");
+                toast.success("Gửi Yều Cầu Hủy Đơn Thành Công!");
                 fetchOrderData();
             } else {
-                toast.success("Order canceled successfully!");
+                toast.success("Gửi Yều Cầu Hủy Đơn Thành Công!");
                 fetchOrderData();
             }
         } catch (error) {
@@ -115,7 +115,7 @@ const OrderHistory = () => {
                 </Nav> */}
 
                 <Select
-                    defaultValue="WAITING_CANCEL"
+                    defaultValue="NOT_DONE"
                     onChange={handleOrderStatusChange}
                     style={{ width: "200px" }}
                 >
@@ -124,18 +124,30 @@ const OrderHistory = () => {
                     <Option value="WAITING_CANCEL">CHỜ HỦY</Option>
                     <Option value="CANCEL">HỦY</Option>
                 </Select>
-                <div className="form-search mb-4">
-                    <div className="form-group">
+
+                <div className="form-search mb-4"
+                    style={{
+                        marginTop: '10px',
+                    }}>
+                    <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <Input
+                            style={{
+                                padding: '10px',
+                                width: '300px',
+                                border: "1px solid #5cb85c",
+                                borderRadius: "4px",
+                                fontSize: "15px",
+                                color: "#5cb85c",
+                            }}
                             type="text"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                             placeholder="Nhập từ khóa..."
-                        />                                        </div>
-                    <div className="form-group">
+                        />
                         <Button color="primary" onClick={fetchOrderData}>Tìm kiếm</Button>
                     </div>
                 </div>
+
                 <TabContent id="pills-tabContent">
                     {/* Render current orders */}
                     {currentOrders.map(order => (
@@ -148,7 +160,7 @@ const OrderHistory = () => {
                                                 <div className="s-rate">
                                                     <span className="s-comment">
                                                         <h6 className="fw-bold mb-0"></h6>
-                                                        <p className="mb-0">Số đặt lịch:<b> {order.id}</b></p>
+                                                        <p className="mb-0">Số đặt lịch:<b> {order.code}</b></p>
                                                         <p className="mb-0">Tên Chuyến Đi:<b> {order.tourInfoDTO.title}</b></p>
                                                     </span>
                                                 </div>
@@ -179,13 +191,13 @@ const OrderHistory = () => {
                                             }
                                         >
                                             {order.orderStatus === "NOT_DONE"
-                                                ? "CHƯA HOÀN TẤT"
+                                                ? "CHƯA HOÀN THÀNH"
                                                 : order.orderStatus === "DONE"
-                                                    ? "HOÀN TẤT"
+                                                    ? "ĐÃ HOÀN THÀNH"
                                                     : order.orderStatus === "WAITING_CANCEL"
                                                         ? "CHỜ HUỶ"
                                                         : order.orderStatus === "CANCEL"
-                                                            ? "HUỶ BỎ"
+                                                            ? "HUỶ"
                                                             : ""}
                                         </span>
 
@@ -274,7 +286,7 @@ const OrderHistory = () => {
                                     padding: '10px 20px',
                                     border: 'none',
                                     borderRadius: '4px',
-                                    backgroundColor: currentPage === i + 1 ? 'blue' : 'gray',
+                                    backgroundColor: currentPage === i + 1 ? '#08C299' : 'gray',
                                     color: 'white',
                                     cursor: 'pointer',
                                 }}

@@ -155,7 +155,7 @@ const ManageBanner = () => {
                         </Form.List>
 
                         {/* Nút tạo banner */}
-                        <Button type="primary" onClick={handleCreateBanner} htmlType="submit">
+                        <Button type="primary"  onClick={handleCreateBanner} htmlType="submit">
                             Tạo Banner
                         </Button>
                     </Form>

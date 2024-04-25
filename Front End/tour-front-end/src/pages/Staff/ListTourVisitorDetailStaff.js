@@ -16,6 +16,7 @@ const ListTourVisitorDetailStaff = () => {
 
     const [tourDetailCustomer, setTourDetailCustomer] =
         useState(null);
+        
     // Xem chi tiết chuyến đi
     const fetchTourDetailCustomer = async () => {
         let response;
@@ -30,6 +31,8 @@ const ListTourVisitorDetailStaff = () => {
             console.error("Error fetching tour:", error);
         }
     }
+
+
 
     // danh sách khách hàng tham gia chuyên đi
 
@@ -86,7 +89,7 @@ const ListTourVisitorDetailStaff = () => {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <SiderBarWebStaff choose={"menu-key/1"}></SiderBarWebStaff>
+            <SiderBarWebStaff choose={"menu-key/2"}></SiderBarWebStaff>
             <Layout>
                 <NavBarWebStaff></NavBarWebStaff>
                 <div

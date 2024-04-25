@@ -10,8 +10,9 @@ import {
     Col,
     Row,
 } from "reactstrap";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from '@firebase/auth';
+import { auth } from "../../../utils/firebase";
 const NavBarWebStaff = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [name, setName] = useState("");
@@ -37,10 +38,24 @@ const NavBarWebStaff = () => {
     };
 
     //-------------------------------------------------------------------------
-    
+
 
 
     //------------------------------------------------------------------------
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate("/login")
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
         <React.Fragment>
             <div>
@@ -67,7 +82,7 @@ const NavBarWebStaff = () => {
                             className="p-1  d-flex gap-3 align-items-center me-2"
                             style={{
                                 height: "60px",
-                                backgroundColor: "#6546D2",
+                                backgroundColor: " #5cb85c",
                                 color: "white",
                                 borderRadius: "7px",
                             }}
@@ -77,7 +92,7 @@ const NavBarWebStaff = () => {
                                     className="p-1 d-flex gap-3 align-items-center"
                                     style={{
                                         height: "60px",
-                                        backgroundColor: "#6546D2",
+                                        backgroundColor: " #5cb85c",
                                         color: "white",
 
                                         cursor: "pointer",
@@ -86,7 +101,7 @@ const NavBarWebStaff = () => {
                                 >
                                     <div>
                                         <img
-                                            src={imgUser}
+                                            src={user.photoURL}
                                             className="ms-1 px-0"
                                             style={{
                                                 borderRadius: "7px",
@@ -96,8 +111,7 @@ const NavBarWebStaff = () => {
                                         />
                                     </div>
                                     <div className="me-1 d-flex flex-column align-items-center">
-                                        <span className="fs-18">{name}</span>
-                                        <span>{roleString}</span>
+                                        <span className="fs-18">{user.email}</span>
                                     </div>
                                 </DropdownToggle>
                                 <DropdownMenu
@@ -112,23 +126,17 @@ const NavBarWebStaff = () => {
                                                 to={"/profileadmin"}
                                                 className="dropdown-item px-0 p-0"
                                             >
-                                                <div className="dropdown-item">Profile</div>
+                                                <div className="dropdown-item">Thông tin</div>
                                             </Link>
                                         </div>
                                     </DropdownItem>
 
-                                    <DropdownItem style={{ padding: "0px" }}>
-                                        <div>
-                                            <Link to="#" className="dropdown-item">
-                                                Change Password
-                                            </Link>
-                                        </div>
-                                    </DropdownItem>
+                                   
 
                                     <DropdownItem style={{ padding: "0px" }}>
                                         <div>
-                                            <Link to="/signout" className="dropdown-item">
-                                                Logout
+                                            <Link className="dropdown-item" onClick={handleLogout}>
+                                                Đăng Xuất
                                             </Link>
                                         </div>
                                     </DropdownItem>

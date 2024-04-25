@@ -94,8 +94,6 @@ const ListTourStaff = () => {
 
             {/* Filter by price */}
             <div className="d-flex justify-content-between mb-4">
-
-
               <span style={{ display: "inline-block" }}>
                 <a
                   href="/createToutStaff"
@@ -122,10 +120,11 @@ const ListTourStaff = () => {
                   <PlusCircleOutlined style={{ marginRight: "5px" }} />
                   Tạo chuyến đi mới
                 </a>
+
+                
               </span>
             </div>
 
-            {/* Display tours for the current page */}
             <div className="row row-with-margin">
               <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div className="card border-5 border-top border-success-subtle">
@@ -134,7 +133,6 @@ const ListTourStaff = () => {
                       {tours.map(tour => (
                         <div className="text p-3">
                           <div className="row">
-                            {/* Tour details */}
                             < div className="col-4" >
                               <Link
                                 to="/listTourStaffDetail"
@@ -152,19 +150,23 @@ const ListTourStaff = () => {
                               <h4 style={{ fontSize: 16, marginTop: 10 }}>
                                 Mã Chuyến Đi:{" "}
                                 <span style={{ color: "#666" }}>
-                                  {tour.id}
+                                  {tour.code}
                                 </span>
                               </h4>
                               <p style={{ fontSize: 14, marginBottom: 5 }}>
                                 <span style={{ color: "#666" }}>
-                                  Tên Chuyến Đi: {tour.title}
+                                  Tên Chuyến Đi: <b> {tour.title}</b>
                                 </span>
                               </p>
                               <p
-                                className="text-primary"
                                 style={{ fontSize: 14, marginBottom: 5 }}
                               >
-                                Nơi Khởi Hành: {tour.starLocation}
+                                Nơi Khởi Hành: <b>{tour.starLocation}</b>
+                              </p>
+                              <p
+                                style={{ fontSize: 14, marginBottom: 5 }}
+                              >
+                                Nơi Khởi Hành:<b> {tour.endLocation}</b>
                               </p>
                             </div>
                             <div className="col-3">
@@ -172,7 +174,8 @@ const ListTourStaff = () => {
                                 className="text-right"
                                 style={{
                                   fontSize: 18,
-                                  color: "#ff5722",
+                                  fontWeight: "bold",
+                                  color: "#F9BE37",
                                   marginBottom: 5,
                                 }}
                               >
@@ -188,10 +191,10 @@ const ListTourStaff = () => {
                                     <a
                                       style={{
                                         fontSize: "15px",
-                                        color: "blueviolet",
+                                        color: "#F9BE37",
                                         textDecoration: "none",
                                         padding: "8px 16px",
-                                        border: "1px solid blueviolet",
+                                        border: "1px solid #F9BE37",
                                         borderRadius: "4px",
                                         transition:
                                           "background-color 0.3s, color 0.3s",
@@ -200,13 +203,13 @@ const ListTourStaff = () => {
                                       }}
                                       onMouseEnter={(e) => {
                                         e.target.style.backgroundColor =
-                                          "blueviolet";
+                                          "#F9BE37";
                                         e.target.style.color = "#fff";
                                       }}
                                       onMouseLeave={(e) => {
                                         e.target.style.backgroundColor =
                                           "transparent";
-                                        e.target.style.color = "blueviolet";
+                                        e.target.style.color = "#F9BE37";
                                       }}
                                     >
                                       Xem chi tiết

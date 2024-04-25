@@ -90,7 +90,7 @@ const InfomationTour = () => {
                 const type = 'BABY';
 
 
-                passengers.push({ name, phone, idCard: null, type, dateOfBirth: formattedDateOfBirth });
+                passengers.push({ name, phone: null, idCard: null, type, dateOfBirth: formattedDateOfBirth });
             }
 
             const response = await orderServices.createOrder(tourTimeId, paid, passengers); // Pass the paid value
@@ -138,13 +138,13 @@ const InfomationTour = () => {
                         <div className="col-lg-3">
                             <div className="form-group">
                                 <label className="pb-1 font-700">Số điện thoại <span className="text-danger">*</span></label>
-                                <input type="text" id={`adult-phone-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số điện thoại" name="fullName" />
+                                <input type="text" id={`adult-phone-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số điện thoại" name="phone" />
                             </div>
                         </div>
                         <div className="col-lg-3">
                             <div className="form-group">
                                 <label className="pb-1 font-700">CMND/CCCD <span className="text-danger">*</span></label>
-                                <input type="text" id={`adult-idCard-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số CMND/CCCD" name="fullName" />
+                                <input type="text" id={`adult-idCard-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số CMND/CCCD" name="isCard" />
                             </div>
                         </div>
                         <div className="col-lg-3">
@@ -184,8 +184,8 @@ const InfomationTour = () => {
                         </div>
                         <div className="col-lg-3">
                             <div className="form-group">
-                                <label className="pb-1 font-700">Số điện thoại <span className="text-danger">*</span></label>
-                                <input type="text" id={`child-phone-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số điện thoại" name="fullName" />
+                                <label className="pb-1 font-700">Số điện thoại <span className="text-danger"></span></label>
+                                <input type="text" id={`child-phone-${i}`} className="form-control fullName hotel-flight-input" placeholder="Nhập số điện thoại" name="phone" />
                             </div>
                         </div>
                         <div className="col-lg-3">
@@ -294,6 +294,11 @@ const InfomationTour = () => {
                                                     value={adultCount === 0 ? '' : adultCount}
                                                     onChange={(e) => {
                                                         const newAdultCount = parseInt(e.target.value) || 0;
+                                                        if (newAdultCount < 0) {
+                                                            e.target.value = adultCount;
+                                                            toast.error("Số lượng người lớn không thể âm."); 
+                                                            return;
+                                                        }
                                                         if (newAdultCount + childCount > tourDetailCustomer?.tourTimeSet[0]?.slotNumber) {
                                                             toast.error(`Tổng số người lớn và trẻ em phải nhỏ hơn hoặc bằng ${tourDetailCustomer?.tourTimeSet[0]?.slotNumber}.`);
                                                             e.target.value = adultCount;
@@ -315,6 +320,11 @@ const InfomationTour = () => {
                                                     value={childCount === 0 ? '' : childCount}
                                                     onChange={(e) => {
                                                         const newChildCount = parseInt(e.target.value) || 0;
+                                                        if (newChildCount < 0) {
+                                                            e.target.value = adultCount;
+                                                            toast.error("Số lượng người nhỏ không thể âm."); 
+                                                            return;
+                                                        }
                                                         if (adultCount + newChildCount > tourDetailCustomer?.tourTimeSet[0]?.slotNumber) {
                                                             toast.error(`Tổng số người lớn và trẻ em phải nhỏ hơn hoặc bằng ${tourDetailCustomer?.tourTimeSet[0]?.slotNumber}.`);
                                                             e.target.value = childCount;
@@ -358,14 +368,14 @@ const InfomationTour = () => {
                                 <div className="go-tour">
                                     <div className="start"><i className="fal fa-calendar-minus" />
                                         <div className="start-content">
-                                            <h3>Bắt đầu chuyến đi</h3>
+                                            <h3><b>Bắt đầu chuyến đi</b></h3>
                                             <p className="time">{tourDetailCustomer?.tourTimeSet[0]?.startDate}</p>
                                             <p className="from" /></div>
                                     </div>
                                     <div className="end">
                                         <i className="fal fa-calendar-minus" />
                                         <div className="start-content">
-                                            <h3>Kết thúc chuyến đi</h3>
+                                            <h3><b>Kết thúc chuyến đi</b></h3>
                                             <p className="time">{tourDetailCustomer?.tourTimeSet[0]?.endDate}</p>
                                             <p className="from" /></div>
                                     </div>
@@ -388,7 +398,7 @@ const InfomationTour = () => {
                                                     {adultCount} x {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp; &nbsp;=&nbsp; {adultCount * tourDetailCustomer?.price}&nbsp;₫
                                                 </td>                                            </tr>
                                             <tr className="detail">
-                                                <td>Người nhỏ</td>
+                                                <td>Trẻ nhỏ</td>
                                                 <td className="t-price text-right">
                                                     {childCount} x {((tourDetailCustomer?.price)/2).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} &nbsp; &nbsp;=&nbsp; {childCount *((tourDetailCustomer?.price)/2)}&nbsp;₫
                                                 </td>                                            </tr>
