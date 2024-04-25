@@ -39,4 +39,6 @@ public class TransactionDTO {
     private OrderDTO orderDTO;
 //
 //    private Payment payment;
+
+    private String code;
 }

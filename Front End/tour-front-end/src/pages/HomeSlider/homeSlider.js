@@ -29,7 +29,7 @@ export default function HomeSlider() {
       spaceBetween={15}
       slidesPerView={3}
       autoplay={{
-        delay: 5000,
+        delay: 3000,
         disableOnInteraction: false,
       }}
       pagination={{ dynamicBullets: true }}

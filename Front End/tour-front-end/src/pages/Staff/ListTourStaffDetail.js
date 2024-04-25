@@ -50,7 +50,7 @@ const ListTourStaffDetail = () => {
           <div key={schedule.id} className={`box`}>
             <h4>Ngày {index + 1}</h4>
             <h3>{scheduleDate}</h3>
-            <p>{schedule.description}</p>
+            {/* <p>{schedule.description}</p> */}
           </div>
         );
       });
@@ -108,28 +108,28 @@ const ListTourStaffDetail = () => {
                       </div>
                       <div className="col-8">
                         <h4 style={{ fontSize: 16, marginTop: 10 }}>
-                          Mã Chuyến Đi:{" "}
+                         <b>Mã Chuyến Đi:{" "}</b> 
                           <span style={{ color: "#666" }}>
 
 
-                            {tourDetailCustomer?.id}
+                            {tourDetailCustomer?.code}
                           </span>
                         </h4>
                         <p
                           style={{
+                            fontWeight: "bold",
                             fontSize: 18,
-                            color: "#ff5722",
+                            color: "#F9BE37",
                             marginBottom: 5,
                           }}
                         >
                           {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                         </p>
                         <p
-                          className="text-primary"
                           style={{ fontSize: 14, marginBottom: 5 }}
                         >
 
-                          Giờ đi: {tourDetailCustomer?.starLocation}
+                         <b>Giờ đi:</b>  {tourDetailCustomer?.starLocation}
                         </p>
                       </div>
                     </div>
@@ -173,7 +173,7 @@ const ListTourStaffDetail = () => {
                     <section className="section-03 mb-5">
                       <div className="container-fluid">
                         <div className="row">
-                          <div className="col-md-5 left">
+                          <div className="col-md-6 left">
                             <div className="box-order">
 
                               <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
@@ -198,7 +198,7 @@ const ListTourStaffDetail = () => {
 
                             </div>
                           </div>
-                          <div className="col-md-7  right">
+                          <div className="col-md-6  right">
                             <div className="group-services">
                               <div className="item">
                                 <img src="/images/co1.jpg" className="icon-img" />
@@ -218,7 +218,6 @@ const ListTourStaffDetail = () => {
                               <div className="item">
                                 <img src="/images/co4.jpg" className="icon-img" />
                                 <label>Ẩm thực</label>
-
                                 <p>{tourDetailCustomer?.tourDetail.food}</p>
                               </div>
                               <div className="item">

@@ -11,7 +11,7 @@ const getAllTourAndPaging = async (currentPage, pageSize, sortBy, sortOrder) => 
     .replace("${sortOrder}", sortOrder);
 
   const fullUrl = serviceUrl + pagingUrl + '&' + sortUrl;
-  const response = await axiosLocalHost.normalRequest(fullUrl);
+  const response = await axiosLocalHost.normalRequest.get(fullUrl);
   return response;
 };
 
@@ -44,7 +44,7 @@ const searchAllTour = async (currentPage, pageSize, sortBy, sortOrder, keyWord, 
       fullUrl += '&' + startDateUrl;
   }
 
-  const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "POST");
+  const response = await axiosLocalHost.normalRequest.post(fullUrl);
   return response;
 };
 
@@ -54,7 +54,7 @@ const getDetailTourByCustomer = async (tourId) => {
       "${tourId}",
       tourId
     );
-  const response = await axiosLocalHost.normalRequest(
+  const response = await axiosLocalHost.normalRequest.get(
     serviceUrl
   );
   return response;
@@ -124,7 +124,7 @@ const deleteImage = async (imageId) => {
 
 const getAllCity = async () => {
   const serviceUrl = urlConstant.endpoint.tour.city;
-  const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+  const response = await axiosLocalHost.normalRequest.get(serviceUrl);
   return response;
 };
 

@@ -22,6 +22,7 @@ import tourbooking.exception.ResourceNotFoundException;
 import tourbooking.repository.TransactionRepository;
 import tourbooking.repository.UserRepository;
 import tourbooking.service.TransactionService;
+import tourbooking.utils.CodeGenerator;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -47,6 +48,13 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setUser(user);
         transaction.setDescription(description);
         transaction.setTransactionStatus(TransactionStatus.DONE);
+
+        String code = CodeGenerator.generate("TR");
+        while (transactionRepository.findByCode(code).isPresent()){
+            code = CodeGenerator.generate("TR");
+        }
+        transaction.setCode(code);
+
         transactionRepository.save(transaction);
 
     }
@@ -96,6 +104,16 @@ public class TransactionServiceImpl implements TransactionService {
 //            transactions1.add(transaction);
 //        }
 //        transactionList = transactions1;
+
+//        for(Transaction transaction : transactionList){
+//
+//            String code = CodeGenerator.generateAddCode("TR", transaction.getCreateDate().toLocalDate());
+//            while (transactionRepository.findByCode(code).isPresent()){
+//                code = CodeGenerator.generateAddCode("TR", transaction.getCreateDate().toLocalDate());
+//            }
+//            transaction.setCode(code);
+//            transactionRepository.save(transaction);
+//        }
 
 
         transactionDTOS = transactionList.stream().map(this::convertToTransactionDTO).toList();

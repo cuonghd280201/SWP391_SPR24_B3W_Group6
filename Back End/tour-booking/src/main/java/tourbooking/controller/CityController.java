@@ -12,7 +12,6 @@ import tourbooking.service.CityService;
 @RestController
 @RequestMapping("api/v1/city")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN') ")
 public class CityController {
     private final CityService cityService;
     @GetMapping("/all")

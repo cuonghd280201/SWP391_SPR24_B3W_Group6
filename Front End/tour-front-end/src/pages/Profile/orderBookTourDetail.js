@@ -61,7 +61,7 @@ const OrderBookTourDetail = () => {
           >
             <h4>Ngày {index + 1}</h4>
             <h3>{adjustedDate}</h3>
-            <p>{schedule.description}</p>
+            {/* <p>{schedule.description}</p> */}
             {isComing && <div className="label-coming">Đã Đến</div>}
           </div>
         );
@@ -104,6 +104,7 @@ const OrderBookTourDetail = () => {
 
   const handlePaymentClick = async () => {
     await createCheckout();
+    fetchOrderDetail();
   };
 
   const handleButtonClick = () => {
@@ -142,34 +143,30 @@ const OrderBookTourDetail = () => {
 
                       <div className="col-10">
                         <h4 style={{ fontSize: 20, marginTop: 10 }}>
-                          Mã đặt chuyến đi: <b>{orderDetail?.id}</b>
+                          Mã đặt chuyến đi: <b>{orderDetail?.code}</b>
                           <span style={{ color: "#666" }}>
 
                           </span>
                         </h4>
                         <p
-                          style={{
-                            fontSize: 18,
-                            color: "#ff5722",
-                            marginBottom: 5,
-                          }}
+                        
                         >
-                          Giá chuyến đi:  <b> {orderDetail?.price} VNĐ</b>
+                          Giá chuyến đi:  <b style={{ fontSize: 18, fontWeight: "bold", color: "#F9BE37", marginBottom: 5 }}> {orderDetail?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b>
                         </p>
                         <p
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
-                          Phần Trăm Tiền Đã Trả:<b> {orderDetail?.paid} %</b>
+                          Tiền đã trả:<b> {orderDetail?.paid.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</b>
                         </p>
                         <p
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
-                          Số tiền đã trả: <b>{orderDetail?.amount} VND</b>
+                          Số tiền thanh toán: <b>{orderDetail?.amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} </b>
                         </p>
                         <p
                           style={{ fontSize: 18, marginBottom: 5 }}
                         >
-                          Số tiền hoàn trả:<b>{orderDetail?.refund} VND</b>
+                          Số tiền hoàn trả:<b>{orderDetail?.refund.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} </b>
                         </p>
                       </div>
                       <div className="col-2">
@@ -200,7 +197,7 @@ const OrderBookTourDetail = () => {
                         </p>
                         <p>
                           {orderDetail?.orderStatus === "NOT_DONE" ? (
-                            <Link to="/orderHistory">
+                            <Link to="/orderBookTouDetail">
                               <button onClick={handlePaymentClick} className="btn btn-primary btn-order">Thanh Toán</button>
                             </Link>
                           ) : (
@@ -254,9 +251,23 @@ const OrderBookTourDetail = () => {
                 </div>
               </div>
               <section className="section-07-map mb-5">
-                <div class="container-fluid">
+                <div class="container-fluid" style={{
+                    fontSize: "15px",
+                    padding: "8px 16px",
+                    border: "1px solid gray",
+                    borderRadius: "10px",
+                    transition: "background-color 0.3s, color 0.3s",
+                    display: "flex",
+                    alignItems: "center",
+                }}>
                   <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-5"  style={{
+                            transition: "background-color 0.3s, color 0.3s",
+                            display: "flex",
+                            alignItems: "center",
+                            borderRadius: "10px",
+                            backgroundColor: "#f0f0f0"
+                        }} >
                       <div class="container-fluid">
                         <main class="row">
                           <section className="col">
@@ -265,7 +276,7 @@ const OrderBookTourDetail = () => {
                               <p>Màu xanh: Đã Tới Điểm Hẹn</p>
                               <p>Màu trắng: Chưa Tới Điểm Hẹn</p>
                             </header>
-                            <div className="contents">
+                            <div className="contents" style={{ width: '400px' }}>
                               {renderTourSchedules()}
                             </div>
                           </section>

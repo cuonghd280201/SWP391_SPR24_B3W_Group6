@@ -35,27 +35,25 @@ const Dashboard = () => {
 
   const getRevenueData = async (days) => {
     const response = await adminServices.getRevenue(days);
-    const {data} = response.data
-    
-    const dates = data.map(element => element.date)
-    setDates(dates)
-    
-    const revenues = data.map(element => element.money)
-    setRevenues(revenues)
+    const { data } = response.data;
 
+    const dates = data.map((element) => element.date);
+    setDates(dates);
+
+    const revenues = data.map((element) => element.money);
+    setRevenues(revenues);
   };
 
   const handleRevenueDatesChange = async (value) => {
     const selectedDays = parseInt(value); // Convert the selected value to a number
-    
+
     // Fetch revenue data based on the selected number of days
     await getRevenueData(selectedDays);
   };
-  
 
-  useEffect(()=>{
-    getRevenueData(0)
-  },[])
+  useEffect(() => {
+    getRevenueData(0);
+  }, []);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -75,7 +73,7 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className="page-header">
-                  <h2 className="pageheader-title">Dashboard </h2>
+                  <h2 className="pageheader-title">Thống kê </h2>
                 </div>
               </div>
             </div>
@@ -85,9 +83,18 @@ const Dashboard = () => {
                 <div className="col-xl-3 ">
                   <div className="card border-5 border-top border-info-subtle">
                     <div className="card-body-dashboard">
-                      <h5 className="text-muted">Tổng tiền</h5>
+                      <h3 className="text-muted">Tổng tiền</h3>
+
                       <div className="metric-value d-inline-block">
-                        <h2>{orderSumary?.completedCount}</h2>
+                        <h4>
+                          {(orderSumary?.completedCount / 1).toLocaleString(
+                            "vi-VN",
+                            {
+                              style: "currency",
+                              currency: "VND",
+                            }
+                          )}
+                        </h4>
                       </div>
                     </div>
                   </div>
@@ -95,9 +102,17 @@ const Dashboard = () => {
                 <div className="col-xl-3">
                   <div className="card border-5 border-top border-success-subtle">
                     <div className="card-body-dashboard">
-                      <h5 className="text-muted">Tổng số tiền hoàn trả</h5>
+                      <h3 className="text-muted">Tổng số tiền hoàn trả</h3>
                       <div className="metric-value d-inline-block">
-                        <h2>{orderSumary?.refundedCount}</h2>
+                      <h4>
+                          {(orderSumary?.refundedCount / 1).toLocaleString(
+                            "vi-VN",
+                            {
+                              style: "currency",
+                              currency: "VND",
+                            }
+                          )}
+                        </h4>
                       </div>
                     </div>
                   </div>
@@ -105,9 +120,9 @@ const Dashboard = () => {
                 <div className="col-xl-3">
                   <div className="card border-5 border-top border-warning-subtle">
                     <div className="card-body-dashboard">
-                      <h5 className="text-muted">Số lượng khách hàng</h5>
+                      <h3 className="text-muted">Số lượng khách hàng</h3>
                       <div className="metric-value d-inline-block">
-                        <h2>{roleNumber?.countUser}</h2>
+                        <h4>{roleNumber?.countUser}</h4>
                       </div>
                     </div>
                   </div>
@@ -115,9 +130,9 @@ const Dashboard = () => {
                 <div className="col-xl-3">
                   <div className="card border-5 border-top border-primary-subtle">
                     <div className="card-body-dashboard">
-                      <h5 className="text-muted">Số lượng nhân viên</h5>
+                      <h3 className="text-muted">Số lượng nhân viên</h3>
                       <div className="metric-value d-inline-block">
-                        <h2>{roleNumber?.countStaff}</h2>
+                        <h4>{roleNumber?.countStaff}</h4>
                       </div>
                     </div>
                   </div>
@@ -140,7 +155,7 @@ const Dashboard = () => {
                   id: "basic-bar",
                 },
                 xaxis: {
-                  categories:dates,
+                  categories: dates,
                 },
                 plotOptions: {
                   bar: {

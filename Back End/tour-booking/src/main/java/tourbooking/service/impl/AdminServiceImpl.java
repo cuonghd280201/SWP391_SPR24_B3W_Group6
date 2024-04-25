@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
 
         for (Orders orders : ordersList) {
             if (orders.getOrderStatus().equals(OrderStatus.DONE)) {
-                completedMoney= completedMoney.add(orders.getAmount());
+                completedMoney= completedMoney.add(orders.getPaid());
             } else if (orders.getOrderStatus().equals(OrderStatus.CANCEL)) {
                 refundedMoney= refundedMoney.add(orders.getRefund());
             }

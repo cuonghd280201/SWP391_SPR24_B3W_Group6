@@ -6,38 +6,60 @@ import { signInWithPopup } from '@firebase/auth';
 import { auth, googleAuthProvider } from '../../utils/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import userServices from '../../services/user.services';
 
 
 
 const Login = () => {
     const navigate = useNavigate();
 
-    const handleSignWithGoogle = async () => {
+    const handleSignInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, googleAuthProvider);
-            console.log(result);
+            console.log('Google Sign-In Result:', result);
+
+            // Store token and user data in local storage
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
-            const user = JSON.parse(localStorage.getItem('user'));
-            console.log("User", user);
-            switch (user.role) {
-                case "ROLE_USER":
-                    navigate("/");
-                    break;
-                case "ROLE_STAFF":
-                    navigate("/listTourStaff");
-                    break;
-                default:
-                    navigate("/dashboard");
+
+            // Get user profile and role
+            const userProfileResponse = await userServices.getUserProfile();
+            if (userProfileResponse === 403) {
+                navigate('/forbidden');
+            } else {
+                const userProfile = userProfileResponse.data.data;
+                const userRole = userProfile.role;
+                console.log('User Role:', userRole);
+
+                // Navigate based on user role
+                switch (userRole) {
+                    case 'USER':
+                        navigate('/');
+                        break;
+                    case 'STAFF':
+                        navigate('/listTourStaff');
+                        break;
+                    default:
+                        navigate('/dashboard');
+                        break;
+                }
+                toast.success('Đăng nhập thành công!');
             }
-            toast.success("Đăng nhập thành công!")
 
         } catch (error) {
-            console.error(error);
-            toast.error("Đăng nhập thất bại!")
+            console.error('Error during Google Sign-In:', error);
+            toast.error('Đăng nhập thất bại!');
+            navigate('/forbidden')
         }
+    };
 
-    }
+    // Check user authentication status
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const { googleSignIn, user } = UserAuth();
     //const navigate = useNavigate();
@@ -77,7 +99,7 @@ const Login = () => {
                                 <i className="fa fa-facebook-official" />
                                 Facebook
                             </a>
-                            <a href="#" className="btn-google m-b-20" onClick={handleSignWithGoogle}>
+                            <a href="#" className="btn-google m-b-20" onClick={handleSignInWithGoogle}>
                                 <img src="images/icongoogle.jpg" alt="GOOGLE" />
                                 Google
                             </a>

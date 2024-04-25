@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tourbooking.dto.BaseResponseDTO;
 import tourbooking.dto.TourFilterRequest;
+import tourbooking.service.StaffService;
 import tourbooking.service.TourService;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TourController {
     private final TourService tourService;
+    private final StaffService staffService;
     @GetMapping("/all")
     public ResponseEntity<BaseResponseDTO> getAllTour (@Min(value = 0, message = "pageNumber must be greater than or equal to 0")
                                                        @RequestParam(defaultValue = "0") int pageNumber,
@@ -57,5 +59,10 @@ public class TourController {
     @GetMapping("/get/{tourId}")
     public ResponseEntity<BaseResponseDTO> viewTourDetailsByTourId(@PathVariable("tourId") UUID tourId){
         return tourService.viewTourDetailsByTourId(tourId);
+    }
+
+    @GetMapping("/tourBanner/viewBanner")
+    public ResponseEntity<BaseResponseDTO> viewBannerList(){
+        return staffService.viewBannerList();
     }
 }

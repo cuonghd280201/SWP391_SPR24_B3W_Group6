@@ -15,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/staff")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_STAFF') or hasAuthority('ROLE_ADMIN')")
 public class StaffController {
 
     private final StaffService staffService;

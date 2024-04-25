@@ -43,4 +43,6 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orders_id", referencedColumnName = "id")
     private Orders orders;
+
+//    private String code;
 }
