@@ -46,7 +46,6 @@ const Dashboard = () => {
 
   const handleRevenueDatesChange = async (value) => {
     const selectedDays = parseInt(value); // Convert the selected value to a number
-
     // Fetch revenue data based on the selected number of days
     await getRevenueData(selectedDays);
   };
@@ -54,7 +53,6 @@ const Dashboard = () => {
   useEffect(() => {
     getRevenueData(0);
   }, []);
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <SiderBarWebAdmin choose={"menu-key/1"}></SiderBarWebAdmin>
@@ -113,6 +111,7 @@ const Dashboard = () => {
                             }
                           )}
                         </h4>
+
                       </div>
                     </div>
                   </div>
