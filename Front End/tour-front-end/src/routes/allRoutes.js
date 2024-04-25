@@ -32,6 +32,7 @@ import ListTourVitorStaff from "../pages/Staff/ListTourVisitorStaff";
 import ListTourVisitorDetailStaff from "../pages/Staff/ListTourVisitorDetailStaff";
 import HistoryPayment from "../pages/Profile/historyPayment";
 import ListVisitorTourByTour from "../pages/Staff/ListVisitorTourByTour";
+import Forbidden from "../pages/Error/error";
 
 
 const Home = React.lazy(() => import("../pages/Home/home"));
@@ -50,6 +51,7 @@ const userRoutes = [
   { path: "/orderBookTouDetail", component: <OrderBookTourDetail/>},
   { path: "/filterHome", component: <FilterHome/>},
   { path: "/historyPayment", component: <HistoryPayment/>},
+  { path: "/forbidden", component: <Forbidden/>},
 
 
 

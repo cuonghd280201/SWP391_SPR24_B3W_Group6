@@ -48,7 +48,7 @@ export default {
             deleteImage:"/staff/tourImage/${imageId}",
         },
         banner:{
-            listBanner:"/staff/tourBanner/viewBanner",
+            listBanner:"/tour/tourBanner/viewBanner",
             postBanner:"/staff/tourBanner/addMoreBanner",     
             deleteBanner:"/staff/tourBanner/deleteBanner?id=${id}", 
         },
