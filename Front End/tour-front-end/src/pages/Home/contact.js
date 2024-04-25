@@ -9,6 +9,39 @@ import {
 const Contact = () => {
   return (
     <div>
+      <div
+        className="hero-wrap js-fullheight"
+        style={{ backgroundImage: 'url("images/bg_1.jpg")' }}
+      >
+        <div className="overlay" />
+        <div className="container">
+          <div
+            className="row no-gutters slider-text js-fullheight align-items-center justify-content-center"
+            data-scrollax-parent="true"
+          >
+            <div
+              className="col-md-9 text-center"
+              data-scrollax=" properties: { translateY: '70%' }"
+            >
+              <p
+                className="breadcrumbs"
+                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+              >
+                <span className="mr-2">
+                  <a href="index.html">Trang Chủ</a>
+                </span>{" "}
+                <span>Chuyến Đi</span>
+              </p>
+              <h1
+                className="mb-3 bread"
+                data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
+              >
+                Chuyến Đi
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
       <div style={{ textAlign: "center" }}>
         <div style={{ fontSize: "2em", color: "#cc0000", fontWeight: "bold" }}>
           Liên hệ

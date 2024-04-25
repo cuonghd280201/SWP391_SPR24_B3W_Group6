@@ -1,210 +1,153 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Input, Button, Select } from "antd";
-import { Row, Col } from "reactstrap";
-import {
-  LeftOutlined,
-  RightOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons"; // Import arrow icons
-import { Link } from "react-router-dom";
-
+import { Layout, Table, Space, Input, Switch } from "antd";
 
 import paymentServices from "../../services/payment.services";
 import SiderBarWebAdmin from "../Admin/SlideBar/SiderBarWebAdmin";
 import NavBarWebAdmin from "../Admin/Navbar/NavBarWebAdmin";
-const { Header, Footer, Sider, Content } = Layout;
 
-
+const { Column } = Table;
+const { Content } = Layout;
+const { Search } = Input;
 
 const ListTransaction = () => {
-
-  const [payments, setpayments] = useState([]);
-
+  const [payments, setPayments] = useState([]);
+  const [switchStatusMap, setSwitchStatusMap] = useState({});
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
-  const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-  const [totalPages, setTotalPages] = useState(1); // Add state for total pages
-
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
+  const [filteredPayments, setFilteredPayments] = useState([]);
 
   useEffect(() => {
     fetchPaymentData();
   }, [currentPage, pageSize]);
 
-
-  const fetchPaymentData = async (sortBy = 'createDate', sortOrder = 'desc') => {
+  const fetchPaymentData = async (
+    sortBy = "createDate",
+    sortOrder = "desc"
+  ) => {
     try {
-      const response = await paymentServices.getAllTransaction(currentPage - 1, pageSize, sortBy, sortOrder);
+      const response = await paymentServices.getAllTransaction(
+        currentPage - 1,
+        pageSize,
+        sortBy,
+        sortOrder
+      );
       console.log("Response:", response);
-      setpayments(response.data.data);
-
+      setPayments(response.data.data);
+      setFilteredPayments(response.data.data);
     } catch (error) {
       console.error("Error fetching payments:", error);
       setError(error);
     }
   };
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const page = {
+    pageSize: 5, // Number of items per page
   };
 
-  const handleNext = () => {
-    setCurrentPage(currentPage + 1);
+  const handleSearch = (value) => {
+    //convert the value to lowercase and trim any leading or trailing whitespace.
+    const searchValue = value.toLowerCase().trim();
+  
+    const filtered = payments.filter((payment) => {
+      const idMatch = payment.id.toString().toLowerCase().includes(searchValue);
+      const amountMatch = payment.amount.toString().includes(searchValue);
+      return idMatch || amountMatch || searchValue === "";
+    });
+  
+    // Set the filtered payments
+    setFilteredPayments(filtered);
   };
-
-
+  
   return (
-    <React.Fragment>
-      <Layout style={{ minHeight: "100vh" }}>
-        <SiderBarWebAdmin choose={"menu-key/5"}></SiderBarWebAdmin>
-        <Layout>
-          <NavBarWebAdmin></NavBarWebAdmin>
+    <Layout style={{ minHeight: "100vh" }}>
+      <SiderBarWebAdmin choose={"menu-key/2"}></SiderBarWebAdmin>
+      <Layout>
+        <NavBarWebAdmin></NavBarWebAdmin>
 
-          <div
-            style={{
-              padding: "10px 5px 0px 5px",
-              background: "white",
-              margin: "30px",
-              borderRadius: "12px",
-              boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-            }}
-          >
-            <Content>
-              <h1
-                style={{
-                  padding: "5px 0px 0px 0px",
-                  margin: "0px 0px 0px 20px",
-                  color: "#4a4a4a",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  fontFamily: "Arial, sans-serif",
-                  textTransform: "uppercase",
-                  letterSpacing: "1px",
-                  borderBottom: "4px solid #6546D2",
-                  display: "inline-block",
-                }}
-              >
-                Quản lý các chuyến đi
-              </h1>
+        <div
+          style={{
+            padding: "10px 5px 0px 5px",
+            background: "white",
+            margin: "30px",
+            borderRadius: "12px",
+            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+          }}
+        >
+          <Content>
+            <h1
+              style={{
+                padding: "5px 0px 0px 0px",
+                margin: "0px 0px 0px 20px",
+                color: "#4a4a4a",
+                fontSize: "24px",
+                fontWeight: "bold",
+                fontFamily: "Arial, sans-serif",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                borderBottom: "4px solid #6546D2",
+                display: "inline-block",
+              }}
+            >
+              BÁO CÁO GIAO DỊCH
+            </h1>
 
-              <div
-                style={{
-                  padding: 25,
-                  minHeight: 400,
-                }}
-              >
-                <div style={{ height: "400px", overflow: "auto" }}>
-                    <h2
-                      style={{
-                        fontSize: "28px",
-                        color: "#333",
-                        marginBottom: "20px",
-                      }}
-                    >
-                      Lịch Sử Chuyền Tiền Của Khách Hàng
-                    </h2>
-                    <div class="table-responsive">
-                      <table
-                        class="table table-striped"
-                        style={{ width: "100%", borderCollapse: "collapse" }}
-                      >
-                        <thead>
-                          <tr
-                            style={{
-                              backgroundColor: "#f8f9fa",
-                              borderBottom: "2px solid #dee2e6",
-                            }}
-                          >
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Mã Thanh Toán
-                            </th>
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Người Thanh Toán
-                            </th>
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Số Tiền
-                            </th>
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Ngày Thanh Toán
-                            </th>
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Mô Tả
-                            </th>
-                            <th
-                              scope="col"
-                              style={{ padding: "15px", color: "#495057" }}
-                            >
-                              Tình Trạng Thanh Toán
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {payments.map(payment => (
-
-                            <tr>
-                              <td style={{ padding: "15px" }}>
-                                {payment.id}
-                              </td>
-                              <td style={{ padding: "15px" }}>
-  <a href={`mailto:${payment.userDTO.email}`} style={{ color: "blue", textDecoration: "underline" }}>
-    {payment.userDTO.email}
-  </a>
-</td>
-
-                              <td style={{ padding: "15px" }}> {payment.amount}</td>
-                              <td style={{ padding: "15px" }}> {payment.createDate}</td>
-                              <td style={{ padding: "15px" }}>  {payment.description}</td>
-                              <td style={{ padding: "15px" }}>    <span className={payment.transactionStatus === "DONE" ? "badge bg-success" : "badge bg-danger"}>
-                            {payment.transactionStatus}
-                          </span></td>
-
-                            
-
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div className="row mt-5">
-                    <div className="col text-center">
-                      <div className="block-27">
-                        <ul>
-                          <li><a href="#" onClick={handlePrevious}>&lt;</a></li>
-                          {Array.from({ length: totalPages }, (_, index) => (
-                            <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
-                              <a href="#" onClick={() => setCurrentPage(index + 1)}>{index + 1}</a>
-                            </li>
-                          ))}
-                          <li><a href="#" onClick={handleNext}>&gt;</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </Content>
-          </div>
-        </Layout>
+            <div
+              style={{
+                padding: 25,
+                minHeight: 400,
+              }}
+            >
+              <div style={{ height: "600px", overflow: "auto" }}>
+                <Search
+                  placeholder="Enter name to search"
+                  allowClear
+                  onSearch={handleSearch}
+                  style={{ width: 200, marginBottom: 16 }}
+                />
+                <Table
+                  className="custom-table"
+                  dataSource={filteredPayments}
+                  pagination={page}
+                  size="middle"
+                  components={{
+                    header: {
+                      cell: (props) => (
+                        <th
+                          {...props}
+                          style={{
+                            background: "hsl(253deg 61% 85%)",
+                            border: "none",
+                          }}
+                        />
+                      ),
+                    },
+                  }}
+                >
+                  <Column title="Mã đơn hàng" dataIndex="id" key="id" />
+                  <Column
+                    title="Mail"
+                    dataIndex={["userDTO", "email"]}
+                    key="email"
+                  />
+                  <Column title="Tổng tiền" dataIndex="amount" key="amount" />
+                  <Column
+                    title="Mô tả"
+                    dataIndex="description"
+                    key="description"
+                  />
+                  <Column
+                    title="Tình trạng giao dịch"
+                    dataIndex="transactionStatus"
+                    key="transactionStatus"
+                  />
+                </Table>
+              </div>
+            </div>
+          </Content>
+        </div>
       </Layout>
-    </React.Fragment>
+    </Layout>
   );
 };
 
