@@ -1,4 +1,4 @@
-const SERVICE_URL = "http://26.84.100.30:9000/tour-booking/api/v1";
+const SERVICE_URL = "https://tour-booking-server-production.up.railway.app/tour-booking/api/v1";
 
 export default {
     base: SERVICE_URL,
