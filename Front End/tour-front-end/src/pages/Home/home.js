@@ -85,7 +85,7 @@ const Home = () => {
         return (price).toLocaleString('vi-VN').replace(/,/g, '.');
     };
     const tourImages = ["images/bg_1.jpg", "images/hotel-1.jpg", "images/hotel-4.jpg", "images/hotel-3.jpg"];
-   
+
 
     const [keyword, setKeyword] = useState('');
     const [endLocation, setEndLocation] = useState('');
@@ -317,23 +317,44 @@ const Home = () => {
                                                 <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
                                                 <div className="d-flex">
                                                     <div className="one">
-                                                        <h4><a href="#">{tour.title}</a></h4>
+                                                        <h4>
+                                                            <Link
+                                                                to="/detailTour"
+                                                                className="text-dark"
+                                                                state={{ tourId: tour.id }}
+                                                            >
+                                                                <a href="#">{tour.title}</a>
+                                                            </Link>
+                                                        </h4>
                                                         <p className="rate">
 
                                                         </p>
                                                     </div>
                                                     <div className="two">
-                                                        <span className="price per-price">{tour.price}<br /><small>/tour</small></span>
+                                                        <span className="price per-price">{tour.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}<br /><small>/khách</small></span>
                                                     </div>
                                                 </div>
                                                 <span><img src="/images/tour.png" className="icon-img" />
                                                     {tour.code}</span>
-                                                <p>Nơi Khởi Hành:  {tour.starLocation}</p>
-                                                <p>Nơi Kết Thúc:  {tour.endLocation}</p>
-                                                <h3>Giá : {formatPrice(tour.price)} &nbsp;₫</h3>
+                                                <p><b>Nơi Khởi Hành: </b>  {tour.starLocation}</p>
+                                                <p><b>Nơi Kết Thúc:</b>  {tour.endLocation}</p>
+                                                <h3 style={{
+                                                    fontSize: 18,
+                                                    fontWeight: "bold",
+                                                    color: "#F9BE37",
+                                                    marginBottom: 5,
+                                                }}><b>Giá : </b>{formatPrice(tour.price)} &nbsp;₫</h3>
                                                 <hr />
                                                 <p className="bottom-area d-flex">
-                                                    <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
+                                                    <span className="ml-auto">
+                                                        <Link
+                                                            to="/detailTour"
+                                                            className="text-dark"
+                                                            state={{ tourId: tour.id }}
+                                                        >
+                                                            <a href="#">Xem chi tiết</a>
+                                                        </Link>
+                                                    </span>
                                                     <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
                                                 </p>
                                             </div>
@@ -375,7 +396,7 @@ const Home = () => {
 
             <HomeSlider></HomeSlider>
 
-            <section className="ftco-section">
+            {/* <section className="ftco-section">
                 <div className="container">
                     <div className="row justify-content-center mb-5 pb-3">
                         <div className="col-md-7 heading-section text-center ">
@@ -577,7 +598,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
 

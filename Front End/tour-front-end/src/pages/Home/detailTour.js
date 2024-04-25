@@ -57,7 +57,7 @@ const DetailTour = () => {
     //Schedule
 
     // Hàm chuyển đổi ngày từ DD-MM-YYYY sang YYYY-MM-DD
-    
+
     // const renderTourSchedules = () => {
     //     if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
     //         return tourDetailCustomer.tourSchedules.map((schedule, index) => {
@@ -127,7 +127,7 @@ const DetailTour = () => {
         if (tourDetailCustomer && tourDetailCustomer.tourSchedules) {
             return tourDetailCustomer.tourSchedules.map((schedule, index) => {
                 return (
-                    <div         
+                    <div
                     >
                         <h4>Ngày {index + 1}: {schedule.title}</h4>
                         <p>{schedule.description}</p>
@@ -140,7 +140,7 @@ const DetailTour = () => {
 
     const formatPrice = (price) => {
         return (price).toLocaleString('vi-VN').replace(/,/g, '.');
-      };
+    };
     return (
         <div>
             <section className="ftco-section ftco-counter img" id="" style={{ backgroundImage: 'url(images/bg_1.jpg)' }} data-stellar-background-ratio="0.5">
@@ -283,8 +283,8 @@ const DetailTour = () => {
                         <section className="section-03 mb-5">
                             <div className="container-fluid">
                                 <div className="row">
-                                    <div className="col-md-5 left">
-                                    <p class="s-title-03 tour-des"> {tourDetailCustomer?.description} </p>
+                                    <div className="col-md-6 left">
+                                        <p class="s-title-03 tour-des"> {tourDetailCustomer?.description} </p>
                                         <div className="box-order">
                                             <div className="time"><p>Khởi hành <b>{tourDetailCustomer?.tourTimeSet[0]?.startDate} - Giờ đi {tourDetailCustomer?.tourTimeSet[0]?.startTime} </b>
                                             </p>
@@ -307,7 +307,7 @@ const DetailTour = () => {
 
                                         </div>
                                     </div>
-                                    <div className="col-md-7  right">
+                                    <div className="col-md-6  right">
                                         <div className="group-services">
                                             <div className="item">
                                                 <img src="/images/co1.jpg" className="icon-img" />
@@ -345,16 +345,30 @@ const DetailTour = () => {
             </div>
 
             <section className="section-07-map mb-5">
-                <div class="container-fluid">
+                <div class="container-fluid" style={{
+                    fontSize: "15px",
+                    padding: "8px 16px",
+                    border: "1px solid gray",
+                    borderRadius: "10px",
+                    transition: "background-color 0.3s, color 0.3s",
+                    display: "flex",
+                    alignItems: "center",
+                }}>
                     <div className="row">
-                        <div className="col-md-5">
+                        <div className="col-md-5" style={{
+                            transition: "background-color 0.3s, color 0.3s",
+                            display: "flex",
+                            alignItems: "center",
+                            borderRadius: "10px",
+                            backgroundColor: "#f0f0f0"
+                        }} >
                             <div class="container-fluid">
                                 <main class="row">
                                     <section class="col">
                                         <header class="title">
                                             <h2>Lịch Trình</h2>
                                         </header>
-                                        <div className="contents">
+                                        <div className="contents" style={{ width: '400px' }}>
                                             {renderTourSchedules()}
                                         </div>
                                     </section>
@@ -362,8 +376,12 @@ const DetailTour = () => {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div>
-                            {renderTourSchedulesDescription()}
+                            <div style={{
+                                padding: "8px 16px",
+                                margin: "60px 10px 10px 10px"
+
+                            }}>
+                                {renderTourSchedulesDescription()}
                             </div>
                             {/* <div><h3 id="day-00">Ngày 1 - TP.HCM - BANGKOK – BẢO TÀNG LIGHTING ART – PATTAYA	                (Ăn trưa, tối)</h3>
 
@@ -473,13 +491,13 @@ const DetailTour = () => {
                                 </div>
                             </div>
                         </div> */}
-                        <div className="col-md-6 col-12 right">
+                        {/* <div className="col-md-6 col-12 right">
                             <h2>Giá tour &amp; phụ thu phòng đơn</h2>
                             <div className="table-price"><table>
                                 <tbody>
                                     <tr><th className="l1">Loại khách</th><th className="l2">Giá tour</th><th className="l3">Land tour</th></tr><tr><td>Người lớn (Từ 12 tuổi trở lên)</td><td className="t-price">8.490.000&nbsp;₫</td><td className="l-price">5.990.000&nbsp;₫</td></tr><tr><td>Trẻ em (Từ 2 tuổi đến dưới 12 tuổi)</td><td className="t-price">7.492.500&nbsp;₫</td><td className="l-price">4.493.000&nbsp;₫</td></tr><tr><td>Em bé (Dưới 2 tuổi)</td><td className="t-price">2.997.000&nbsp;₫</td><td className="l-price">1.797.000&nbsp;₫</td></tr><tr className="total"><td>Phụ thu phòng đơn</td><td className="t-price">3.500.000&nbsp;₫</td><td className="l-price">3.500.000&nbsp;₫</td></tr>
                                 </tbody></table></div>
-                            {/* <h2 className="tt mt-3">Thông tin hướng dẫn viên</h2>
+                             <h2 className="tt mt-3">Thông tin hướng dẫn viên</h2>
                             <div className="table-price"><div className="more-info more-info-2">
                                 <div className="block"><span>HDV dẫn đoàn</span><div className="info">
                                     <h3>TRẦN DŨNG CẢM</h3><p>190 Pasteur, Phường Võ Thị Sáu, Quận 3, TP.HCM, Viet Nam</p>
@@ -488,8 +506,8 @@ const DetailTour = () => {
                                 <div className="block"><span>HDV tiễn</span><div>Đang cập nhật</div>
                                 </div>
                             </div>
-                            </div> */}
-                        </div>
+                            </div> *
+                        </div> */}
                     </div>
                 </div>
             </section>

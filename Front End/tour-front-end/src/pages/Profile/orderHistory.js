@@ -22,7 +22,7 @@ const OrderHistory = () => {
 
 
     const [keyword, setKeyword] = useState('');
-    const [orderStatus, setOrderStatus] = useState("WAITING_CANCEL");
+    const [orderStatus, setOrderStatus] = useState("NOT_DONE");
     const handleOrderStatusChange = (value) => {
         setOrderStatus(value);
     }
@@ -67,10 +67,10 @@ const OrderHistory = () => {
         try {
             const response = await cancelServices.customerCancel(orderId);
             if (response.status === 200) {
-                toast.success("Order canceled successfully!");
+                toast.success("Gửi Yều Cầu Hủy Đơn Thành Công!");
                 fetchOrderData();
             } else {
-                toast.success("Order canceled successfully!");
+                toast.success("Gửi Yều Cầu Hủy Đơn Thành Công!");
                 fetchOrderData();
             }
         } catch (error) {
@@ -115,7 +115,7 @@ const OrderHistory = () => {
                 </Nav> */}
 
                 <Select
-                    defaultValue="WAITING_CANCEL"
+                    defaultValue="NOT_DONE"
                     onChange={handleOrderStatusChange}
                     style={{ width: "200px" }}
                 >
@@ -148,7 +148,7 @@ const OrderHistory = () => {
                                                 <div className="s-rate">
                                                     <span className="s-comment">
                                                         <h6 className="fw-bold mb-0"></h6>
-                                                        <p className="mb-0">Số đặt lịch:<b> {order.id}</b></p>
+                                                        <p className="mb-0">Số đặt lịch:<b> {order.code}</b></p>
                                                         <p className="mb-0">Tên Chuyến Đi:<b> {order.tourInfoDTO.title}</b></p>
                                                     </span>
                                                 </div>
@@ -179,13 +179,13 @@ const OrderHistory = () => {
                                             }
                                         >
                                             {order.orderStatus === "NOT_DONE"
-                                                ? "CHƯA HOÀN TẤT"
+                                                ? "CHƯA HOÀN THÀNH"
                                                 : order.orderStatus === "DONE"
-                                                    ? "HOÀN TẤT"
+                                                    ? "ĐÃ HOÀN THÀNH"
                                                     : order.orderStatus === "WAITING_CANCEL"
                                                         ? "CHỜ HUỶ"
                                                         : order.orderStatus === "CANCEL"
-                                                            ? "HUỶ BỎ"
+                                                            ? "HUỶ"
                                                             : ""}
                                         </span>
 
@@ -274,7 +274,7 @@ const OrderHistory = () => {
                                     padding: '10px 20px',
                                     border: 'none',
                                     borderRadius: '4px',
-                                    backgroundColor: currentPage === i + 1 ? 'blue' : 'gray',
+                                    backgroundColor: currentPage === i + 1 ? '#08C299' : 'gray',
                                     color: 'white',
                                     cursor: 'pointer',
                                 }}

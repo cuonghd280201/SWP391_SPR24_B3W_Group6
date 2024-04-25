@@ -1,61 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Input, Table, Select, Badge } from "antd";
-
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-
-import paymentServices from "../../services/payment.services";
-
-import orderServices from "../../services/order.services";
+import { Layout, Input, Table, Badge } from "antd";
+import { Link, useLocation } from 'react-router-dom';
 import SiderBarWebStaff from "./SlideBar/SiderBarWebStaff";
 import NavBarWebStaff from "./Navbar/NavBarWebStaff";
-const { Header, Footer, Sider, Content } = Layout;
+import orderServices from "../../services/order.services";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+const { Header, Footer, Sider, Content } = Layout;
 const { Column } = Table;
-const { Option } = Select;
 const page = {
-    pageSize: 5, // Number of items per page
+    pageSize: 5,
 };
 
 const ListVisitorTourByTour = () => {
-
     const { state } = useLocation();
-    const [visitors, setVisitors] =
-        useState(null);
+    const [visitors, setVisitors] = useState(null);
     const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage state
-    const [pageSize, setPageSize] = useState(6); // Initialize pageSize state
-    const [totalPages, setTotalPages] = useState(1); // Add state for total pages
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(6);
+    const [searchKeyword, setSearchKeyword] = useState(""); // State for search keyword
+
 
     const fetchTourDetailCustomer = async () => {
-        let response;
         try {
             const response = await orderServices.getAllTourVisitor(state.tourTimeId);
-            console.log("Response:", response); // Log the response object
             setVisitors(response.data.data);
-
             return response;
-
         } catch (error) {
             console.error("Error fetching tour:", error);
         }
-    }
+    };
 
     useEffect(() => {
         fetchTourDetailCustomer();
-    }, [currentPage, pageSize]);
+    }, []);
 
+    const filteredVisitors = visitors?.tourVisitorDTOList.filter(visitor => {
+        const nameMatch = visitor.name ? visitor.name.toLowerCase().includes(searchKeyword.toLowerCase()) : false;
+        const phoneMatch = visitor.phone ? visitor.phone.includes(searchKeyword) : false;
+        const idCardMatch = visitor.idCard ? visitor.idCard.includes(searchKeyword) : false;
+        const emailMatch = visitor.userEmail ? visitor.userEmail.toLowerCase().includes(searchKeyword.toLowerCase()) : false;
 
-    const handlePrevious = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
+        return nameMatch || phoneMatch || idCardMatch || emailMatch;
+    });
 
-    const handleNext = () => {
-        setCurrentPage(currentPage + 1);
-    };
+    const filteredVisitorsCancel = visitors?.tourVisitorDTOCancelList.filter(visitor => {
+        const nameMatch = visitor.name ? visitor.name.toLowerCase().includes(searchKeyword.toLowerCase()) : false;
+        const phoneMatch = visitor.phone ? visitor.phone.includes(searchKeyword) : false;
+        const idCardMatch = visitor.idCard ? visitor.idCard.includes(searchKeyword) : false;
+        const emailMatch = visitor.userEmail ? visitor.userEmail.toLowerCase().includes(searchKeyword.toLowerCase()) : false;
 
+        return nameMatch || phoneMatch || idCardMatch || emailMatch;
+    });
 
     return (
         <React.Fragment>
@@ -64,107 +61,136 @@ const ListVisitorTourByTour = () => {
                 <Layout>
                     <NavBarWebStaff></NavBarWebStaff>
 
-                    <div
-                        style={{
-                            padding: "10px 5px 0px 5px",
-                            background: "white",
-                            margin: "30px",
-                            borderRadius: "12px",
-                            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                        }}
+                    <div style={{
+                        padding: "10px 5px 0px 5px",
+                        background: "white",
+                        margin: "30px",
+                        borderRadius: "12px",
+                        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                    }}
                     >
                         <Content>
-
-                            <div
-                                style={{
-                                    padding: 25,
-                                    minHeight: 400,
-                                }}
+                            <div style={{
+                                padding: 25,
+                                minHeight: 400,
+                            }}
                             >
-
                                 <h1
                                     style={{
                                         padding: "5px 0px 0px 0px",
                                         margin: "0px 0px 0px 20px",
-                                        color: "#4a4a4a",
                                         fontSize: "24px",
                                         fontWeight: "bold",
                                         fontFamily: "Arial, sans-serif",
                                         textTransform: "uppercase",
                                         letterSpacing: "1px",
-                                        borderBottom: "4px solid #6546D2",
+                                        borderBottom: "4px solid #5cb85c",
                                         display: "inline-block",
                                     }}
                                 >
                                     Danh Sách Những Người Tham Gia
                                 </h1>
+                                <div style={{ position: 'relative', display: 'inline-block' }}>
+                                    <input
+                                        type="text"
+                                        placeholder="Tìm kiếm tên, điện thoại, cccd, email"
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword(e.target.value)}
+                                        style={{
+                                            marginLeft: '3  00px',
+                                            marginBottom: '20px',
+                                            padding: '10px',
+                                            width: '300px',
+                                            border: "1px solid #5cb85c",
+                                            borderRadius: "4px",
+                                            transition: "background-color 0.3s, color 0.3s",
+                                            alignItems: "center",
+                                            fontSize: "15px",
+                                            color: "#5cb85c",
+                                            textDecoration: "none",
+                                        }}
+                                    />
 
-                                <Table dataSource={visitors?.tourVisitorDTOList} pagination={page}>
+                                    {/* The search icon */}
+                                    <FontAwesomeIcon
+                                        icon={faSearch}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            right: '10px',
+                                            transform: 'translateY(-50%)',
+                                            color: 'gray',
+                                        }}
+                                    />
+                                </div>
+
+                                <Table dataSource={filteredVisitors} pagination={page}>
                                     <Column title="Tên" dataIndex="name" key="id" />
                                     <Column title="Số Điện Thoại" dataIndex="phone" key="phone" />
                                     <Column title="Thẻ căn cước" dataIndex="idCard" key="idCard" />
-
                                     <Column title="Ngày sinh" dataIndex="dateOfBirth" key="dateOfBirth" />
-                                    <Column
-                                        title="Loại Khách Hàng"
-                                        dataIndex="tourVisitorType"
-                                        key="tourVisitorType"
-                                        render={(value) => {
-                                            if (value === 'ADULT') {
-                                              return <Badge color="green" text="Người lớn" />;
-                                            } else if (value === 'BABY') {
-                                              return <Badge color="yellow" text="Trẻ em" />;
-                                            } else {
-                                              return <span>{value}</span>; 
-                                            }
-                                          }}
-                                    />
+                                   
                                     <Column
                                         title="Địa chỉ e-mail"
                                         dataIndex="userEmail"
                                         key="userEmail"
                                     />
-                                    {/* Add more columns as needed */}
+                                     <Column
+                                        title="Loại Khách Hàng"
+                                        dataIndex="tourVisitorType"
+                                        key="tourVisitorType"
+                                        render={(value) => {
+                                            if (value === 'ADULT') {
+                                                return <Badge color="green" text="Người lớn" />;
+                                            } else if (value === 'BABY') {
+                                                return <Badge color="yellow" text="Trẻ em" />;
+                                            } else {
+                                                return <span>{value}</span>;
+                                            }
+                                        }}
+                                    />
                                 </Table>
 
+                                <h1
+                                    style={{
+                                        padding: "5px 0px 0px 0px",
+                                        margin: "0px 0px 0px 20px",
+                                        fontSize: "24px",
+                                        fontWeight: "bold",
+                                        fontFamily: "Arial, sans-serif",
+                                        textTransform: "uppercase",
+                                        letterSpacing: "1px",
+                                        borderBottom: "4px solid #5cb85c",
+                                        display: "inline-block",
+                                    }}
+                                >
+                                    Danh Sách Những Người Đã Hủy Chuyến Đi
+                                </h1>
 
-                                <h1 style={{
-                                    padding: "5px 0px 0px 0px",
-                                    margin: "0px 0px 0px 20px",
-                                    color: "#4a4a4a",
-                                    fontSize: "24px",
-                                    fontWeight: "bold",
-                                    fontFamily: "Arial, sans-serif",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "1px",
-                                    borderBottom: "4px solid #6546D2",
-                                    display: "inline-block",
-                                }}>Danh Sách Người Đã Hủy Chuyến Đi</h1>
-
-                                <Table dataSource={visitors?.tourVisitorDTOCancelList} pagination={page}>
+                                <Table dataSource={filteredVisitorsCancel} pagination={page}>
                                     <Column title="Tên" dataIndex="name" key="id" />
                                     <Column title="Số Điện Thoại" dataIndex="phone" key="phone" />
                                     <Column title="Thẻ căn cước" dataIndex="idCard" key="idCard" />
-
                                     <Column title="Ngày sinh" dataIndex="dateOfBirth" key="dateOfBirth" />
+                                    
+                                    <Column
+                                        title="Địa chỉ e-mail"
+                                        dataIndex="userEmail"
+                                        key="userEmail"
+                                    />
                                     <Column
                                         title="Loại Khách Hàng"
                                         dataIndex="tourVisitorType"
                                         key="tourVisitorType"
                                         render={(value) => {
                                             if (value === 'ADULT') {
-                                              return <Badge color="green" text="Người lớn" />;
+                                                return <Badge color="green" text="Người lớn" />;
                                             } else if (value === 'BABY') {
-                                              return <Badge color="yellow" text="Trẻ em" />;
+                                                return <Badge color="yellow" text="Trẻ em" />;
                                             } else {
-                                              return <span>{value}</span>; 
+                                                return <span>{value}</span>;
                                             }
-                                          }}
-                                    />
-                                    <Column
-                                        title="Địa chỉ e-mail"
-                                        dataIndex="userEmail"
-                                        key="userEmail"
+                                        }}
                                     />
                                     {/* Add more columns as needed */}
                                 </Table>

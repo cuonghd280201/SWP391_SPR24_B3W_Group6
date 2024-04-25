@@ -104,6 +104,7 @@ const OrderBookTourDetail = () => {
 
   const handlePaymentClick = async () => {
     await createCheckout();
+    fetchOrderDetail();
   };
 
   const handleButtonClick = () => {
@@ -142,7 +143,7 @@ const OrderBookTourDetail = () => {
 
                       <div className="col-10">
                         <h4 style={{ fontSize: 20, marginTop: 10 }}>
-                          Mã đặt chuyến đi: <b>{orderDetail?.id}</b>
+                          Mã đặt chuyến đi: <b>{orderDetail?.code}</b>
                           <span style={{ color: "#666" }}>
 
                           </span>
@@ -200,7 +201,7 @@ const OrderBookTourDetail = () => {
                         </p>
                         <p>
                           {orderDetail?.orderStatus === "NOT_DONE" ? (
-                            <Link to="/orderHistory">
+                            <Link to="/orderBookTouDetail">
                               <button onClick={handlePaymentClick} className="btn btn-primary btn-order">Thanh Toán</button>
                             </Link>
                           ) : (
