@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Layout, Table, Space, Input, Switch } from "antd";
+import React, { useEffect, useState,useMemo } from "react";
+import { Layout, Table, Space, Input, Switch, Select } from "antd";
 
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
-// import UpdateHRAccountPopup from "./UpdateUserAccountPopup/UpdateUserAccountPopup";
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
 import adminServices from "../../services/admin.services";
 const page = {
@@ -10,15 +9,19 @@ const page = {
 };
 
 const { Column } = Table;
-
 const { Content } = Layout;
 const { Search } = Input;
+const { Option } = Select;
 
 const ListAccountStaff = () => {
   // State for switch status
   const [switchStatusMap, setSwitchStatusMap] = useState({});
   const [allStaff, setAllStaff] = useState();
   const [filteredStaff, setFilteredStaff] = useState([]);
+  const [sortedInfo, setSortedInfo] = useState({
+    columnKey: null,
+    order: null,
+  });
 
   useEffect(() => {
     fetchAllStaff();
@@ -32,16 +35,38 @@ const ListAccountStaff = () => {
 
   const handleSearch = (value) => {
     const searchValue = value.toLowerCase().trim();
-    const filtered = allStaff.filter(
-      (staff) => {
-        const name = staff.name.toLowerCase().includes(searchValue);
-        const email = staff.email.toLowerCase().includes(searchValue);
-        return name || email || searchValue === "";
-       }
-    );
+    const filtered = allStaff.filter((staff) => {
+      const name = staff.name.toLowerCase().includes(searchValue);
+      const email = staff.email.toLowerCase().includes(searchValue);
+      return name || email || searchValue === "";
+    });
     setFilteredStaff(filtered);
   };
 
+  const handleSortOptionChange = (value) => {
+    if (value === "NAME_ASC") {
+      handleSort("name", "ascend");
+    } else if (value === "NAME_DESC") {
+      handleSort("name", "descend");
+    }
+  };
+
+  const handleSort = (columnKey, order) => {
+    setSortedInfo({ columnKey, order });
+  };
+
+  const sortedDataSource = useMemo(() => {
+    if (sortedInfo.columnKey && sortedInfo.order) {
+      const sortedData = [...filteredStaff].sort((a, b) => {
+        const result = a[sortedInfo.columnKey].localeCompare(
+          b[sortedInfo.columnKey]
+        );
+        return sortedInfo.order === "ascend" ? result : -result;
+      });
+      return sortedData;
+    }
+    return filteredStaff;
+  }, [sortedInfo, filteredStaff]);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <SiderBarWebAdmin choose={"menu-key/3"}></SiderBarWebAdmin>
@@ -58,23 +83,44 @@ const ListAccountStaff = () => {
           }}
         >
           <Content>
-            <h1
-              style={{
-                padding: "5px 0px 0px 0px",
-                margin: "0px 0px 0px 20px",
-                color: "#4a4a4a",
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Arial, sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                borderBottom: "4px solid #6546D2",
-                display: "inline-block",
-              }}
-            >
-              QUẢN LÝ NHÂN VIÊN
-            </h1>
+            <div>
+              <h1
+                style={{
+                  padding: "15px 0px 0px 0px",
+                  margin: "0px 0px 0px 20px",
+                  color: "#4a4a4a",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif",
+                  textTransform: "uppercase",
+                  letterSpacing: "1px",
+                  borderBottom: "4px solid #6546D2",
+                  display: "inline-block",
+                }}
+              >
+                QUẢN LÝ NHÂN VIÊN
+              </h1>
 
+              <Search
+                placeholder="Tìm kiếm theo từ khóa"
+                allowClear
+                onSearch={handleSearch}
+                style={{
+                  width: 250,
+                  marginBottom: 16,
+                  marginLeft: 525,
+                  marginTop: 15,
+                }}
+              />
+            </div>
+            <Select
+              defaultValue="Sắp xếp theo tên"
+              onChange={handleSortOptionChange}
+              style={{ marginLeft: "20px", width: "200px" }}
+            >
+              <Option value="NAME_ASC">Sắp xếp theo Tên (A - Z)</Option>
+              <Option value="NAME_DESC">Sắp xếp theo Tên (Z - A)</Option>
+            </Select>
             <div
               style={{
                 padding: 25,
@@ -82,15 +128,9 @@ const ListAccountStaff = () => {
               }}
             >
               <div style={{ height: "600px", overflow: "auto" }}>
-                <Search
-                  placeholder="Enter name to search"
-                  allowClear
-                  onSearch={handleSearch}
-                  style={{ width: 200, marginBottom: 16 }}
-                />
                 <Table
                   className="custom-table"
-                  dataSource={filteredStaff}
+                  dataSource={sortedDataSource}
                   pagination={page}
                   size="middle"
                   components={{

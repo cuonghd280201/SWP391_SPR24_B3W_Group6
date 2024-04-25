@@ -39,10 +39,30 @@ const getAllStaff = async () => {
 
 const getOrderStatus = async (orderStatus) => {
   const serviceUrl = `${urlConstant.endpoint.admin.getOrderStatus}?orderStatus=${orderStatus}`;
-  const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "GET"
+  );
   return response;
 };
 
+const getRevenue = async (days) => {
+  const serviceUrl = `${urlConstant.endpoint.admin.getRevenue}?days=${days}`;
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "POST"
+  );
+  return response;
+};
+
+const banUserById = async (id) => {
+  const serviceUrl = `${urlConstant.endpoint.admin.banUserById}?user_id=${id}`;
+  const response = await axiosLocalHost.sendAuthorizedRequest(
+    serviceUrl,
+    "POST"
+  );
+  return response;
+};
 
 export default {
   getOrderSumary,
@@ -50,4 +70,6 @@ export default {
   getAllUser,
   getAllStaff,
   getOrderStatus,
+  getRevenue,
+  banUserById
 };
