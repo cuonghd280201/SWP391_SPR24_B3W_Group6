@@ -8,7 +8,7 @@ const { Content } = Layout;
 const { Column } = Table;
 const { Option } = Select;
 const page = {
-  pageSize: 5, // Number of items per page
+  pageSize: 5, 
 };
 
 const ListOrderStatus = () => {
@@ -36,10 +36,6 @@ const ListOrderStatus = () => {
     setOrderStatus(value); // Update selected order status
   };
 
-  const handleSortOrderChange = (value) => {
-    const newSortOrderMap = { ...sortOrderMap, [orderStatus]: value };
-    setSortOrderMap(newSortOrderMap); // Update sorting order map for the current status
-  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -109,7 +105,6 @@ const ListOrderStatus = () => {
                 ),
               },
             }}
-            onChange={(pagination, filters, sorter) => handleSortOrderChange(sorter.order)}
           >
             <Column title="Mã đơn hàng" dataIndex="code" key="code" />
             <Column
@@ -155,8 +150,7 @@ const ListOrderStatus = () => {
               title="Tổng tiền thanh toán"
               dataIndex="amount"
               key="amount"
-              sorter={(a, b) => a.amount - b.amount} // Enable sorting by total payment amount
-              sortOrder={sortOrderMap[orderStatus]} // Use the sorting order for the current status
+        
             />
             <Column
               title="Tiền hoàn trả"
