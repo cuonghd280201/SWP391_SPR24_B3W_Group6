@@ -28,8 +28,21 @@ const getAllTransaction = async (currentPage, pageSize, sortBy, sortOrder) => {
     return response;
   };
 
+  const postPayMentVNPay = async (amount, vnp_TxnRef)=>{
+    const serviceUrl = urlConstant.endpoint.payment.postPayment + "?";
+    const amountUrl = urlConstant.endpoint.payment.amount
+    .replace("${amount}", amount);
+    const vnp_TxnRefUrl = urlConstant.endpoint.payment.vnp_TxnRef
+    .replace("${vnp_TxnRef}", vnp_TxnRef);
+    const fullUrl = serviceUrl + amountUrl + '&' + vnp_TxnRefUrl;
+    const response = await axiosLocalHost.sendAuthorizedRequest(fullUrl, "POST");
+    return response;
+    
+  }
+
 export default {
     createCheckout,
     getAllTransaction,
+    postPayMentVNPay,
     
 };

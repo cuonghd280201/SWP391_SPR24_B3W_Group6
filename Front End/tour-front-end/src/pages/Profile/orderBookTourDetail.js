@@ -136,6 +136,61 @@ const OrderBookTourDetail = () => {
         >
           <div className="ecommerce-widget">
             <div className="row row-with-margin">
+            <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div className="destination">
+                  <div className="text p-3">
+                    <div className="row">
+                      <div className="col-4">
+                        <img
+                          src={orderDetail?.tourDTO.coverImage}
+                          className="img-fluid rounded"
+                          alt="Tour Image"
+                          style={{
+                            width: "100%",
+                            height: 200,
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                      <div className="col-8">
+                        <h4 style={{ fontSize: 16, marginTop: 10 }}>
+                         <b>Mã Chuyến Đi:{" "}</b> 
+                          <span style={{ color: "#666" }}>
+
+
+                            {orderDetail?.tourDTO.code}
+                          </span>
+                        </h4>
+                        <p
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: 18,
+                            color: "#F9BE37",
+                            marginBottom: 5,
+                          }}
+                        >
+                          {orderDetail?.tourDTO.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                        </p>
+                        <p
+                          style={{ fontSize: 14, marginBottom: 5 }}
+                        >
+                          
+                         <b>Nơi khởi hành :</b>  {orderDetail?.tourDTO.starLocation}
+
+                        </p>
+                        <p
+                          style={{ fontSize: 14, marginBottom: 5 }}
+                        >
+                          
+                         <b>Nơi kết thúc :</b>  {orderDetail?.tourDTO.endLocation}
+
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+              </div>
               <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div className="destination">
                   <div className="text p-3">

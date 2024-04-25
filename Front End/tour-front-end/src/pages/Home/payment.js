@@ -53,6 +53,21 @@ const Payment = () => {
         }
     };
 
+
+    const paymentVNPay = async() =>{
+        try{
+            const amount ="";
+            const vnp_TxnRef="";
+
+            const response = await paymentServices.postPayMentVNPay(amount, vnp_TxnRef);
+            console("response", response);
+            toast.success("Chuyển hướng thanh toán thành công ");
+        }catch (error){
+            toast.success("Chuyển hướng thanh toan thành công");
+            console.error("Error payment failed", error);
+        }
+    }
+
     const handlePaymentClick = async () => {
         await createCheckout();
     };
@@ -192,7 +207,8 @@ const Payment = () => {
                             <div className="group-checkout">
                                 <h3>Tóm tắt chuyến đi</h3>
                                 <div className="product">
-                                    <div className="product-image"><img src={orderDetail?.tourDTO?.coverImage} className="img-fluid" alt="image" /></div>
+                                    <div className="product-image"><img src={orderDetail?.tourDTO?.coverImage} className="img-fluid" alt="image" style={{ width: '200px', height: '100px' }}
+ /></div>
                                     <div className="product-content">
                                         <p className="title">{orderDetail?.tourDTO?.title} </p>
                                     </div>
@@ -212,14 +228,35 @@ const Payment = () => {
                                             <p className="from" /></div>
                                     </div>
                                 </div>
+                                <div className="go-tour">
+                                    <div className="end">
+                                        <i className="fal fa-calendar-minus" />
+                                        <div className="start-content">
+                                            <h3>Hành Khách</h3>
+                                            {orderDetail && orderDetail.tourVisitorDTOList.map((order, index) => (
+
+                                            <p className="time"><b>{order.name}</b> : {order.phone} : {order.tourVisitorType}</p>
+                                        ))}
+                                            <p className="from" /></div>
+                                    </div>
+                                </div>
                                 <div className="detail">
                                     <table>
                                         <thead>
-                                            <tr>
+                                            {/* <tr>
                                                 <th className="l1">
                                                     <i className="fal fa-users me-1" id="AmoutPerson" />Hành khách</th>
-
-                                            </tr>
+                                                {orderDetail && orderDetail.tourVisitorDTOList.map((order, index) => (
+                                                    <div>
+                                                         <td className="t-price text-right">
+                                                        : 
+                                                    </td>
+                                                    <td className="t-price text-right">
+                                                        {order.phone}
+                                                    </td>
+                                                    </div>       
+                                              
+                                            </tr> */}
                                         </thead>
                                         <tbody>
                                             <tr className="total">
@@ -244,11 +281,11 @@ const Payment = () => {
                                                 </tr>
 
 
-                                                 <Link to="/orderHistory">
-                                                <button
-                                                    onClick={handlePaymentClick}
-                                                    className="btn btn-primary btn-order">Thanh Toán</button>
-                                            </Link> 
+                                                <Link to="/orderHistory">
+                                                    <button
+                                                        onClick={handlePaymentClick}
+                                                        className="btn btn-primary btn-order">Thanh Toán</button>
+                                                </Link>
                                             </tr>
 
                                         </tbody></table>

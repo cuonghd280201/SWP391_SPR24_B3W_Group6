@@ -360,7 +360,7 @@ const InfomationTour = () => {
                             <div className="group-checkout">
                                 <h3>Tóm tắt chuyến đi</h3>
                                 <div className="product">
-                                    <div className="product-image"><img src={tourDetailCustomer?.coverImage} className="img-fluid" alt="image" /></div>
+                                    <div className="product-image"><img src={tourDetailCustomer?.coverImage} className="img-fluid" alt="image" style={{ width: '200px', height: '100px' }}  /></div>
                                     <div className="product-content">
                                         <p className="title">{tourDetailCustomer?.title} </p>
                                     </div>

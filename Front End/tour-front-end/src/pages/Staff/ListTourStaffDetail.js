@@ -223,7 +223,7 @@ const ListTourStaffDetail = () => {
                               <div className="item">
                                 <img src="/images/co5.png" className="icon-img" />
                                 <label>Khách sạn</label>
-                                <p>{tourDetailCustomer?.tourDetail.food}</p>
+                                <p>{tourDetailCustomer?.tourDetail.hotel}</p>
                               </div>
 
                             </div>

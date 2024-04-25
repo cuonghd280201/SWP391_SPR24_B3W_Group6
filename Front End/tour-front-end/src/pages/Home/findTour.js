@@ -42,8 +42,8 @@ const FindTour = () => {
             <section className="ftco-section">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-3 sidebar  ftco-animate">
-                            <div className="sidebar-wrap ftco-animate">
+                        <div className="col-lg-3 sidebar ">
+                            <div className="sidebar-wrap">
                                 <h3 className="heading mb-4">Địa Điểm Đi</h3>
                                 <form action="#">
                                     <div className="fields">
@@ -129,10 +129,10 @@ const FindTour = () => {
                                                 <hr />
 
                                                 {/* Hiển thị các thông tin khác về tour */}
-                                                <p className="bottom-area d-flex">
+                                                {/* <p className="bottom-area d-flex">
                                                     <span className="ml-auto"><a href="#">Xem chi tiết</a></span>
                                                     <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
-                                                </p>
+                                                </p> */}
                                             </div>
                                         </div>
                                     </div>
