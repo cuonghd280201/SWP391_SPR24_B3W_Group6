@@ -58,22 +58,31 @@ const ListAccountStaff = () => {
           }}
         >
           <Content>
-            <h1
-              style={{
-                padding: "5px 0px 0px 0px",
-                margin: "0px 0px 0px 20px",
-                color: "#4a4a4a",
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Arial, sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                borderBottom: "4px solid #6546D2",
-                display: "inline-block",
-              }}
-            >
-              QUẢN LÝ NHÂN VIÊN
-            </h1>
+          <div>
+              <h1
+                style={{
+                  padding: "15px 0px 0px 0px",
+                  margin: "0px 0px 0px 20px",
+                  color: "#4a4a4a",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif",
+                  textTransform: "uppercase",
+                  letterSpacing: "1px",
+                  borderBottom: "4px solid #6546D2",
+                  display: "inline-block",
+                }}
+              >
+                QUẢN LÝ NHÂN VIÊN
+              </h1>
+
+              <Search
+                placeholder="Enter name to search"
+                allowClear
+                onSearch={handleSearch}
+                style={{ width: 250, marginBottom: 16, marginLeft: 525, marginTop: 15 }}
+              />
+            </div>
 
             <div
               style={{
@@ -82,12 +91,6 @@ const ListAccountStaff = () => {
               }}
             >
               <div style={{ height: "600px", overflow: "auto" }}>
-                <Search
-                  placeholder="Enter name to search"
-                  allowClear
-                  onSearch={handleSearch}
-                  style={{ width: 200, marginBottom: 16 }}
-                />
                 <Table
                   className="custom-table"
                   dataSource={filteredStaff}

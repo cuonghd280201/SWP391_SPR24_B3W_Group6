@@ -56,6 +56,7 @@ export default {
             getAllUser: "/dashboard/getAllUser",
             getAllStaff: "/dashboard/getAllStaff",
             getOrderStatus: "/dashboard/orderStatus",
+            getRevenue: "/dashboard/order/revenue",
         }
         
         

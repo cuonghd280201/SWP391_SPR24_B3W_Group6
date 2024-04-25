@@ -57,8 +57,8 @@ const ListOrderStatus = () => {
         >
           <h1
             style={{
-              padding: "5px 0px 0px 0px",
-              margin: "0px 0px 20px 5px",
+              padding: "0px 0px 0px 0px",
+              margin: "0px 0px 30px 5px",
               color: "#4a4a4a",
               fontSize: "24px",
               fontWeight: "bold",

@@ -24,19 +24,17 @@ const ListAccountCustomer = () => {
   const fetchAllUser = async () => {
     const response = await adminServices.getAllUser();
     setAllUser(response.data.data);
-    setFilteredUsers(response.data.data); 
+    setFilteredUsers(response.data.data);
   };
 
   const handleSearch = (value) => {
     const searchValue = value.toLowerCase().trim();
 
-    const filtered = allUser.filter((user) =>{
+    const filtered = allUser.filter((user) => {
       const nameMatch = user.name.toLowerCase().includes(searchValue);
       const emailMatch = user.email.toLowerCase().includes(searchValue);
       return nameMatch || emailMatch || searchValue === "";
-    }
-   
-    );
+    });
     setFilteredUsers(filtered);
   };
 
@@ -48,30 +46,35 @@ const ListAccountCustomer = () => {
 
         <div
           style={{
-            padding: "10px 5px 0px 5px",
-            background: "white",
-            margin: "30px",
-            borderRadius: "12px",
-            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+            margin: "20px", padding: "20px", backgroundColor: "#fff"
           }}
         >
           <Content>
-            <h1
-              style={{
-                padding: "5px 0px 0px 0px",
-                margin: "0px 0px 0px 20px",
-                color: "#4a4a4a",
-                fontSize: "24px",
-                fontWeight: "bold",
-                fontFamily: "Arial, sans-serif",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                borderBottom: "4px solid #6546D2",
-                display: "inline-block",
-              }}
-            >
-              QUẢN LÝ KHÁCH HÀNG
-            </h1>
+            <div>
+              <h1
+                style={{
+                  padding: "15px 0px 0px 0px",
+                  margin: "0px 0px 0px 20px",
+                  color: "#4a4a4a",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  fontFamily: "Arial, sans-serif",
+                  textTransform: "uppercase",
+                  letterSpacing: "1px",
+                  borderBottom: "4px solid #6546D2",
+                  display: "inline-block",
+                }}
+              >
+                QUẢN LÝ KHÁCH HÀNG
+              </h1>
+
+              <Search
+                placeholder="Enter name to search"
+                allowClear
+                onSearch={handleSearch}
+                style={{ width: 250, marginBottom: 16, marginLeft: 490, marginTop: 15 }}
+              />
+            </div>
 
             <div
               style={{
@@ -80,12 +83,6 @@ const ListAccountCustomer = () => {
               }}
             >
               <div style={{ height: "600px", overflow: "auto" }}>
-                <Search
-                  placeholder="Enter name to search"
-                  allowClear
-                  onSearch={handleSearch}
-                  style={{ width: 200, marginBottom: 16 }}
-                />
                 <Table
                   className="custom-table"
                   dataSource={filteredUsers} // Render filtered users instead of all users
@@ -169,10 +166,8 @@ const ListAccountCustomer = () => {
                               ...prevMap,
                               [record.userId]: !record.enable,
                             }));
-
-                     
                           }}
-                          size="small" 
+                          size="small"
                           style={{
                             backgroundColor: record.enable ? "green" : "red", // Determine color based on the 'enable' property
                             borderColor: record.enable ? "green" : "red", // Determine border color accordingly

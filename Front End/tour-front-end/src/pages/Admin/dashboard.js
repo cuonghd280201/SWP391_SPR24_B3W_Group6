@@ -1,113 +1,169 @@
 import React, { useEffect, useState } from "react";
 
-import '../Admin/dashboard.css'
-import { Layout } from 'antd';
-
+import "../Admin/dashboard.css";
+import { Layout, Table, Select } from "antd";
 
 import NavBarWebAdmin from "./Navbar/NavBarWebAdmin";
 import SiderBarWebAdmin from "./SlideBar/SiderBarWebAdmin";
 import adminServices from "../../services/admin.services";
-const { Content } = Layout;
+import Chart from "react-apexcharts";
 
+const { Content } = Layout;
+const { Column } = Table;
+const { Option } = Select;
 
 const Dashboard = () => {
-    const [orderSumary, setOrderSumary] = useState(); // Initialize users as an object
-    const [roleNumber, setRoleNumber] = useState(); //
+  const [orderSumary, setOrderSumary] = useState(); // Initialize users as an object
+  const [roleNumber, setRoleNumber] = useState(); //
+  const [revenues, setRevenues] = useState([]);
+  const [dates, setDates] = useState([]);
 
-    useEffect(() => {
-        fetchOrderSumary();
-        fetchRoleNumber();
-    }, []);
+  useEffect(() => {
+    fetchOrderSumary();
+    fetchRoleNumber();
+  }, []);
 
-    const fetchOrderSumary = async () => {
-        const response = await adminServices.getOrderSumary();
-        setOrderSumary(response.data.data);
-    }
+  const fetchOrderSumary = async () => {
+    const response = await adminServices.getOrderSumary();
+    setOrderSumary(response.data.data);
+  };
 
-    const fetchRoleNumber = async () => {
-        const response = await adminServices.getRoleNumber();
-        setRoleNumber(response.data.data);
-    }
-    return (
+  const fetchRoleNumber = async () => {
+    const response = await adminServices.getRoleNumber();
+    setRoleNumber(response.data.data);
+  };
 
-        <Layout style={{ minHeight: "100vh" }}>
-            <SiderBarWebAdmin choose={"menu-key/1"}></SiderBarWebAdmin>
-            <Layout>
-                <NavBarWebAdmin></NavBarWebAdmin>
-                <div
-                    style={{
-                        padding: "30px",
-                        background: "white",
-                        margin: "30px",
-                        borderRadius: "12px",
-                        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                    }}
-                >
-                    <Content>
+  const getRevenueData = async (days) => {
+    const response = await adminServices.getRevenue(days);
+    const {data} = response.data
+    
+    const dates = data.map(element => element.date)
+    setDates(dates)
+    
+    const revenues = data.map(element => element.money)
+    setRevenues(revenues)
 
-                        <div className="row">
-                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div className="page-header">
-                                    <h2 className="pageheader-title">Dashboard </h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="ecommerce-widget">
-                            <div className="row row-with-margin">
-                                <div className="col-xl-3 ">
-                                    <div className="card border-5 border-top border-info-subtle">
-                                        <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Tổng tiền</h5>
-                                            <div className="metric-value d-inline-block">
-                                                <h2>{orderSumary?.completedCount}</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3">
-                                    <div className="card border-5 border-top border-success-subtle">
-                                        <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Tổng số tiền hoàn trả</h5>
-                                            <div className="metric-value d-inline-block">
-                                            <h2>{orderSumary?.refundedCount}</h2>
+  };
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3">
-                                    <div className="card border-5 border-top border-warning-subtle">
-                                        <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Số lượng khách hàng</h5>
-                                            <div className="metric-value d-inline-block">
-                                                <h2>{roleNumber?.countUser}</h2>
+  const handleRevenueDatesChange = async (value) => {
+    const selectedDays = parseInt(value); // Convert the selected value to a number
+    
+    // Fetch revenue data based on the selected number of days
+    await getRevenueData(selectedDays);
+  };
+  
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3">
-                                    <div className="card border-5 border-top border-primary-subtle">
-                                        <div className="card-body-dashboard">
-                                            <h5 className="text-muted">Số lượng nhân viên</h5>
-                                            <div className="metric-value d-inline-block">
-                                            <h2>{roleNumber?.countStaff}</h2>
+  useEffect(()=>{
+    getRevenueData(0)
+  },[])
 
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </Content>
+  return (
+    <Layout style={{ minHeight: "100vh" }}>
+      <SiderBarWebAdmin choose={"menu-key/1"}></SiderBarWebAdmin>
+      <Layout>
+        <NavBarWebAdmin></NavBarWebAdmin>
+        <div
+          style={{
+            padding: "30px",
+            background: "white",
+            margin: "30px",
+            borderRadius: "12px",
+            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+          }}
+        >
+          <Content>
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div className="page-header">
+                  <h2 className="pageheader-title">Dashboard </h2>
                 </div>
-            </Layout >
-        </Layout >
+              </div>
+            </div>
 
-    )
-}
+            <div className="ecommerce-widget">
+              <div className="row row-with-margin">
+                <div className="col-xl-3 ">
+                  <div className="card border-5 border-top border-info-subtle">
+                    <div className="card-body-dashboard">
+                      <h5 className="text-muted">Tổng tiền</h5>
+                      <div className="metric-value d-inline-block">
+                        <h2>{orderSumary?.completedCount}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-xl-3">
+                  <div className="card border-5 border-top border-success-subtle">
+                    <div className="card-body-dashboard">
+                      <h5 className="text-muted">Tổng số tiền hoàn trả</h5>
+                      <div className="metric-value d-inline-block">
+                        <h2>{orderSumary?.refundedCount}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-xl-3">
+                  <div className="card border-5 border-top border-warning-subtle">
+                    <div className="card-body-dashboard">
+                      <h5 className="text-muted">Số lượng khách hàng</h5>
+                      <div className="metric-value d-inline-block">
+                        <h2>{roleNumber?.countUser}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-xl-3">
+                  <div className="card border-5 border-top border-primary-subtle">
+                    <div className="card-body-dashboard">
+                      <h5 className="text-muted">Số lượng nhân viên</h5>
+                      <div className="metric-value d-inline-block">
+                        <h2>{roleNumber?.countStaff}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Select
+              defaultValue="Doanh thu trong vòng"
+              onChange={handleRevenueDatesChange}
+              style={{ marginLeft: "400px", width: "200px" }}
+            >
+              <Option value="7">7 ngày</Option>
+              <Option value="14">14 ngày</Option>
+              <Option value="21">21 ngày</Option>
+            </Select>
 
-export default Dashboard
+            <Chart
+              options={{
+                chart: {
+                  id: "basic-bar",
+                },
+                xaxis: {
+                  categories:dates,
+                },
+                plotOptions: {
+                  bar: {
+                    horizontal: false, // Ensure bars are vertical
+                    columnWidth: "25%", // Adjust the width of the bars
+                  },
+                },
+              }}
+              series={[
+                {
+                  name: "series-1",
+                  data: revenues,
+                  color: "#007FFF",
+                },
+              ]}
+              type="bar"
+              width="1000"
+            />
+          </Content>
+        </div>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default Dashboard;
