@@ -1,4 +1,5 @@
 package tourbooking.controller;
+import com.google.firebase.auth.FirebaseAuthException;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -27,6 +28,7 @@ import tourbooking.service.impl.UserServiceImpl;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/dashboard")
@@ -89,6 +91,11 @@ public class DashboardController {
     @PostMapping("order/revenue")
     public ResponseEntity<BaseResponseDTO> revenueStatistic(@RequestParam int days) {
         return dashboardService.revenueStatistic(days);
+    }
+
+    @PostMapping("/user/disable")
+    public ResponseEntity<BaseResponseDTO> disableUser(@RequestParam UUID user_id) throws FirebaseAuthException {
+        return userService.disableUser(user_id);
     }
 
 }

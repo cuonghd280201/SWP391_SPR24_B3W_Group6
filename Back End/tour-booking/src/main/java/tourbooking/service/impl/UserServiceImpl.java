@@ -88,6 +88,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public ResponseEntity<BaseResponseDTO> disableUser(UUID id) throws FirebaseAuthException {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        //UserRecord userRecord = firebaseAuth.getUser(user.getFireBaseUid());
+        firebaseAuth.deleteUser(user.getFireBaseUid());
+        user.setEnable(false);
+        userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BaseResponseDTO(LocalDateTime.now(), HttpStatus.CREATED, "Successfully"));
+    }
+
 
     //Chuyển danh sách authorities thành claims
     public Map<String, Object> convertAuthoritiesToClaims(Collection<? extends GrantedAuthority> authorities) {

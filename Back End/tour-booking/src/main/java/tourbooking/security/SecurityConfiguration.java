@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                         .requestMatchers(
                                 antMatcher("/api/v1/tour/**"),
                                 antMatcher("/api/v1/guest/**"),
+                                antMatcher("/api/v1/city/**"),
                                 //antMatcher("/api/v1/vn-pay/**"),
                                 antMatcher("/swagger-ui/**"),
                                 antMatcher("/swagger-ui.html"),
