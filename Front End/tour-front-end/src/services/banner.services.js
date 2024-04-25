@@ -3,7 +3,7 @@ import axiosLocalHost from "../utils/customAxios";
 
 const getListBanner = async () => {
     const serviceUrl = urlConstant.endpoint.banner.listBanner;
-    const response = await axiosLocalHost.sendAuthorizedRequest(serviceUrl, "GET");
+    const response = await axiosLocalHost.normalRequest.get(serviceUrl);
     return response;
   };
 
