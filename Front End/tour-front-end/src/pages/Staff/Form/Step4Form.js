@@ -6,7 +6,6 @@ const Step4Form = ({ formData, onNext }) => {
     const [form] = Form.useForm();
 
     const handleSubmit = (values) => {
-        // Định dạng các giá trị ngày tháng trong values
         const formattedValues = values.tourTimeCreateFormSet.map((item) => {
             return {
                 ...item,
@@ -15,7 +14,6 @@ const Step4Form = ({ formData, onNext }) => {
             };
         });
 
-        // Gọi onNext với giá trị đã định dạng
         onNext({ tourTimeCreateFormSet: formattedValues });
     };
 

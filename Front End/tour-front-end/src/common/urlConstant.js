@@ -5,7 +5,11 @@ export default {
     endpoint:{
         auth: {    
             profile: "/user/profile",   
-            updateProfile: "/user/update"
+            updateProfile: "/user/update",
+            transaction: "/transaction/all",
+            paging: "pageNumber=${currentPage}&pageSize=${pageSize}",
+            sorting: "sortBy=${sortBy}&sortOrder=${sortOrder}",
+            
 
         },
         tour: {
@@ -25,7 +29,11 @@ export default {
         order: {
             createOrder: "/order/create?tourTimeId=${tourTimeId}&paid=${paid}",
             getAllTour: "/order/all",
-            getOrderDetailByID: "/order/${orderId}"
+            orderStatus: "orderStatus=${orderStatus}",
+            getOrderDetailByID: "/order/${orderId}",
+            getTourOrdered: "/staff/tour/ordered",
+            keyWord: "keyWord=${keyWord}",
+            getTourVisitor: "/staff/tourVisitor/${tourTimeId}",
         },
         payment: {
             checkout: "/payment/check-out?uuid=${uuid}",
@@ -46,7 +54,7 @@ export default {
         },
         cancel:{
             customerCancel:"/order/cancel/${orderId}",
-            getAllOrderStatus:"/dashboard/orderStatus?orderStatus=WAITING_CANCEL",
+            getAllOrderStatus:"/dashboard/orderStatus",
             staffCancel:"/staff/order/cancel/${orderId}",
         },
 

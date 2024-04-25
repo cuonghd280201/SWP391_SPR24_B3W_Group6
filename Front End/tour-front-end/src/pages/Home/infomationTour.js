@@ -238,7 +238,7 @@ const InfomationTour = () => {
                                     </div>
                                     <p className="title" id="title">Siêu Sale 🔥 {tourDetailCustomer?.title} </p>
                                     <div className="entry"><div className="entry-inner">
-                                        <span>Mã Tour <b>{tourDetailCustomer?.tourTimeSet[0]?.id} </b>
+                                        <span>Mã Tour <b>{tourDetailCustomer?.tourTimeSet[0]?.code} </b>
                                         </span>
                                         <span>Khởi hành<b>{tourDetailCustomer?.tourTimeSet[0]?.startDate}</b>
                                         </span><span>Thời gian <b>{tourDetailCustomer?.tourTimeSet[0]?.startTime}</b></span>
@@ -388,9 +388,9 @@ const InfomationTour = () => {
                                                     {adultCount} x {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp; &nbsp;=&nbsp; {adultCount * tourDetailCustomer?.price}&nbsp;₫
                                                 </td>                                            </tr>
                                             <tr className="detail">
-                                                <td>Người nhở</td>
+                                                <td>Người nhỏ</td>
                                                 <td className="t-price text-right">
-                                                    {childCount} x {tourDetailCustomer?.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}&nbsp; &nbsp;=&nbsp; {childCount * (tourDetailCustomer?.price) / 2}&nbsp;₫
+                                                    {childCount} x {((tourDetailCustomer?.price)/2).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} &nbsp; &nbsp;=&nbsp; {childCount *((tourDetailCustomer?.price)/2)}&nbsp;₫
                                                 </td>                                            </tr>
                                             <tr className="total">
                                                 <td>Tổng tiền </td>

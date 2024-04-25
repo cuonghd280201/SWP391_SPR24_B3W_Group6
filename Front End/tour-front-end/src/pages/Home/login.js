@@ -13,35 +13,46 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleSignWithGoogle = async () => {
-        try{
-            const result  = await signInWithPopup(auth,googleAuthProvider);
-            console.log(result);  
+        try {
+            const result = await signInWithPopup(auth, googleAuthProvider);
+            console.log(result);
             localStorage.setItem('token', result.user.accessToken);
             localStorage.setItem('user', JSON.stringify(result.user));
-            navigate("/");  
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log("User", user);
+            switch (user.role) {
+                case "ROLE_USER":
+                    navigate("/");
+                    break;
+                case "ROLE_STAFF":
+                    navigate("/listTourStaff");
+                    break;
+                default:
+                    navigate("/dashboard");
+            }
             toast.success("Đăng nhập thành công!")
 
-        }catch(error){
+        } catch (error) {
             console.error(error);
             toast.error("Đăng nhập thất bại!")
         }
 
     }
 
-const { googleSignIn, user } = UserAuth();
-  //const navigate = useNavigate();
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (user != null) { 
-      navigate('/login'); 
-    }
-  }, [user]); 
+    const { googleSignIn, user } = UserAuth();
+    //const navigate = useNavigate();
+    const handleGoogleSignIn = async () => {
+        try {
+            await googleSignIn();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        if (user != null) {
+            navigate('/login');
+        }
+    }, [user]);
     return (
         <div>
             <div className="hero-wrap js-fullheight" style={{ backgroundImage: 'url("images/bg_1.jpg")' }}>
@@ -92,10 +103,10 @@ const { googleSignIn, user } = UserAuth();
                                 <span className="focus-input100" />
                             </div>
                             <div className="container-login100-form-btn m-t-17">
-                            <Link to="/listTourStaff">
-                                <button className="login100-form-btn">
-                                    Đăng Nhập
-                                </button>
+                                <Link to="/listTourStaff">
+                                    <button className="login100-form-btn">
+                                        Đăng Nhập
+                                    </button>
                                 </Link>
                             </div>
                             <div className="w-full text-center p-t-55">
