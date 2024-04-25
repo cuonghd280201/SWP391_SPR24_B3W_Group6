@@ -124,18 +124,30 @@ const OrderHistory = () => {
                     <Option value="WAITING_CANCEL">CHỜ HỦY</Option>
                     <Option value="CANCEL">HỦY</Option>
                 </Select>
-                <div className="form-search mb-4">
-                    <div className="form-group">
+
+                <div className="form-search mb-4"
+                    style={{
+                        marginTop: '10px',
+                    }}>
+                    <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <Input
+                            style={{
+                                padding: '10px',
+                                width: '300px',
+                                border: "1px solid #5cb85c",
+                                borderRadius: "4px",
+                                fontSize: "15px",
+                                color: "#5cb85c",
+                            }}
                             type="text"
                             value={keyword}
                             onChange={(e) => setKeyword(e.target.value)}
                             placeholder="Nhập từ khóa..."
-                        />                                        </div>
-                    <div className="form-group">
+                        />
                         <Button color="primary" onClick={fetchOrderData}>Tìm kiếm</Button>
                     </div>
                 </div>
+
                 <TabContent id="pills-tabContent">
                     {/* Render current orders */}
                     {currentOrders.map(order => (

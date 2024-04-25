@@ -121,32 +121,10 @@ const ListTourStaff = () => {
                   Tạo chuyến đi mới
                 </a>
 
-                <div className="form-group">
-                  <div className="select-wrap one-third">
-                    <div className="icon">
-                      <span className="ion-ios-arrow-down" />
-                    </div>
-                    <select
-                      name="endLocation"
-                      id="endLocation"
-                      className="form-control"
-                      // value={endLocation}
-                      // onChange={(e) => setEndLocation(e.target.value)}
-                    >
-                      {/* <option value="">Điểm Kết Thúc</option>
-                      {cities.map((city, index) => (
-                        <option key={index} value={city.name}>
-                          {city.name}
-                        </option>
-                      ))} */}
-                    </select>
-
-                  </div>
-                </div>
+                
               </span>
             </div>
 
-            {/* Display tours for the current page */}
             <div className="row row-with-margin">
               <div className="col-xl-12 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div className="card border-5 border-top border-success-subtle">
@@ -155,7 +133,6 @@ const ListTourStaff = () => {
                       {tours.map(tour => (
                         <div className="text p-3">
                           <div className="row">
-                            {/* Tour details */}
                             < div className="col-4" >
                               <Link
                                 to="/listTourStaffDetail"

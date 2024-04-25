@@ -144,66 +144,122 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <HomeSlider></HomeSlider>
 
-            {/* 
-            <section className="ftco-section justify-content-end ftco-search">
-                <div className="container-wrap ml-auto">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <div className="nav nav-pills justify-content-center text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            </div>
-                        </div>
-                        <div className="col-md-24">
-                            <div className="tab-content p-4 px-5" id="v-pills-tabContent">
-                                <div className="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                                    <Row>
-                                        <Col>
-                                            <TabContent activeTab="v-pills-1">
-                                                <TabPane tabId="v-pills-1">
-                                                    <form className="search-destination">
-                                                        <Row>
-                                                            <Col md={3}>
-                                                                <div className="form-group">
-                                                                    <label>Điểm đi</label>
-                                                                    <Input type="text" placeholder="Check In" />
-                                                                </div>
-                                                            </Col>
-                                                            <Col md={3}>
-                                                                <div className="form-group">
-                                                                    <label>Điểm đến</label>
-                                                                    <Input type="text" placeholder="From" />
-                                                                </div>
-                                                            </Col>
-                                                            <Col md={3}>
-                                                                <div className="form-group">
-                                                                    <label>Ngày đi</label>
-                                                                    <Input type="date" />
-                                                                </div>
-                                                            </Col>
 
-                                                            <Col md={2}>
-                                                                <div className="form-group">
-                                                                    <Button color="primary">Tìm Kiếm</Button>
+                    <div className="col-md-24" style={{
+                        marginTop: '30px'
+                    }}>
+                        <div className="tab-content p-4 px-5" id="v-pills-tabContent">
+                            <div className="sidebar-wrap tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                                <Row>
+                                    <Col>
+                                        <TabContent activeTab="v-pills-1">
+                                            <TabPane tabId="v-pills-1">
+                                                <form className="search-destination">
+                                                    <Row>
+                                                        <Col md={3}>
+                                                            <div className="form-group">
+                                                                <Input
+                                                                    type="text"
+                                                                    value={keyword}
+                                                                    onChange={(e) => setKeyword(e.target.value)}
+                                                                    placeholder="Nhập từ khóa..."
+                                                                />                                        </div>
+                                                        </Col>
+                                                        <Col md={2}>
+                                                            <div className="form-group">
+                                                                <div className="select-wrap one-third">
+                                                                    <div className="icon">
+                                                                        <span className="ion-ios-arrow-down" />
+                                                                    </div>
+                                                                    <select
+                                                                        name="endLocation"
+                                                                        id="endLocation"
+                                                                        className="form-control"
+                                                                        value={endLocation}
+                                                                        onChange={(e) => setEndLocation(e.target.value)}
+                                                                    >
+                                                                        <option value="">Điểm Kết Thúc</option>
+                                                                        {cities.map((city, index) => (
+                                                                            <option key={index} value={city.name}>
+                                                                                {city.name}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+
                                                                 </div>
-                                                            </Col>
-                                                        </Row>
-                                                    </form>
-                                                </TabPane>
-                                            </TabContent>
-                                        </Col>
-                                    </Row>
-                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col md={2}>
+                                                            <div className="form-group">
+                                                                <Input type="date" onChange={handleDateChange} />
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col md={3}>
+                                                            <div className="form-group">
+                                                                <div className="range-slider">
+                                                                    <span>
+                                                                        {/* Number input for minPrice */}
+                                                                        <input
+                                                                            type="number"
+                                                                            value={minPrice}
+                                                                            min={0}
+                                                                            max={100000000}
+                                                                            onChange={handleMinPriceChange}
+                                                                        />
+                                                                        -
+                                                                        {/* Number input for maxPrice */}
+                                                                        <input
+                                                                            type="number"
+                                                                            value={maxPrice}
+                                                                            min={0}
+                                                                            max={100000000}
+                                                                            onChange={handleMaxPriceChange}
+                                                                        />
+                                                                    </span>
+                                                                    {/* Range input for minPrice */}
+                                                                    <input
+                                                                        type="range"
+                                                                        value={minPrice}
+                                                                        min={0}
+                                                                        max={100000000}
+                                                                        step={500000}
+                                                                        onChange={handleMinPriceChange}
+                                                                    />
+                                                                    {/* Range input for maxPrice */}
+                                                                    <input
+                                                                        type="range"
+                                                                        value={maxPrice}
+                                                                        min={0}
+                                                                        max={100000000}
+                                                                        step={500000}
+                                                                        onChange={handleMaxPriceChange}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col md={2}>
+                                                            <div className="form-group">
+                                                            <Button color="primary" onClick={fetchData}>Tìm kiếm</Button>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </form>
+                                            </TabPane>
+                                        </TabContent>
+                                    </Col>
+                                </Row>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <h1></h1> */}
-
-            <section className="ftco-section">
+            
+            <section className="">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-3 sidebar order-md-last">
+                        {/* <div className="col-lg-3 sidebar order-md-last">
                             <div className="sidebar-wrap">
                                 <h3 className="heading mb-4">Tìm Chuyến Đi</h3>
                                 <form action="#">
@@ -248,7 +304,6 @@ const Home = () => {
                                         <div className="form-group">
                                             <div className="range-slider">
                                                 <span>
-                                                    {/* Number input for minPrice */}
                                                     <input
                                                         type="number"
                                                         value={minPrice}
@@ -256,8 +311,7 @@ const Home = () => {
                                                         max={100000000}
                                                         onChange={handleMinPriceChange}
                                                     />
-                                                    -
-                                                    {/* Number input for maxPrice */}
+                                                    
                                                     <input
                                                         type="number"
                                                         value={maxPrice}
@@ -266,7 +320,6 @@ const Home = () => {
                                                         onChange={handleMaxPriceChange}
                                                     />
                                                 </span>
-                                                {/* Range input for minPrice */}
                                                 <input
                                                     type="range"
                                                     value={minPrice}
@@ -275,7 +328,6 @@ const Home = () => {
                                                     step={500000}
                                                     onChange={handleMinPriceChange}
                                                 />
-                                                {/* Range input for maxPrice */}
                                                 <input
                                                     type="range"
                                                     value={maxPrice}
@@ -293,14 +345,24 @@ const Home = () => {
                                 </form>
                             </div>
 
-                        </div>{/* END*/}
+                        </div> */}
 
 
-                        <div className="col-lg-9">
-                            <div className="row">
+                        <div className="col-lg-12">
+                            <div className="row" >
                                 {tours.map(tour => (
-                                    <div key={tour.id} className="col-sm col-md-6 col-lg-4 ">
-                                        <div className="destination">
+                                    <div key={tour.id} className="col-md-4" style={{
+                                        fontSize: "15px",
+                                        padding: "10px 20px 20px 20px",
+                                        border: "0.1px solid #D3D3D3",
+                                        borderRadius: "10px",
+                                        transition: "background-color 0.3s, color 0.3s",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        boxShadow: "2px 2px 5px rgba(0  , 0, 0, 0.2)"
+
+                                    }} >
+                                        <div className="destination" >
                                             <Link
                                                 to="/detailTour"
                                                 className="text-dark"
@@ -316,7 +378,7 @@ const Home = () => {
                                             <div className="text p-3">
                                                 <p>{tour.createDate} - Giờ đi: {tour.startTime}</p>
                                                 <div className="d-flex">
-                                                    <div className="one">
+                                                    <div>
                                                         <h4>
                                                             <Link
                                                                 to="/detailTour"
@@ -330,9 +392,10 @@ const Home = () => {
 
                                                         </p>
                                                     </div>
-                                                    <div className="two">
-                                                        <span className="price per-price">{tour.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}<br /><small>/khách</small></span>
-                                                    </div>
+                                                    {/* <div className="two">
+                                                        <span className="price per-price">{tour.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}<br />
+                                                        <small>/khách</small></span>
+                                                    </div> */}
                                                 </div>
                                                 <span><img src="/images/tour.png" className="icon-img" />
                                                     {tour.code}</span>
@@ -343,7 +406,7 @@ const Home = () => {
                                                     fontWeight: "bold",
                                                     color: "#F9BE37",
                                                     marginBottom: 5,
-                                                }}><b>Giá : </b>{formatPrice(tour.price)} &nbsp;₫</h3>
+                                                }}><b>Giá : </b>{formatPrice(tour.price)} &nbsp;₫ / khách</h3>
                                                 <hr />
                                                 <p className="bottom-area d-flex">
                                                     <span className="ml-auto">
@@ -352,10 +415,10 @@ const Home = () => {
                                                             className="text-dark"
                                                             state={{ tourId: tour.id }}
                                                         >
-                                                            <a href="#">Xem chi tiết</a>
+                                                            {/* <a href="#">Xem chi tiết</a> */}
                                                         </Link>
                                                     </span>
-                                                    <span className="ml-auto"><a href="#">Đặt Lịch</a></span>
+                                                    {/* <span className="ml-auto"><a href="#">Đặt Lịch</a></span> */}
                                                 </p>
                                             </div>
                                         </div>
